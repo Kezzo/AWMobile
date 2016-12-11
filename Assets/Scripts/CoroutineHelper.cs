@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Helper class to provide basic coroutines from everywhere.
+/// </summary>
 public class CoroutineHelper : MonoBehaviour
 {
     //TODO: Implement function to clean up old, but still running coroutines
