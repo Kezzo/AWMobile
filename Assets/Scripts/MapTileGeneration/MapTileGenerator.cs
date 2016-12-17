@@ -11,9 +11,9 @@ public class MapTileGenerator
     /// Generates a simple rect map.
     /// </summary>
     /// <param name="sizeOfLevel">The size of level.</param>
+    /// <param name="tileMargin">The tile margin.</param>
     /// <param name="prefab">The prefab.</param>
     /// <param name="root">The root.</param>
-    /// <param name="layerToAssign">The layer to assign.</param>
     public void Generate(Vector2 sizeOfLevel, float tileMargin, GameObject prefab, Transform root)
     {
         float mapMaxX = ((sizeOfLevel.x - 1) * tileMargin / 2);
@@ -52,6 +52,7 @@ public class MapTileGenerator
     {
         Vector2 groupsToGenerate = new Vector2(sizeOfLevel.x / MapTileGroupSize, sizeOfLevel.y / MapTileGroupSize);
 
+        // To center the map
         float mapMaxX = ((sizeOfLevel.x - 1) * tileMargin / 2);
         float mapMaxZ = ((sizeOfLevel.y - 1) * tileMargin / 2);
 

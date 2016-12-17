@@ -9,16 +9,6 @@ using UnityEngine;
 /// </summary>
 public class BaseMapTile : MonoBehaviour
 {
-    [Serializable]
-    private class MapTileTypeAssignment
-    {
-        public MapTileType m_MapTileType;
-        public GameObject m_MapTilePrefab;
-    }
-
-    [SerializeField]
-    private List<MapTileTypeAssignment> m_mapTileTypeAssignmentList;
-
     [SerializeField]
     private MapTileType m_mapTileType;
     public MapTileType MapTileType { get { return m_mapTileType; } set { m_mapTileType = value; } }
@@ -40,7 +30,6 @@ public class BaseMapTile : MonoBehaviour
     /// Validates the specified map tile type.
     /// If the maptiletype has changed or the child was not created, will create the correct maptile.
     /// </summary>
-    /// <param name="mapTileType">Type of the map tile.</param>
     public void Validate()
     {
         if(m_currentInstantiatedMapTileType == m_mapTileType && m_currentInstantiatedMapTile != null)
@@ -53,7 +42,12 @@ public class BaseMapTile : MonoBehaviour
             DestroyImmediate(m_currentInstantiatedMapTile);
         }
 
-        GameObject prefabToInstantiate = GetPrefabOfMapTileType(m_mapTileType);
+        if (m_mapTileType == MapTileType.Empty)
+        {
+            return;
+        }
+
+        GameObject prefabToInstantiate = FindObjectOfType<MapTileGeneratorEditor>().GetPrefabOfMapTileType(m_mapTileType);
 
         if(prefabToInstantiate != null)
         {
@@ -69,17 +63,5 @@ public class BaseMapTile : MonoBehaviour
 
             m_currentInstantiatedMapTileType = MapTileType.Empty;
         }
-    }
-
-    /// <summary>
-    /// Returns a prefab from the MapTileTypeAssignment based on the given MapTileType.
-    /// </summary>
-    /// <param name="mapTileType">Type of the map tile.</param>
-    /// <returns></returns>
-    private GameObject GetPrefabOfMapTileType(MapTileType mapTileType)
-    {
-        MapTileTypeAssignment mapTileTypeAssignment = m_mapTileTypeAssignmentList.Find(prefab => prefab.m_MapTileType == mapTileType);
-
-        return mapTileTypeAssignment == null ? null : mapTileTypeAssignment.m_MapTilePrefab;
     }
 }

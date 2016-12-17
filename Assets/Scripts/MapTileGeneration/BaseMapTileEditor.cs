@@ -5,17 +5,29 @@ using UnityEditor;
 /// <summary>
 /// Editor script to enable function of the BaseMapTile class in the editor.
 /// </summary>
+[CanEditMultipleObjects]
 [CustomEditor(typeof(BaseMapTile))]
 public class BaseMapTileEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        BaseMapTile baseMapTile = (BaseMapTile)target;
 
-        if (GUILayout.Button("Validate"))
+        if (Selection.gameObjects.Length == 0)
         {
-            baseMapTile.Validate();
+            return;
+        }
+
+        for (int index = 0; index < Selection.gameObjects.Length; index++)
+        {
+            GameObject gameObjectToModifiy = Selection.gameObjects[index];
+
+            BaseMapTile baseMapTile = gameObjectToModifiy.GetComponent<BaseMapTile>();
+
+            if (baseMapTile != null)
+            {
+                baseMapTile.Validate();
+            }
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Editor script to enable function of the MapTileGeneratorEditor class in the editor.
 /// </summary>
+[CanEditMultipleObjects]
 [CustomEditor(typeof(MapTileGeneratorEditor))]
 public class MapTileGeneratorEditorHelper : Editor
 {

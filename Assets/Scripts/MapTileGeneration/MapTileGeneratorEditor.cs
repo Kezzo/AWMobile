@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,6 +18,18 @@ public class MapTileGeneratorEditor : MonoBehaviour
 
     [SerializeField]
     private Transform m_levelRoot;
+
+    [Serializable]
+    private class MapTileTypeAssignment
+    {
+#pragma warning disable 649
+        public MapTileType m_MapTileType;
+        public GameObject m_MapTilePrefab;
+#pragma warning restore 649
+    }
+
+    [SerializeField]
+    private List<MapTileTypeAssignment> m_mapTileTypeAssignmentList;
 
     /// <summary>
     /// Generates the map.
@@ -44,5 +57,17 @@ public class MapTileGeneratorEditor : MonoBehaviour
         {
             DestroyImmediate(gameObjectsToKill[i]);
         }
+    }
+
+    /// <summary>
+    /// Returns a prefab from the MapTileTypeAssignment based on the given MapTileType.
+    /// </summary>
+    /// <param name="mapTileType">Type of the map tile.</param>
+    /// <returns></returns>
+    public GameObject GetPrefabOfMapTileType(MapTileType mapTileType)
+    {
+        MapTileTypeAssignment mapTileTypeAssignment = m_mapTileTypeAssignmentList.Find(prefab => prefab.m_MapTileType == mapTileType);
+
+        return mapTileTypeAssignment == null ? null : mapTileTypeAssignment.m_MapTilePrefab;
     }
 }
