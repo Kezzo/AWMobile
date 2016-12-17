@@ -86,8 +86,10 @@ namespace UnityStandardAssets.CinematicEffects
                 EditorGUILayout.HelpBox(_textNoAmbientOnly, MessageType.Warning);
             }
 
-            #if UNITY_5_4_OR_NEWER
+#if UNITY_5_4_OR_NEWER
+#pragma warning disable CS0618 // Type or member is obsolete
             if (_ambientOnly.boolValue && PlayerSettings.singlePassStereoRendering)
+#pragma warning restore CS0618 // Type or member is obsolete
                 EditorGUILayout.HelpBox(_textSinglePassStereo, MessageType.Warning);
             #endif
 

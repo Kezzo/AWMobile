@@ -1,5 +1,6 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
 using UnityEngine;
+using UnityEditor;
 
 /// <summary>
 /// Editor script to enable function of the BaseMapTile class in the editor.
@@ -19,3 +20,4 @@ public class BaseMapTileEditor : Editor
     }
 
 }
+#endif

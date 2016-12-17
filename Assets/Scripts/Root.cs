@@ -19,6 +19,11 @@ public class Root : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 30;
+        Screen.SetResolution((int) (Screen.width * 0.7f), (int) (Screen.height * 0.7f), false);
+
+        Input.multiTouchEnabled = false;
+
         if (m_instance == null)
         {
             m_instance = this;
@@ -32,6 +37,8 @@ public class Root : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Initialize();
+
+        CoroutineHelper.CallDelayed(this, 5f, LogScreenResolution);
     }
 
     /// <summary>
@@ -40,5 +47,13 @@ public class Root : MonoBehaviour
     private void Initialize()
     {
         SceneManager.LoadScene(m_initialSceneToLoad, LoadSceneMode.Additive);
+    }
+
+    /// <summary>
+    /// Logs the screen resolution.
+    /// </summary>
+    private void LogScreenResolution()
+    {
+        Debug.Log("Resolution: " + Screen.currentResolution);
     }
 }

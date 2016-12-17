@@ -53,6 +53,7 @@ public class MapTileGenerator
         Vector2 groupsToGenerate = new Vector2(sizeOfLevel.x / MapTileGroupSize, sizeOfLevel.y / MapTileGroupSize);
 
         float mapMaxX = ((sizeOfLevel.x - 1) * tileMargin / 2);
+        float mapMaxZ = ((sizeOfLevel.y - 1) * tileMargin / 2);
 
         for (int xGroup = 0; xGroup < groupsToGenerate.x; xGroup++)
         {
@@ -61,7 +62,7 @@ public class MapTileGenerator
                 GameObject rowRoot = new GameObject();
                 rowRoot.AddComponent<BaseMapTileGroup>();
                 rowRoot.transform.SetParent(root);
-                rowRoot.transform.position = new Vector3(xGroup * MapTileGroupSize * tileMargin - mapMaxX, 0f, zGroup * MapTileGroupSize * tileMargin);
+                rowRoot.transform.position = new Vector3(xGroup * MapTileGroupSize * tileMargin - mapMaxX, 0f, zGroup * MapTileGroupSize * tileMargin - mapMaxZ);
                 rowRoot.name = string.Format("MapTileGroup {0}x{1}",xGroup, zGroup);
 
                 for (int x = 0; x < MapTileGroupSize; x++)
