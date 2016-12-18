@@ -11,9 +11,13 @@ public class BaseMapTileGroup : MonoBehaviour
     /// <summary>
     /// Validates the specified map tile type of all maptile children.
     /// </summary>
-    /// <param name="mapTileType">Type of the map tile.</param>
     public void Validate()
     {
+        if (m_mapTileType == MapTileType.Empty)
+        {
+            return;
+        }
+
         var baseMapTiles = transform.GetComponentsInChildren<BaseMapTile>();
 
         foreach (var baseMapTile in baseMapTiles)

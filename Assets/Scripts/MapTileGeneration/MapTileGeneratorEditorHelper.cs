@@ -14,7 +14,9 @@ public class MapTileGeneratorEditorHelper : Editor
         base.OnInspectorGUI();
         MapTileGeneratorEditor mapTileGeneratorEditor = (MapTileGeneratorEditor)target;
 
-        if (GUILayout.Button("Generate"))
+        GUILayout.Space(10f);
+
+        if (GUILayout.Button("Generate Empty Map"))
         {
             mapTileGeneratorEditor.GenerateMap();
         }
@@ -22,6 +24,18 @@ public class MapTileGeneratorEditorHelper : Editor
         if (GUILayout.Button("Clear"))
         {
             mapTileGeneratorEditor.ClearMap();
+        }
+
+        GUILayout.Space(10f);
+
+        if (GUILayout.Button("Load Map"))
+        {
+            mapTileGeneratorEditor.LoadExistingMap();
+        }
+
+        if (GUILayout.Button("Save Map"))
+        {
+            mapTileGeneratorEditor.SaveMapUnderLevelName();
         }
     }
 }

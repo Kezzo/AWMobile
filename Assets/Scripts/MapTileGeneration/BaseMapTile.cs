@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 #pragma warning disable 0649
 /// <summary>
@@ -16,12 +14,15 @@ public class BaseMapTile : MonoBehaviour
     private GameObject m_currentInstantiatedMapTile;
     private MapTileType m_currentInstantiatedMapTileType;
 
+    private MapGenerationData.MapTile m_mapTileData;
+
     /// <summary>
     /// Creates the first maptile child based on a default maptiletype.
     /// </summary>
-    public void Initialize()
+    public void Initialize(ref MapGenerationData.MapTile mapTileData)
     {
-        m_mapTileType = MapTileType.Water;
+        m_mapTileData = mapTileData;
+        m_mapTileType = m_mapTileData.MapTileType;
 
         Validate();
     }
@@ -56,6 +57,7 @@ public class BaseMapTile : MonoBehaviour
             m_currentInstantiatedMapTile.transform.localPosition = Vector3.zero;
 
             m_currentInstantiatedMapTileType = m_mapTileType;
+            m_mapTileData.MapTileType = m_mapTileType;
         }
         else
         {

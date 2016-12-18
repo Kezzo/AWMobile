@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Root : MonoBehaviour
 {
@@ -9,6 +8,10 @@ public class Root : MonoBehaviour
     [SerializeField]
     private CoroutineHelper m_coroutineHelper;
     public CoroutineHelper CoroutineHelper { get { return m_coroutineHelper; } }
+
+    [SerializeField]
+    private SceneLoadingService m_sceneLoadingService;
+    public SceneLoadingService SceneLoading { get { return m_sceneLoadingService; } }
 
     // Singleton
     private static Root m_instance = null;
@@ -20,7 +23,7 @@ public class Root : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 30;
-        Screen.SetResolution((int) (Screen.width * 0.7f), (int) (Screen.height * 0.7f), false);
+        Screen.SetResolution((int) (Screen.width * 0.7f), (int) (Screen.height * 0.7f), true);
 
         Input.multiTouchEnabled = false;
 
@@ -46,7 +49,15 @@ public class Root : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
-        SceneManager.LoadScene(m_initialSceneToLoad, LoadSceneMode.Additive);
+        SceneLoading.LoadSceneAsync(m_initialSceneToLoad, null, () =>
+        {
+            MapTileGeneratorEditor mapTileGeneratorEditor;
+
+            if (ControllerContainer.MonoBehaviourRegistry.TryGet<MapTileGeneratorEditor>(out mapTileGeneratorEditor))
+            {
+                mapTileGeneratorEditor.LoadExistingMap("Level1");
+            }
+        });
     }
 
     /// <summary>
