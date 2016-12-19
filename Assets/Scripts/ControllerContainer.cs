@@ -11,5 +11,8 @@ public static class ControllerContainer
     private static MonoBehaviourRegistry m_monoBehaviourRegistry;
     public static MonoBehaviourRegistry MonoBehaviourRegistry { get { return m_monoBehaviourRegistry ?? (m_monoBehaviourRegistry = new MonoBehaviourRegistry()); } }
 
+    private static BattleController m_battleController;
+    public static BattleController BattleController { get { return m_battleController ?? (m_battleController = new BattleController()); } }
+
 #pragma warning restore 649
 }

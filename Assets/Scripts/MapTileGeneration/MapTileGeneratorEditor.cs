@@ -28,18 +28,28 @@ public class MapTileGeneratorEditor : MonoBehaviour
     [SerializeField]
     private Transform m_levelRoot;
 
+#pragma warning disable 649
+
     [Serializable]
     private class MapTileTypeAssignment
     {
-#pragma warning disable 649
         public MapTileType m_MapTileType;
         public GameObject m_MapTilePrefab;
-#pragma warning restore 649
     }
 
     [SerializeField]
-#pragma warning disable 649
     private List<MapTileTypeAssignment> m_mapTileTypeAssignmentList;
+
+    [Serializable]
+    private class UnitTypeAssignment
+    {
+        public UnitType m_UnitType;
+        public GameObject m_UnitPrefab;
+    }
+
+    [SerializeField]
+    private List<UnitTypeAssignment> m_unitTypeAssignmentList;
+
 #pragma warning restore 649
 
     private MapGenerationData m_currentlyVisibleMap;
@@ -127,6 +137,16 @@ public class MapTileGeneratorEditor : MonoBehaviour
 #if UNITY_EDITOR
 
     /// <summary>
+    /// Updates the existing asset file.
+    /// </summary>
+    public void UpdateExistingAssetFile()
+    {
+        AssetDatabase.Refresh();
+        EditorUtility.SetDirty(m_currentlyVisibleMap);
+        AssetDatabase.SaveAssets();
+    }
+
+    /// <summary>
     /// Gets or sets the name of the save map under level.
     /// </summary>
     /// <value>
@@ -190,5 +210,17 @@ public class MapTileGeneratorEditor : MonoBehaviour
         MapTileTypeAssignment mapTileTypeAssignment = m_mapTileTypeAssignmentList.Find(prefab => prefab.m_MapTileType == mapTileType);
 
         return mapTileTypeAssignment == null ? null : mapTileTypeAssignment.m_MapTilePrefab;
+    }
+
+    /// <summary>
+    /// Returns a prefab from the UnitTypeAssignment based on the given UnitType.
+    /// </summary>
+    /// <param name="unitType">Type of the unit.</param>
+    /// <returns></returns>
+    public GameObject GetPrefabOfUnitType(UnitType unitType)
+    {
+        UnitTypeAssignment unitTypeAssignment = m_unitTypeAssignmentList.Find(prefab => prefab.m_UnitType == unitType);
+
+        return unitTypeAssignment == null ? null : unitTypeAssignment.m_UnitPrefab;
     }
 }

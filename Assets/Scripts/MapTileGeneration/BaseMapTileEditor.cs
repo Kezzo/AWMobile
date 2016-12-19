@@ -26,7 +26,8 @@ public class BaseMapTileEditor : Editor
 
             if (baseMapTile != null)
             {
-                baseMapTile.Validate();
+                baseMapTile.ValidateMapTile();
+                baseMapTile.ValidateUnitType();
             }
         }
     }

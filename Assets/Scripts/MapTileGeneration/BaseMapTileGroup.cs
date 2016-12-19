@@ -23,7 +23,7 @@ public class BaseMapTileGroup : MonoBehaviour
         foreach (var baseMapTile in baseMapTiles)
         {
             baseMapTile.MapTileType = m_mapTileType;
-            baseMapTile.Validate();
+            baseMapTile.ValidateMapTile();
         }
     }
 }

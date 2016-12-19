@@ -21,19 +21,24 @@ public class MapTileGeneratorEditorHelper : Editor
             mapTileGeneratorEditor.GenerateMap();
         }
 
-        if (GUILayout.Button("Clear"))
+        if (GUILayout.Button("Clear Hierarchy"))
         {
             mapTileGeneratorEditor.ClearMap();
         }
 
         GUILayout.Space(10f);
 
-        if (GUILayout.Button("Load Map"))
+        if (GUILayout.Button("Load Map File"))
         {
             mapTileGeneratorEditor.LoadExistingMap();
         }
 
-        if (GUILayout.Button("Save Map"))
+        if (GUILayout.Button("Update Map File"))
+        {
+            mapTileGeneratorEditor.UpdateExistingAssetFile();
+        }
+
+        if (GUILayout.Button("Save New Map File"))
         {
             mapTileGeneratorEditor.SaveMapUnderLevelName();
         }
