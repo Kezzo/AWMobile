@@ -100,7 +100,7 @@ public class MapTileGenerationService
                         {
                             m_PositionVector = new Vector2(x, z),
                             m_LocalPositionInGroup = new Vector3(x * tileMargin, 0f, z * tileMargin),
-                            MapTileType = MapTileType.Water
+                            m_MapTileType = MapTileType.Water
                         };
 
                         mapTileGroup.m_MapTiles.Add(mapTile);

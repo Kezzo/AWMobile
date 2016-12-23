@@ -1,11 +1,5 @@
 ﻿public class BattleController
 {
-    public class Team
-    {
-        public TeamColor TeamColor { get; set; }
-        public bool IsPlayer { get; set; }
-    }
-
     private Team[] m_teamThisBattle;
 
     // Defines the turn of one round. After the round ends and another battle turn begins, this gets reset to 0.
@@ -42,7 +36,7 @@
     /// </returns>
     public bool IsPlayersTurn()
     {
-        return GetCurrentlyPlayingTeam().IsPlayer;
+        return GetCurrentlyPlayingTeam().m_IsPlayersTeam;
     }
 
     /// <summary>

@@ -11,22 +11,73 @@ public class SelectionControls : MonoBehaviour
     [SerializeField]
     private LayerMask m_movementfieldLayerMask;
 
+    [SerializeField]
+    private CameraControls m_cameraControls;
+
     private BaseUnit m_currentlySelectedUnit;
+    private bool m_abortNextSelectionTry;
 
 	// Update is called once per frame
 	private void Update ()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) && m_cameraControls.IsDragging)
         {
-            RaycastHit raycastHit;
+            m_abortNextSelectionTry = true;
+            //Debug.Log("Aborting Next Selection Try");
+        }
 
-            if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (ControllerContainer.BattleController.IsPlayersTurn() && !m_abortNextSelectionTry)
             {
-                Debug.Log("Selected: "+ raycastHit.transform.gameObject.name);
-                m_currentlySelectedUnit = raycastHit.transform.GetComponent<BaseUnit>();
+                RaycastHit raycastHit;
+
+                if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
+                {
+                    BaseUnit selectedUnit = raycastHit.transform.GetComponent<BaseUnit>();
+
+                    if (selectedUnit != null && selectedUnit.CanUnitTakeAction())
+                    {
+                        DeselectCurrentUnit();
+
+                        m_currentlySelectedUnit = selectedUnit;
+                        m_currentlySelectedUnit.OnUnitWasSelected();
+                    }
+                }
+                else if (m_currentlySelectedUnit != null &&
+                         TrySelection(m_battlegroundCamera, m_movementfieldLayerMask, out raycastHit))
+                {
+                    // Get Movement field
+                    // Tell Unit to Move
+                }
+                else if (m_currentlySelectedUnit != null)
+                {
+                    // Deselect unit
+                    DeselectCurrentUnit();
+                }
+            }
+            else if (m_abortNextSelectionTry)
+            {
+                m_abortNextSelectionTry = false;
+
+                //Debug.Log("Selection Try was aborted!");
             }
         }
-	}
+    }
+
+    /// <summary>
+    /// De-Selects the current unit.
+    /// </summary>
+    private void DeselectCurrentUnit()
+    {
+        if (m_currentlySelectedUnit == null)
+        {
+            return;
+        }
+
+        m_currentlySelectedUnit.OnUnitWasDeselected();
+        m_currentlySelectedUnit = null;
+    }
 
     /// <summary>
     /// Tries selecting a unit

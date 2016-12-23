@@ -14,7 +14,9 @@ public class CameraControls : MonoBehaviour
 
     private Vector3 m_lastMousePosition;
     private bool m_draggingTop;
-    private bool m_dragging;
+
+    private bool m_startedDragging;
+    public bool IsDragging { get; private set; }
 
     /// <summary>
     /// Focuses the camera on the middle of the battlefield.
@@ -31,12 +33,20 @@ public class CameraControls : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            if (m_dragging)
-            {
-                Vector3 mouseDelta = m_lastMousePosition - Input.mousePosition;
+            Vector3 mouseDelta = m_lastMousePosition - Input.mousePosition;
 
-                float rotationChangeX = (mouseDelta.x * m_scrollSpeed * Time.deltaTime);
-                float rotationChangeY = (mouseDelta.y * m_scrollSpeed * Time.deltaTime);
+            if (m_startedDragging)
+            {
+                float rotationChangeX = mouseDelta.x * m_scrollSpeed * Time.deltaTime;
+                float rotationChangeY = mouseDelta.y * m_scrollSpeed * Time.deltaTime;
+
+                //Debug.LogFormat("Rotation Change X: '{0}' Y: '{1}'", rotationChangeX, rotationChangeY);
+
+                if (!IsDragging && (Mathf.Abs(rotationChangeX) > 0.1f || Mathf.Abs(rotationChangeX) > 0.1f))
+                {
+                    //Debug.Log("Started Dragging");
+                    IsDragging = true;
+                }
 
                 // Change rotation direction when dragging on the other side of the screen.
                 if (Input.mousePosition.y < Screen.height / 2)
@@ -53,11 +63,15 @@ public class CameraControls : MonoBehaviour
             }
 
             m_lastMousePosition = Input.mousePosition;
-            m_dragging = true;
+            m_startedDragging = true;
         }
         else if(Input.GetMouseButtonUp(0))
         {
-            m_dragging = false;
+            //Debug.Log("Stopped Dragging");
+
+            IsDragging = false;
+            m_startedDragging = false;
+            m_lastMousePosition = Vector3.zero;
         }
 	}
 

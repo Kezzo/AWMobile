@@ -41,7 +41,7 @@ public class Root : MonoBehaviour
 
         Initialize();
 
-        CoroutineHelper.CallDelayed(this, 5f, LogScreenResolution);
+        CoroutineHelper.CallDelayed(this, 1f, LogScreenResolution);
     }
 
     /// <summary>
@@ -49,6 +49,13 @@ public class Root : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
+        ControllerContainer.BattleController.IntializeBattle(new[] {new Team
+        {
+            //TODO: Move this setup into Scriptable Object
+            m_TeamColor = TeamColor.Blue,
+            m_IsPlayersTeam = true
+        }});
+
         SceneLoading.LoadSceneAsync(m_initialSceneToLoad, null, () =>
         {
             MapTileGeneratorEditor mapTileGeneratorEditor;

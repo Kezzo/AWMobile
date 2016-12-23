@@ -12,7 +12,7 @@ public class BaseMapTile : MonoBehaviour
     public MapTileType MapTileType { get { return m_mapTileType; } set { m_mapTileType = value; } }
 
     [SerializeField]
-    private UnitType m_unitTypeOnThisTile;
+    private MapGenerationData.Unit m_unitOnThisTile;
 
     [SerializeField]
     private Transform m_unitRoot;
@@ -20,8 +20,8 @@ public class BaseMapTile : MonoBehaviour
     private GameObject m_currentInstantiatedMapTile;
     private MapTileType m_currentInstantiatedMapTileType;
 
-    private GameObject m_currentInstantiatedUnit;
-    private UnitType m_currentInstantiatedUnitType;
+    private GameObject m_currentInstantiatedUnitGameObject;
+    private MapGenerationData.Unit m_currentInstantiatedUnit;
 
     private MapTileGeneratorEditor m_mapTileGeneratorEditor;
     private MapGenerationData.MapTile m_mapTileData;
@@ -42,8 +42,8 @@ public class BaseMapTile : MonoBehaviour
         }
 
         m_mapTileData = mapTileData;
-        m_mapTileType = m_mapTileData.MapTileType;
-        m_unitTypeOnThisTile = m_mapTileData.UnitType;
+        m_mapTileType = m_mapTileData.m_MapTileType;
+        m_unitOnThisTile = m_mapTileData.m_Unit;
 
         ValidateMapTile();
         ValidateUnitType();
@@ -78,24 +78,17 @@ public class BaseMapTile : MonoBehaviour
     /// </summary>
     public void ValidateUnitType()
     {
-        if (m_currentInstantiatedUnitType == m_unitTypeOnThisTile && m_currentInstantiatedUnit != null)
-        {
-            return;
-        }
-
         if (m_currentInstantiatedUnit != null)
         {
-            DestroyImmediate(m_currentInstantiatedUnit);
+            DestroyImmediate(m_currentInstantiatedUnitGameObject);
         }
 
-        if (m_unitTypeOnThisTile == UnitType.None)
-        {
-            m_mapTileData.UnitType = m_unitTypeOnThisTile;
-        }
-        else
+        if (m_unitOnThisTile != null && m_unitOnThisTile.m_UnitType != UnitType.None)
         {
             InstantiateUnitPrefab();
         }
+
+        m_mapTileData.m_Unit = m_unitOnThisTile;
     }
 
     /// <summary>
@@ -114,7 +107,7 @@ public class BaseMapTile : MonoBehaviour
             m_currentInstantiatedMapTile.transform.localPosition = Vector3.zero;
 
             m_currentInstantiatedMapTileType = m_mapTileType;
-            m_mapTileData.MapTileType = m_mapTileType;
+            m_mapTileData.m_MapTileType = m_mapTileType;
         }
         else
         {
@@ -130,20 +123,22 @@ public class BaseMapTile : MonoBehaviour
     private void InstantiateUnitPrefab()
     {
         // Instantiate UnitType
-        GameObject unitPrefabToInstantiate = m_mapTileGeneratorEditor.GetPrefabOfUnitType(m_unitTypeOnThisTile);
+        GameObject unitPrefabToInstantiate = m_mapTileGeneratorEditor.GetPrefabOfUnitType(m_unitOnThisTile.m_UnitType);
 
         if (unitPrefabToInstantiate != null)
         {
-            m_currentInstantiatedUnit = Instantiate(unitPrefabToInstantiate);
-            m_currentInstantiatedUnit.transform.SetParent(m_unitRoot);
-            m_currentInstantiatedUnit.transform.localPosition = Vector3.zero;
+            m_currentInstantiatedUnitGameObject = Instantiate(unitPrefabToInstantiate);
+            m_currentInstantiatedUnitGameObject.transform.SetParent(m_unitRoot);
+            m_currentInstantiatedUnitGameObject.transform.localPosition = Vector3.zero;
 
-            m_currentInstantiatedUnitType = m_unitTypeOnThisTile;
-            m_mapTileData.UnitType = m_unitTypeOnThisTile;
-        }
-        else
-        {
-            Debug.LogErrorFormat("Unit with Type: '{0}' was not found!", m_unitTypeOnThisTile);
+            BaseUnit baseUnit = m_currentInstantiatedUnitGameObject.GetComponent<BaseUnit>();
+
+            if (baseUnit != null)
+            {
+                baseUnit.Initialize(m_unitOnThisTile);
+            }
+
+            m_currentInstantiatedUnit = m_unitOnThisTile;
         }
     }
 }

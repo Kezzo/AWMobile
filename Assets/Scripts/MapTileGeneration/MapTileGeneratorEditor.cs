@@ -168,7 +168,7 @@ public class MapTileGeneratorEditor : MonoBehaviour
 
         m_currentlyVisibleMap.m_LevelName = m_levelToEdit;
 
-        string pathToAsset = string.Format("Assets/Levels/{0}.asset", m_currentlyVisibleMap.m_LevelName);
+        string pathToAsset = string.Format("Assets/Resources/Levels/{0}.asset", m_currentlyVisibleMap.m_LevelName);
 
         AssetDatabase.CreateAsset(m_currentlyVisibleMap, pathToAsset);
     }
