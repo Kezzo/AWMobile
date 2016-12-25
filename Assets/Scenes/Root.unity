@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 694809055}
   - component: {fileID: 694809057}
   - component: {fileID: 694809058}
+  - component: {fileID: 694809059}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -304,6 +305,7 @@ MonoBehaviour:
   m_initialSceneToLoad: Battleground
   m_coroutineHelper: {fileID: 694809057}
   m_sceneLoadingService: {fileID: 694809058}
+  m_simpleUnitBalancing: {fileID: 694809059}
 --- !u!4 &694809056
 Transform:
   m_ObjectHideFlags: 0
@@ -339,3 +341,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4051b67b49e454083dd4c42c8efcde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &694809059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 694809054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f09d739de78394ba02fe6b0fdfb94e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_unitBalancingList:
+  - m_UnitType: 1
+    m_MovementSpeed: 3
+    m_WalkableMapTileTypes: 01000000

@@ -14,5 +14,8 @@ public static class ControllerContainer
     private static BattleController m_battleController;
     public static BattleController BattleController { get { return m_battleController ?? (m_battleController = new BattleController()); } }
 
+    private static TileNavigationController m_tileNavigationController;
+    public static TileNavigationController TileNavigationController { get { return m_tileNavigationController ?? (m_tileNavigationController = new TileNavigationController()); } }
+
 #pragma warning restore 649
 }

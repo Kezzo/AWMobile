@@ -44,7 +44,7 @@
     /// </summary>
     public void StartNextTurn()
     {
-        Team teamToStartNext = m_teamThisBattle[m_subTurnCount];
+        //Team teamToStartNext = m_teamThisBattle[m_subTurnCount];
     }
 
     /// <summary>

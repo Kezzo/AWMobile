@@ -13,6 +13,10 @@ public class Root : MonoBehaviour
     private SceneLoadingService m_sceneLoadingService;
     public SceneLoadingService SceneLoading { get { return m_sceneLoadingService; } }
 
+    [SerializeField]
+    private SimpleUnitBalancing m_simpleUnitBalancing;
+    public SimpleUnitBalancing SimeSimpleUnitBalancing { get { return m_simpleUnitBalancing; } }
+
     // Singleton
     private static Root m_instance = null;
     public static Root Instance

@@ -17,6 +17,9 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private Transform m_unitRoot;
 
+    [SerializeField]
+    private GameObject m_movementField;
+
     private GameObject m_currentInstantiatedMapTile;
     private MapTileType m_currentInstantiatedMapTileType;
 
@@ -26,11 +29,12 @@ public class BaseMapTile : MonoBehaviour
     private MapTileGeneratorEditor m_mapTileGeneratorEditor;
     private MapGenerationData.MapTile m_mapTileData;
 
-
     /// <summary>
     /// Creates the first MapTile child based on a default MapTileType.
     /// </summary>
-    public void Initialize(ref MapGenerationData.MapTile mapTileData)
+    /// <param name="mapTileData">The map tile data.</param>
+    /// <param name="simplifiedPosition">The simplified position of the maptile.</param>
+    public void Initialize(ref MapGenerationData.MapTile mapTileData, Vector2 simplifiedPosition)
     {
         if (Application.isPlaying)
         {
@@ -46,7 +50,7 @@ public class BaseMapTile : MonoBehaviour
         m_unitOnThisTile = m_mapTileData.m_Unit;
 
         ValidateMapTile();
-        ValidateUnitType();
+        ValidateUnitType(simplifiedPosition);
     }
 
     /// <summary>
@@ -76,7 +80,8 @@ public class BaseMapTile : MonoBehaviour
     /// <summary>
     /// Validates the type of the unit.
     /// </summary>
-    public void ValidateUnitType()
+    /// <param name="simplifiedPosition">The simplified position of the unit.</param>
+    public void ValidateUnitType(Vector2 simplifiedPosition = new Vector2())
     {
         if (m_currentInstantiatedUnit != null)
         {
@@ -85,10 +90,9 @@ public class BaseMapTile : MonoBehaviour
 
         if (m_unitOnThisTile != null && m_unitOnThisTile.m_UnitType != UnitType.None)
         {
-            InstantiateUnitPrefab();
+            InstantiateUnitPrefab(simplifiedPosition);
+            m_mapTileData.m_Unit = m_unitOnThisTile;
         }
-
-        m_mapTileData.m_Unit = m_unitOnThisTile;
     }
 
     /// <summary>
@@ -120,7 +124,8 @@ public class BaseMapTile : MonoBehaviour
     /// <summary>
     /// Instantiates the unit prefab.
     /// </summary>
-    private void InstantiateUnitPrefab()
+    /// <param name="simplifiedPosition">The simplified position of the unit.</param>
+    private void InstantiateUnitPrefab(Vector2 simplifiedPosition)
     {
         // Instantiate UnitType
         GameObject unitPrefabToInstantiate = m_mapTileGeneratorEditor.GetPrefabOfUnitType(m_unitOnThisTile.m_UnitType);
@@ -135,10 +140,19 @@ public class BaseMapTile : MonoBehaviour
 
             if (baseUnit != null)
             {
-                baseUnit.Initialize(m_unitOnThisTile);
+                baseUnit.Initialize(m_unitOnThisTile, simplifiedPosition);
             }
 
             m_currentInstantiatedUnit = m_unitOnThisTile;
         }
+    }
+
+    /// <summary>
+    /// Changes the visibilty of movement field.
+    /// </summary>
+    /// <param name="setVisibiltyTo">if set to <c>true</c> [set visibilty to].</param>
+    public void ChangeVisibiltyOfMovementField(bool setVisibiltyTo)
+    {
+        m_movementField.SetActive(setVisibiltyTo);
     }
 }

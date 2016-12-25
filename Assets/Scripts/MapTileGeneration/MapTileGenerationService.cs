@@ -14,6 +14,7 @@ public class MapTileGenerationService
     /// <param name="root">The root.</param>
     public void LoadGeneratedMap(MapGenerationData mapGenerationData, GameObject prefab, Transform root)
     {
+        ControllerContainer.TileNavigationController.Initialize(mapGenerationData.m_LevelSize);
         Vector2 groupsToGenerate = new Vector2(mapGenerationData.m_LevelSize.x / mapGenerationData.m_MapTileGroupSize, mapGenerationData.m_LevelSize.y / mapGenerationData.m_MapTileGroupSize);
 
         for (int xGroup = 0; xGroup < groupsToGenerate.x; xGroup++)
@@ -40,7 +41,7 @@ public class MapTileGenerationService
                 {
                     for (int z = 0; z < mapGenerationData.m_MapTileGroupSize; z++)
                     {
-                        MapGenerationData.MapTile mapTile = mapTileGroup.GetMapTileAtGroupVector(new Vector2(x, z));
+                        MapGenerationData.MapTile mapTile = mapTileGroup.GetMapTileAtGroupPosition(new Vector2(x, z));
 
                         var levelTile = GameObject.Instantiate(prefab);
 
@@ -49,10 +50,20 @@ public class MapTileGenerationService
 
                         BaseMapTile baseMapTile = levelTile.GetComponent<BaseMapTile>();
 
-                        if (baseMapTile != null)
+                        if (baseMapTile == null)
                         {
-                            baseMapTile.Initialize(ref mapTile);
+                            Debug.LogError("No BaseMapTile Component was found on the MapTile!", levelTile);
                         }
+                        else
+                        {
+                            Vector2 simplifiedMapTilePosition = mapGenerationData.GetSimplifiedMapTileCoordinate(mapTile);
+
+                            ControllerContainer.TileNavigationController.RegisterMapTile(simplifiedMapTilePosition, baseMapTile);
+                            baseMapTile.Initialize(ref mapTile, simplifiedMapTilePosition);
+                        }
+
+                        //Debug.LogFormat(levelTile, "Generated MapTile at simplified coordinate: '{0}'", 
+                        //    mapGenerationData.GetSimplifiedMapTileCoordinate(mapTile));
                     }
                 }
             }
