@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="MovementMarker.svg">
+   sodipodi:docname="MapMarker.svg"
+   inkscape:export-filename="C:\Users\Jonny\Documents\AdvanceWarsMobile\Assets\Models\MapMarker\Materials\MapMarker.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <marker
@@ -63,9 +66,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="-18.331968"
-     inkscape:cy="65.676278"
+     inkscape:zoom="1.979899"
+     inkscape:cx="15.006888"
+     inkscape:cy="45.651825"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -94,13 +97,50 @@
      id="layer1"
      transform="translate(0,-924.36216)">
     <rect
-       style="fill:#4997ff;fill-opacity:0.1607143;fill-rule:evenodd;stroke:#4997ff;stroke-width:5.86152363;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#4997ff;fill-opacity:0.1607143;fill-rule:evenodd;stroke:#4997ff;stroke-width:2.93076181;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect3336"
-       width="122.13847"
-       height="122.13847"
-       x="2.9307618"
-       y="927.29291"
+       width="61.069237"
+       height="61.069237"
+       x="1.4653809"
+       y="989.82751"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
+    <g
+       transform="matrix(0.5,0,0,0.5,64,426.18106)"
+       id="layer1-4"
+       inkscape:label="Layer 1">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         sodipodi:nodetypes="ccccccc"
+         inkscape:connector-curvature="0"
+         id="path4145"
+         d="m 0,1174.3622 15,0 0,-35 35,0 0,-15 -50,0 z"
+         style="fill:#fc5800;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         sodipodi:nodetypes="ccccccc"
+         inkscape:connector-curvature="0"
+         id="path4145-2"
+         d="m 128,1202.3622 -15,0 0,35 -35,0 0,15 50,0 z"
+         style="fill:#fc5800;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         sodipodi:nodetypes="ccccccc"
+         inkscape:connector-curvature="0"
+         id="path4145-6"
+         d="m 78,1124.3622 0,15 35,0 0,35 15,0 0,-50 z"
+         style="fill:#fc5800;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         sodipodi:nodetypes="ccccccc"
+         inkscape:connector-curvature="0"
+         id="path4145-2-0"
+         d="m 50,1252.3622 0,-15 -35,0 0,-35 -15,0 0,50 z"
+         style="fill:#fc5800;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
   </g>
 </svg>
