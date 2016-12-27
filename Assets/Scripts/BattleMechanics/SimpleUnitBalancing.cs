@@ -12,14 +12,43 @@ public class SimpleUnitBalancing : MonoBehaviour
 
         // Tiles the unit can move in one turn.
         public int m_MovementSpeed;
-        public List<MapTileType> m_WalkableMapTileTypes;
+        public List<WalkableMapTiles> m_WalkableMapTileTypes;
+
+        [Serializable]
+        public class WalkableMapTiles
+        {
+            public MapTileType m_MapTileType;
+            public int m_MovementCost;
+        }
+
+        /// <summary>
+        /// Determines whether a unit can walk on a map tile type.
+        /// </summary>
+        /// <param name="mapTileType">Type of the map tile.</param>
+        /// <returns></returns>
+        public bool CanUnitWalkOnMapTileType(MapTileType mapTileType)
+        {
+            return m_WalkableMapTileTypes.Exists(walkableMapTile => walkableMapTile.m_MapTileType == mapTileType);
+        }
+
+        /// <summary>
+        /// Gets the movement cost to walk on a map tile with a certain type.
+        /// </summary>
+        /// <param name="mapTileType">Type of the map tile.</param>
+        /// <returns></returns>
+        public int GetMovementCostToWalkOnMapTileType(MapTileType mapTileType)
+        {
+            var walkMapToCheck = m_WalkableMapTileTypes.Find(walkableMapTile => walkableMapTile.m_MapTileType == mapTileType);
+
+            return walkMapToCheck == null ? 0 : walkMapToCheck.m_MovementCost;
+        }
     }
 
     [SerializeField]
     private List<UnitBalancing> m_unitBalancingList;
 
     /// <summary>
-    /// Gets the unit balancing.
+    /// Gets a unit balancing based on the UnitType.
     /// </summary>
     /// <param name="unitType">Type of the unit.</param>
     /// <returns></returns>

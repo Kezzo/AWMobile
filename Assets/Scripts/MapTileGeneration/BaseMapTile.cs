@@ -29,6 +29,8 @@ public class BaseMapTile : MonoBehaviour
     private MapTileGeneratorEditor m_mapTileGeneratorEditor;
     private MapGenerationData.MapTile m_mapTileData;
 
+    public Vector2 SimplifiedMapPosition { get; private set; }
+
     /// <summary>
     /// Creates the first MapTile child based on a default MapTileType.
     /// </summary>
@@ -48,6 +50,8 @@ public class BaseMapTile : MonoBehaviour
         m_mapTileData = mapTileData;
         m_mapTileType = m_mapTileData.m_MapTileType;
         m_unitOnThisTile = m_mapTileData.m_Unit;
+
+        SimplifiedMapPosition = simplifiedPosition;
 
         ValidateMapTile();
         ValidateUnitType(simplifiedPosition);

@@ -354,5 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_unitBalancingList:
   - m_UnitType: 1
-    m_MovementSpeed: 3
-    m_WalkableMapTileTypes: 01000000
+    m_MovementSpeed: 10
+    m_WalkableMapTileTypes:
+    - m_MapTileType: 1
+      m_MovementCost: 1

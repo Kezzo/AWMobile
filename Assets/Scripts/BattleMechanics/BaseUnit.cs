@@ -89,4 +89,13 @@ public class BaseUnit : MonoBehaviour
     {
         return !UnitHasActedThisRound && ControllerContainer.BattleController.GetCurrentlyPlayingTeam().m_TeamColor == TeamAffinity.m_TeamColor;
     }
+
+    /// <summary>
+    /// Gets the unit balancing.
+    /// </summary>
+    /// <returns></returns>
+    public SimpleUnitBalancing.UnitBalancing GetUnitBalancing()
+    {
+        return Root.Instance.SimeSimpleUnitBalancing.GetUnitBalancing(UnitType);
+    }
 }

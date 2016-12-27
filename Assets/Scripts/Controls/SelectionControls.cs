@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SelectionControls : MonoBehaviour
 {
@@ -17,8 +18,26 @@ public class SelectionControls : MonoBehaviour
     private BaseUnit m_currentlySelectedUnit;
     private bool m_abortNextSelectionTry;
 
-	// Update is called once per frame
-	private void Update ()
+    private List<Vector2> m_routeToMovementField;
+
+    private void OnDrawGizmos()
+    {
+        if (m_routeToMovementField == null)
+        {
+            return;
+        }
+
+        foreach (var node in m_routeToMovementField)
+        {
+            Debug.Log(node);
+
+            BaseMapTile baseMapTileOnPath = ControllerContainer.TileNavigationController.GetMapTile(node);
+            Gizmos.DrawSphere(baseMapTileOnPath.transform.position + Vector3.up, 1f);
+        }
+    }
+
+    // Update is called once per frame
+    private void Update ()
     {
         if (Input.GetMouseButton(0) && m_cameraControls.IsDragging)
         {
@@ -49,6 +68,15 @@ public class SelectionControls : MonoBehaviour
                 {
                     // Get Movement field
                     // Tell Unit to Move
+
+                    BaseMapTile baseMapTile = raycastHit.transform.parent.parent.GetComponent<BaseMapTile>();
+
+                    if (baseMapTile != null)
+                    {
+                        m_routeToMovementField = ControllerContainer.TileNavigationController.
+                            GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile);
+                    }
+                    
                 }
                 else if (m_currentlySelectedUnit != null)
                 {

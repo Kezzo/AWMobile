@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 33158208969087770}
   - component: {fileID: 23987455040646570}
   - component: {fileID: 65047368986647856}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MovementMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
