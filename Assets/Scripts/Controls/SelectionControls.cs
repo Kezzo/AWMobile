@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class SelectionControls : MonoBehaviour
 {
     [SerializeField]
@@ -20,22 +24,36 @@ public class SelectionControls : MonoBehaviour
 
     private List<Vector2> m_routeToMovementField;
 
+    private Dictionary<Vector2, PathfindingNodeDebugData> m_pathfindingNodeDebug;
+
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (m_routeToMovementField == null)
+        if (m_routeToMovementField == null || m_pathfindingNodeDebug == null)
         {
             return;
         }
 
-        foreach (var node in m_routeToMovementField)
+        foreach (var node in m_pathfindingNodeDebug)
         {
-            Debug.Log(node);
+            //Debug.Log(node);
 
-            BaseMapTile baseMapTileOnPath = ControllerContainer.TileNavigationController.GetMapTile(node);
-            Gizmos.DrawSphere(baseMapTileOnPath.transform.position + Vector3.up, 1f);
+            BaseMapTile baseMapTileOnPath = ControllerContainer.TileNavigationController.GetMapTile(node.Key);
+
+            if (baseMapTileOnPath != null)
+            {
+                // Draw sphere
+                Handles.color = m_routeToMovementField.Contains(node.Key) ? Color.red : Color.gray;
+                Handles.SphereCap(0, baseMapTileOnPath.transform.position + Vector3.up, Quaternion.identity, 0.5f);
+
+                // Draw text label
+                GUIStyle guiStyle = new GUIStyle { normal = { textColor = Color.black }, alignment = TextAnchor.MiddleCenter };
+                Handles.Label(baseMapTileOnPath.transform.position + Vector3.up + Vector3.back, 
+                    string.Format("C{0} P{1}", node.Value.CostToMoveToNode, node.Value.NodePriority), guiStyle);
+            }
         }
     }
-
+#endif
     // Update is called once per frame
     private void Update ()
     {
@@ -67,6 +85,8 @@ public class SelectionControls : MonoBehaviour
                          TrySelection(m_battlegroundCamera, m_movementfieldLayerMask, out raycastHit))
                 {
                     // Get Movement field
+                    // Get best movement path
+                    // Draw path to walk
                     // Tell Unit to Move
 
                     BaseMapTile baseMapTile = raycastHit.transform.parent.parent.GetComponent<BaseMapTile>();
@@ -74,7 +94,7 @@ public class SelectionControls : MonoBehaviour
                     if (baseMapTile != null)
                     {
                         m_routeToMovementField = ControllerContainer.TileNavigationController.
-                            GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile);
+                            GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile, out m_pathfindingNodeDebug);
                     }
                     
                 }

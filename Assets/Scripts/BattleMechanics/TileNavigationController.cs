@@ -115,15 +115,23 @@ public class TileNavigationController
     /// <summary>
     /// Gets the best way from a unit to a maptile.
     /// The best way is shortest walkable way to the maptile.
+    /// Used the A* pathfinding algorithm to find the best path.
     /// </summary>
     /// <param name="unitToMove">The unit to move.</param>
     /// <param name="destinationMapTile">The destination map tile.</param>
+    /// <param name="pathfindingNodeDebugData">The pathfinding node debug data.</param>
     /// <returns></returns>
-    public List<Vector2> GetBestWayToDestination(BaseUnit unitToMove, BaseMapTile destinationMapTile)
+    public List<Vector2> GetBestWayToDestination(BaseUnit unitToMove, BaseMapTile destinationMapTile, out Dictionary<Vector2, PathfindingNodeDebugData> pathfindingNodeDebugData)
     {
         Vector2 start = unitToMove.CurrentSimplifiedPosition;
         Vector2 destination = destinationMapTile.SimplifiedMapPosition;
         SimpleUnitBalancing.UnitBalancing unitBalancing = unitToMove.GetUnitBalancing();
+
+#if UNITY_EDITOR
+        pathfindingNodeDebugData = new Dictionary<Vector2, PathfindingNodeDebugData>();
+#else
+        pathfindingNodeDebugData = null;
+#endif
 
         PriorityQueue<Vector2> queueOfNodesToCheck = new PriorityQueue<Vector2>();
         queueOfNodesToCheck.Enqueue(start, 0);
@@ -151,20 +159,58 @@ public class TileNavigationController
             for (int nodeIndex = 0; nodeIndex < adjacentNodes.Count; nodeIndex++)
             {
                 Vector2 nodeToCheck = adjacentNodes[nodeIndex];
+                BaseMapTile baseMapTile;
+
+                if (!m_mapTilePositions.TryGetValue(nodeToCheck, out baseMapTile))
+                {
+                    Debug.LogErrorFormat("BaseMapTile on position: '{0}' was not found!", nodeToCheck);
+                    continue;
+                }
+
                 int costToMoveToNode = costToGetToPreviousMapTile +
-                                       unitBalancing.GetMovementCostToWalkOnMapTileType(destinationMapTile.MapTileType);
+                                       unitBalancing.GetMovementCostToWalkOnMapTileType(baseMapTile.MapTileType);
 
                 int existingCostToMoveToNode = 0;
 
-                // Only add node, if it wasn't added before or if a short path to the node was found.
-                if (!costToMoveToNodeStorage.ContainsKey(nodeToCheck) ||
-                    (costToMoveToNodeStorage.TryGetValue(nodeToCheck, out existingCostToMoveToNode) &&
-                    costToMoveToNode < existingCostToMoveToNode))
+                // The node priority describes how good it is to consider taking the note into the best path to the destination.
+                // The lower the value the better.
+                int nodePriority = costToMoveToNode + GetDistanceToCoordinate(nodeToCheck, destination);
+
+                // Only add node, if it wasn't added before or if a shorter path to the node was found.
+                if (!costToMoveToNodeStorage.ContainsKey(nodeToCheck))
                 {
                     routeMapping.Add(nodeToCheck, nodeToGetNeighboursFrom);
                     costToMoveToNodeStorage.Add(nodeToCheck, costToMoveToNode);
 
-                    queueOfNodesToCheck.Enqueue(nodeToCheck, costToMoveToNode + GetDistanceToCoordinate(nodeToCheck, destination));
+                    queueOfNodesToCheck.Enqueue(nodeToCheck, nodePriority);
+
+#if UNITY_EDITOR
+                    pathfindingNodeDebugData.Add(nodeToCheck, new PathfindingNodeDebugData
+                    {
+                        CostToMoveToNode = costToMoveToNode,
+                        NodePriority = nodePriority,
+
+                        PreviousNode = nodeToGetNeighboursFrom
+                    });
+#endif
+                }
+                else if(costToMoveToNodeStorage.TryGetValue(nodeToCheck, out existingCostToMoveToNode) &&
+                    costToMoveToNode < existingCostToMoveToNode)
+                {
+                    routeMapping[nodeToCheck] = nodeToGetNeighboursFrom;
+                    costToMoveToNodeStorage[nodeToCheck] = costToMoveToNode;
+
+                    queueOfNodesToCheck.Enqueue(nodeToCheck, nodePriority);
+
+#if UNITY_EDITOR
+                    pathfindingNodeDebugData[nodeToCheck] = new PathfindingNodeDebugData
+                    {
+                        CostToMoveToNode = costToMoveToNode,
+                        NodePriority = nodePriority,
+
+                        PreviousNode = nodeToGetNeighboursFrom
+                    };
+#endif
                 }
             }
         }

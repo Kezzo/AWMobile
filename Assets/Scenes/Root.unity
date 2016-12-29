@@ -358,3 +358,5 @@ MonoBehaviour:
     m_WalkableMapTileTypes:
     - m_MapTileType: 1
       m_MovementCost: 1
+    - m_MapTileType: 3
+      m_MovementCost: 3
