@@ -11,7 +11,7 @@ public class SimpleUnitBalancing : MonoBehaviour
         public UnitType m_UnitType;
 
         // Tiles the unit can move in one turn.
-        public int m_MovementSpeed;
+        public int m_MovementRangePerRound;
         public List<WalkableMapTiles> m_WalkableMapTileTypes;
 
         [Serializable]
