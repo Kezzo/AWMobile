@@ -22,14 +22,14 @@ public class SelectionControls : MonoBehaviour
     private BaseUnit m_currentlySelectedUnit;
     private bool m_abortNextSelectionTry;
 
-    private List<Vector2> m_routeToMovementField;
+    private List<Vector2> m_routeToDestinationField;
 
     private Dictionary<Vector2, PathfindingNodeDebugData> m_pathfindingNodeDebug;
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (m_routeToMovementField == null || m_pathfindingNodeDebug == null)
+        if (m_routeToDestinationField == null || m_pathfindingNodeDebug == null)
         {
             return;
         }
@@ -43,7 +43,7 @@ public class SelectionControls : MonoBehaviour
             if (baseMapTileOnPath != null)
             {
                 // Draw sphere
-                Handles.color = m_routeToMovementField.Contains(node.Key) ? Color.red : Color.gray;
+                Handles.color = m_routeToDestinationField.Contains(node.Key) ? Color.red : Color.gray;
                 Handles.SphereCap(0, baseMapTileOnPath.transform.position + Vector3.up, Quaternion.identity, 0.5f);
 
                 // Draw text label
@@ -93,8 +93,9 @@ public class SelectionControls : MonoBehaviour
 
                     if (baseMapTile != null)
                     {
-                        m_routeToMovementField = ControllerContainer.TileNavigationController.
+                        m_routeToDestinationField = ControllerContainer.TileNavigationController.
                             GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile, out m_pathfindingNodeDebug);
+                        m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField);
                     }
                     
                 }

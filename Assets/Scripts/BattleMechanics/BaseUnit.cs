@@ -58,7 +58,26 @@ public class BaseUnit : MonoBehaviour
         m_selectionMarker.SetActive(false);
 
         SetWalkableTileFieldVisibiltyTo(false);
+        HideAllRouteMarker();
+
         m_currentWalkableMapTiles = null;
+    }
+
+    /// <summary>
+    /// Hides all route marker.
+    /// </summary>
+    private void HideAllRouteMarker()
+    {
+        if (m_currentWalkableMapTiles == null)
+        {
+            Debug.LogError("Redundant call of HideAllRouteMarker.");
+            return;
+        }
+
+        for (int tileIndex = 0; tileIndex < m_currentWalkableMapTiles.Count; tileIndex++)
+        {
+            m_currentWalkableMapTiles[tileIndex].HideAllRouteMarker();
+        }
     }
 
     /// <summary>
@@ -97,5 +116,29 @@ public class BaseUnit : MonoBehaviour
     public SimpleUnitBalancing.UnitBalancing GetUnitBalancing()
     {
         return Root.Instance.SimeSimpleUnitBalancing.GetUnitBalancing(UnitType);
+    }
+
+    /// <summary>
+    /// Displays the route to the destination.
+    /// </summary>
+    /// <param name="routeToDestination">The route to destination.</param>
+    public void DisplayRouteToDestination(List<Vector2> routeToDestination)
+    {
+        HideAllRouteMarker();
+        SetWalkableTileFieldVisibiltyTo(true);
+
+        var routeMarkerDefinitions = ControllerContainer.TileNavigationController.GetRouteMarkerDefinitions(routeToDestination);
+
+        for (int routeMarkerIndex = 0; routeMarkerIndex < routeMarkerDefinitions.Count; routeMarkerIndex++)
+        {
+            var routeMarkerDefinition = routeMarkerDefinitions[routeMarkerIndex];
+
+            BaseMapTile mapTile = ControllerContainer.TileNavigationController.GetMapTile(routeMarkerDefinition.Key);
+
+            if (mapTile != null)
+            {
+                mapTile.DisplayRouteMarker(routeMarkerDefinition.Value);
+            }
+        }
     }
 }

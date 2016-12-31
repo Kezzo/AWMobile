@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -329,5 +330,183 @@ public class TileNavigationController
         }
 
         return adjacentNodes;
+    }
+
+    /// <summary>
+    /// Returns the route marker definitions for a route.
+    /// </summary>
+    /// <param name="route">The route.</param>
+    /// <returns></returns>
+    public List<KeyValuePair<Vector2, RouteMarkerDefinition>> GetRouteMarkerDefinitions(List<Vector2> route)
+    {
+        var routeMarkerDefinitions = new List<KeyValuePair<Vector2, RouteMarkerDefinition>>(route.Count);
+
+        // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
+        for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
+        {
+            RouteMarkerDefinition routeMarkerDefinition = new RouteMarkerDefinition();
+
+            Vector2 nodeToGetRouteMarkerFor = route[nodeIndex];
+            Vector2 previousNode = route[nodeIndex - 1];
+            Vector2 nextNode = Vector2.zero;
+            bool isDestinationNode = false;
+
+            if (nodeIndex < route.Count - 1)
+            {
+                nextNode = route[nodeIndex + 1];
+            }
+            else
+            {
+                isDestinationNode = true;
+            }
+
+            Vector2 diffToPreviousNode = previousNode - nodeToGetRouteMarkerFor;
+            Vector2 diffToNextNode = !isDestinationNode ? nodeToGetRouteMarkerFor - nextNode : Vector2.zero;
+            routeMarkerDefinition.RouteMarkerType = GetRouteMarkerType(diffToPreviousNode, diffToNextNode);
+            routeMarkerDefinition.Rotation = GetRouteMarkerRotation(diffToPreviousNode, diffToNextNode, routeMarkerDefinition.RouteMarkerType);
+
+            // Calculate route marker definitions here.
+            routeMarkerDefinitions.Add(new KeyValuePair<Vector2, RouteMarkerDefinition>(
+                route[nodeIndex], routeMarkerDefinition));
+        }
+
+        return routeMarkerDefinitions;
+    }
+
+    /// <summary>
+    /// Gets the route marker rotation.
+    /// </summary>
+    /// <param name="diffToPreviousNode">The difference to previous node.</param>
+    /// <param name="diffToNextNode">The difference to next node.</param>
+    /// <param name="routeMarkerType">Type of the route marker.</param>
+    /// <returns></returns>
+    private Vector3 GetRouteMarkerRotation(Vector2 diffToPreviousNode, Vector2 diffToNextNode, RouteMarkerType routeMarkerType)
+    {
+        Vector3 rotation = Vector3.zero;
+
+        CardinalDirection comingFromDirection = GetCardinalDirectionFromNodePositionDiff(diffToPreviousNode, true);
+        CardinalDirection goingToDirection = GetCardinalDirectionFromNodePositionDiff(diffToNextNode, false);
+
+        if (routeMarkerType == RouteMarkerType.Destination)
+        {
+            switch (comingFromDirection)
+            {
+                case CardinalDirection.North:
+                    rotation.y = 90f;
+                    break;
+                case CardinalDirection.East:
+                    rotation.y = 180f;
+                    break;
+                case CardinalDirection.South:
+                    rotation.y = 270f;
+                    break;
+                case CardinalDirection.West:
+                    rotation.y = 0f;
+                    break;
+            }
+        }
+        else if (routeMarkerType == RouteMarkerType.Straight)
+        {
+            if ((comingFromDirection == CardinalDirection.East || comingFromDirection == CardinalDirection.West) &&
+                (goingToDirection == CardinalDirection.East || goingToDirection == CardinalDirection.West))
+            {
+                rotation.y = 0f;
+            }
+            else
+            {
+                rotation.y = 90f;
+            }
+        }
+        else if(routeMarkerType == RouteMarkerType.Turn)
+        {
+            //Debug.LogFormat("Coming from: '{0}' Going to: '{1}'", comingFromDirection, goingToDirection);
+
+            if ((comingFromDirection == CardinalDirection.East && goingToDirection == CardinalDirection.North) ||
+                (comingFromDirection == CardinalDirection.North && goingToDirection == CardinalDirection.East))
+            {
+                rotation.y = 180f;
+            }
+            else if ((comingFromDirection == CardinalDirection.East && goingToDirection == CardinalDirection.South) ||
+                (comingFromDirection == CardinalDirection.South && goingToDirection == CardinalDirection.East))
+            {
+                rotation.y = 270f;
+            }
+            else if ((comingFromDirection == CardinalDirection.South && goingToDirection == CardinalDirection.West) ||
+                (comingFromDirection == CardinalDirection.West && goingToDirection == CardinalDirection.South))
+            {
+                rotation.y = 0f;
+            }
+            else if ((comingFromDirection == CardinalDirection.North && goingToDirection == CardinalDirection.West) || 
+                (comingFromDirection == CardinalDirection.West && goingToDirection == CardinalDirection.North))
+            {
+                rotation.y = 90f;
+            }
+        }
+
+        return rotation;
+    }
+
+    /// <summary>
+    /// Gets the cardinal direction from node posittion difference.
+    /// </summary>
+    /// <param name="nodePositionDiff">The node position difference.</param>
+    /// <param name="comingFrom">if set to <c>true</c> [previous node].</param>
+    /// <returns></returns>
+    private CardinalDirection GetCardinalDirectionFromNodePositionDiff(Vector2 nodePositionDiff, bool comingFrom)
+    {
+        CardinalDirection direction;
+
+        if (Mathf.Abs(nodePositionDiff.x) > 0)
+        {
+            if (comingFrom)
+            {
+                direction = nodePositionDiff.x < 0 ? CardinalDirection.West : CardinalDirection.East;
+            }
+            else
+            {
+                direction = nodePositionDiff.x > 0 ? CardinalDirection.West : CardinalDirection.East;
+            }
+        }
+        else
+        {
+            if (comingFrom)
+            {
+                direction = nodePositionDiff.y > 0 ? CardinalDirection.North : CardinalDirection.South;
+            }
+            else
+            {
+                direction = nodePositionDiff.y < 0 ? CardinalDirection.North : CardinalDirection.South;
+            }
+        }
+
+        return direction;
+    }
+
+    /// <summary>
+    /// Gets the type of the route marker.
+    /// </summary>
+    /// <param name="diffToPreviousNode">The difference to previous node.</param>
+    /// <param name="diffToNextNode">The difference to next node.</param>
+    /// <returns></returns>
+    private RouteMarkerType GetRouteMarkerType(Vector2 diffToPreviousNode, Vector2 diffToNextNode)
+    {
+        RouteMarkerType routeMarkerType;
+
+        Vector2 diffOfSorroundingNodes = new Vector2(Mathf.Abs(diffToPreviousNode.x) + Mathf.Abs(diffToNextNode.x), Mathf.Abs(diffToPreviousNode.y) + Mathf.Abs(diffToNextNode.y));
+
+        if (diffToNextNode == Vector2.zero)
+        {
+            routeMarkerType = RouteMarkerType.Destination;
+        }
+        else if (Mathf.RoundToInt(diffOfSorroundingNodes.x) == 2 || Mathf.RoundToInt(diffOfSorroundingNodes.y) == 2)
+        {
+            routeMarkerType = RouteMarkerType.Straight;
+        }
+        else
+        {
+            routeMarkerType = RouteMarkerType.Turn;
+        }
+
+        return routeMarkerType;
     }
 }

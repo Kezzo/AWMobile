@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 #pragma warning disable 0649
 /// <summary>
@@ -7,9 +9,13 @@
 /// </summary>
 public class BaseMapTile : MonoBehaviour
 {
-    [SerializeField]
-    private MapTileType m_mapTileType;
-    public MapTileType MapTileType { get { return m_mapTileType; } set { m_mapTileType = value; } }
+    [SerializeField] private MapTileType m_mapTileType;
+
+    public MapTileType MapTileType
+    {
+        get { return m_mapTileType; }
+        set { m_mapTileType = value; }
+    }
 
     [SerializeField]
     private MapGenerationData.Unit m_unitOnThisTile;
@@ -19,6 +25,16 @@ public class BaseMapTile : MonoBehaviour
 
     [SerializeField]
     private GameObject m_movementField;
+
+    [Serializable]
+    public class RouteMarkerMapping
+    {
+        public RouteMarkerType m_RouteMarkerType;
+        public GameObject m_RouteMarkerPrefab;
+    }
+
+    [SerializeField]
+    private List<RouteMarkerMapping> m_routeMarkerMappings;
 
     private GameObject m_currentInstantiatedMapTile;
     private MapTileType m_currentInstantiatedMapTileType;
@@ -158,5 +174,34 @@ public class BaseMapTile : MonoBehaviour
     public void ChangeVisibiltyOfMovementField(bool setVisibiltyTo)
     {
         m_movementField.SetActive(setVisibiltyTo);
+    }
+
+    /// <summary>
+    /// Hides all route marker.
+    /// </summary>
+    public void HideAllRouteMarker()
+    {
+        for (int routeMarkerIndex = 0; routeMarkerIndex < m_routeMarkerMappings.Count; routeMarkerIndex++)
+        {
+            m_routeMarkerMappings[routeMarkerIndex].m_RouteMarkerPrefab.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Displays the route marker.
+    /// </summary>
+    /// <param name="routeMarkerDefinition">The route marker definition.</param>
+    public void DisplayRouteMarker(RouteMarkerDefinition routeMarkerDefinition)
+    {
+        ChangeVisibiltyOfMovementField(false);
+
+        RouteMarkerMapping routeMarkerMappingToUse = m_routeMarkerMappings.Find(
+            routeMarkerMapping => routeMarkerMapping.m_RouteMarkerType == routeMarkerDefinition.RouteMarkerType);
+
+        if (routeMarkerMappingToUse != null)
+        {
+            routeMarkerMappingToUse.m_RouteMarkerPrefab.SetActive(true);
+            routeMarkerMappingToUse.m_RouteMarkerPrefab.transform.rotation = Quaternion.Euler(routeMarkerDefinition.Rotation);
+        }
     }
 }
