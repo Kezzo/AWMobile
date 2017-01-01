@@ -26,6 +26,8 @@ public class SelectionControls : MonoBehaviour
 
     private Dictionary<Vector2, PathfindingNodeDebugData> m_pathfindingNodeDebug;
 
+    private BattlegroundUI m_battlegroundUi;
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
@@ -54,6 +56,12 @@ public class SelectionControls : MonoBehaviour
         }
     }
 #endif
+
+    private void Start()
+    {
+        ControllerContainer.MonoBehaviourRegistry.TryGet(out m_battlegroundUi);
+    }
+
     // Update is called once per frame
     private void Update ()
     {
@@ -96,6 +104,8 @@ public class SelectionControls : MonoBehaviour
                         m_routeToDestinationField = ControllerContainer.TileNavigationController.
                             GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile, out m_pathfindingNodeDebug);
                         m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField);
+
+                        m_battlegroundUi.ChangeVisibilityOfConfirmMoveButton(true);
                     }
                     
                 }
@@ -126,6 +136,8 @@ public class SelectionControls : MonoBehaviour
 
         m_currentlySelectedUnit.OnUnitWasDeselected();
         m_currentlySelectedUnit = null;
+
+        m_battlegroundUi.ChangeVisibilityOfConfirmMoveButton(false);
     }
 
     /// <summary>

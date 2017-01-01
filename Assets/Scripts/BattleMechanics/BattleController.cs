@@ -62,4 +62,12 @@
 
         StartNextTurn();
     }
+
+    /// <summary>
+    /// Called when the current move was confirmed.
+    /// </summary>
+    public void OnConfirmMove()
+    {
+        
+    }
 }

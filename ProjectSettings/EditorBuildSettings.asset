@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Root.unity
   - enabled: 1
     path: Assets/Scenes/Battleground.unity
+  - enabled: 1
+    path: Assets/Scenes/UI/BattlegroundUI.unity

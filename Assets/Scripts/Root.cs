@@ -60,6 +60,8 @@ public class Root : MonoBehaviour
             m_IsPlayersTeam = true
         }});
 
+        SceneLoading.LoadSceneAsync("BattlegroundUI", null, null);
+        
         SceneLoading.LoadSceneAsync(m_initialSceneToLoad, null, () =>
         {
             MapTileGeneratorEditor mapTileGeneratorEditor;
