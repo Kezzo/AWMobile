@@ -35,10 +35,18 @@ public class BaseUnit : MonoBehaviour
 
         if (Application.isPlaying)
         {
-            ControllerContainer.TileNavigationController.RegisterUnit(this);
+            ControllerContainer.BattleController.RegisterUnit(this);
         }
         
         // Load balancing once here and keep for the round.
+    }
+
+    /// <summary>
+    /// Resets the unit.
+    /// </summary>
+    public void ResetUnit()
+    {
+        UnitHasActedThisRound = false;
     }
 
     /// <summary>

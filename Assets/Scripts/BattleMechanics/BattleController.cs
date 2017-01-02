@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class BattleController
 {
@@ -12,6 +14,8 @@ public class BattleController
 
     private Action m_onConfirmButtonPressed;
 
+    private List<BaseUnit> m_registeredUnits;
+
     /// <summary>
     /// Intializes a battle.
     /// </summary>
@@ -21,6 +25,29 @@ public class BattleController
         m_teamThisBattle = teamsThisBattle;
         m_subTurnCount = 0;
         m_turnCount = 0;
+
+        m_registeredUnits = new List<BaseUnit>();
+    }
+
+    /// <summary>
+    /// Registers the unit.
+    /// </summary>
+    /// <param name="baseUnit">The base unit.</param>
+    public void RegisterUnit(BaseUnit baseUnit)
+    {
+        m_registeredUnits.Add(baseUnit);
+    }
+
+    /// <summary>
+    /// Determines whether a unit is on the given node.
+    /// </summary>
+    /// <param name="node">The node.</param>
+    /// <returns>
+    ///   <c>true</c> if [is unit on node] [the specified node]; otherwise, <c>false</c>.
+    /// </returns>
+    public bool IsUnitOnNode(Vector2 node)
+    {
+        return m_registeredUnits.Exists(unit => unit.CurrentSimplifiedPosition == node);
     }
 
     /// <summary>
@@ -48,7 +75,14 @@ public class BattleController
     /// </summary>
     public void StartNextTurn()
     {
-        //Team teamToStartNext = m_teamThisBattle[m_subTurnCount];
+        Team teamToStartNext = m_teamThisBattle[m_subTurnCount];
+
+        List<BaseUnit> unitsToReset = m_registeredUnits.FindAll(unit => unit.TeamAffinity.m_TeamColor == teamToStartNext.m_TeamColor);
+
+        for (int unitIndex = 0; unitIndex < unitsToReset.Count; unitIndex++)
+        {
+            unitsToReset[unitIndex].ResetUnit();
+        }
     }
 
     /// <summary>

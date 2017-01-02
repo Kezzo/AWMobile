@@ -6684,7 +6684,7 @@ MonoBehaviour:
         m_UnitType: 1
         m_Team:
           m_TeamColor: 0
-          m_IsPlayersTeam: 0
+          m_IsPlayersTeam: 1
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -8784,7 +8784,7 @@ MonoBehaviour:
         m_UnitType: 1
         m_Team:
           m_TeamColor: 0
-          m_IsPlayersTeam: 0
+          m_IsPlayersTeam: 1
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -8862,7 +8862,7 @@ MonoBehaviour:
         m_UnitType: 1
         m_Team:
           m_TeamColor: 0
-          m_IsPlayersTeam: 0
+          m_IsPlayersTeam: 1
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -10429,7 +10429,7 @@ MonoBehaviour:
         m_UnitType: 1
         m_Team:
           m_TeamColor: 0
-          m_IsPlayersTeam: 0
+          m_IsPlayersTeam: 1
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -11207,7 +11207,7 @@ MonoBehaviour:
         m_UnitType: 1
         m_Team:
           m_TeamColor: 0
-          m_IsPlayersTeam: 0
+          m_IsPlayersTeam: 1
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1

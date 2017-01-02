@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -10,7 +9,6 @@ using Debug = UnityEngine.Debug;
 public class TileNavigationController
 {
     private Dictionary<Vector2, BaseMapTile> m_mapTilePositions;
-    private List<BaseUnit> m_registeredUnits;
 
     /// <summary>
     /// Initializes the TileNavigationController.
@@ -19,7 +17,6 @@ public class TileNavigationController
     public void Initialize(Vector2 mapSize)
     {
         m_mapTilePositions = new Dictionary<Vector2, BaseMapTile>((int) (mapSize.x * mapSize.y));
-        m_registeredUnits = new List<BaseUnit>();
     }
 
     /// <summary>
@@ -52,15 +49,6 @@ public class TileNavigationController
         m_mapTilePositions.TryGetValue(mapTilePosition, out baseMapTile);
 
         return baseMapTile;
-    }
-
-    /// <summary>
-    /// Registers the unit.
-    /// </summary>
-    /// <param name="baseUnit">The base unit.</param>
-    public void RegisterUnit(BaseUnit baseUnit)
-    {
-        m_registeredUnits.Add(baseUnit);
     }
 
     /// <summary>
@@ -321,7 +309,7 @@ public class TileNavigationController
                 // Is MapTile walkable by unit?
                 unitBalancing.CanUnitWalkOnMapTileType(adjacenBaseMapTile.MapTileType) &&
                 // Is there a unit on the positon? (rendering it unwalkable)
-                !m_registeredUnits.Exists(unit => unit.CurrentSimplifiedPosition == adjacentTile) &&
+                !ControllerContainer.BattleController.IsUnitOnNode(adjacentTile) &&
                 // Can unit walk on the node, base on the movement range of the unit.
                 walkingCostToNode + unitBalancing.GetMovementCostToWalkOnMapTileType(adjacenBaseMapTile.MapTileType) <= unitBalancing.m_MovementRangePerRound)
             {

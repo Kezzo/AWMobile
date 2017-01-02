@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: f29ca9c9d0843744cb1f4b8e31181426
-timeCreated: 1483216213
+timeCreated: 1483397947
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: BattleUi_0
+    21300002: BattleUi_1
+    21300004: BattleUi_2
+    21300006: BattleUi_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -36,12 +39,12 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 0
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 300
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -80,6 +83,45 @@ TextureImporter:
     sprites:
     - serializedVersion: 2
       name: BattleUi_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 130
+        width: 215
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_1
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 0
+        width: 191
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_2
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 3
+        width: 257
+        height: 265
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_3
       rect:
         serializedVersion: 2
         x: 0
