@@ -1,4 +1,6 @@
-﻿public class BattleController
+﻿using System;
+
+public class BattleController
 {
     private Team[] m_teamThisBattle;
 
@@ -7,6 +9,8 @@
 
     // Defines the turn of the battle.
     private int m_turnCount;
+
+    private Action m_onConfirmButtonPressed;
 
     /// <summary>
     /// Intializes a battle.
@@ -64,10 +68,30 @@
     }
 
     /// <summary>
+    /// Adds the on confirm button pressed listener.
+    /// </summary>
+    /// <param name="actionToCall">The action to call.</param>
+    public void AddOnConfirmButtonPressedListener(Action actionToCall)
+    {
+        m_onConfirmButtonPressed = actionToCall;
+    }
+
+    /// <summary>
+    /// Removes the current confirm button pressed listener.
+    /// </summary>
+    public void RemoveCurrentConfirmButtonPressedListener()
+    {
+        m_onConfirmButtonPressed = null;
+    }
+
+    /// <summary>
     /// Called when the current move was confirmed.
     /// </summary>
     public void OnConfirmMove()
     {
-        
+        if (m_onConfirmButtonPressed != null)
+        {
+            m_onConfirmButtonPressed();
+        }
     }
 }

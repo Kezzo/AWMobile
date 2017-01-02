@@ -97,7 +97,7 @@ Transform:
   m_GameObject: {fileID: 1033610107560384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1.4656544}
   m_Children:
   - {fileID: 4145436006399004}
   m_Father: {fileID: 0}
@@ -189,8 +189,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 1.5, z: 2}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!114 &114108100811358502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,3 +203,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_selectionMarker: {fileID: 1986006050148184}
+  m_worldMovementSpeed: 12

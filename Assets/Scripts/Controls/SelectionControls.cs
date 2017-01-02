@@ -79,6 +79,7 @@ public class SelectionControls : MonoBehaviour
 
                 if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
                 {
+                    // Select Unit
                     BaseUnit selectedUnit = raycastHit.transform.GetComponent<BaseUnit>();
 
                     if (selectedUnit != null && selectedUnit.CanUnitTakeAction())
@@ -92,11 +93,7 @@ public class SelectionControls : MonoBehaviour
                 else if (m_currentlySelectedUnit != null &&
                          TrySelection(m_battlegroundCamera, m_movementfieldLayerMask, out raycastHit))
                 {
-                    // Get Movement field
-                    // Get best movement path
-                    // Draw path to walk
-                    // Tell Unit to Move
-
+                    // Select movement field
                     BaseMapTile baseMapTile = raycastHit.transform.parent.parent.GetComponent<BaseMapTile>();
 
                     if (baseMapTile != null)

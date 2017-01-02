@@ -22,6 +22,7 @@ public class BaseMapTile : MonoBehaviour
 
     [SerializeField]
     private Transform m_unitRoot;
+    public Transform UnitRoot { get { return m_unitRoot; } }
 
     [SerializeField]
     private GameObject m_movementField;

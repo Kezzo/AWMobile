@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseUnit : MonoBehaviour
 {
     [SerializeField]
     private GameObject m_selectionMarker;
+
+    [SerializeField]
+    private float m_worldMovementSpeed;
 
     public Team TeamAffinity { get; private set; }
     public UnitType UnitType { get; private set; }
@@ -139,6 +144,100 @@ public class BaseUnit : MonoBehaviour
             {
                 mapTile.DisplayRouteMarker(routeMarkerDefinition.Value);
             }
+        }
+
+        ControllerContainer.BattleController.AddOnConfirmButtonPressedListener(() =>
+        {
+            ControllerContainer.BattleController.RemoveCurrentConfirmButtonPressedListener();
+            StartCoroutine(MoveAlongRoute(routeToDestination, null));
+        });
+    }
+
+    /// <summary>
+    /// Moves the along route.
+    /// </summary>
+    /// <param name="route">The route.</param>
+    /// <param name="onMoveFinished">The on move finished.</param>
+    /// <returns></returns>
+    public IEnumerator MoveAlongRoute(List<Vector2> route, Action onMoveFinished)
+    {
+        // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
+        for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
+        {
+            Vector2 nodeToMoveTo = route[nodeIndex];
+            Vector2 currentNode = route[nodeIndex - 1];
+
+            yield return MoveToNeighborNode(currentNode, nodeToMoveTo);
+
+            if (nodeIndex == route.Count - 1)
+            {
+                UnitHasActedThisRound = true;
+
+                if (onMoveFinished != null)
+                {
+                    onMoveFinished();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Moves from to neighbor node.
+    /// </summary>
+    /// <param name="startNode">The start node.</param>
+    /// <param name="destinationNode">The destination node.</param>
+    public IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode)
+    {
+        Vector2 nodePositionDiff = startNode - destinationNode;
+
+        // Rotate unit to destination node
+        CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(
+            nodePositionDiff, false);
+
+        switch (directionToRotateTo)
+        {
+            case CardinalDirection.North:
+                this.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                break;
+            case CardinalDirection.East:
+                this.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                break;
+            case CardinalDirection.South:
+                this.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                break;
+            case CardinalDirection.West:
+                this.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
+                break;
+        }
+
+        BaseMapTile mapTile = ControllerContainer.TileNavigationController.GetMapTile(destinationNode);
+        Vector3 targetWorldPosition = Vector3.zero;
+
+        if (mapTile != null)
+        {
+            targetWorldPosition = mapTile.UnitRoot.position;
+            this.transform.SetParent(mapTile.UnitRoot, true);
+        }
+        else
+        {
+            Debug.LogErrorFormat("Unable to find destination MapTile for node: '{0}'", destinationNode);
+            yield break;
+        }
+
+        // Move to world position
+        while (true)
+        {
+            float movementStep = m_worldMovementSpeed * Time.deltaTime;
+
+            transform.position = Vector3.MoveTowards(transform.position, targetWorldPosition, movementStep);
+
+            if (transform.position == targetWorldPosition)
+            {
+                m_currentSimplifiedPosition = mapTile.SimplifiedMapPosition;
+                yield break;
+            }
+
+            yield return null;
         }
     }
 }

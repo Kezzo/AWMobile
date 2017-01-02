@@ -452,7 +452,7 @@ public class TileNavigationController
     /// <param name="nodePositionDiff">The node position difference.</param>
     /// <param name="comingFrom">if set to <c>true</c> [previous node].</param>
     /// <returns></returns>
-    private CardinalDirection GetCardinalDirectionFromNodePositionDiff(Vector2 nodePositionDiff, bool comingFrom)
+    public CardinalDirection GetCardinalDirectionFromNodePositionDiff(Vector2 nodePositionDiff, bool comingFrom)
     {
         CardinalDirection direction;
 
