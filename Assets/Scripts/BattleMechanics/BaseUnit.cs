@@ -9,16 +9,35 @@ public class BaseUnit : MonoBehaviour
     private GameObject m_selectionMarker;
 
     [SerializeField]
+    private GameObject m_attackMarker;
+
+    [SerializeField]
     private float m_worldMovementSpeed;
+
+    [SerializeField]
+    private MeshFilter m_meshFilter;
+
+    [SerializeField]
+    private UnitStatManagement m_statManagement;
+    public UnitStatManagement StatManagement { get { return m_statManagement; } }
 
     public Team TeamAffinity { get; private set; }
     public UnitType UnitType { get; private set; }
-    public bool UnitHasActedThisRound { get; private set; }
+    public bool UnitHasMovedThisRound { get; private set; }
+    public bool UnitHasAttackedThisRound { get; private set; }
 
     private Vector2 m_currentSimplifiedPosition;
     public Vector2 CurrentSimplifiedPosition { get { return m_currentSimplifiedPosition; } }
 
     private List<BaseMapTile> m_currentWalkableMapTiles;
+    private BattlegroundUI m_battlegroundUi;
+
+    private List<BaseUnit> m_attackableUnits;
+
+    private void Start()
+    {
+        ControllerContainer.MonoBehaviourRegistry.TryGet(out m_battlegroundUi);
+    }
 
     /// <summary>
     /// Initializes the specified team.
@@ -29,7 +48,7 @@ public class BaseUnit : MonoBehaviour
     {
         TeamAffinity = unitData.m_Team;
         UnitType = unitData.m_UnitType;
-        UnitHasActedThisRound = false;
+        UnitHasMovedThisRound = false;
 
         m_currentSimplifiedPosition = initialSimplifiedPosition;
 
@@ -37,8 +56,44 @@ public class BaseUnit : MonoBehaviour
         {
             ControllerContainer.BattleController.RegisterUnit(this);
         }
-        
+
+        m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
+
         // Load balancing once here and keep for the round.
+    }
+
+    /// <summary>
+    /// Kills this unit.
+    /// </summary>
+    public void Die()
+    {
+        ControllerContainer.BattleController.RemoveRegisteredUnit(this);
+        // Play explosion effect and destroy delayed.
+
+        Destroy(this.gameObject);
+    }
+
+    /// <summary>
+    /// Attacks the unit.
+    /// </summary>
+    /// <param name="baseUnit">The base unit.</param>
+    public void AttackUnit(BaseUnit baseUnit)
+    {
+        baseUnit.StatManagement.TakeDamage(GetUnitBalancing().m_Damage);
+        baseUnit.ChangeVisibiltyOfAttackMarker(false);
+
+        UnitHasAttackedThisRound = true;
+        // An attack will always keep the unit from moving in this round.
+        UnitHasMovedThisRound = true;
+    }
+
+    /// <summary>
+    /// Sets the team color uv mesh.
+    /// </summary>
+    /// <param name="mesh">The mesh.</param>
+    public void SetTeamColorUVMesh(Mesh mesh)
+    {
+        m_meshFilter.mesh = mesh;
     }
 
     /// <summary>
@@ -46,7 +101,8 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     public void ResetUnit()
     {
-        UnitHasActedThisRound = false;
+        UnitHasMovedThisRound = false;
+        UnitHasAttackedThisRound = false;
     }
 
     /// <summary>
@@ -59,8 +115,16 @@ public class BaseUnit : MonoBehaviour
 
         m_selectionMarker.SetActive(true);
 
-        m_currentWalkableMapTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(this);
-        SetWalkableTileFieldVisibiltyTo(true);
+        if (!UnitHasMovedThisRound)
+        {
+            m_currentWalkableMapTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(this);
+            SetWalkableTileFieldVisibiltyTo(true);
+        }
+
+        if (!UnitHasAttackedThisRound)
+        {
+            TryToDisplayActionOnUnitsInRange(out m_attackableUnits);
+        }
     }
 
     /// <summary>
@@ -69,11 +133,23 @@ public class BaseUnit : MonoBehaviour
     public void OnUnitWasDeselected()
     {
         m_selectionMarker.SetActive(false);
+        ChangeVisibiltyOfAttackMarker(false);
 
         SetWalkableTileFieldVisibiltyTo(false);
         HideAllRouteMarker();
 
         m_currentWalkableMapTiles = null;
+
+        ClearAttackableUnits(m_attackableUnits);
+    }
+
+    /// <summary>
+    /// Changes the visibilty of attack marker.
+    /// </summary>
+    /// <param name="setVisible">if set to <c>true</c> [set visible].</param>
+    private void ChangeVisibiltyOfAttackMarker(bool setVisible)
+    {
+        m_attackMarker.SetActive(setVisible);
     }
 
     /// <summary>
@@ -83,7 +159,7 @@ public class BaseUnit : MonoBehaviour
     {
         if (m_currentWalkableMapTiles == null)
         {
-            Debug.LogError("Redundant call of HideAllRouteMarker.");
+            //Debug.LogError("Redundant call of HideAllRouteMarker.");
             return;
         }
 
@@ -101,7 +177,7 @@ public class BaseUnit : MonoBehaviour
     {
         if (m_currentWalkableMapTiles == null)
         {
-            Debug.LogError("Redundant call of SetWalkableTileFieldVisibiltyTo.");
+            //Debug.LogError("Redundant call of SetWalkableTileFieldVisibiltyTo.");
             return;
         }
 
@@ -119,7 +195,7 @@ public class BaseUnit : MonoBehaviour
     /// </returns>
     public bool CanUnitTakeAction()
     {
-        return !UnitHasActedThisRound && ControllerContainer.BattleController.GetCurrentlyPlayingTeam().m_TeamColor == TeamAffinity.m_TeamColor;
+        return (!UnitHasMovedThisRound || !UnitHasAttackedThisRound) && ControllerContainer.BattleController.GetCurrentlyPlayingTeam().m_TeamColor == TeamAffinity.m_TeamColor;
     }
 
     /// <summary>
@@ -135,7 +211,8 @@ public class BaseUnit : MonoBehaviour
     /// Displays the route to the destination.
     /// </summary>
     /// <param name="routeToDestination">The route to destination.</param>
-    public void DisplayRouteToDestination(List<Vector2> routeToDestination)
+    /// <param name="onUnitMovedToDestinationCallback">The on unit moved to destination callback.</param>
+    public void DisplayRouteToDestination(List<Vector2> routeToDestination, Action onUnitMovedToDestinationCallback)
     {
         HideAllRouteMarker();
         SetWalkableTileFieldVisibiltyTo(true);
@@ -154,11 +231,81 @@ public class BaseUnit : MonoBehaviour
             }
         }
 
-        ControllerContainer.BattleController.AddOnConfirmButtonPressedListener(() =>
+        ControllerContainer.BattleController.AddConfirmMoveButtonPressedListener(() =>
         {
-            ControllerContainer.BattleController.RemoveCurrentConfirmButtonPressedListener();
-            StartCoroutine(MoveAlongRoute(routeToDestination, null));
+            ControllerContainer.BattleController.RemoveCurrentConfirmMoveButtonPressedListener();
+
+            SetWalkableTileFieldVisibiltyTo(false);
+            ClearAttackableUnits(m_attackableUnits);
+
+            StartCoroutine(MoveAlongRoute(routeToDestination, () =>
+            {
+                if (TryToDisplayActionOnUnitsInRange(out m_attackableUnits))
+                {
+                    Debug.Log("Attackable units: "+m_attackableUnits.Count);
+
+                    HideAllRouteMarker();
+                    m_battlegroundUi.ChangeVisibilityOfConfirmMoveButton(false);
+                }
+                else
+                {
+                    if (onUnitMovedToDestinationCallback != null)
+                    {
+                        onUnitMovedToDestinationCallback();
+                    }
+                }
+                
+            }));
         });
+    }
+
+    /// <summary>
+    /// Clears the action on units.
+    /// </summary>
+    /// <param name="unitToClearActionsFrom">The unit to clear actions from.</param>
+    private void ClearAttackableUnits(List<BaseUnit> unitToClearActionsFrom)
+    {
+        for (int unitIndex = 0; unitIndex < unitToClearActionsFrom.Count; unitIndex++)
+        {
+            unitToClearActionsFrom[unitIndex].ChangeVisibiltyOfAttackMarker(false);
+        }
+
+        unitToClearActionsFrom.Clear();
+    }
+
+    /// <summary>
+    /// Tries to display action on units in range.
+    /// For units that can take action on friendly units, it will display the field to do the friendly action on the unit.
+    /// For enemy units the attack field will be displayed, if the unit can attack.
+    /// </summary>
+    /// <returns></returns>
+    private bool TryToDisplayActionOnUnitsInRange(out List<BaseUnit> attackableUnits)
+    {
+        List<BaseUnit> unitsInRange =
+            ControllerContainer.BattleController.GetUnitsInRange(this.CurrentSimplifiedPosition, GetUnitBalancing().m_AttackRange);
+
+        attackableUnits = new List<BaseUnit>();
+
+        for (int unitIndex = 0; unitIndex < unitsInRange.Count; unitIndex++)
+        {
+            BaseUnit unit = unitsInRange[unitIndex];
+
+            // Is unit enemy or friend?
+            if (unit.TeamAffinity.m_TeamColor != TeamAffinity.m_TeamColor)
+            {
+                if (GetUnitBalancing().m_AttackableUnitMetaTypes.Contains(unit.GetUnitBalancing().m_UnitMetaType))
+                {
+                    unit.ChangeVisibiltyOfAttackMarker(true);
+                    attackableUnits.Add(unit);
+                }
+            }
+            else
+            {
+                //TODO: Handle interaction with friendly units.
+            }
+        }
+
+        return unitsInRange.Count > 0;
     }
 
     /// <summary>
@@ -179,7 +326,7 @@ public class BaseUnit : MonoBehaviour
 
             if (nodeIndex == route.Count - 1)
             {
-                UnitHasActedThisRound = true;
+                UnitHasMovedThisRound = true;
 
                 if (onMoveFinished != null)
                 {
@@ -194,7 +341,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="startNode">The start node.</param>
     /// <param name="destinationNode">The destination node.</param>
-    public IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode)
+    private IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode)
     {
         Vector2 nodePositionDiff = startNode - destinationNode;
 

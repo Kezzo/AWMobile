@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f29ca9c9d0843744cb1f4b8e31181426
-timeCreated: 1483397947
+timeCreated: 1483631787
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,8 @@ TextureImporter:
     21300002: BattleUi_1
     21300004: BattleUi_2
     21300006: BattleUi_3
+    21300008: BattleUi_4
+    21300010: BattleUi_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -40,11 +42,11 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 0
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 300
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -85,6 +87,32 @@ TextureImporter:
       name: BattleUi_0
       rect:
         serializedVersion: 2
+        x: 3
+        y: 340
+        width: 251
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_1
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 283
+        width: 251
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_2
+      rect:
+        serializedVersion: 2
         x: 0
         y: 130
         width: 215
@@ -95,12 +123,12 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BattleUi_1
+      name: BattleUi_3
       rect:
         serializedVersion: 2
         x: 380
         y: 0
-        width: 191
+        width: 192
         height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -108,12 +136,12 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BattleUi_2
+      name: BattleUi_4
       rect:
         serializedVersion: 2
-        x: 569
+        x: 568
         y: 3
-        width: 257
+        width: 258
         height: 265
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -121,7 +149,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BattleUi_3
+      name: BattleUi_5
       rect:
         serializedVersion: 2
         x: 0

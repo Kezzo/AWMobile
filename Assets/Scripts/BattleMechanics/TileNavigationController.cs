@@ -132,7 +132,7 @@ public class TileNavigationController
     /// <param name="from">From.</param>
     /// <param name="to">To.</param>
     /// <returns></returns>
-    private int GetDistanceToCoordinate(Vector2 from, Vector2 to)
+    public int GetDistanceToCoordinate(Vector2 from, Vector2 to)
     {
         Vector2 directionalVectorToMapTile = from - to;
 
@@ -288,19 +288,13 @@ public class TileNavigationController
     private List<Vector2> GetWalkableAdjacentNodes(Vector2 sourceToGetNeighboursFrom, SimpleUnitBalancing.UnitBalancing unitBalancing, 
         int walkingCostToNode)
     {
-        List<Vector2> adjacentNodes = new List<Vector2>();
+        List<Vector2> walkableAdjacentNodes = new List<Vector2>();
 
-        Vector2[] adjacentModifier =
-        {
-            new Vector2(1, 0),
-            new Vector2(0, 1),
-            new Vector2(-1, 0),
-            new Vector2(0, -1)
-        };
+        List<Vector2> adjacentNodes = GetAdjacentNodes(sourceToGetNeighboursFrom);
 
-        for (int modifierIndex = 0; modifierIndex < adjacentModifier.Length; modifierIndex++)
+        for (int nodeIndex = 0; nodeIndex < adjacentNodes.Count; nodeIndex++)
         {
-            Vector2 adjacentTile = sourceToGetNeighboursFrom + adjacentModifier[modifierIndex];
+            Vector2 adjacentTile = adjacentNodes[nodeIndex];
 
             BaseMapTile adjacenBaseMapTile;
 
@@ -313,8 +307,33 @@ public class TileNavigationController
                 // Can unit walk on the node, base on the movement range of the unit.
                 walkingCostToNode + unitBalancing.GetMovementCostToWalkOnMapTileType(adjacenBaseMapTile.MapTileType) <= unitBalancing.m_MovementRangePerRound)
             {
-                adjacentNodes.Add(adjacentTile);
+                walkableAdjacentNodes.Add(adjacentTile);
             }
+        }
+
+        return walkableAdjacentNodes;
+    }
+
+    /// <summary>
+    /// Gets the adjacent nodes.
+    /// </summary>
+    /// <param name="sourceNode">The source node.</param>
+    /// <returns></returns>
+    public List<Vector2> GetAdjacentNodes(Vector2 sourceNode)
+    {
+        List<Vector2> adjacentNodes = new List<Vector2>(4);
+
+        Vector2[] adjacentModifier =
+        {
+            new Vector2(1, 0),
+            new Vector2(0, 1),
+            new Vector2(-1, 0),
+            new Vector2(0, -1)
+        };
+
+        for (int modifierIndex = 0; modifierIndex < adjacentModifier.Length; modifierIndex++)
+        {
+            adjacentNodes.Add(sourceNode + adjacentModifier[modifierIndex]);
         }
 
         return adjacentNodes;

@@ -10,13 +10,19 @@ public class CameraControls : MonoBehaviour
     private float m_scrollSpeed;
 
     [SerializeField]
-    private Transform m_cameraTransform;
+    private Camera m_cameraToControl;
+    public Camera CameraToControl { get { return m_cameraToControl; } }
 
     private Vector3 m_lastMousePosition;
     private bool m_draggingTop;
 
     private bool m_startedDragging;
     public bool IsDragging { get; private set; }
+
+    private void Awake()
+    {
+        ControllerContainer.MonoBehaviourRegistry.Register(this);
+    }
 
     /// <summary>
     /// Focuses the camera on the middle of the battlefield.
@@ -80,6 +86,6 @@ public class CameraControls : MonoBehaviour
     /// </summary>
     public void CameraLookAtWorldCenter()
     {
-        m_cameraTransform.LookAt(new Vector3(0, 0, 0));
+        m_cameraToControl.transform.LookAt(new Vector3(0, 0, 0));
     }
 }

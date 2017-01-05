@@ -9,10 +9,19 @@ public class SimpleUnitBalancing : MonoBehaviour
     public class UnitBalancing
     {
         public UnitType m_UnitType;
+        public UnitMetaType m_UnitMetaType;
 
         // Tiles the unit can move in one turn.
         public int m_MovementRangePerRound;
         public List<WalkableMapTiles> m_WalkableMapTileTypes;
+
+        // TODO: Implement min and max attack range for units that can only attack units far away.
+        public int m_AttackRange;
+        public List<UnitMetaType> m_AttackableUnitMetaTypes;
+        // TODO: Implement damage based on enemy armor/type
+        public int m_Damage;
+
+        public int m_Health;
 
         [Serializable]
         public class WalkableMapTiles

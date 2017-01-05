@@ -4,6 +4,7 @@ using UnityEditor;
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SelectionControls : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class SelectionControls : MonoBehaviour
 
     [SerializeField]
     private LayerMask m_movementfieldLayerMask;
+
+    [SerializeField]
+    private LayerMask m_attackfieldLayerMask;
 
     [SerializeField]
     private CameraControls m_cameraControls;
@@ -77,8 +81,23 @@ public class SelectionControls : MonoBehaviour
             {
                 RaycastHit raycastHit;
 
-                if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
+                if (m_currentlySelectedUnit != null && TrySelection(m_battlegroundCamera, m_attackfieldLayerMask, out raycastHit))
                 {
+                    Debug.Log("Selected attack field");
+
+                    // Select attack field
+                    BaseUnit unitToAttack = raycastHit.transform.parent.parent.GetComponent<BaseUnit>();
+
+                    if (unitToAttack != null)
+                    {
+                        m_currentlySelectedUnit.AttackUnit(unitToAttack);
+                        DeselectCurrentUnit();
+                    }
+                }
+                else if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
+                {
+                    Debug.Log("Selected unit");
+
                     // Select Unit
                     BaseUnit selectedUnit = raycastHit.transform.GetComponent<BaseUnit>();
 
@@ -93,6 +112,8 @@ public class SelectionControls : MonoBehaviour
                 else if (m_currentlySelectedUnit != null &&
                          TrySelection(m_battlegroundCamera, m_movementfieldLayerMask, out raycastHit))
                 {
+                    Debug.Log("Selected movement field");
+
                     // Select movement field
                     BaseMapTile baseMapTile = raycastHit.transform.parent.parent.GetComponent<BaseMapTile>();
 
@@ -100,16 +121,17 @@ public class SelectionControls : MonoBehaviour
                     {
                         m_routeToDestinationField = ControllerContainer.TileNavigationController.
                             GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile, out m_pathfindingNodeDebug);
-                        m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField);
+                        m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);
 
                         m_battlegroundUi.ChangeVisibilityOfConfirmMoveButton(true);
                     }
                     
                 }
-                else if (m_currentlySelectedUnit != null)
+                else if (m_currentlySelectedUnit != null && !IsPointerOverUIObject())
                 {
                     // Deselect unit
                     DeselectCurrentUnit();
+                    Debug.Log("Deselected Unit");
                 }
             }
             else if (m_abortNextSelectionTry)
@@ -157,5 +179,24 @@ public class SelectionControls : MonoBehaviour
         Debug.DrawRay(selectionRay.origin, selectionRay.direction * 100f, Color.yellow, 1f);
 
         return Physics.Raycast(selectionRay, out selectionTarget, 100f, selectionMask);
+    }
+
+    /// <summary>
+    /// Determines whether a pointer is over an UI object.
+    /// This is the only solution that also works on mobile.
+    /// </summary>
+    /// <returns>
+    ///   <c>true</c> if [is pointer over UI object]; otherwise, <c>false</c>.
+    /// </returns>
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+        {
+            position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

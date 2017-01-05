@@ -53,12 +53,19 @@ public class Root : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
-        ControllerContainer.BattleController.IntializeBattle(new[] {new Team
-        {
-            //TODO: Move this setup into Scriptable Object
-            m_TeamColor = TeamColor.Blue,
-            m_IsPlayersTeam = true
-        }});
+        ControllerContainer.BattleController.IntializeBattle(new[] {
+            new Team
+            {
+                //TODO: Move this setup into Scriptable Object
+                m_TeamColor = TeamColor.Blue,
+                m_IsPlayersTeam = true
+            },
+            new Team
+            {
+                m_TeamColor = TeamColor.Red,
+                m_IsPlayersTeam = true
+            }
+        });
 
         SceneLoading.LoadSceneAsync("BattlegroundUI", null, null);
         

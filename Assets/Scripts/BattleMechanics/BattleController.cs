@@ -17,7 +17,7 @@ public class BattleController
     private List<BaseUnit> m_registeredUnits;
 
     /// <summary>
-    /// Intializes a battle.
+    /// Initializes a battle.
     /// </summary>
     /// <param name="teamsThisBattle">The teams this battle.</param>
     public void IntializeBattle(Team[] teamsThisBattle)
@@ -39,6 +39,15 @@ public class BattleController
     }
 
     /// <summary>
+    /// Removes the registered unit.
+    /// </summary>
+    /// <param name="baseUnit">The base unit.</param>
+    public void RemoveRegisteredUnit(BaseUnit baseUnit)
+    {
+        m_registeredUnits.Remove(baseUnit);
+    }
+
+    /// <summary>
     /// Determines whether a unit is on the given node.
     /// </summary>
     /// <param name="node">The node.</param>
@@ -48,6 +57,16 @@ public class BattleController
     public bool IsUnitOnNode(Vector2 node)
     {
         return m_registeredUnits.Exists(unit => unit.CurrentSimplifiedPosition == node);
+    }
+
+    /// <summary>
+    /// Gets the unit on node.
+    /// </summary>
+    /// <param name="node">The node.</param>
+    /// <returns></returns>
+    public BaseUnit GetUnitOnNode(Vector2 node)
+    {
+        return m_registeredUnits.Find(unit => unit.CurrentSimplifiedPosition == node);
     }
 
     /// <summary>
@@ -77,6 +96,8 @@ public class BattleController
     {
         Team teamToStartNext = m_teamThisBattle[m_subTurnCount];
 
+        Debug.LogFormat("Starting turn for Team: '{0}'", teamToStartNext.m_TeamColor);
+
         List<BaseUnit> unitsToReset = m_registeredUnits.FindAll(unit => unit.TeamAffinity.m_TeamColor == teamToStartNext.m_TeamColor);
 
         for (int unitIndex = 0; unitIndex < unitsToReset.Count; unitIndex++)
@@ -105,7 +126,7 @@ public class BattleController
     /// Adds the on confirm button pressed listener.
     /// </summary>
     /// <param name="actionToCall">The action to call.</param>
-    public void AddOnConfirmButtonPressedListener(Action actionToCall)
+    public void AddConfirmMoveButtonPressedListener(Action actionToCall)
     {
         m_onConfirmButtonPressed = actionToCall;
     }
@@ -113,7 +134,7 @@ public class BattleController
     /// <summary>
     /// Removes the current confirm button pressed listener.
     /// </summary>
-    public void RemoveCurrentConfirmButtonPressedListener()
+    public void RemoveCurrentConfirmMoveButtonPressedListener()
     {
         m_onConfirmButtonPressed = null;
     }
@@ -127,5 +148,61 @@ public class BattleController
         {
             m_onConfirmButtonPressed();
         }
+    }
+
+    /// <summary>
+    /// Gets the units in range.
+    /// </summary>
+    /// <param name="sourceNode">The source node.</param>
+    /// <param name="range">The range.</param>
+    /// <returns></returns>
+    public List<BaseUnit> GetUnitsInRange(Vector2 sourceNode, int range)
+    {
+        List<BaseUnit> unitsInRange = new List<BaseUnit>();
+
+        TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
+        HashSet<Vector2> checkedNodes = new HashSet<Vector2> { sourceNode };
+
+        Queue<Vector2> nodesToCheck = new Queue<Vector2>();
+        nodesToCheck.Enqueue(sourceNode);
+
+        while (true)
+        {
+            Vector2 nodeToCheck = nodesToCheck.Dequeue();
+            
+            // Get unit on Node
+            if (nodeToCheck != sourceNode)
+            {
+                var unitOnNode = GetUnitOnNode(nodeToCheck);
+
+                if (unitOnNode != null)
+                {
+                    unitsInRange.Add(unitOnNode);
+                }
+            }
+
+            List<Vector2> adjacentNodes = tileNavigationController.GetAdjacentNodes(nodeToCheck)
+                .FindAll(node => !checkedNodes.Contains(node));
+
+            for (int nodeIndex = 0; nodeIndex < adjacentNodes.Count; nodeIndex++)
+            {
+                Vector2 adjacentNode = adjacentNodes[nodeIndex];
+
+                checkedNodes.Add(adjacentNode);
+
+                // Is node in range?
+                if (tileNavigationController.GetDistanceToCoordinate(sourceNode, adjacentNode) <= range)
+                {
+                    nodesToCheck.Enqueue(adjacentNode);
+                }
+            }
+
+            if (nodesToCheck.Count == 0)
+            {
+                break;
+            }
+        }
+
+        return unitsInRange;
     }
 }

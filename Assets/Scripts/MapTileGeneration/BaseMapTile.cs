@@ -162,6 +162,9 @@ public class BaseMapTile : MonoBehaviour
             if (baseUnit != null)
             {
                 baseUnit.Initialize(m_unitOnThisTile, simplifiedPosition);
+
+                baseUnit.SetTeamColorUVMesh(m_mapTileGeneratorEditor.GetUVCoordinateMeshForTeamColor(
+                    m_unitOnThisTile.m_UnitType, m_unitOnThisTile.m_Team.m_TeamColor));
             }
 
             m_currentInstantiatedUnit = m_unitOnThisTile;
