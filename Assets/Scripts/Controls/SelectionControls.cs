@@ -64,6 +64,8 @@ public class SelectionControls : MonoBehaviour
     private void Start()
     {
         ControllerContainer.MonoBehaviourRegistry.TryGet(out m_battlegroundUi);
+
+        ControllerContainer.BattleController.AddTurnEndEvent("DeselectUnit", DeselectCurrentUnit);
     }
 
     // Update is called once per frame

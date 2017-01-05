@@ -13,6 +13,7 @@ public class BattleController
     private int m_turnCount;
 
     private Action m_onConfirmButtonPressed;
+    private readonly Dictionary<string, Action> m_onTurnEndEvents =  new Dictionary<string, Action>();
 
     private List<BaseUnit> m_registeredUnits;
 
@@ -27,6 +28,8 @@ public class BattleController
         m_turnCount = 0;
 
         m_registeredUnits = new List<BaseUnit>();
+        m_onConfirmButtonPressed = null;
+        m_onTurnEndEvents.Clear();
     }
 
     /// <summary>
@@ -111,6 +114,11 @@ public class BattleController
     /// </summary>
     public void EndCurrentTurn()
     {
+        foreach (var onTurnEndEvent in m_onTurnEndEvents)
+        {
+            onTurnEndEvent.Value();
+        }
+
         m_subTurnCount++;
 
         if (m_subTurnCount == m_teamThisBattle.Length)
@@ -120,6 +128,32 @@ public class BattleController
         }
 
         StartNextTurn();
+    }
+
+    /// <summary>
+    /// Adds the turn end event.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <param name="actionToAdd">The action to add.</param>
+    public void AddTurnEndEvent(string key, Action actionToAdd)
+    {
+        if (m_onTurnEndEvents.ContainsKey(key))
+        {
+            Debug.LogError("Trying to add turn end event with already existing key!");
+        }
+        else
+        {
+            m_onTurnEndEvents.Add(key, actionToAdd);
+        }
+    }
+
+    /// <summary>
+    /// Removes the turn end event.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    public void RemoveTurnEndEvent(string key)
+    {
+        m_onTurnEndEvents.Remove(key);
     }
 
     /// <summary>
