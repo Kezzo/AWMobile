@@ -78,9 +78,8 @@ public class BaseUnit : MonoBehaviour
         if (Application.isPlaying)
         {
             ControllerContainer.BattleController.RegisterUnit(this);
+            m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
         }
-
-        m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
 
         // Load balancing once here and keep for the round.
     }
