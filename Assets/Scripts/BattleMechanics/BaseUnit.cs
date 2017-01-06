@@ -18,13 +18,34 @@ public class BaseUnit : MonoBehaviour
     private MeshFilter m_meshFilter;
 
     [SerializeField]
+    private MeshRenderer m_meshRenderer;
+
+    [SerializeField]
     private UnitStatManagement m_statManagement;
     public UnitStatManagement StatManagement { get { return m_statManagement; } }
 
     public Team TeamAffinity { get; private set; }
     public UnitType UnitType { get; private set; }
     public bool UnitHasMovedThisRound { get; private set; }
-    public bool UnitHasAttackedThisRound { get; private set; }
+
+    private bool m_unitHasAttackedThisRound;
+    public bool UnitHasAttackedThisRound
+    {
+        get
+        {
+            return m_unitHasAttackedThisRound;
+        }
+        private set
+        {
+            m_unitHasAttackedThisRound = value;
+
+            m_materialPropertyBlock.SetColor("_Color", value ? Color.gray : Color.white);
+
+            m_meshRenderer.SetPropertyBlock(m_materialPropertyBlock);
+        }
+    }
+
+    private MaterialPropertyBlock m_materialPropertyBlock;
 
     private Vector2 m_currentSimplifiedPosition;
     public Vector2 CurrentSimplifiedPosition { get { return m_currentSimplifiedPosition; } }
@@ -37,6 +58,8 @@ public class BaseUnit : MonoBehaviour
     private void Start()
     {
         ControllerContainer.MonoBehaviourRegistry.TryGet(out m_battlegroundUi);
+
+        m_materialPropertyBlock = new MaterialPropertyBlock();
     }
 
     /// <summary>
@@ -249,6 +272,8 @@ public class BaseUnit : MonoBehaviour
                 }
                 else
                 {
+                    UnitHasAttackedThisRound = true;
+
                     if (onUnitMovedToDestinationCallback != null)
                     {
                         onUnitMovedToDestinationCallback();
@@ -305,7 +330,7 @@ public class BaseUnit : MonoBehaviour
             }
         }
 
-        return unitsInRange.Count > 0;
+        return attackableUnits.Count > 0; // || supportableUnits.Count > 0;
     }
 
     /// <summary>

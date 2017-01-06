@@ -198,7 +198,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_MotionVectors: 1
+  m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
@@ -380,6 +380,7 @@ MonoBehaviour:
   m_attackMarker: {fileID: 1791988929165598}
   m_worldMovementSpeed: 12
   m_meshFilter: {fileID: 33453538758930442}
+  m_meshRenderer: {fileID: 23075647398201128}
   m_statManagement: {fileID: 114839991524481696}
 --- !u!114 &114730407404330514
 MonoBehaviour:

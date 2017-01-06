@@ -9,7 +9,8 @@ using UnityEngine;
 /// </summary>
 public class BaseMapTile : MonoBehaviour
 {
-    [SerializeField] private MapTileType m_mapTileType;
+    [SerializeField]
+    private MapTileType m_mapTileType;
 
     public MapTileType MapTileType
     {
