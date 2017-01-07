@@ -373,21 +373,7 @@ public class BaseUnit : MonoBehaviour
         CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(
             nodePositionDiff, false);
 
-        switch (directionToRotateTo)
-        {
-            case CardinalDirection.North:
-                this.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                break;
-            case CardinalDirection.East:
-                this.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-                break;
-            case CardinalDirection.South:
-                this.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                break;
-            case CardinalDirection.West:
-                this.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
-                break;
-        }
+        SetRotation(directionToRotateTo);
 
         BaseMapTile mapTile = ControllerContainer.TileNavigationController.GetMapTile(destinationNode);
         Vector3 targetWorldPosition = Vector3.zero;
@@ -417,6 +403,29 @@ public class BaseUnit : MonoBehaviour
             }
 
             yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Sets the rotation of the baseunit.
+    /// </summary>
+    /// <param name="directionToRotateTo">The direction to rotate to.</param>
+    public void SetRotation(CardinalDirection directionToRotateTo)
+    {
+        switch (directionToRotateTo)
+        {
+            case CardinalDirection.North:
+                this.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                break;
+            case CardinalDirection.East:
+                this.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                break;
+            case CardinalDirection.South:
+                this.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                break;
+            case CardinalDirection.West:
+                this.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
+                break;
         }
     }
 }

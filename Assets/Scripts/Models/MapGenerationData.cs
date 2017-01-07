@@ -68,6 +68,7 @@ public class MapGenerationData : ScriptableObject
     {
         public UnitType m_UnitType;
         public Team m_Team;
+        public CardinalDirection m_Orientation;
     }
 
     /// <summary>
