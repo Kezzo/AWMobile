@@ -87,19 +87,22 @@ public class TileNavigationController
                 int costToMoveToNode = walkingCostToNode +
                                        unitBalancing.GetMovementCostToWalkOnMapTileType(baseMapTile.MapTileType);
 
-                int existingCostToMoveToNode = 0;
-
                 // Only add node, if it wasn't added before or if a shorter path to the node was found.
                 if (!costToMoveToNodes.ContainsKey(adjacentNode))
                 {
                     costToMoveToNodes.Add(adjacentNode, costToMoveToNode);
                     nodesToCheck.Enqueue(adjacentNode);
                 }
-                else if (costToMoveToNodes.TryGetValue(nodeToCheck, out existingCostToMoveToNode) &&
-                    costToMoveToNode < existingCostToMoveToNode)
+                else
                 {
-                    costToMoveToNodes[adjacentNode] = costToMoveToNode;
-                    nodesToCheck.Enqueue(adjacentNode);
+                    var existingCostToMoveToNode = 0;
+                    costToMoveToNodes.TryGetValue(adjacentNode, out existingCostToMoveToNode);
+
+                    if (costToMoveToNode < existingCostToMoveToNode)
+                    {
+                        costToMoveToNodes[adjacentNode] = costToMoveToNode;
+                        nodesToCheck.Enqueue(adjacentNode);
+                    }
                 }
             }
 

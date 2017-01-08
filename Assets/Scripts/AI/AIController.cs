@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class AIController
 {
@@ -46,8 +44,8 @@ public class AIController
             BaseMapTile tileToWalkTo = GetWalkableTileNearestToEnemy(m_myUnits[unitCounter]);
             if (tileToWalkTo != null)
             {
-                Dictionary<UnityEngine.Vector2, PathfindingNodeDebugData> dontCare = new Dictionary<UnityEngine.Vector2, PathfindingNodeDebugData>();
-                m_myUnits[unitCounter].MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(m_myUnits[unitCounter], tileToWalkTo, out dontCare), () => AttackIfPossible());
+                var dontCare = new Dictionary<UnityEngine.Vector2, PathfindingNodeDebugData>();
+                m_myUnits[unitCounter].MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(m_myUnits[unitCounter], tileToWalkTo, out dontCare), AttackIfPossible);
                 
             }
             else
@@ -81,6 +79,7 @@ public class AIController
             }
 
         }
+
         unitCounter++;
         MoveNextUnit();
     }

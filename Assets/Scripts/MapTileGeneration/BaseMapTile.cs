@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 #pragma warning disable 0649
@@ -48,6 +49,25 @@ public class BaseMapTile : MonoBehaviour
     private MapGenerationData.MapTile m_mapTileData;
 
     public Vector2 SimplifiedMapPosition { get; private set; }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (!Root.Instance.DebugValues.m_ShowCoordinatesOnNodes)
+        {
+            return;
+        }
+
+        Handles.Label(this.transform.position + Vector3.up, string.Format("X{0}, Y{1}", SimplifiedMapPosition.x, SimplifiedMapPosition.y), new GUIStyle
+        {
+            alignment = TextAnchor.MiddleCenter,
+            normal = new GUIStyleState
+            {
+                textColor = Color.black
+            }
+        });
+    }
+#endif
 
     /// <summary>
     /// Creates the first MapTile child based on a default MapTileType.

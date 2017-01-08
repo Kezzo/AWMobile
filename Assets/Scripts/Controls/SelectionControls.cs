@@ -35,7 +35,7 @@ public class SelectionControls : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (m_routeToDestinationField == null || m_pathfindingNodeDebug == null)
+        if (!Root.Instance.DebugValues.m_ShowPathfindingDebugData || m_routeToDestinationField == null || m_pathfindingNodeDebug == null)
         {
             return;
         }

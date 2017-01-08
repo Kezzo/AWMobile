@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class to handle to control a unit an handle the display and behaviors of a unit.
+/// </summary>
 public class BaseUnit : MonoBehaviour
 {
     [SerializeField]

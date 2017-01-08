@@ -49,7 +49,7 @@ public class BlinkingStandardShader : MonoBehaviour
 
         m_colorClampValue = Mathf.Clamp(m_colorClampValue, 0f, 1f);
 
-        Debug.Log(m_colorClampValue);
+        //Debug.Log(m_colorClampValue);
 
         m_renderer.material.color = Color.Lerp(m_firstColor, m_secondColor, m_colorClampValue);
     }

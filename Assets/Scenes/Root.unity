@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 694809057}
   - component: {fileID: 694809058}
   - component: {fileID: 694809059}
+  - component: {fileID: 694809060}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -306,6 +307,7 @@ MonoBehaviour:
   m_coroutineHelper: {fileID: 694809057}
   m_sceneLoadingService: {fileID: 694809058}
   m_simpleUnitBalancing: {fileID: 694809059}
+  m_debugValues: {fileID: 694809060}
 --- !u!4 &694809056
 Transform:
   m_ObjectHideFlags: 0
@@ -366,6 +368,18 @@ MonoBehaviour:
     m_AttackableUnitMetaTypes: 0000000002000000
     m_Damage: 5
     m_Health: 10
+--- !u!114 &694809060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 694809054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b97bb34fd36d0ee41a2be43168ef6c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowCoordinatesOnNodes: 0
 --- !u!1 &1707093313
 GameObject:
   m_ObjectHideFlags: 0

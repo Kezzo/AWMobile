@@ -17,6 +17,7 @@ public class BattleController
 
     private Dictionary<TeamColor, List<BaseUnit>> m_registeredUnits;
     public Dictionary<TeamColor, List<BaseUnit>> RegisteredUnits { get { return m_registeredUnits; } }
+
     private List<AIController> m_registeredAIs;
 
     /// <summary>
@@ -34,6 +35,7 @@ public class BattleController
         m_onTurnEndEvents.Clear();
 
         m_registeredAIs = new List<AIController>();
+
         foreach (Team team in m_teamThisBattle)
         {
             List<BaseUnit> teamUnitList = new List<BaseUnit>();
@@ -79,6 +81,7 @@ public class BattleController
                 return true;
             }
         }
+
         return false;
     }
 
@@ -89,15 +92,15 @@ public class BattleController
     /// <returns></returns>
     public BaseUnit GetUnitOnNode(Vector2 node)
     {
-        BaseUnit foundUnit;
         foreach (var item in m_registeredUnits)
         {
-            foundUnit = item.Value.Find(unit => unit.CurrentSimplifiedPosition == node);
+            BaseUnit foundUnit = item.Value.Find(unit => unit.CurrentSimplifiedPosition == node);
             if (foundUnit != null)
             {
                 return foundUnit;
             }
         }
+
         return null;
     }
 

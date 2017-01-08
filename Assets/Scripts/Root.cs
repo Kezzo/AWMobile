@@ -17,6 +17,12 @@ public class Root : MonoBehaviour
     private SimpleUnitBalancing m_simpleUnitBalancing;
     public SimpleUnitBalancing SimeSimpleUnitBalancing { get { return m_simpleUnitBalancing; } }
 
+#if UNITY_EDITOR
+    [SerializeField]
+    private DebugValues m_debugValues;
+    public DebugValues DebugValues { get { return m_debugValues; } }
+#endif
+
     // Singleton
     private static Root m_instance = null;
     public static Root Instance
