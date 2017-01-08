@@ -70,14 +70,13 @@ public class AIController
             List<UnityEngine.Vector2> adjacentPositions = ControllerContainer.TileNavigationController.GetAdjacentNodes(m_myUnits[unitCounter].CurrentSimplifiedPosition);
             for (int i = 0; i < adjacentPositions.Count; i++)
             {
-                if (ControllerContainer.BattleController.IsUnitOnNode(adjacentPositions[i]) && ControllerContainer.BattleController.GetUnitOnNode(adjacentPositions[i]).TeamAffinity.m_TeamColor != m_myTeam.m_TeamColor)
+                if (ControllerContainer.BattleController.IsUnitOnNode(adjacentPositions[i]) && ControllerContainer.BattleController.GetUnitOnNode(adjacentPositions[i]).TeamColor != m_myTeam.m_TeamColor)
                 {
                     m_myUnits[unitCounter].AttackUnit(ControllerContainer.BattleController.GetUnitOnNode(adjacentPositions[i]));
                     //TODO: Do I need another Solution?
                     break;
                 }
             }
-
         }
 
         unitCounter++;

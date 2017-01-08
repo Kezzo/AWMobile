@@ -53,19 +53,23 @@ public class BaseMapTile : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (!Root.Instance.DebugValues.m_ShowCoordinatesOnNodes)
+        if (Application.isPlaying)
         {
-            return;
-        }
-
-        Handles.Label(this.transform.position + Vector3.up, string.Format("X{0}, Y{1}", SimplifiedMapPosition.x, SimplifiedMapPosition.y), new GUIStyle
-        {
-            alignment = TextAnchor.MiddleCenter,
-            normal = new GUIStyleState
+            if (!Root.Instance.DebugValues.m_ShowCoordinatesOnNodes)
             {
-                textColor = Color.black
+                return;
             }
-        });
+
+            Handles.Label(this.transform.position + Vector3.up,
+                string.Format("X{0}, Y{1}", SimplifiedMapPosition.x, SimplifiedMapPosition.y), new GUIStyle
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                    normal = new GUIStyleState
+                    {
+                        textColor = Color.black
+                    }
+                });
+        }
     }
 #endif
 
@@ -185,7 +189,7 @@ public class BaseMapTile : MonoBehaviour
                 baseUnit.Initialize(m_unitOnThisTile, simplifiedPosition);
 
                 baseUnit.SetTeamColorUVMesh(m_mapTileGeneratorEditor.GetUVCoordinateMeshForTeamColor(
-                    m_unitOnThisTile.m_UnitType, m_unitOnThisTile.m_Team.m_TeamColor));
+                    m_unitOnThisTile.m_UnitType, m_unitOnThisTile.m_TeamColor));
 
                 baseUnit.SetRotation(m_unitOnThisTile.m_Orientation);
             }

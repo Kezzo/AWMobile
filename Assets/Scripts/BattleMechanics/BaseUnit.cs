@@ -27,7 +27,7 @@ public class BaseUnit : MonoBehaviour
     private UnitStatManagement m_statManagement;
     public UnitStatManagement StatManagement { get { return m_statManagement; } }
 
-    public Team TeamAffinity { get; private set; }
+    public TeamColor TeamColor { get; private set; }
     public UnitType UnitType { get; private set; }
     public bool UnitHasMovedThisRound { get; private set; }
 
@@ -72,7 +72,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="initialSimplifiedPosition">The initial simplified position.</param>
     public void Initialize(MapGenerationData.Unit unitData, Vector2 initialSimplifiedPosition)
     {
-        TeamAffinity = unitData.m_Team;
+        TeamColor = unitData.m_TeamColor;
         UnitType = unitData.m_UnitType;
         UnitHasMovedThisRound = false;
 
@@ -80,7 +80,7 @@ public class BaseUnit : MonoBehaviour
 
         if (Application.isPlaying)
         {
-            ControllerContainer.BattleController.RegisterUnit(TeamAffinity.m_TeamColor, this);
+            ControllerContainer.BattleController.RegisterUnit(TeamColor, this);
             m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
         }
 
@@ -92,7 +92,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     public void Die()
     {
-        ControllerContainer.BattleController.RemoveRegisteredUnit(TeamAffinity.m_TeamColor,this);
+        ControllerContainer.BattleController.RemoveRegisteredUnit(TeamColor, this);
         // Play explosion effect and destroy delayed.
 
         Destroy(this.gameObject);
@@ -136,7 +136,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     public void OnUnitWasSelected()
     {
-        Debug.LogFormat("Unit: '{0}' from Team: '{1}' was selected.", UnitType, TeamAffinity.m_TeamColor);
+        Debug.LogFormat("Unit: '{0}' from Team: '{1}' was selected.", UnitType, TeamColor);
 
         m_selectionMarker.SetActive(true);
 
@@ -220,7 +220,7 @@ public class BaseUnit : MonoBehaviour
     /// </returns>
     public bool CanUnitTakeAction()
     {
-        return (!UnitHasMovedThisRound || !UnitHasAttackedThisRound) && ControllerContainer.BattleController.GetCurrentlyPlayingTeam().m_TeamColor == TeamAffinity.m_TeamColor;
+        return (!UnitHasMovedThisRound || !UnitHasAttackedThisRound) && ControllerContainer.BattleController.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor;
     }
 
     /// <summary>
@@ -318,7 +318,7 @@ public class BaseUnit : MonoBehaviour
             BaseUnit unit = unitsInRange[unitIndex];
 
             // Is unit enemy or friend?
-            if (unit.TeamAffinity.m_TeamColor != TeamAffinity.m_TeamColor)
+            if (unit.TeamColor != TeamColor)
             {
                 if (GetUnitBalancing().m_AttackableUnitMetaTypes.Contains(unit.GetUnitBalancing().m_UnitMetaType))
                 {

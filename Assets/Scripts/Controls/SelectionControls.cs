@@ -35,27 +35,35 @@ public class SelectionControls : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (!Root.Instance.DebugValues.m_ShowPathfindingDebugData || m_routeToDestinationField == null || m_pathfindingNodeDebug == null)
+        if (Application.isPlaying)
         {
-            return;
-        }
-
-        foreach (var node in m_pathfindingNodeDebug)
-        {
-            //Debug.Log(node);
-
-            BaseMapTile baseMapTileOnPath = ControllerContainer.TileNavigationController.GetMapTile(node.Key);
-
-            if (baseMapTileOnPath != null)
+            if (!Root.Instance.DebugValues.m_ShowPathfindingDebugData || m_routeToDestinationField == null ||
+                m_pathfindingNodeDebug == null)
             {
-                // Draw sphere
-                Handles.color = m_routeToDestinationField.Contains(node.Key) ? Color.red : Color.gray;
-                Handles.SphereCap(0, baseMapTileOnPath.transform.position + Vector3.up, Quaternion.identity, 0.5f);
+                return;
+            }
 
-                // Draw text label
-                GUIStyle guiStyle = new GUIStyle { normal = { textColor = Color.black }, alignment = TextAnchor.MiddleCenter };
-                Handles.Label(baseMapTileOnPath.transform.position + Vector3.up + Vector3.back, 
-                    string.Format("C{0} P{1}", node.Value.CostToMoveToNode, node.Value.NodePriority), guiStyle);
+            foreach (var node in m_pathfindingNodeDebug)
+            {
+                //Debug.Log(node);
+
+                BaseMapTile baseMapTileOnPath = ControllerContainer.TileNavigationController.GetMapTile(node.Key);
+
+                if (baseMapTileOnPath != null)
+                {
+                    // Draw sphere
+                    Handles.color = m_routeToDestinationField.Contains(node.Key) ? Color.red : Color.gray;
+                    Handles.SphereCap(0, baseMapTileOnPath.transform.position + Vector3.up, Quaternion.identity, 0.5f);
+
+                    // Draw text label
+                    GUIStyle guiStyle = new GUIStyle
+                    {
+                        normal = {textColor = Color.black},
+                        alignment = TextAnchor.MiddleCenter
+                    };
+                    Handles.Label(baseMapTileOnPath.transform.position + Vector3.up + Vector3.back,
+                        string.Format("C{0} P{1}", node.Value.CostToMoveToNode, node.Value.NodePriority), guiStyle);
+                }
             }
         }
     }
