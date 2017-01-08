@@ -77,7 +77,7 @@ public class BaseUnit : MonoBehaviour
 
         if (Application.isPlaying)
         {
-            ControllerContainer.BattleController.RegisterUnit(this);
+            ControllerContainer.BattleController.RegisterUnit(TeamAffinity.m_TeamColor, this);
             m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
         }
 
@@ -89,7 +89,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     public void Die()
     {
-        ControllerContainer.BattleController.RemoveRegisteredUnit(this);
+        ControllerContainer.BattleController.RemoveRegisteredUnit(TeamAffinity.m_TeamColor,this);
         // Play explosion effect and destroy delayed.
 
         Destroy(this.gameObject);
@@ -260,7 +260,7 @@ public class BaseUnit : MonoBehaviour
             SetWalkableTileFieldVisibiltyTo(false);
             ClearAttackableUnits(m_attackableUnits);
 
-            StartCoroutine(MoveAlongRoute(routeToDestination, () =>
+            StartCoroutine(MoveAlongRouteCoroutine(routeToDestination, () =>
             {
                 if (TryToDisplayActionOnUnitsInRange(out m_attackableUnits))
                 {
@@ -338,7 +338,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="route">The route.</param>
     /// <param name="onMoveFinished">The on move finished.</param>
     /// <returns></returns>
-    public IEnumerator MoveAlongRoute(List<Vector2> route, Action onMoveFinished)
+    private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, Action onMoveFinished)
     {
         // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
         for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
@@ -358,6 +358,16 @@ public class BaseUnit : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Moves the along route.
+    /// </summary>
+    /// <param name="route">The route.</param>
+    /// <param name="onMoveFinished">The on move finished.</param>
+    public void MoveAlongRoute(List<Vector2> route, Action onMoveFinished)
+    {
+        StartCoroutine(MoveAlongRouteCoroutine(route,onMoveFinished));
     }
 
     /// <summary>

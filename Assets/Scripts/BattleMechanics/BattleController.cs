@@ -13,9 +13,11 @@ public class BattleController
     private int m_turnCount;
 
     private Action m_onConfirmButtonPressed;
-    private readonly Dictionary<string, Action> m_onTurnEndEvents =  new Dictionary<string, Action>();
+    private readonly Dictionary<string, Action> m_onTurnEndEvents = new Dictionary<string, Action>();
 
-    private List<BaseUnit> m_registeredUnits;
+    private Dictionary<TeamColor, List<BaseUnit>> m_registeredUnits;
+    public Dictionary<TeamColor, List<BaseUnit>> RegisteredUnits { get { return m_registeredUnits; } }
+    private List<AIController> m_registeredAIs;
 
     /// <summary>
     /// Initializes a battle.
@@ -27,27 +29,38 @@ public class BattleController
         m_subTurnCount = 0;
         m_turnCount = 0;
 
-        m_registeredUnits = new List<BaseUnit>();
+        m_registeredUnits = new Dictionary<TeamColor, List<BaseUnit>>();
         m_onConfirmButtonPressed = null;
         m_onTurnEndEvents.Clear();
+
+        m_registeredAIs = new List<AIController>();
+        foreach (Team team in m_teamThisBattle)
+        {
+            List<BaseUnit> teamUnitList = new List<BaseUnit>();
+            m_registeredUnits.Add(team.m_TeamColor, teamUnitList);
+            if (!team.m_IsPlayersTeam)
+            {
+                m_registeredAIs.Add(new AIController(team));
+            }
+        }
     }
 
     /// <summary>
     /// Registers the unit.
     /// </summary>
     /// <param name="baseUnit">The base unit.</param>
-    public void RegisterUnit(BaseUnit baseUnit)
+    public void RegisterUnit(TeamColor color, BaseUnit baseUnit)
     {
-        m_registeredUnits.Add(baseUnit);
+        m_registeredUnits[color].Add(baseUnit);
     }
 
     /// <summary>
     /// Removes the registered unit.
     /// </summary>
     /// <param name="baseUnit">The base unit.</param>
-    public void RemoveRegisteredUnit(BaseUnit baseUnit)
+    public void RemoveRegisteredUnit(TeamColor color, BaseUnit baseUnit)
     {
-        m_registeredUnits.Remove(baseUnit);
+        m_registeredUnits[color].Remove(baseUnit);
     }
 
     /// <summary>
@@ -59,7 +72,14 @@ public class BattleController
     /// </returns>
     public bool IsUnitOnNode(Vector2 node)
     {
-        return m_registeredUnits.Exists(unit => unit.CurrentSimplifiedPosition == node);
+        foreach (var item in m_registeredUnits)
+        {
+            if (item.Value.Exists(unit => unit.CurrentSimplifiedPosition == node))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -69,7 +89,16 @@ public class BattleController
     /// <returns></returns>
     public BaseUnit GetUnitOnNode(Vector2 node)
     {
-        return m_registeredUnits.Find(unit => unit.CurrentSimplifiedPosition == node);
+        BaseUnit foundUnit;
+        foreach (var item in m_registeredUnits)
+        {
+            foundUnit = item.Value.Find(unit => unit.CurrentSimplifiedPosition == node);
+            if (foundUnit != null)
+            {
+                return foundUnit;
+            }
+        }
+        return null;
     }
 
     /// <summary>
@@ -101,11 +130,22 @@ public class BattleController
 
         Debug.LogFormat("Starting turn for Team: '{0}'", teamToStartNext.m_TeamColor);
 
-        List<BaseUnit> unitsToReset = m_registeredUnits.FindAll(unit => unit.TeamAffinity.m_TeamColor == teamToStartNext.m_TeamColor);
+        List<BaseUnit> unitsToReset = m_registeredUnits[teamToStartNext.m_TeamColor];
 
         for (int unitIndex = 0; unitIndex < unitsToReset.Count; unitIndex++)
         {
             unitsToReset[unitIndex].ResetUnit();
+        }
+
+        if (!teamToStartNext.m_IsPlayersTeam)
+        {
+            foreach (AIController ai in m_registeredAIs)
+            {
+                if (teamToStartNext.m_TeamColor == ai.MyTeamColor)
+                {
+                    ai.StartTurn();
+                }
+            }
         }
     }
 
@@ -203,7 +243,7 @@ public class BattleController
         while (true)
         {
             Vector2 nodeToCheck = nodesToCheck.Dequeue();
-            
+
             // Get unit on Node
             if (nodeToCheck != sourceNode)
             {

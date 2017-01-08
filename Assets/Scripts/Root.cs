@@ -63,7 +63,7 @@ public class Root : MonoBehaviour
             new Team
             {
                 m_TeamColor = TeamColor.Red,
-                m_IsPlayersTeam = true
+                m_IsPlayersTeam = false
             }
         });
 
