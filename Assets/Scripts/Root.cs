@@ -73,16 +73,19 @@ public class Root : MonoBehaviour
             }
         });
 
-        SceneLoading.LoadSceneAsync("BattlegroundUI", null, null);
-        
-        SceneLoading.LoadSceneAsync(m_initialSceneToLoad, null, () =>
+        SceneLoading.LoadSceneAsync("BattlegroundUI", null, () =>
         {
-            MapTileGeneratorEditor mapTileGeneratorEditor;
-
-            if (ControllerContainer.MonoBehaviourRegistry.TryGet<MapTileGeneratorEditor>(out mapTileGeneratorEditor))
+            SceneLoading.LoadSceneAsync(m_initialSceneToLoad, null, () =>
             {
-                mapTileGeneratorEditor.LoadExistingMap("Level1");
-            }
+                MapTileGeneratorEditor mapTileGeneratorEditor;
+
+                if (ControllerContainer.MonoBehaviourRegistry.TryGet<MapTileGeneratorEditor>(out mapTileGeneratorEditor))
+                {
+                    mapTileGeneratorEditor.LoadExistingMap("Level1");
+                }
+
+                ControllerContainer.BattleController.StartBattle();
+            });
         });
     }
 

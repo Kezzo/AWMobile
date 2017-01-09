@@ -40,6 +40,11 @@ public class BaseUnit : MonoBehaviour
         }
         private set
         {
+            if (m_materialPropertyBlock == null)
+            {
+                m_materialPropertyBlock = new MaterialPropertyBlock();
+            }
+
             m_unitHasAttackedThisRound = value;
 
             m_materialPropertyBlock.SetColor("_Color", value ? Color.gray : Color.white);
@@ -61,8 +66,6 @@ public class BaseUnit : MonoBehaviour
     private void Start()
     {
         ControllerContainer.MonoBehaviourRegistry.TryGet(out m_battlegroundUi);
-
-        m_materialPropertyBlock = new MaterialPropertyBlock();
     }
 
     /// <summary>

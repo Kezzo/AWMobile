@@ -12,8 +12,10 @@ public class BattleController
     // Defines the turn of the battle.
     private int m_turnCount;
 
-    private Action m_onConfirmButtonPressed;
-    private readonly Dictionary<string, Action> m_onTurnEndEvents = new Dictionary<string, Action>();
+    private Action m_onConfirmMoveButtonPressed;
+
+    private readonly Dictionary<string, Action<Team[]>> m_onBattleStartEvents = new Dictionary<string, Action<Team[]>>();
+    private readonly Dictionary<string, Action<Team>> m_onTurnStartEvents = new Dictionary<string, Action<Team>>();
 
     private Dictionary<TeamColor, List<BaseUnit>> m_registeredUnits;
     public Dictionary<TeamColor, List<BaseUnit>> RegisteredUnits { get { return m_registeredUnits; } }
@@ -31,8 +33,9 @@ public class BattleController
         m_turnCount = 0;
 
         m_registeredUnits = new Dictionary<TeamColor, List<BaseUnit>>();
-        m_onConfirmButtonPressed = null;
-        m_onTurnEndEvents.Clear();
+        m_onConfirmMoveButtonPressed = null;
+        m_onTurnStartEvents.Clear();
+        m_onBattleStartEvents.Clear();
 
         m_registeredAIs = new List<AIController>();
 
@@ -48,21 +51,34 @@ public class BattleController
     }
 
     /// <summary>
+    /// Starts the previously initialized battle.
+    /// </summary>
+    public void StartBattle()
+    {
+        foreach (var battleStartEvent in m_onBattleStartEvents)
+        {
+            battleStartEvent.Value(m_teamThisBattle);
+        }
+
+        StartNextTurn();
+    }
+
+    /// <summary>
     /// Registers the unit.
     /// </summary>
     /// <param name="baseUnit">The base unit.</param>
-    public void RegisterUnit(TeamColor color, BaseUnit baseUnit)
+    public void RegisterUnit(TeamColor teamColor, BaseUnit baseUnit)
     {
-        m_registeredUnits[color].Add(baseUnit);
+        m_registeredUnits[teamColor].Add(baseUnit);
     }
 
     /// <summary>
     /// Removes the registered unit.
     /// </summary>
     /// <param name="baseUnit">The base unit.</param>
-    public void RemoveRegisteredUnit(TeamColor color, BaseUnit baseUnit)
+    public void RemoveRegisteredUnit(TeamColor teamColor, BaseUnit baseUnit)
     {
-        m_registeredUnits[color].Remove(baseUnit);
+        m_registeredUnits[teamColor].Remove(baseUnit);
     }
 
     /// <summary>
@@ -127,11 +143,16 @@ public class BattleController
     /// <summary>
     /// Starts the next turn.
     /// </summary>
-    public void StartNextTurn()
+    private void StartNextTurn()
     {
         Team teamToStartNext = m_teamThisBattle[m_subTurnCount];
 
         Debug.LogFormat("Starting turn for Team: '{0}'", teamToStartNext.m_TeamColor);
+
+        foreach (var turnStartEvent in m_onTurnStartEvents)
+        {
+            turnStartEvent.Value(teamToStartNext);
+        }
 
         List<BaseUnit> unitsToReset = m_registeredUnits[teamToStartNext.m_TeamColor];
 
@@ -157,11 +178,6 @@ public class BattleController
     /// </summary>
     public void EndCurrentTurn()
     {
-        foreach (var onTurnEndEvent in m_onTurnEndEvents)
-        {
-            onTurnEndEvent.Value();
-        }
-
         m_subTurnCount++;
 
         if (m_subTurnCount == m_teamThisBattle.Length)
@@ -174,29 +190,55 @@ public class BattleController
     }
 
     /// <summary>
-    /// Adds the turn end event.
+    /// Adds a turn start event.
     /// </summary>
     /// <param name="key">The key.</param>
-    /// <param name="actionToAdd">The action to add.</param>
-    public void AddTurnEndEvent(string key, Action actionToAdd)
+    /// <param name="actionToAdd">The action that should be called when a turn starts.</param>
+    public void AddBattleStartedEvent(string key, Action<Team[]> actionToAdd)
     {
-        if (m_onTurnEndEvents.ContainsKey(key))
+        if (m_onBattleStartEvents.ContainsKey(key))
         {
             Debug.LogError("Trying to add turn end event with already existing key!");
         }
         else
         {
-            m_onTurnEndEvents.Add(key, actionToAdd);
+            m_onBattleStartEvents.Add(key, actionToAdd);
         }
     }
 
     /// <summary>
-    /// Removes the turn end event.
+    /// Removes a turn start event.
     /// </summary>
     /// <param name="key">The key.</param>
-    public void RemoveTurnEndEvent(string key)
+    public void RemoveBattleStartedEvent(string key)
     {
-        m_onTurnEndEvents.Remove(key);
+        m_onBattleStartEvents.Remove(key);
+    }
+
+    /// <summary>
+    /// Adds a turn start event.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <param name="actionToAdd">The action that should be called when a turn starts.</param>
+    public void AddTurnStartEvent(string key, Action<Team> actionToAdd)
+    {
+        if (m_onTurnStartEvents.ContainsKey(key))
+        {
+            Debug.LogError("Trying to add turn end event with already existing key!");
+        }
+        else
+        {
+            m_onTurnStartEvents.Add(key, actionToAdd);
+        }
+    }
+
+    /// <summary>
+    /// Removes a turn start event.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    public void RemoveTurnStartEvent(string key)
+    {
+        m_onTurnStartEvents.Remove(key);
     }
 
     /// <summary>
@@ -205,7 +247,7 @@ public class BattleController
     /// <param name="actionToCall">The action to call.</param>
     public void AddConfirmMoveButtonPressedListener(Action actionToCall)
     {
-        m_onConfirmButtonPressed = actionToCall;
+        m_onConfirmMoveButtonPressed = actionToCall;
     }
 
     /// <summary>
@@ -213,7 +255,7 @@ public class BattleController
     /// </summary>
     public void RemoveCurrentConfirmMoveButtonPressedListener()
     {
-        m_onConfirmButtonPressed = null;
+        m_onConfirmMoveButtonPressed = null;
     }
 
     /// <summary>
@@ -221,9 +263,9 @@ public class BattleController
     /// </summary>
     public void OnConfirmMove()
     {
-        if (m_onConfirmButtonPressed != null)
+        if (m_onConfirmMoveButtonPressed != null)
         {
-            m_onConfirmButtonPressed();
+            m_onConfirmMoveButtonPressed();
         }
     }
 

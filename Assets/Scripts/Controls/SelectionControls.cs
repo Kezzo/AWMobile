@@ -61,6 +61,7 @@ public class SelectionControls : MonoBehaviour
                         normal = {textColor = Color.black},
                         alignment = TextAnchor.MiddleCenter
                     };
+
                     Handles.Label(baseMapTileOnPath.transform.position + Vector3.up + Vector3.back,
                         string.Format("C{0} P{1}", node.Value.CostToMoveToNode, node.Value.NodePriority), guiStyle);
                 }
@@ -73,7 +74,7 @@ public class SelectionControls : MonoBehaviour
     {
         ControllerContainer.MonoBehaviourRegistry.TryGet(out m_battlegroundUi);
 
-        ControllerContainer.BattleController.AddTurnEndEvent("DeselectUnit", DeselectCurrentUnit);
+        ControllerContainer.BattleController.AddTurnStartEvent("DeselectUnit", teamPlayingNext => DeselectCurrentUnit()); 
     }
 
     // Update is called once per frame
