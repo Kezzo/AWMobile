@@ -13,6 +13,12 @@ public class BaseMapTileGroupEditor : Editor
     {
         base.OnInspectorGUI();
 
+        if (Application.isPlaying)
+        {
+            // Only update the MapTiles when modifying it in the editor.
+            return;
+        }
+
         if (Selection.gameObjects.Length == 0)
         {
             return;

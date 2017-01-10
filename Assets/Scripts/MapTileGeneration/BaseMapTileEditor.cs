@@ -13,6 +13,12 @@ public class BaseMapTileEditor : Editor
     {
         base.OnInspectorGUI();
 
+        if (Application.isPlaying)
+        {
+            // Only update the MapTile and unit when modifying it in the editor.
+            return;
+        }
+
         if (Selection.gameObjects.Length == 0)
         {
             return;
