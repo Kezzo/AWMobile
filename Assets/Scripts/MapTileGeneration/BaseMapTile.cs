@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 #pragma warning disable 0649
@@ -60,7 +59,7 @@ public class BaseMapTile : MonoBehaviour
                 return;
             }
 
-            Handles.Label(this.transform.position + Vector3.up,
+            UnityEditor.Handles.Label(this.transform.position + Vector3.up,
                 string.Format("X{0}, Y{1}", SimplifiedMapPosition.x, SimplifiedMapPosition.y), new GUIStyle
                 {
                     alignment = TextAnchor.MiddleCenter,
