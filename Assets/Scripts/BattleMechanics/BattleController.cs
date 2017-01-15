@@ -20,6 +20,8 @@ public class BattleController
     private Dictionary<TeamColor, List<BaseUnit>> m_registeredUnits;
     public Dictionary<TeamColor, List<BaseUnit>> RegisteredUnits { get { return m_registeredUnits; } }
 
+    private List<int> m_uniqueUnitIdents;
+
     private List<AIController> m_registeredAIs;
 
     /// <summary>
@@ -33,6 +35,8 @@ public class BattleController
         m_turnCount = 0;
 
         m_registeredUnits = new Dictionary<TeamColor, List<BaseUnit>>();
+        m_uniqueUnitIdents = new List<int>();
+
         m_onConfirmMoveButtonPressed = null;
         m_onTurnStartEvents.Clear();
         m_onBattleStartEvents.Clear();
@@ -64,17 +68,26 @@ public class BattleController
     }
 
     /// <summary>
-    /// Registers the unit.
+    /// Registers a unit and returns a unique id for the unit, so we can always identify a certain unit.
     /// </summary>
+    /// <param name="teamColor">Color of the team.</param>
     /// <param name="baseUnit">The base unit.</param>
-    public void RegisterUnit(TeamColor teamColor, BaseUnit baseUnit)
+    /// <returns></returns>
+    public int RegisterUnit(TeamColor teamColor, BaseUnit baseUnit)
     {
         m_registeredUnits[teamColor].Add(baseUnit);
+
+        int unitIdent = m_uniqueUnitIdents.Count > 0 ? m_uniqueUnitIdents[m_uniqueUnitIdents.Count - 1] + 1 : 0;
+
+        m_uniqueUnitIdents.Add(unitIdent);
+
+        return unitIdent;
     }
 
     /// <summary>
     /// Removes the registered unit.
     /// </summary>
+    /// <param name="teamColor">Color of the team.</param>
     /// <param name="baseUnit">The base unit.</param>
     public void RemoveRegisteredUnit(TeamColor teamColor, BaseUnit baseUnit)
     {

@@ -31,6 +31,8 @@ public class BaseUnit : MonoBehaviour
     public UnitType UnitType { get; private set; }
     public bool UnitHasMovedThisRound { get; private set; }
 
+    public int UniqueIdent { get; private set; }
+
     private bool m_unitHasAttackedThisRound;
     public bool UnitHasAttackedThisRound
     {
@@ -83,7 +85,7 @@ public class BaseUnit : MonoBehaviour
 
         if (Application.isPlaying)
         {
-            ControllerContainer.BattleController.RegisterUnit(TeamColor, this);
+            UniqueIdent = ControllerContainer.BattleController.RegisterUnit(TeamColor, this);
             m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
         }
 
@@ -240,7 +242,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="routeToDestination">The route to destination.</param>
     /// <param name="onUnitMovedToDestinationCallback">The on unit moved to destination callback.</param>
-    public void DisplayRouteToDestination(List<Vector2> routeToDestination, Action onUnitMovedToDestinationCallback)
+    public void DisplayRouteToDestination(List<Vector2> routeToDestination, Action<int> onUnitMovedToDestinationCallback)
     {
         HideAllRouteMarker();
         SetWalkableTileFieldVisibiltyTo(true);
@@ -266,7 +268,7 @@ public class BaseUnit : MonoBehaviour
             SetWalkableTileFieldVisibiltyTo(false);
             ClearAttackableUnits(m_attackableUnits);
 
-            StartCoroutine(MoveAlongRouteCoroutine(routeToDestination, () =>
+            MoveAlongRoute(routeToDestination, () =>
             {
                 if (TryToDisplayActionOnUnitsInRange(out m_attackableUnits))
                 {
@@ -281,11 +283,11 @@ public class BaseUnit : MonoBehaviour
 
                     if (onUnitMovedToDestinationCallback != null)
                     {
-                        onUnitMovedToDestinationCallback();
+                        onUnitMovedToDestinationCallback(UniqueIdent);
                     }
                 }
                 
-            }));
+            });
         });
     }
 
@@ -367,13 +369,15 @@ public class BaseUnit : MonoBehaviour
     }
 
     /// <summary>
-    /// Moves the along route.
+    /// Moves the along route. This method will also instantly set the unit position to the destination node to avoid units standing on the same position.
     /// </summary>
     /// <param name="route">The route.</param>
     /// <param name="onMoveFinished">The on move finished.</param>
     public void MoveAlongRoute(List<Vector2> route, Action onMoveFinished)
     {
-        StartCoroutine(MoveAlongRouteCoroutine(route,onMoveFinished));
+        m_currentSimplifiedPosition = route[route.Count - 1];
+
+        StartCoroutine(MoveAlongRouteCoroutine(route, onMoveFinished));
     }
 
     /// <summary>
@@ -414,7 +418,6 @@ public class BaseUnit : MonoBehaviour
 
             if (transform.position == targetWorldPosition)
             {
-                m_currentSimplifiedPosition = mapTile.SimplifiedMapPosition;
                 yield break;
             }
 

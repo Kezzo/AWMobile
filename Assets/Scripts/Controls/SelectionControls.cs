@@ -156,10 +156,13 @@ public class SelectionControls : MonoBehaviour
 
     /// <summary>
     /// De-Selects the current unit.
+    /// The input parameter unitident exists to be able to only de-select the current unit, if it has the given unit ident.
+    /// This is for example needed for the case where a unit is moving and when it reaches its destination would call this method.
+    /// If the user selects another unit in the meantime, we can make sure that the current unit is not de-selected because it has a different unit ident.
     /// </summary>
-    private void DeselectCurrentUnit()
+    private void DeselectCurrentUnit(int unitIdent = -1)
     {
-        if (m_currentlySelectedUnit == null)
+        if (m_currentlySelectedUnit == null || unitIdent >= 0 && m_currentlySelectedUnit.UniqueIdent != unitIdent)
         {
             return;
         }
