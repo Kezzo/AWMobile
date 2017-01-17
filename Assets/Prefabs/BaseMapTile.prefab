@@ -150,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 1323773061353520}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
   m_Children: []
   m_Father: {fileID: 4822900489766150}
   m_RootOrder: 0
@@ -163,7 +163,7 @@ Transform:
   m_GameObject: {fileID: 1314506070715280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
   m_Children: []
   m_Father: {fileID: 4822900489766150}
   m_RootOrder: 2
@@ -191,7 +191,7 @@ Transform:
   m_GameObject: {fileID: 1492244914234912}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
   m_Children: []
   m_Father: {fileID: 4822900489766150}
   m_RootOrder: 1
@@ -204,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 1920910123957894}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
   m_Children: []
   m_Father: {fileID: 4822900489766150}
   m_RootOrder: 3
@@ -440,9 +440,8 @@ MonoBehaviour:
   m_mapTileType: 0
   m_unitOnThisTile:
     m_UnitType: 0
-    m_Team:
-      m_TeamColor: 0
-      m_IsPlayersTeam: 0
+    m_TeamColor: 0
+    m_Orientation: 0
   m_unitRoot: {fileID: 4409293562262158}
   m_movementField: {fileID: 1323773061353520}
   m_routeMarkerMappings:
