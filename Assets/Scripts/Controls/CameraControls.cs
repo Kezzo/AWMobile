@@ -26,6 +26,8 @@ public class CameraControls : MonoBehaviour
 
     private Vector3 m_lastMousePosition;
     private bool m_draggingTop;
+    private float m_cameraStartPosZ;
+    private float m_ZoomLevel;
 
     private bool m_startedDragging;
     public bool IsDragging { get; private set; }
@@ -62,14 +64,16 @@ public class CameraControls : MonoBehaviour
         {
             CameraLookAtWorldCenter();
         }
+        m_cameraStartPosZ = m_cameraToControl.transform.localPosition.z;
     }
 
     /// <summary>
     /// Listens to the mouse button input (touch also works) and handles a selected camera movement type.
     /// </summary>
-    private void Update ()
+    private void Update()
     {
         m_cameraUpdateAction();
+        HandleZoomPinch();
     }
 
     /// <summary>
@@ -77,22 +81,13 @@ public class CameraControls : MonoBehaviour
     /// </summary>
     private void HandleScrollCamera()
     {
-        if (Input.GetMouseButton(0))
+#if UNITY_EDITOR
+        if (Input.touchCount < 1 && Input.GetMouseButton(0))
         {
             Vector3 mouseDelta = m_lastMousePosition - Input.mousePosition;
-
             if (m_startedDragging)
             {
-                if (!IsDragging && (Mathf.Abs(mouseDelta.x) > 1f || Mathf.Abs(mouseDelta.y) > 1f))
-                {
-                    IsDragging = true;
-                }
-
-                float yPosition = m_cameraMover.position.y;
-
                 m_cameraMover.localPosition += new Vector3(mouseDelta.x * m_scrollSpeed, mouseDelta.y * m_scrollSpeed, 0f);
-
-                m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
             }
 
             m_lastMousePosition = Input.mousePosition;
@@ -100,11 +95,18 @@ public class CameraControls : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            //Debug.Log("Stopped Dragging");
-
-            IsDragging = false;
             m_startedDragging = false;
             m_lastMousePosition = Vector3.zero;
+        }
+#endif
+        if(Input.touchCount == 1)
+        {
+            Touch theTouch = Input.GetTouch(0);
+            if (theTouch.phase == TouchPhase.Moved)
+            {
+                m_cameraMover.localPosition += new Vector3(-theTouch.deltaPosition.x * m_scrollSpeed, -theTouch.deltaPosition.y * m_scrollSpeed, 0f);
+            }
+
         }
     }
 
@@ -154,6 +156,36 @@ public class CameraControls : MonoBehaviour
             IsDragging = false;
             m_startedDragging = false;
             m_lastMousePosition = Vector3.zero;
+        }
+    }
+
+    /// <summary>
+    /// Handles the zoom pinch.
+    /// </summary>
+    private void HandleZoomPinch()
+    {
+        if (Input.touchCount == 2)
+        {
+            Touch tZero = Input.GetTouch(0);
+            Touch tOne = Input.GetTouch(1);
+
+            Vector2 tZeroPrevPos = tZero.position - tZero.deltaPosition;
+            Vector2 tOnePrevPos = tOne.position - tOne.deltaPosition;
+
+            float prevTouchDeltaMag = (tZeroPrevPos - tOnePrevPos).magnitude;
+            float touchDeltaMag = (tZero.position - tOne.position).magnitude;
+
+            float deltaMagDiff = prevTouchDeltaMag - touchDeltaMag;
+            if (m_cameraToControl.orthographic)
+            {
+                m_cameraToControl.orthographicSize += deltaMagDiff * Time.deltaTime;
+                m_cameraToControl.orthographicSize = Mathf.Clamp(m_cameraToControl.orthographicSize, .5f, 15.0f);
+            }
+            else
+            {
+                m_ZoomLevel = Mathf.Clamp(m_ZoomLevel + deltaMagDiff * .05f, -10.0f, 15.0f);
+                m_cameraToControl.transform.localPosition = new Vector3(CameraToControl.transform.localPosition.x, CameraToControl.transform.localPosition.y, m_cameraStartPosZ - m_ZoomLevel);
+            }
         }
     }
 
