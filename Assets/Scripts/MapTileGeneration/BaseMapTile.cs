@@ -154,6 +154,7 @@ public class BaseMapTile : MonoBehaviour
             m_currentInstantiatedMapTile = Instantiate(mapTilePrefabToInstantiate);
             m_currentInstantiatedMapTile.transform.SetParent(this.transform);
             m_currentInstantiatedMapTile.transform.localPosition = Vector3.zero;
+            m_currentInstantiatedMapTile.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
             m_currentInstantiatedMapTileType = m_mapTileType;
             m_mapTileData.m_MapTileType = m_mapTileType;
@@ -180,6 +181,7 @@ public class BaseMapTile : MonoBehaviour
             m_currentInstantiatedUnitGameObject = Instantiate(unitPrefabToInstantiate);
             m_currentInstantiatedUnitGameObject.transform.SetParent(m_unitRoot);
             m_currentInstantiatedUnitGameObject.transform.localPosition = Vector3.zero;
+            m_currentInstantiatedMapTile.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
             BaseUnit baseUnit = m_currentInstantiatedUnitGameObject.GetComponent<BaseUnit>();
 

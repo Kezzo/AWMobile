@@ -25,7 +25,6 @@ public class CameraControls : MonoBehaviour
     private Transform m_cameraMover;
 
     private Vector3 m_lastMousePosition;
-    private bool m_draggingTop;
     private float m_cameraStartPosZ;
     private float m_ZoomLevel;
 
@@ -64,6 +63,7 @@ public class CameraControls : MonoBehaviour
         {
             CameraLookAtWorldCenter();
         }
+
         m_cameraStartPosZ = m_cameraToControl.transform.localPosition.z;
     }
 
