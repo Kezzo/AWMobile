@@ -25,8 +25,9 @@ public class CameraControls : MonoBehaviour
     private Transform m_cameraMover;
 
     private Vector3 m_lastMousePosition;
+    private Vector2 m_touchPositionLastFrame;
     private float m_cameraStartPosZ;
-    private float m_ZoomLevel;
+    private float m_zoomLevel;
 
     private bool m_startedDragging;
     public bool IsDragging { get; private set; }
@@ -85,9 +86,16 @@ public class CameraControls : MonoBehaviour
         if (Input.touchCount < 1 && Input.GetMouseButton(0))
         {
             Vector3 mouseDelta = m_lastMousePosition - Input.mousePosition;
+
             if (m_startedDragging)
             {
+                if (!IsDragging && (Mathf.Abs(mouseDelta.x) > 0.1f || Mathf.Abs(mouseDelta.y) > 0.1f))
+                {
+                    IsDragging = true;
+                }
+                float yPosition = m_cameraMover.position.y;
                 m_cameraMover.localPosition += new Vector3(mouseDelta.x * m_scrollSpeed, mouseDelta.y * m_scrollSpeed, 0f);
+                m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
             }
 
             m_lastMousePosition = Input.mousePosition;
@@ -96,17 +104,32 @@ public class CameraControls : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             m_startedDragging = false;
+            IsDragging = false;
             m_lastMousePosition = Vector3.zero;
         }
 #endif
-        if(Input.touchCount == 1)
+        if (Input.touchCount == 1)
         {
             Touch theTouch = Input.GetTouch(0);
-            if (theTouch.phase == TouchPhase.Moved)
+            if (theTouch.phase == TouchPhase.Began)
             {
-                m_cameraMover.localPosition += new Vector3(-theTouch.deltaPosition.x * m_scrollSpeed, -theTouch.deltaPosition.y * m_scrollSpeed, 0f);
+                m_touchPositionLastFrame = theTouch.position;
             }
+            else if (theTouch.phase == TouchPhase.Moved)
+            {
+                Vector2 touchDelta = m_touchPositionLastFrame - theTouch.position;
+                IsDragging = true;
+                float yPosition = m_cameraMover.position.y;
 
+                m_cameraMover.localPosition += new Vector3(touchDelta.x * m_scrollSpeed, touchDelta.y * m_scrollSpeed, 0f);
+                m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
+                m_touchPositionLastFrame = theTouch.position;
+            }
+            else if (theTouch.phase == TouchPhase.Ended)
+            {
+                IsDragging = false;
+                m_touchPositionLastFrame = Vector2.zero;
+            }
         }
     }
 
@@ -166,25 +189,25 @@ public class CameraControls : MonoBehaviour
     {
         if (Input.touchCount == 2)
         {
-            Touch tZero = Input.GetTouch(0);
-            Touch tOne = Input.GetTouch(1);
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
 
-            Vector2 tZeroPrevPos = tZero.position - tZero.deltaPosition;
-            Vector2 tOnePrevPos = tOne.position - tOne.deltaPosition;
+            Vector2 touchZeroPreviousPosition = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePreviousPosition = touchOne.position - touchOne.deltaPosition;
 
-            float prevTouchDeltaMag = (tZeroPrevPos - tOnePrevPos).magnitude;
-            float touchDeltaMag = (tZero.position - tOne.position).magnitude;
+            float previousTouchDeltaMagnitude = (touchZeroPreviousPosition - touchOnePreviousPosition).magnitude;
+            float touchDeltaMagnitude = (touchZero.position - touchOne.position).magnitude;
 
-            float deltaMagDiff = prevTouchDeltaMag - touchDeltaMag;
+            float deltaMagnitudeDifference = previousTouchDeltaMagnitude - touchDeltaMagnitude;
             if (m_cameraToControl.orthographic)
             {
-                m_cameraToControl.orthographicSize += deltaMagDiff * Time.deltaTime;
+                m_cameraToControl.orthographicSize += deltaMagnitudeDifference;
                 m_cameraToControl.orthographicSize = Mathf.Clamp(m_cameraToControl.orthographicSize, .5f, 15.0f);
             }
             else
             {
-                m_ZoomLevel = Mathf.Clamp(m_ZoomLevel + deltaMagDiff * .05f, -10.0f, 15.0f);
-                m_cameraToControl.transform.localPosition = new Vector3(CameraToControl.transform.localPosition.x, CameraToControl.transform.localPosition.y, m_cameraStartPosZ - m_ZoomLevel);
+                m_zoomLevel = Mathf.Clamp(m_zoomLevel + deltaMagnitudeDifference * .05f, -10.0f, 15.0f);
+                m_cameraToControl.transform.localPosition = new Vector3(CameraToControl.transform.localPosition.x, CameraToControl.transform.localPosition.y, m_cameraStartPosZ - m_zoomLevel);
             }
         }
     }
