@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityStandardAssets.CinematicEffects;
 
 /// <summary>
 /// Controls the camera movement.
@@ -23,6 +24,9 @@ public class CameraControls : MonoBehaviour
 
     [SerializeField]
     private Transform m_cameraMover;
+
+    [SerializeField]
+    private MotionBlur m_motionBlur;
 
     private Vector3 m_lastMousePosition;
     private Vector2 m_touchPositionLastFrame;
@@ -75,6 +79,8 @@ public class CameraControls : MonoBehaviour
     {
         m_cameraUpdateAction();
         HandleZoomPinch();
+
+        m_motionBlur.enabled = IsDragging;
     }
 
     /// <summary>
@@ -82,32 +88,21 @@ public class CameraControls : MonoBehaviour
     /// </summary>
     private void HandleScrollCamera()
     {
-#if UNITY_EDITOR
-        if (Input.touchCount < 1 && Input.GetMouseButton(0))
+        if (Application.platform == RuntimePlatform.WindowsEditor)
         {
-            Vector3 mouseDelta = m_lastMousePosition - Input.mousePosition;
-
-            if (m_startedDragging)
-            {
-                if (!IsDragging && (Mathf.Abs(mouseDelta.x) > 0.1f || Mathf.Abs(mouseDelta.y) > 0.1f))
-                {
-                    IsDragging = true;
-                }
-                float yPosition = m_cameraMover.position.y;
-                m_cameraMover.localPosition += new Vector3(mouseDelta.x * m_scrollSpeed, mouseDelta.y * m_scrollSpeed, 0f);
-                m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
-            }
-
-            m_lastMousePosition = Input.mousePosition;
-            m_startedDragging = true;
+            ScrollCameraInEditor();
         }
-        else if (Input.GetMouseButtonUp(0))
+        else
         {
-            m_startedDragging = false;
-            IsDragging = false;
-            m_lastMousePosition = Vector3.zero;
+            ScrollCameraOnDevice();
         }
-#endif
+    }
+
+    /// <summary>
+    /// Scrolls the camera on a device (Android/iOS)
+    /// </summary>
+    private void ScrollCameraOnDevice()
+    {
         if (Input.touchCount == 1)
         {
             Touch theTouch = Input.GetTouch(0);
@@ -130,6 +125,39 @@ public class CameraControls : MonoBehaviour
                 IsDragging = false;
                 m_touchPositionLastFrame = Vector2.zero;
             }
+        }
+    }
+
+    /// <summary>
+    /// Scrolls the camera in the editor.
+    /// </summary>
+    private void ScrollCameraInEditor()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 mouseDelta = m_lastMousePosition - Input.mousePosition;
+
+            if (m_startedDragging)
+            {
+                if (!IsDragging && (Mathf.Abs(mouseDelta.x) > 0.1f || Mathf.Abs(mouseDelta.y) > 0.1f))
+                {
+                    IsDragging = true;
+                }
+
+                float yPosition = m_cameraMover.position.y;
+
+                m_cameraMover.localPosition += new Vector3(mouseDelta.x * m_scrollSpeed, mouseDelta.y * m_scrollSpeed, 0f);
+                m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
+            }
+
+            m_lastMousePosition = Input.mousePosition;
+            m_startedDragging = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            IsDragging = false;
+            m_startedDragging = false;
+            m_lastMousePosition = Vector3.zero;
         }
     }
 
