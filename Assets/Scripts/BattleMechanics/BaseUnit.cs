@@ -18,9 +18,6 @@ public class BaseUnit : MonoBehaviour
     private float m_worldMovementSpeed;
 
     [SerializeField]
-    private MeshFilter m_meshFilter;
-
-    [SerializeField]
     private MeshRenderer m_meshRenderer;
 
     [SerializeField]
@@ -118,12 +115,12 @@ public class BaseUnit : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the team color uv mesh.
+    /// Sets the team color material.
     /// </summary>
-    /// <param name="mesh">The mesh.</param>
-    public void SetTeamColorUVMesh(Mesh mesh)
+    /// <param name="material">The material.</param>
+    public void SetTeamColorMaterial(Material material)
     {
-        m_meshFilter.mesh = mesh;
+        m_meshRenderer.material = material;
     }
 
     /// <summary>

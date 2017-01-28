@@ -46,13 +46,13 @@ public class MapTileGeneratorEditor : MonoBehaviour
         public UnitType m_UnitType;
         public GameObject m_UnitPrefab;
 
-        public List<TeamColorUVCoordinateAssignment> m_ColorUvCoordinateAssignments;
+        public List<TeamMaterialAssignment> m_ColorUvCoordinateAssignments;
 
         [Serializable]
-        public class TeamColorUVCoordinateAssignment
+        public class TeamMaterialAssignment
         {
             public TeamColor m_TeamColor;
-            public Mesh m_Mesh;
+            public Material m_Material;
         }
     }
 
@@ -239,22 +239,22 @@ public class MapTileGeneratorEditor : MonoBehaviour
     /// <param name="unitType">Type of the unit.</param>
     /// <param name="teamColor">Color of the team.</param>
     /// <returns></returns>
-    public Mesh GetUVCoordinateMeshForTeamColor(UnitType unitType, TeamColor teamColor)
+    public Material GetMaterialForTeamColor(UnitType unitType, TeamColor teamColor)
     {
-        Mesh meshToReturn = null;
+        Material materialToReturn = null;
         UnitTypeAssignment unitTypeAssignment = m_unitTypeAssignmentList.Find(prefab => prefab.m_UnitType == unitType);
 
         if (unitTypeAssignment != null)
         {
-            UnitTypeAssignment.TeamColorUVCoordinateAssignment teamColorUvCoordinateAssignment =
-                unitTypeAssignment.m_ColorUvCoordinateAssignments.Find(teamUVMesh => teamUVMesh.m_TeamColor == teamColor);
+            UnitTypeAssignment.TeamMaterialAssignment teamMaterialAssignment =
+                unitTypeAssignment.m_ColorUvCoordinateAssignments.Find(material => material.m_TeamColor == teamColor);
 
-            if (teamColorUvCoordinateAssignment != null)
+            if (teamMaterialAssignment != null)
             {
-                meshToReturn = teamColorUvCoordinateAssignment.m_Mesh;
+                materialToReturn = teamMaterialAssignment.m_Material;
             }
         }
 
-        return meshToReturn;
+        return materialToReturn;
     }
 }
