@@ -70,6 +70,16 @@ public class Root : MonoBehaviour
             {
                 m_TeamColor = TeamColor.Red,
                 m_IsPlayersTeam = false
+            },
+            new Team
+            {
+                m_TeamColor = TeamColor.Yellow,
+                m_IsPlayersTeam = false
+            },
+            new Team
+            {
+                m_TeamColor = TeamColor.Green,
+                m_IsPlayersTeam = false
             }
         });
 
