@@ -24,6 +24,9 @@ public class BaseUnit : MonoBehaviour
     private UnitStatManagement m_statManagement;
     public UnitStatManagement StatManagement { get { return m_statManagement; } }
 
+    [SerializeField]
+    private Color m_disabledColor;
+
     public TeamColor TeamColor { get; private set; }
     public UnitType UnitType { get; private set; }
     public bool UnitHasMovedThisRound { get; private set; }
@@ -46,7 +49,7 @@ public class BaseUnit : MonoBehaviour
 
             m_unitHasAttackedThisRound = value;
 
-            m_materialPropertyBlock.SetColor("_Color", value ? Color.gray : Color.white);
+            m_materialPropertyBlock.SetColor("_Color", value ? m_disabledColor : Color.white);
 
             m_meshRenderer.SetPropertyBlock(m_materialPropertyBlock);
         }
