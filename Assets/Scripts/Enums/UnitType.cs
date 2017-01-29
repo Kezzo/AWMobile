@@ -1,5 +1,6 @@
 ﻿public enum UnitType
 {
     None = 0,
-    BasicTank = 1,
+    BattleTank = 1,
+    AntiAirTank = 2
 }

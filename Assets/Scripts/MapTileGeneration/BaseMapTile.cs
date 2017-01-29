@@ -174,7 +174,7 @@ public class BaseMapTile : MonoBehaviour
     private void InstantiateUnitPrefab(Vector2 simplifiedPosition)
     {
         // Instantiate UnitType
-        GameObject unitPrefabToInstantiate = m_mapTileGeneratorEditor.GetPrefabOfUnitType(m_unitOnThisTile.m_UnitType);
+        GameObject unitPrefabToInstantiate = m_mapTileGeneratorEditor.BaseUnitPrefab;
 
         if (unitPrefabToInstantiate != null)
         {
@@ -187,7 +187,8 @@ public class BaseMapTile : MonoBehaviour
 
             if (baseUnit != null)
             {
-                baseUnit.Initialize(m_unitOnThisTile, simplifiedPosition);
+                baseUnit.Initialize(m_unitOnThisTile, m_mapTileGeneratorEditor.GetMeshOfUnitType(m_unitOnThisTile.m_UnitType), 
+                    simplifiedPosition);
 
                 baseUnit.SetTeamColorMaterial(m_mapTileGeneratorEditor.GetMaterialForTeamColor(
                     m_unitOnThisTile.m_UnitType, m_unitOnThisTile.m_TeamColor));

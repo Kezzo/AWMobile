@@ -368,6 +368,18 @@ MonoBehaviour:
     m_AttackableUnitMetaTypes: 0000000002000000
     m_Damage: 5
     m_Health: 10
+  - m_UnitType: 2
+    m_UnitMetaType: 0
+    m_MovementRangePerRound: 3
+    m_WalkableMapTileTypes:
+    - m_MapTileType: 1
+      m_MovementCost: 1
+    - m_MapTileType: 3
+      m_MovementCost: 3
+    m_AttackRange: 4
+    m_AttackableUnitMetaTypes: 01000000
+    m_Damage: 10
+    m_Health: 10
 --- !u!114 &694809060
 MonoBehaviour:
   m_ObjectHideFlags: 0

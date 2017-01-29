@@ -18,6 +18,9 @@ public class BaseUnit : MonoBehaviour
     private float m_worldMovementSpeed;
 
     [SerializeField]
+    private MeshFilter m_meshFilter;
+
+    [SerializeField]
     private MeshRenderer m_meshRenderer;
 
     [SerializeField]
@@ -74,13 +77,15 @@ public class BaseUnit : MonoBehaviour
     /// Initializes the specified team.
     /// </summary>
     /// <param name="unitData">The unit data.</param>
+    /// <param name="unitMesh">The unit mesh.</param>
     /// <param name="initialSimplifiedPosition">The initial simplified position.</param>
-    public void Initialize(MapGenerationData.Unit unitData, Vector2 initialSimplifiedPosition)
+    public void Initialize(MapGenerationData.Unit unitData, Mesh unitMesh, Vector2 initialSimplifiedPosition)
     {
         TeamColor = unitData.m_TeamColor;
         UnitType = unitData.m_UnitType;
         UnitHasMovedThisRound = false;
 
+        m_meshFilter.mesh = unitMesh;
         m_currentSimplifiedPosition = initialSimplifiedPosition;
 
         if (Application.isPlaying)

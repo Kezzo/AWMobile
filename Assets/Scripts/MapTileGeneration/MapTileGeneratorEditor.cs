@@ -28,6 +28,10 @@ public class MapTileGeneratorEditor : MonoBehaviour
     [SerializeField]
     private Transform m_levelRoot;
 
+    [SerializeField]
+    private GameObject m_baseUnitPrefab;
+    public GameObject BaseUnitPrefab { get { return m_baseUnitPrefab; } }
+
 #pragma warning disable 649
 
     [Serializable]
@@ -44,7 +48,7 @@ public class MapTileGeneratorEditor : MonoBehaviour
     public class UnitTypeAssignment
     {
         public UnitType m_UnitType;
-        public GameObject m_UnitPrefab;
+        public Mesh m_UnitMesh;
 
         public List<TeamMaterialAssignment> m_ColorUvCoordinateAssignments;
 
@@ -222,15 +226,15 @@ public class MapTileGeneratorEditor : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a prefab from the UnitTypeAssignment based on the given UnitType.
+    /// Returns a mesh from the UnitTypeAssignment based on the given UnitType.
     /// </summary>
     /// <param name="unitType">Type of the unit.</param>
     /// <returns></returns>
-    public GameObject GetPrefabOfUnitType(UnitType unitType)
+    public Mesh GetMeshOfUnitType(UnitType unitType)
     {
         UnitTypeAssignment unitTypeAssignment = m_unitTypeAssignmentList.Find(prefab => prefab.m_UnitType == unitType);
 
-        return unitTypeAssignment == null ? null : unitTypeAssignment.m_UnitPrefab;
+        return unitTypeAssignment == null ? null : unitTypeAssignment.m_UnitMesh;
     }
 
     /// <summary>
