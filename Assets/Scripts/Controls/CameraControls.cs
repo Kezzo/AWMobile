@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CinematicEffects;
 
@@ -19,6 +20,18 @@ public class CameraControls : MonoBehaviour
     private float m_scrollSpeed;
 
     [SerializeField]
+    [Range(0.05f, 0.2f)]
+    private float m_zoomSpeed;
+
+    [SerializeField]
+    [Range(0.0f,20.0f)]
+    private float m_maxZoomLevel;
+
+    [SerializeField]
+    [Range(-10.0f,0.0f)]
+    private float m_minZoomLevel;
+
+    [SerializeField]
     private Camera m_cameraToControl;
     public Camera CameraToControl { get { return m_cameraToControl; } }
 
@@ -32,6 +45,7 @@ public class CameraControls : MonoBehaviour
     private Vector2 m_touchPositionLastFrame;
     private float m_cameraStartPosZ;
     private float m_zoomLevel;
+    private int m_fingersOnScreenLastFrame;
 
     private bool m_startedDragging;
     public bool IsDragging { get; private set; }
@@ -106,7 +120,7 @@ public class CameraControls : MonoBehaviour
         if (Input.touchCount == 1)
         {
             Touch theTouch = Input.GetTouch(0);
-            if (theTouch.phase == TouchPhase.Began)
+            if (theTouch.phase == TouchPhase.Began || m_fingersOnScreenLastFrame > 1)
             {
                 m_touchPositionLastFrame = theTouch.position;
             }
@@ -116,7 +130,9 @@ public class CameraControls : MonoBehaviour
                 IsDragging = true;
                 float yPosition = m_cameraMover.position.y;
 
-                m_cameraMover.localPosition += new Vector3(touchDelta.x * m_scrollSpeed, touchDelta.y * m_scrollSpeed, 0f);
+                //Changes the speed of the camera movement, depending on zoomlevel
+                float zoomScrollModifier = (m_zoomLevel - m_minZoomLevel) / (m_maxZoomLevel - m_minZoomLevel) + .3f;
+                m_cameraMover.localPosition += new Vector3(touchDelta.x * m_scrollSpeed * zoomScrollModifier, touchDelta.y * m_scrollSpeed * zoomScrollModifier, 0f);
                 m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
                 m_touchPositionLastFrame = theTouch.position;
             }
@@ -126,6 +142,7 @@ public class CameraControls : MonoBehaviour
                 m_touchPositionLastFrame = Vector2.zero;
             }
         }
+        m_fingersOnScreenLastFrame = Input.touchCount;
     }
 
     /// <summary>
@@ -227,16 +244,48 @@ public class CameraControls : MonoBehaviour
             float touchDeltaMagnitude = (touchZero.position - touchOne.position).magnitude;
 
             float deltaMagnitudeDifference = previousTouchDeltaMagnitude - touchDeltaMagnitude;
-            if (m_cameraToControl.orthographic)
+            ChangeZoomLevel(deltaMagnitudeDifference);
+        }
+    }
+
+    /// <summary>
+    /// Changes the zoom level.
+    /// </summary>
+    private void ChangeZoomLevel(float zoomDelta)
+    {
+        if (m_cameraToControl.orthographic)
+        {
+            m_cameraToControl.orthographicSize += zoomDelta;
+            m_cameraToControl.orthographicSize = Mathf.Clamp(m_cameraToControl.orthographicSize, .5f, 15.0f);
+        }
+        else
+        {
+            m_zoomLevel = Mathf.Clamp(m_zoomLevel + zoomDelta * m_zoomSpeed, m_minZoomLevel, m_maxZoomLevel);
+            m_cameraToControl.transform.localPosition = new Vector3(CameraToControl.transform.localPosition.x, CameraToControl.transform.localPosition.y, m_cameraStartPosZ - m_zoomLevel);
+        }
+    }
+
+    public void CameraLookAtPosition(Vector3 targetPos, float time)
+    {
+        StartCoroutine(MoveCameraToPoint(targetPos, time));
+    }
+
+    private IEnumerator MoveCameraToPoint(Vector3 targetPos, float time)
+    {
+        float timer = 0.0f;
+        float timeFactor = 1 / time;
+
+        Vector3 moverPos = m_cameraMover.position;
+        while (true)
+        {
+            m_cameraMover.position = Vector3.Slerp(moverPos, new Vector3(targetPos.x, moverPos.y, targetPos.z), Mathf.Clamp01(timer * timeFactor));
+            m_cameraMover.position = new Vector3(m_cameraMover.position.x, moverPos.y, m_cameraMover.position.z);
+            timer += Time.deltaTime;
+            if (timer >= time)
             {
-                m_cameraToControl.orthographicSize += deltaMagnitudeDifference;
-                m_cameraToControl.orthographicSize = Mathf.Clamp(m_cameraToControl.orthographicSize, .5f, 15.0f);
+                yield break;
             }
-            else
-            {
-                m_zoomLevel = Mathf.Clamp(m_zoomLevel + deltaMagnitudeDifference * .05f, -10.0f, 15.0f);
-                m_cameraToControl.transform.localPosition = new Vector3(CameraToControl.transform.localPosition.x, CameraToControl.transform.localPosition.y, m_cameraStartPosZ - m_zoomLevel);
-            }
+            yield return null;
         }
     }
 

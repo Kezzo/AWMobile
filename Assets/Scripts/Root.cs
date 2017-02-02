@@ -35,7 +35,7 @@ public class Root : MonoBehaviour
         Application.targetFrameRate = 30;
         Screen.SetResolution((int) (Screen.width * 0.7f), (int) (Screen.height * 0.7f), true);
 
-        Input.multiTouchEnabled = false;
+        Input.multiTouchEnabled = true;
 
         if (m_instance == null)
         {
