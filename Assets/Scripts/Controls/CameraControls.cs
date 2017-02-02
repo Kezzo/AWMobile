@@ -24,11 +24,11 @@ public class CameraControls : MonoBehaviour
     private float m_zoomSpeed;
 
     [SerializeField]
-    [Range(0.0f,20.0f)]
+    [Range(0.0f, 20.0f)]
     private float m_maxZoomLevel;
 
     [SerializeField]
-    [Range(-10.0f,0.0f)]
+    [Range(-10.0f, 0.0f)]
     private float m_minZoomLevel;
 
     [SerializeField]
@@ -265,11 +265,30 @@ public class CameraControls : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Moves the Camera to look at position.
+    /// </summary>
+    /// <param name="targetPos">The target position.</param>
+    /// <param name="time">The time.</param>
     public void CameraLookAtPosition(Vector3 targetPos, float time)
     {
-        StartCoroutine(MoveCameraToPoint(targetPos, time));
+        Vector3 cameraPositionWithZeroHeight = new Vector3(m_cameraMover.position.x, 0.0f, m_cameraMover.position.z);
+        Ray ray = new Ray(m_cameraMover.position, m_cameraMover.forward);
+        float hypotenuse = (m_cameraMover.position - cameraPositionWithZeroHeight).magnitude /
+                           Mathf.Sin(m_cameraMover.parent.rotation.eulerAngles.x);
+        Vector3 cameraAimTarget = ray.GetPoint(hypotenuse);
+        Vector3 cameraPosition = targetPos - (m_cameraMover.position - cameraAimTarget);
+        StartCoroutine(MoveCameraToPoint(cameraPosition, time));
+
     }
 
+    /// <summary>
+    /// This coroutine moves the camera to a point.
+    /// </summary>
+    /// <param name="targetPos">The target position.</param>
+    /// <param name="time">The time.</param>
+    /// <returns></returns>
     private IEnumerator MoveCameraToPoint(Vector3 targetPos, float time)
     {
         float timer = 0.0f;

@@ -353,6 +353,16 @@ public class BaseUnit : MonoBehaviour
     /// <returns></returns>
     private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, Action onMoveFinished)
     {
+        if (!ControllerContainer.BattleController.IsPlayersTurn())
+        {
+            CameraControls cameraController;
+            if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraController))
+            {
+                cameraController.CameraLookAtPosition(ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position, route.Count * .15f);
+            }
+        }
+        
+
         // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
         for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
         {
