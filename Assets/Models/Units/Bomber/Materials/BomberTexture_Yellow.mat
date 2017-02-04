@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: BomberTexture_Blue 2
+  m_Name: BomberTexture_Yellow
   m_Shader: {fileID: 4800000, guid: c8078bd53a98d3742982577e4219d60d, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
@@ -48,7 +48,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: b8bc2ce4fde910241bb2af1d876b58a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0af4c885ffc328f4e967d9ab5b8a39cc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:

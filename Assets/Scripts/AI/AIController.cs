@@ -92,35 +92,39 @@ public class AIController
     /// <returns></returns>
     private BaseMapTile GetWalkableTileNearestToEnemy(BaseUnit unit)
     {
-        if (m_enemyUnits.Count > 0)
+        if (m_enemyUnits.Count <= 0)
         {
-            List<BaseMapTile> walkableTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(unit);
-            int unitWithLowestDistance = 0;
-            int lowestDistanceFound = int.MaxValue;
-            for (int i = 0; i < m_enemyUnits.Count; i++)
-            {
-                int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(unit.CurrentSimplifiedPosition, m_enemyUnits[i].CurrentSimplifiedPosition);
-                if (lowestDistanceFound > dist)
-                {
-                    lowestDistanceFound = dist;
-                    unitWithLowestDistance = i;
-                }
-
-            }
-            BaseMapTile tileWithLowestDistToEnemy = null;
-            lowestDistanceFound = int.MaxValue;
-            for (int i = 0; i < walkableTiles.Count; i++)
-            {
-                int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(walkableTiles[i].SimplifiedMapPosition, m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
-                if (lowestDistanceFound > dist)
-                {
-                    lowestDistanceFound = dist;
-                    tileWithLowestDistToEnemy = walkableTiles[i];
-                }
-            }
-            return tileWithLowestDistToEnemy;
+            return null;
         }
-        return null;
 
+        List<BaseMapTile> walkableTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(unit);
+        int unitWithLowestDistance = 0;
+        int lowestDistanceFound = int.MaxValue;
+
+        for (int i = 0; i < m_enemyUnits.Count; i++)
+        {
+            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(unit.CurrentSimplifiedPosition, m_enemyUnits[i].CurrentSimplifiedPosition);
+            if (lowestDistanceFound > dist)
+            {
+                lowestDistanceFound = dist;
+                unitWithLowestDistance = i;
+            }
+
+        }
+
+        BaseMapTile tileWithLowestDistToEnemy = null;
+        lowestDistanceFound = int.MaxValue;
+
+        for (int i = 0; i < walkableTiles.Count; i++)
+        {
+            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(walkableTiles[i].SimplifiedMapPosition, m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
+            if (lowestDistanceFound > dist)
+            {
+                lowestDistanceFound = dist;
+                tileWithLowestDistToEnemy = walkableTiles[i];
+            }
+        }
+
+        return tileWithLowestDistToEnemy;
     }
 }
