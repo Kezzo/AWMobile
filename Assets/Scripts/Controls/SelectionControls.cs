@@ -15,10 +15,13 @@ public class SelectionControls : MonoBehaviour
     private LayerMask m_unitLayerMask;
 
     [SerializeField]
-    private LayerMask m_movementfieldLayerMask;
+    private LayerMask m_movementFieldLayerMask;
 
     [SerializeField]
-    private LayerMask m_attackfieldLayerMask;
+    private LayerMask m_attackFieldLayerMask;
+
+    [SerializeField]
+    private LayerMask m_moveDestinationFieldLayerMask;
 
     [SerializeField]
     private CameraControls m_cameraControls;
@@ -86,71 +89,108 @@ public class SelectionControls : MonoBehaviour
             //Debug.Log("Aborting Next Selection Try");
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (!Input.GetMouseButtonUp(0))
         {
-            if (ControllerContainer.BattleController.IsPlayersTurn() && !m_abortNextSelectionTry)
+            return;
+        }
+
+        if (ControllerContainer.BattleController.IsPlayersTurn() && !m_abortNextSelectionTry)
+        {
+            RaycastHit raycastHit;
+
+            if (m_currentlySelectedUnit != null && TrySelection(m_battlegroundCamera, m_attackFieldLayerMask, out raycastHit))
             {
-                RaycastHit raycastHit;
+                Debug.Log("Selected attack field");
 
-                if (m_currentlySelectedUnit != null && TrySelection(m_battlegroundCamera, m_attackfieldLayerMask, out raycastHit))
-                {
-                    Debug.Log("Selected attack field");
-
-                    // Select attack field
-                    BaseUnit unitToAttack = raycastHit.transform.parent.parent.GetComponent<BaseUnit>();
-
-                    if (unitToAttack != null)
-                    {
-                        m_currentlySelectedUnit.AttackUnit(unitToAttack);
-                        DeselectCurrentUnit();
-                    }
-                }
-                else if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
-                {
-                    Debug.Log("Selected unit");
-
-                    // Select Unit
-                    BaseUnit selectedUnit = raycastHit.transform.GetComponent<BaseUnit>();
-
-                    if (selectedUnit != null && selectedUnit.CanUnitTakeAction())
-                    {
-                        DeselectCurrentUnit();
-
-                        m_currentlySelectedUnit = selectedUnit;
-                        m_currentlySelectedUnit.OnUnitWasSelected();
-                    }
-                }
-                else if (m_currentlySelectedUnit != null &&
-                         TrySelection(m_battlegroundCamera, m_movementfieldLayerMask, out raycastHit))
-                {
-                    Debug.Log("Selected movement field");
-
-                    // Select movement field
-                    BaseMapTile baseMapTile = raycastHit.transform.parent.parent.GetComponent<BaseMapTile>();
-
-                    if (baseMapTile != null)
-                    {
-                        m_routeToDestinationField = ControllerContainer.TileNavigationController.
-                            GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile, out m_pathfindingNodeDebug);
-                        m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);
-
-                        m_battlegroundUi.ChangeVisibilityOfConfirmMoveButton(true);
-                    }
-                    
-                }
-                else if (m_currentlySelectedUnit != null && !IsPointerOverUIObject())
-                {
-                    // Deselect unit
-                    DeselectCurrentUnit();
-                    Debug.Log("Deselected Unit");
-                }
+                // Select attack field
+                StartUnitAttack(raycastHit);
             }
-            else if (m_abortNextSelectionTry)
+            else if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
             {
-                m_abortNextSelectionTry = false;
+                Debug.Log("Selected unit");
 
-                //Debug.Log("Selection Try was aborted!");
+                // Select Unit
+                SelectUnit(raycastHit);
             }
+            else if (m_currentlySelectedUnit != null &&
+                     TrySelection(m_battlegroundCamera, m_movementFieldLayerMask, out raycastHit))
+            {
+                Debug.Log("Selected movement field");
+
+                // Select movement field
+                CalculateRouteToMovementField(raycastHit);
+
+            }
+            else if (m_currentlySelectedUnit != null &&
+                     TrySelection(m_battlegroundCamera, m_moveDestinationFieldLayerMask, out raycastHit))
+            {
+                Debug.Log("Selected destination movement field");
+
+                // confirm move
+                ControllerContainer.BattleController.OnConfirmMove();
+            }
+            else if (m_currentlySelectedUnit != null && !IsPointerOverUIObject())
+            {
+                // Deselect unit
+                DeselectCurrentUnit();
+                Debug.Log("Deselected Unit");
+            }
+        }
+        else if (m_abortNextSelectionTry)
+        {
+            m_abortNextSelectionTry = false;
+
+            //Debug.Log("Selection Try was aborted!");
+        }
+    }
+
+    /// <summary>
+    /// Starts the attack of the currently selected unit.
+    /// </summary>
+    /// <param name="raycastHit">The raycast hit.</param>
+    private void StartUnitAttack(RaycastHit raycastHit)
+    {
+        BaseUnit unitToAttack = raycastHit.transform.parent.parent.GetComponent<BaseUnit>();
+
+        if (unitToAttack != null)
+        {
+            m_currentlySelectedUnit.AttackUnit(unitToAttack);
+            DeselectCurrentUnit();
+        }
+    }
+
+    /// <summary>
+    /// Selects a unit.
+    /// </summary>
+    /// <param name="raycastHit">The raycast hit.</param>
+    private void SelectUnit(RaycastHit raycastHit)
+    {
+        BaseUnit selectedUnit = raycastHit.transform.GetComponent<BaseUnit>();
+
+        if (selectedUnit != null && selectedUnit.CanUnitTakeAction())
+        {
+            DeselectCurrentUnit();
+
+            m_currentlySelectedUnit = selectedUnit;
+            m_currentlySelectedUnit.OnUnitWasSelected();
+        }
+    }
+
+    /// <summary>
+    /// Calculates the route to a movement field.
+    /// </summary>
+    /// <param name="raycastHit">The raycast hit.</param>
+    private void CalculateRouteToMovementField(RaycastHit raycastHit)
+    {
+        BaseMapTile baseMapTile = raycastHit.transform.parent.parent.GetComponent<BaseMapTile>();
+
+        if (baseMapTile != null)
+        {
+            m_routeToDestinationField = ControllerContainer.TileNavigationController.
+                GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile, out m_pathfindingNodeDebug);
+            m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);
+
+            m_battlegroundUi.ChangeVisibilityOfConfirmMoveButton(true);
         }
     }
 
