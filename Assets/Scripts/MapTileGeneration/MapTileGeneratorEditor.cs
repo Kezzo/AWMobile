@@ -66,6 +66,7 @@ public class MapTileGeneratorEditor : MonoBehaviour
 #pragma warning restore 649
 
     private MapGenerationData m_currentlyVisibleMap;
+    public MapGenerationData CurrentlyVisibleMap { get { return m_currentlyVisibleMap; } }
 
     private void Awake()
     {
@@ -93,7 +94,7 @@ public class MapTileGeneratorEditor : MonoBehaviour
 
         string assetPath = string.Format("Levels/{0}", levelToLoad);
 
-        MapGenerationData mapGenerationData = GetMapGenerationDataAtPath(assetPath);
+        MapGenerationData mapGenerationData = ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<MapGenerationData>(assetPath);
 
         if (mapGenerationData == null)
         {
@@ -108,56 +109,6 @@ public class MapTileGeneratorEditor : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    /// <summary>
-    /// Gets the map generation data at path.
-    /// </summary>
-    /// <param name="path">The path.</param>
-    /// <returns></returns>
-    private MapGenerationData GetMapGenerationDataAtPath(string path)
-    {
-        MapGenerationData mapGenerationDataToReturn;
-
-        if (Application.isPlaying)
-        {
-            mapGenerationDataToReturn = (MapGenerationData)Resources.Load(path, typeof(MapGenerationData));
-        }
-        else
-        {
-            string assetPath = string.Format("Assets/Resources/{0}.asset", path);
-
-            Debug.LogFormat("Loading asset from path: '{0}'", assetPath);
-
-            mapGenerationDataToReturn = (MapGenerationData)AssetDatabase.LoadAssetAtPath(assetPath, typeof(MapGenerationData));
-        }
-
-        return mapGenerationDataToReturn;
-    }
-
-#else
-
-    /// <summary>
-    /// Gets the map generation data at path.
-    /// </summary>
-    /// <param name="path">The path.</param>
-    /// <returns></returns>
-    private MapGenerationData GetMapGenerationDataAtPath(string path)
-    {
-        return (MapGenerationData)Resources.Load(path, typeof(MapGenerationData));
-    }
-
-#endif
-
-#if UNITY_EDITOR
-
-    /// <summary>
-    /// Updates the existing asset file.
-    /// </summary>
-    public void UpdateExistingAssetFile()
-    {
-        AssetDatabase.Refresh();
-        EditorUtility.SetDirty(m_currentlyVisibleMap);
-        AssetDatabase.SaveAssets();
-    }
 
     /// <summary>
     /// Gets or sets the name of the save map under level.

@@ -244,11 +244,10 @@ public class BaseUnit : MonoBehaviour
     /// Gets the unit balancing.
     /// </summary>
     /// <returns></returns>
-    public SimpleUnitBalancing.UnitBalancing GetUnitBalancing()
+    public UnitBalancingData GetUnitBalancing()
     {
-        return Root.Instance.SimeSimpleUnitBalancing.GetUnitBalancing(UnitType);
+        return ControllerContainer.UnitBalancingProvider.GetUnitBalancing(UnitType);
     }
-
 
     /// <summary>
     /// Determines whether this unit can attack a given unit.

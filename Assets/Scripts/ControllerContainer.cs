@@ -17,5 +17,11 @@ public static class ControllerContainer
     private static TileNavigationController m_tileNavigationController;
     public static TileNavigationController TileNavigationController { get { return m_tileNavigationController ?? (m_tileNavigationController = new TileNavigationController()); } }
 
+    private static UnitBalancingProvider m_unitBalancingProvider;
+    public static UnitBalancingProvider UnitBalancingProvider { get { return m_unitBalancingProvider ?? (m_unitBalancingProvider = new UnitBalancingProvider()); } }
+
+    private static AssetDatabaseService m_assetDatabaseService;
+    public static AssetDatabaseService AssetDatabaseService { get { return m_assetDatabaseService ?? (m_assetDatabaseService = new AssetDatabaseService()); } }
+
 #pragma warning restore 649
 }

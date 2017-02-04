@@ -35,7 +35,7 @@ public class MapTileGeneratorEditorHelper : Editor
 
         if (GUILayout.Button("Update Map File"))
         {
-            mapTileGeneratorEditor.UpdateExistingAssetFile();
+            ControllerContainer.AssetDatabaseService.UpdateExistingAssetFile(mapTileGeneratorEditor.CurrentlyVisibleMap);
         }
 
         if (GUILayout.Button("Save New Map File"))

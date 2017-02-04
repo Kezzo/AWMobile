@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UnitBalancingData : ScriptableObject
+{
+    public UnitType m_UnitType;
+    public UnitMetaType m_UnitMetaType;
+
+    // Tiles the unit can move in one turn.
+    public int m_MovementRangePerRound;
+    public List<WalkableMapTiles> m_WalkableMapTileTypes;
+
+    // TODO: Implement min and max attack range for units that can only attack units far away.
+    public int m_AttackRange;
+    public List<UnitMetaType> m_AttackableUnitMetaTypes;
+    // TODO: Implement damage based on enemy armor/type
+
+    public int m_Damage;
+    public int m_Health;
+
+    [Serializable]
+    public class WalkableMapTiles
+    {
+        public MapTileType m_MapTileType;
+        public int m_MovementCost;
+    }
+
+    /// <summary>
+    /// Determines whether a unit can walk on a map tile type.
+    /// </summary>
+    /// <param name="mapTileType">Type of the map tile.</param>
+    /// <returns></returns>
+    public bool CanUnitWalkOnMapTileType(MapTileType mapTileType)
+    {
+        return m_WalkableMapTileTypes.Exists(walkableMapTile => walkableMapTile.m_MapTileType == mapTileType);
+    }
+
+    /// <summary>
+    /// Gets the movement cost to walk on a map tile with a certain type.
+    /// </summary>
+    /// <param name="mapTileType">Type of the map tile.</param>
+    /// <returns></returns>
+    public int GetMovementCostToWalkOnMapTileType(MapTileType mapTileType)
+    {
+        var walkMapToCheck = m_WalkableMapTileTypes.Find(walkableMapTile => walkableMapTile.m_MapTileType == mapTileType);
+
+        return walkMapToCheck == null ? 0 : walkMapToCheck.m_MovementCost;
+    }
+}

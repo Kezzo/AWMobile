@@ -13,10 +13,6 @@ public class Root : MonoBehaviour
     private SceneLoadingService m_sceneLoadingService;
     public SceneLoadingService SceneLoading { get { return m_sceneLoadingService; } }
 
-    [SerializeField]
-    private SimpleUnitBalancing m_simpleUnitBalancing;
-    public SimpleUnitBalancing SimeSimpleUnitBalancing { get { return m_simpleUnitBalancing; } }
-
 #if UNITY_EDITOR
     [SerializeField]
     private DebugValues m_debugValues;
@@ -59,6 +55,8 @@ public class Root : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
+        ControllerContainer.UnitBalancingProvider.InitializeBalancingData();
+
         ControllerContainer.BattleController.IntializeBattle(new[] {
             new Team
             {

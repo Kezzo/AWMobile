@@ -57,7 +57,7 @@ public class TileNavigationController
     /// <param name="unitToCheckFor">The unit.</param>
     public List<BaseMapTile> GetWalkableMapTiles(BaseUnit unitToCheckFor)
     {
-        SimpleUnitBalancing.UnitBalancing unitBalancing = unitToCheckFor.GetUnitBalancing();
+        UnitBalancingData unitBalancing = unitToCheckFor.GetUnitBalancing();
 
         Queue<Vector2> nodesToCheck = new Queue<Vector2>();
         nodesToCheck.Enqueue(unitToCheckFor.CurrentSimplifiedPosition);
@@ -155,7 +155,7 @@ public class TileNavigationController
     {
         Vector2 startNode = unitToMove.CurrentSimplifiedPosition;
         Vector2 destinationNode = destinationMapTile.SimplifiedMapPosition;
-        SimpleUnitBalancing.UnitBalancing unitBalancing = unitToMove.GetUnitBalancing();
+        UnitBalancingData unitBalancing = unitToMove.GetUnitBalancing();
 
 #if UNITY_EDITOR
         pathfindingNodeDebugData = new Dictionary<Vector2, PathfindingNodeDebugData>();
@@ -288,7 +288,7 @@ public class TileNavigationController
     /// <param name="unitBalancing">The unit balancing.</param>
     /// <param name="walkingCostToNode">The already walked map tiles.</param>
     /// <returns></returns>
-    private List<Vector2> GetWalkableAdjacentNodes(Vector2 sourceToGetNeighboursFrom, SimpleUnitBalancing.UnitBalancing unitBalancing, 
+    private List<Vector2> GetWalkableAdjacentNodes(Vector2 sourceToGetNeighboursFrom, UnitBalancingData unitBalancing, 
         int walkingCostToNode)
     {
         List<Vector2> walkableAdjacentNodes = new List<Vector2>();
