@@ -114,6 +114,13 @@ public class BaseUnit : MonoBehaviour
     /// <param name="baseUnit">The base unit.</param>
     public void AttackUnit(BaseUnit baseUnit)
     {
+        Vector2 unitPositionDiff = baseUnit.CurrentSimplifiedPosition - CurrentSimplifiedPosition;
+
+        CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(
+            unitPositionDiff, true);
+
+        SetRotation(directionToRotateTo);
+
         baseUnit.StatManagement.TakeDamage(GetUnitBalancing().m_Damage);
         baseUnit.ChangeVisibiltyOfAttackMarker(false);
 
