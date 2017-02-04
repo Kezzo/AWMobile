@@ -376,7 +376,7 @@ MonoBehaviour:
       m_MovementCost: 1
     - m_MapTileType: 3
       m_MovementCost: 3
-    m_AttackRange: 4
+    m_AttackRange: 5
     m_AttackableUnitMetaTypes: 01000000
     m_Damage: 10
     m_Health: 10

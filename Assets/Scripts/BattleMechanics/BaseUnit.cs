@@ -242,6 +242,17 @@ public class BaseUnit : MonoBehaviour
         return Root.Instance.SimeSimpleUnitBalancing.GetUnitBalancing(UnitType);
     }
 
+
+    /// <summary>
+    /// Determines whether this unit can attack a given unit.
+    /// </summary>
+    /// <param name="unitToCheck">The unit to check.</param>
+    public bool CanUnitAttackUnit(BaseUnit unitToCheck)
+    {
+        return TeamColor != unitToCheck.TeamColor && 
+            GetUnitBalancing().m_AttackableUnitMetaTypes.Contains(unitToCheck.GetUnitBalancing().m_UnitMetaType);
+    }
+
     /// <summary>
     /// Displays the route to the destination.
     /// </summary>
@@ -327,14 +338,10 @@ public class BaseUnit : MonoBehaviour
         {
             BaseUnit unit = unitsInRange[unitIndex];
 
-            // Is unit enemy or friend?
-            if (unit.TeamColor != TeamColor)
+            if (CanUnitAttackUnit(unit))
             {
-                if (GetUnitBalancing().m_AttackableUnitMetaTypes.Contains(unit.GetUnitBalancing().m_UnitMetaType))
-                {
-                    unit.ChangeVisibiltyOfAttackMarker(true);
-                    attackableUnits.Add(unit);
-                }
+                unit.ChangeVisibiltyOfAttackMarker(true);
+                attackableUnits.Add(unit);
             }
             else
             {

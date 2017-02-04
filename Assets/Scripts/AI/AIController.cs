@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class AIController
 {
@@ -7,7 +8,7 @@ public class AIController
     private List<BaseUnit> m_myUnits;
     private List<BaseUnit> m_enemyUnits;
 
-    private int unitCounter = 0;
+    private int m_unitCounter = 0;
 
     public AIController(Team aiTeam)
     {
@@ -23,6 +24,7 @@ public class AIController
         Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleController.RegisteredUnits;
         m_myUnits = units[m_myTeam.m_TeamColor];
         m_enemyUnits = new List<BaseUnit>();
+
         foreach (var item in units)
         {
             if (item.Key != m_myTeam.m_TeamColor)
@@ -39,13 +41,13 @@ public class AIController
     /// </summary>
     private void MoveNextUnit()
     {
-        if (unitCounter < m_myUnits.Count)
+        if (m_unitCounter < m_myUnits.Count)
         {
-            BaseMapTile tileToWalkTo = GetWalkableTileNearestToEnemy(m_myUnits[unitCounter]);
+            BaseMapTile tileToWalkTo = GetWalkableTileOfClosestAttackableEnemy(m_myUnits[m_unitCounter]);
             if (tileToWalkTo != null)
             {
-                var dontCare = new Dictionary<UnityEngine.Vector2, PathfindingNodeDebugData>();
-                m_myUnits[unitCounter].MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(m_myUnits[unitCounter], tileToWalkTo, out dontCare), AttackIfPossible);
+                var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
+                m_myUnits[m_unitCounter].MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(m_myUnits[m_unitCounter], tileToWalkTo, out dontCare), AttackIfPossible);
 
             }
             else
@@ -55,7 +57,7 @@ public class AIController
         }
         else
         {
-            unitCounter = 0;
+            m_unitCounter = 0;
             ControllerContainer.BattleController.EndCurrentTurn();
         }
     }
@@ -65,23 +67,27 @@ public class AIController
     /// </summary>
     private void AttackIfPossible()
     {
-        List<UnityEngine.Vector2> adjacentPositions = ControllerContainer.TileNavigationController.GetAdjacentNodes(m_myUnits[unitCounter].CurrentSimplifiedPosition);
+        List<Vector2> adjacentPositions = ControllerContainer.TileNavigationController.GetAdjacentNodes(m_myUnits[m_unitCounter].CurrentSimplifiedPosition);
+
         for (int i = 0; i < adjacentPositions.Count; i++)
         {
-            if (ControllerContainer.BattleController.IsUnitOnNode(adjacentPositions[i]) && ControllerContainer.BattleController.GetUnitOnNode(adjacentPositions[i]).TeamColor != m_myTeam.m_TeamColor)
+            BaseUnit unitToCheck = ControllerContainer.BattleController.GetUnitOnNode(adjacentPositions[i]);
+
+            if (unitToCheck != null && m_myUnits[m_unitCounter].CanUnitAttackUnit(unitToCheck))
             {
-                BaseUnit attackableUnit = ControllerContainer.BattleController.GetUnitOnNode(adjacentPositions[i]);
-                m_myUnits[unitCounter].AttackUnit(attackableUnit);
+                m_myUnits[m_unitCounter].AttackUnit(unitToCheck);
+
+                // Check if unit died
                 if (!ControllerContainer.BattleController.IsUnitOnNode(adjacentPositions[i]))
                 {
-                    m_enemyUnits.Remove(attackableUnit);
+                    m_enemyUnits.Remove(unitToCheck);
                 }
 
                 break;
             }
         }
 
-        unitCounter++;
+        m_unitCounter++;
         MoveNextUnit();
     }
 
@@ -90,20 +96,30 @@ public class AIController
     /// </summary>
     /// <param name="unit">The unit.</param>
     /// <returns></returns>
-    private BaseMapTile GetWalkableTileNearestToEnemy(BaseUnit unit)
+    private BaseMapTile GetWalkableTileOfClosestAttackableEnemy(BaseUnit unit)
     {
         if (m_enemyUnits.Count <= 0)
         {
             return null;
         }
 
+        //TODO: Consider the attack range of units
+
         List<BaseMapTile> walkableTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(unit);
         int unitWithLowestDistance = 0;
         int lowestDistanceFound = int.MaxValue;
 
+        // Get closest attackable enemy
         for (int i = 0; i < m_enemyUnits.Count; i++)
         {
-            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(unit.CurrentSimplifiedPosition, m_enemyUnits[i].CurrentSimplifiedPosition);
+            if (!unit.CanUnitAttackUnit(m_enemyUnits[i]))
+            {
+                continue;   
+            }
+
+            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                unit.CurrentSimplifiedPosition, m_enemyUnits[i].CurrentSimplifiedPosition);
+
             if (lowestDistanceFound > dist)
             {
                 lowestDistanceFound = dist;
@@ -115,9 +131,12 @@ public class AIController
         BaseMapTile tileWithLowestDistToEnemy = null;
         lowestDistanceFound = int.MaxValue;
 
+        // Get closest tile next to unit to attack
         for (int i = 0; i < walkableTiles.Count; i++)
         {
-            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(walkableTiles[i].SimplifiedMapPosition, m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
+            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(walkableTiles[i].SimplifiedMapPosition, 
+                m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
+
             if (lowestDistanceFound > dist)
             {
                 lowestDistanceFound = dist;
