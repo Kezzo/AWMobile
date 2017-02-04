@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -87,3 +88,4 @@ public class BalancingFileCreationWindow : EditorWindow
         return ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<UnitBalancingData>(string.Format("Balancing/{0}", m_unitTypeToEdit));
     }
 }
+#endif
