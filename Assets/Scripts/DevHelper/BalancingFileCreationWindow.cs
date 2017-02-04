@@ -9,14 +9,18 @@ public class BalancingFileCreationWindow : EditorWindow
         "m_UnitMetaType",
         "m_MovementRangePerRound",
         "m_WalkableMapTileTypes",
+
+        "m_Health",
+
         "m_AttackRange",
         "m_AttackableUnitMetaTypes",
-        "m_Damage",
-        "m_Health"
+        "m_DamageOnUnitsList",
     };
 
     private UnitType m_unitTypeToEdit;
     private UnitBalancingData m_unitBalancingData;
+
+    private Vector2 m_scrollPosition;
 
     [MenuItem("Tools/Create Balancing File")]
     private static void CreateWindows()
@@ -29,23 +33,29 @@ public class BalancingFileCreationWindow : EditorWindow
 
     private void OnGUI()
     {
-        if (GUILayout.Button("Load Balancing"))
+        UnitType unitTypeToEdit = (UnitType) EditorGUILayout.EnumPopup("Unit type: ", m_unitTypeToEdit);
+
+        if (m_unitTypeToEdit != unitTypeToEdit)
         {
+            m_unitTypeToEdit = unitTypeToEdit;
             m_unitBalancingData = GetUnitBalancingDataFromFile();
         }
-
-        m_unitTypeToEdit = (UnitType) EditorGUILayout.EnumPopup("Unit type: ", m_unitTypeToEdit);
 
         if (m_unitBalancingData != null)
         {
             SerializedObject serializedObject = new SerializedObject(m_unitBalancingData);
 
             EditorGUILayout.Space();
+            EditorGUILayout.Space();
+
+            m_scrollPosition = EditorGUILayout.BeginScrollView(m_scrollPosition, GUILayout.Height(600));
 
             for (int propertyIndex = 0; propertyIndex < m_propertyNamesToDisplay.Count; propertyIndex++)
             {
                 EditorGUILayout.PropertyField(serializedObject.FindProperty(m_propertyNamesToDisplay[propertyIndex]), true);
             }
+
+            EditorGUILayout.EndScrollView();
 
             serializedObject.ApplyModifiedProperties();
 

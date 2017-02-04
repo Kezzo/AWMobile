@@ -19,7 +19,13 @@ MonoBehaviour:
     m_MovementCost: 1
   - m_MapTileType: 3
     m_MovementCost: 2
-  m_AttackRange: 5
-  m_AttackableUnitMetaTypes: 01000000
-  m_Damage: 10
   m_Health: 10
+  m_AttackRange: 4
+  m_AttackableUnitMetaTypes: 0100000000000000
+  m_DamageOnUnitsList:
+  - m_UnitType: 1
+    m_Damage: 4
+  - m_UnitType: 2
+    m_Damage: 5
+  - m_UnitType: 3
+    m_Damage: 10

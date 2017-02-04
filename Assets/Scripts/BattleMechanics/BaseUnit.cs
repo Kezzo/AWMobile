@@ -121,7 +121,7 @@ public class BaseUnit : MonoBehaviour
 
         SetRotation(directionToRotateTo);
 
-        baseUnit.StatManagement.TakeDamage(GetUnitBalancing().m_Damage);
+        baseUnit.StatManagement.TakeDamage(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType));
         baseUnit.ChangeVisibiltyOfAttackMarker(false);
 
         UnitHasAttackedThisRound = true;
