@@ -87,7 +87,7 @@ public class Root : MonoBehaviour
             {
                 MapTileGeneratorEditor mapTileGeneratorEditor;
 
-                if (ControllerContainer.MonoBehaviourRegistry.TryGet<MapTileGeneratorEditor>(out mapTileGeneratorEditor))
+                if (ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
                 {
                     mapTileGeneratorEditor.LoadExistingMap("Level1");
                 }
