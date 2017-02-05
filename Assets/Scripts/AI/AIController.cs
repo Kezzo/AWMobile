@@ -1,19 +1,50 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// AI that controls one Player in the game.
+/// </summary>
 public class AIController
 {
+    /// <summary>
+    /// The team the AI is playing for.
+    /// </summary>
     private Team m_myTeam;
-    public TeamColor MyTeamColor { get { return m_myTeam.m_TeamColor; } }
+
+    /// <summary>
+    /// Every Unit under this AI's Control.
+    /// </summary>
     private List<BaseUnit> m_myUnits;
+
+    /// <summary>
+    /// Every Unit not under the AI's Control.
+    /// </summary>
     private List<BaseUnit> m_enemyUnits;
 
-    private int m_unitCounter = 0;
+    /// <summary>
+    /// The position at which Unit the AI is while moving them.
+    /// </summary>
+    private int m_unitCounter;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AIController"/> class.
+    /// </summary>
+    /// <param name="aiTeam">The AI team.</param>
     public AIController(Team aiTeam)
     {
-        m_myTeam = aiTeam;
-        m_enemyUnits = new List<BaseUnit>();
+        this.m_myTeam = aiTeam;
+        this.m_enemyUnits = new List<BaseUnit>();
+    }
+
+    /// <summary>
+    /// Gets the color of the AI's team.
+    /// </summary>
+    /// <value>
+    /// The color of my team.
+    /// </value>
+    public TeamColor MyTeamColor
+    {
+        get { return this.m_myTeam.m_TeamColor; }
     }
 
     /// <summary>
@@ -22,18 +53,19 @@ public class AIController
     public void StartTurn()
     {
         Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleController.RegisteredUnits;
-        m_myUnits = units[m_myTeam.m_TeamColor];
-        m_enemyUnits = new List<BaseUnit>();
+        this.m_myUnits = units[this.MyTeamColor];
+        this.m_enemyUnits = new List<BaseUnit>();
 
         foreach (var item in units)
         {
-            if (item.Key != m_myTeam.m_TeamColor)
+            if (item.Key != this.m_myTeam.m_TeamColor)
             {
-                m_enemyUnits.AddRange(item.Value);
+                this.m_enemyUnits.AddRange(item.Value);
             }
         }
 
-        MoveNextUnit();
+        this.m_unitCounter = 0;
+        this.MoveNextUnit();
     }
 
     /// <summary>
@@ -41,23 +73,22 @@ public class AIController
     /// </summary>
     private void MoveNextUnit()
     {
-        if (m_unitCounter < m_myUnits.Count)
+        if (this.m_unitCounter < this.m_myUnits.Count)
         {
-            BaseMapTile tileToWalkTo = GetWalkableTileOfClosestAttackableEnemy(m_myUnits[m_unitCounter]);
+            BaseMapTile tileToWalkTo = this.GetWalkableTileClosestToNextAttackableEnemy(this.m_myUnits[this.m_unitCounter]);
             if (tileToWalkTo != null)
             {
                 var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
-                m_myUnits[m_unitCounter].MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(m_myUnits[m_unitCounter], tileToWalkTo, out dontCare), AttackIfPossible);
-
+                this.m_myUnits[this.m_unitCounter].MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(this.m_myUnits[this.m_unitCounter], tileToWalkTo, out dontCare), this.AttackIfPossible);
             }
             else
             {
-                AttackIfPossible();
+                this.AttackIfPossible();
             }
         }
         else
         {
-            m_unitCounter = 0;
+            this.m_unitCounter = 0;
             ControllerContainer.BattleController.EndCurrentTurn();
         }
     }
@@ -67,69 +98,72 @@ public class AIController
     /// </summary>
     private void AttackIfPossible()
     {
-        List<Vector2> adjacentPositions = ControllerContainer.TileNavigationController.GetAdjacentNodes(m_myUnits[m_unitCounter].CurrentSimplifiedPosition);
-
-        for (int i = 0; i < adjacentPositions.Count; i++)
+        BaseUnit attackingUnit = this.m_myUnits[this.m_unitCounter];
+        List<BaseUnit> unitsInRange =
+            ControllerContainer.BattleController.GetUnitsInRange(attackingUnit.CurrentSimplifiedPosition, attackingUnit.GetUnitBalancing().m_AttackRange);
+        for (int i = 0; i < unitsInRange.Count; i++)
         {
-            BaseUnit unitToCheck = ControllerContainer.BattleController.GetUnitOnNode(adjacentPositions[i]);
-
-            if (unitToCheck != null && m_myUnits[m_unitCounter].CanUnitAttackUnit(unitToCheck))
+            if (attackingUnit.CanUnitAttackUnit(unitsInRange[i]))
             {
-                m_myUnits[m_unitCounter].AttackUnit(unitToCheck, () =>
-                {
-                    // Check if unit died
-                    if (!ControllerContainer.BattleController.IsUnitOnNode(adjacentPositions[i]))
-                    {
-                        m_enemyUnits.Remove(unitToCheck);
-                    }
+                BaseUnit unitToAttack = unitsInRange[i];
+                Debug.LogFormat("{0} {1} attacks {2} {3}", attackingUnit.TeamColor, attackingUnit.UnitType, unitToAttack.TeamColor, unitToAttack.UnitType);
+                attackingUnit.AttackUnit(unitToAttack, () =>
+                        {
+                            // Check if unit died
+                            if (!ControllerContainer.BattleController.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
+                            {
+                                this.m_enemyUnits.Remove(unitToAttack);
+                            }
 
-                    m_unitCounter++;
-                    MoveNextUnit();
-                });            
+                            this.m_unitCounter++;
+                            this.MoveNextUnit();
+                        });
 
                 return;
             }
         }
 
-        m_unitCounter++;
-        MoveNextUnit();
+        this.m_unitCounter++;
+        this.MoveNextUnit();
     }
 
     /// <summary>
-    /// Gets the walkable tile nearest to enemy.
+    /// Gets the walkable tile nearest to an enemy unit.
     /// </summary>
     /// <param name="unit">The unit.</param>
-    /// <returns></returns>
-    private BaseMapTile GetWalkableTileOfClosestAttackableEnemy(BaseUnit unit)
+    /// <returns>The tile closest to an enemy unit.</returns>
+    private BaseMapTile GetWalkableTileClosestToNextAttackableEnemy(BaseUnit unit)
     {
-        if (m_enemyUnits.Count <= 0)
+        if (this.m_enemyUnits.Count <= 0)
         {
             return null;
         }
-
-        //TODO: Consider the attack range of units
 
         List<BaseMapTile> walkableTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(unit);
         int unitWithLowestDistance = 0;
         int lowestDistanceFound = int.MaxValue;
 
         // Get closest attackable enemy
-        for (int i = 0; i < m_enemyUnits.Count; i++)
+        for (int i = 0; i < this.m_enemyUnits.Count; i++)
         {
-            if (!unit.CanUnitAttackUnit(m_enemyUnits[i]))
+            if (!unit.CanUnitAttackUnit(this.m_enemyUnits[i]))
             {
-                continue;   
+                continue;
             }
 
             int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                unit.CurrentSimplifiedPosition, m_enemyUnits[i].CurrentSimplifiedPosition);
+                unit.CurrentSimplifiedPosition, this.m_enemyUnits[i].CurrentSimplifiedPosition);
 
             if (lowestDistanceFound > dist)
             {
                 lowestDistanceFound = dist;
                 unitWithLowestDistance = i;
             }
+        }
 
+        if (lowestDistanceFound <= unit.GetUnitBalancing().m_AttackRange)
+        {
+            return null;
         }
 
         BaseMapTile tileWithLowestDistToEnemy = null;
@@ -138,12 +172,17 @@ public class AIController
         // Get closest tile next to unit to attack
         for (int i = 0; i < walkableTiles.Count; i++)
         {
-            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(walkableTiles[i].SimplifiedMapPosition, 
-                m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
+            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                walkableTiles[i].SimplifiedMapPosition, this.m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
 
             if (lowestDistanceFound > dist)
             {
                 lowestDistanceFound = dist;
+                if (lowestDistanceFound <= unit.GetUnitBalancing().m_AttackRange)
+                {
+                    return walkableTiles[i];
+                }
+
                 tileWithLowestDistToEnemy = walkableTiles[i];
             }
         }
