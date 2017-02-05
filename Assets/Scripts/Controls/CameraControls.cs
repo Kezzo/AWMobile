@@ -50,6 +50,8 @@ public class CameraControls : MonoBehaviour
     private bool m_startedDragging;
     public bool IsDragging { get; private set; }
 
+    public bool IsBlocked { get; set; }
+
     public enum CameraType
     {
         Rotate,
@@ -91,6 +93,15 @@ public class CameraControls : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (IsBlocked)
+        {
+            IsDragging = false;
+            m_startedDragging = false;
+            m_lastMousePosition = Vector3.zero;
+
+            return;
+        }
+
         m_cameraUpdateAction();
         HandleZoomPinch();
 

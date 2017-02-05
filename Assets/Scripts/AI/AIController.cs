@@ -75,15 +75,19 @@ public class AIController
 
             if (unitToCheck != null && m_myUnits[m_unitCounter].CanUnitAttackUnit(unitToCheck))
             {
-                m_myUnits[m_unitCounter].AttackUnit(unitToCheck);
-
-                // Check if unit died
-                if (!ControllerContainer.BattleController.IsUnitOnNode(adjacentPositions[i]))
+                m_myUnits[m_unitCounter].AttackUnit(unitToCheck, () =>
                 {
-                    m_enemyUnits.Remove(unitToCheck);
-                }
+                    // Check if unit died
+                    if (!ControllerContainer.BattleController.IsUnitOnNode(adjacentPositions[i]))
+                    {
+                        m_enemyUnits.Remove(unitToCheck);
+                    }
 
-                break;
+                    m_unitCounter++;
+                    MoveNextUnit();
+                });            
+
+                return;
             }
         }
 

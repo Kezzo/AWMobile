@@ -64,14 +64,8 @@ public class BaseUnit : MonoBehaviour
     public Vector2 CurrentSimplifiedPosition { get { return m_currentSimplifiedPosition; } }
 
     private List<BaseMapTile> m_currentWalkableMapTiles;
-    private BattlegroundUI m_battlegroundUi;
 
     private List<BaseUnit> m_attackableUnits;
-
-    private void Start()
-    {
-        ControllerContainer.MonoBehaviourRegistry.TryGet(out m_battlegroundUi);
-    }
 
     /// <summary>
     /// Initializes the specified team.
@@ -79,7 +73,8 @@ public class BaseUnit : MonoBehaviour
     /// <param name="unitData">The unit data.</param>
     /// <param name="unitMesh">The unit mesh.</param>
     /// <param name="initialSimplifiedPosition">The initial simplified position.</param>
-    public void Initialize(MapGenerationData.Unit unitData, Mesh unitMesh, Vector2 initialSimplifiedPosition)
+    /// <param name="registerUnit">if set to <c>true</c> [register unit].</param>
+    public void Initialize(MapGenerationData.Unit unitData, Mesh unitMesh, Vector2 initialSimplifiedPosition, bool registerUnit)
     {
         TeamColor = unitData.m_TeamColor;
         UnitType = unitData.m_UnitType;
@@ -88,7 +83,7 @@ public class BaseUnit : MonoBehaviour
         m_meshFilter.mesh = unitMesh;
         m_currentSimplifiedPosition = initialSimplifiedPosition;
 
-        if (Application.isPlaying)
+        if (Application.isPlaying && registerUnit)
         {
             UniqueIdent = ControllerContainer.BattleController.RegisterUnit(TeamColor, this);
             m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
@@ -112,7 +107,8 @@ public class BaseUnit : MonoBehaviour
     /// Attacks the unit.
     /// </summary>
     /// <param name="baseUnit">The base unit.</param>
-    public void AttackUnit(BaseUnit baseUnit)
+    /// <param name="onBattleSequenceFinished">The on battle sequence finished.</param>
+    public void AttackUnit(BaseUnit baseUnit, Action onBattleSequenceFinished = null)
     {
         Vector2 unitPositionDiff = baseUnit.CurrentSimplifiedPosition - CurrentSimplifiedPosition;
 
@@ -121,12 +117,59 @@ public class BaseUnit : MonoBehaviour
 
         SetRotation(directionToRotateTo);
 
-        baseUnit.StatManagement.TakeDamage(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType));
-        baseUnit.ChangeVisibiltyOfAttackMarker(false);
+        PrepareAndShowBattleSequence(baseUnit, () =>
+        {
+            baseUnit.StatManagement.TakeDamage(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType));
+            baseUnit.ChangeVisibiltyOfAttackMarker(false);
 
-        UnitHasAttackedThisRound = true;
-        // An attack will always keep the unit from moving in this round.
-        UnitHasMovedThisRound = true;
+            UnitHasAttackedThisRound = true;
+            // An attack will always keep the unit from moving in this round.
+            UnitHasMovedThisRound = true;
+
+            if (onBattleSequenceFinished != null)
+            {
+                onBattleSequenceFinished();
+            }
+        }); 
+    }
+
+    /// <summary>
+    /// Prepares and shows the battle sequence against a given unit.
+    /// </summary>
+    /// <param name="attackedUnit">The base unit.</param>
+    /// <param name="onBattleSequenceFinished">The on battle sequence finished.</param>
+    private void PrepareAndShowBattleSequence(BaseUnit attackedUnit, Action onBattleSequenceFinished)
+    {
+        BattlegroundUI battlegroundUi;
+
+        if (ControllerContainer.MonoBehaviourRegistry.TryGet(out battlegroundUi))
+        {
+            MapGenerationData.MapTile attackingUnitData = GetMapTileDataFromUnit(this);
+            MapGenerationData.MapTile attackedUnitData = GetMapTileDataFromUnit(attackedUnit);
+
+            battlegroundUi.ShowBattleSequence(attackingUnitData, this.StatManagement.CurrentHealth,
+                attackedUnitData, attackedUnit.StatManagement.CurrentHealth, onBattleSequenceFinished);
+        }
+    }
+
+    /// <summary>
+    /// Gets the map tile data from unit.
+    /// </summary>
+    /// <param name="baseUnit">The base unit.</param>
+    /// <returns></returns>
+    private MapGenerationData.MapTile GetMapTileDataFromUnit(BaseUnit baseUnit)
+    {
+        return new MapGenerationData.MapTile
+        {
+            m_MapTileType = ControllerContainer.TileNavigationController.GetMapTile(
+                baseUnit.CurrentSimplifiedPosition).MapTileType,
+
+            m_Unit = new MapGenerationData.Unit
+            {
+                m_TeamColor = baseUnit.TeamColor,
+                m_UnitType = baseUnit.UnitType
+            }
+        };
     }
 
     /// <summary>
@@ -297,7 +340,6 @@ public class BaseUnit : MonoBehaviour
                     Debug.Log("Attackable units: "+m_attackableUnits.Count);
 
                     HideAllRouteMarker();
-                    m_battlegroundUi.ChangeVisibilityOfConfirmMoveButton(false);
                 }
                 else
                 {

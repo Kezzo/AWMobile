@@ -79,6 +79,32 @@ public class BaseMapTile : MonoBehaviour
     /// <param name="simplifiedPosition">The simplified position of the maptile.</param>
     public void Initialize(ref MapGenerationData.MapTile mapTileData, Vector2 simplifiedPosition)
     {
+        InitializeBaseValues(mapTileData);
+
+        SimplifiedMapPosition = simplifiedPosition;
+
+        ValidateMapTile();
+        ValidateUnitType(true, simplifiedPosition);
+    }
+
+    /// <summary>
+    /// Initializes this BaseMapTile only visually.
+    /// </summary>
+    /// <param name="mapTileData">The map tile data.</param>
+    public void InitializeVisually(MapGenerationData.MapTile mapTileData)
+    {
+        InitializeBaseValues(mapTileData);
+
+        ValidateMapTile();
+        ValidateUnitType();
+    }
+
+    /// <summary>
+    /// Initializes the base values.
+    /// </summary>
+    /// <param name="mapTileData">The map tile data.</param>
+    private void InitializeBaseValues(MapGenerationData.MapTile mapTileData)
+    {
         if (Application.isPlaying)
         {
             ControllerContainer.MonoBehaviourRegistry.TryGet(out m_mapTileGeneratorEditor);
@@ -91,11 +117,6 @@ public class BaseMapTile : MonoBehaviour
         m_mapTileData = mapTileData;
         m_mapTileType = m_mapTileData.m_MapTileType;
         m_unitOnThisTile = m_mapTileData.m_Unit;
-
-        SimplifiedMapPosition = simplifiedPosition;
-
-        ValidateMapTile();
-        ValidateUnitType(simplifiedPosition);
     }
 
     /// <summary>
@@ -125,8 +146,9 @@ public class BaseMapTile : MonoBehaviour
     /// <summary>
     /// Validates the type of the unit.
     /// </summary>
+    /// <param name="registerUnit">if set to <c>true</c> [register unit].</param>
     /// <param name="simplifiedPosition">The simplified position of the unit.</param>
-    public void ValidateUnitType(Vector2 simplifiedPosition = new Vector2())
+    public void ValidateUnitType(bool registerUnit = false, Vector2 simplifiedPosition = new Vector2())
     {
         if (m_currentInstantiatedUnit != null)
         {
@@ -135,7 +157,7 @@ public class BaseMapTile : MonoBehaviour
 
         if (m_unitOnThisTile != null && m_unitOnThisTile.m_UnitType != UnitType.None)
         {
-            InstantiateUnitPrefab(simplifiedPosition);
+            InstantiateUnitPrefab(simplifiedPosition, registerUnit);
             m_mapTileData.m_Unit = m_unitOnThisTile;
         }
     }
@@ -146,6 +168,11 @@ public class BaseMapTile : MonoBehaviour
     /// <returns></returns>
     private void InstantiateMapTilePrefab()
     {
+        if (m_mapTileGeneratorEditor == null)
+        {
+            return;
+        }
+
         // Instantiate MapTile
         GameObject mapTilePrefabToInstantiate = m_mapTileGeneratorEditor.GetPrefabOfMapTileType(m_mapTileType);
 
@@ -171,8 +198,14 @@ public class BaseMapTile : MonoBehaviour
     /// Instantiates the unit prefab.
     /// </summary>
     /// <param name="simplifiedPosition">The simplified position of the unit.</param>
-    private void InstantiateUnitPrefab(Vector2 simplifiedPosition)
+    /// <param name="registerUnit">if set to <c>true</c> [register unit].</param>
+    private void InstantiateUnitPrefab(Vector2 simplifiedPosition, bool registerUnit)
     {
+        if (m_mapTileGeneratorEditor == null)
+        {
+            return;
+        }
+
         // Instantiate UnitType
         GameObject unitPrefabToInstantiate = m_mapTileGeneratorEditor.BaseUnitPrefab;
 
@@ -188,7 +221,7 @@ public class BaseMapTile : MonoBehaviour
             if (baseUnit != null)
             {
                 baseUnit.Initialize(m_unitOnThisTile, m_mapTileGeneratorEditor.GetMeshOfUnitType(m_unitOnThisTile.m_UnitType), 
-                    simplifiedPosition);
+                    simplifiedPosition, registerUnit);
 
                 baseUnit.SetTeamColorMaterial(m_mapTileGeneratorEditor.GetMaterialForTeamColor(
                     m_unitOnThisTile.m_UnitType, m_unitOnThisTile.m_TeamColor));

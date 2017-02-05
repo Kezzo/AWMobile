@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BattlegroundUI : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class BattlegroundUI : MonoBehaviour
 
     [SerializeField]
     private GameObject m_endTurnButton;
+
+    [SerializeField]
+    private BattleSequenceUIElement m_battleSequenceUiElement;
 
     private void Awake()
     {
@@ -23,6 +27,21 @@ public class BattlegroundUI : MonoBehaviour
         //TODO: Display team stats and show battle introduction etc.
         ControllerContainer.BattleController.AddTurnStartEvent("BattleGroundUI - Initialize", teamToStartNext => 
             ChangeVisibilityOfEndTurnButton(teamToStartNext.m_IsPlayersTeam));
+    }
+
+    /// <summary>
+    /// Shows a battle sequence.
+    /// </summary>
+    /// <param name="leftMapTileData">The left map tile data.</param>
+    /// <param name="healthOfLeftUnit">The health of left unit.</param>
+    /// <param name="rightMapTileData">The right map tile data.</param>
+    /// <param name="healthOfRightUnit">The health of right unit.</param>
+    /// <param name="onBattleSequenceFinished">The on battle sequence finished.</param>
+    public void ShowBattleSequence(MapGenerationData.MapTile leftMapTileData, int healthOfLeftUnit, 
+        MapGenerationData.MapTile rightMapTileData, int healthOfRightUnit, Action onBattleSequenceFinished)
+    {
+        m_battleSequenceUiElement.InitializeAndStartSequence(leftMapTileData, healthOfLeftUnit, 
+            rightMapTileData, healthOfRightUnit, onBattleSequenceFinished);
     }
 
     /// <summary>
