@@ -1,4 +1,8 @@
-﻿public class InputBlocker
+﻿/// <summary>
+/// Class to help block the input in the battle.
+/// This class is able to block the camera scroll and the selection.
+/// </summary>
+public class InputBlocker
 {
     /// <summary>
     /// Changes the battle control input.

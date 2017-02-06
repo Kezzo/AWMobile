@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// Class to handle UI initialization and interaction in the Battleground
+/// </summary>
 public class BattlegroundUI : MonoBehaviour
 {
     [SerializeField]
@@ -40,8 +43,23 @@ public class BattlegroundUI : MonoBehaviour
     public void ShowBattleSequence(MapGenerationData.MapTile leftMapTileData, int healthOfLeftUnit, 
         MapGenerationData.MapTile rightMapTileData, int healthOfRightUnit, Action onBattleSequenceFinished)
     {
+        bool activateEndTurnButton = m_endTurnButton.activeSelf;
+
+        ChangeVisibilityOfEndTurnButton(false);
+
         m_battleSequenceUiElement.InitializeAndStartSequence(leftMapTileData, healthOfLeftUnit, 
-            rightMapTileData, healthOfRightUnit, onBattleSequenceFinished);
+            rightMapTileData, healthOfRightUnit, () =>
+            {
+                if (onBattleSequenceFinished != null)
+                {
+                    onBattleSequenceFinished();
+                }
+
+                if (activateEndTurnButton)
+                {
+                    ChangeVisibilityOfEndTurnButton(true);
+                }
+            });
     }
 
     /// <summary>

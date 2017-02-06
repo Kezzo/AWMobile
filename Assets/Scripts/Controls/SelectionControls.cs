@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Class to handle all selections in the battle.
+/// </summary>
 public class SelectionControls : MonoBehaviour
 {
     [SerializeField]
@@ -83,7 +86,9 @@ public class SelectionControls : MonoBehaviour
         ControllerContainer.BattleController.AddTurnStartEvent("DeselectUnit", teamPlayingNext => DeselectCurrentUnit()); 
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Checks if a raycast hit a specific layermask under the correct circumstances.
+    /// </summary>
     private void Update ()
     {
         if (IsBlocked)

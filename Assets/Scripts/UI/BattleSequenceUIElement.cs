@@ -2,6 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Part of the BattlegroundUI.
+/// Handles initialization of the battle sequences.
+/// </summary>
 public class BattleSequenceUIElement : MonoBehaviour
 {
     [SerializeField]
@@ -53,7 +57,14 @@ public class BattleSequenceUIElement : MonoBehaviour
 
         m_battleSequenceCanvas.gameObject.SetActive(true);
 
-        // Play pew pew animations here! 
+        // Play pew pew animations here!
+
+        CameraControls cameraController;
+        if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraController))
+        {
+            cameraController.CameraLookAtPosition(ControllerContainer.TileNavigationController.GetMapTile(
+                leftMapTileData.m_PositionVector).UnitRoot.position, 0.1f);
+        }
 
         Root.Instance.CoroutineHelper.CallDelayed(this, 2f, () =>
         {

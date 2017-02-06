@@ -161,6 +161,8 @@ public class BaseUnit : MonoBehaviour
     {
         return new MapGenerationData.MapTile
         {
+            m_PositionVector = CurrentSimplifiedPosition,
+
             m_MapTileType = ControllerContainer.TileNavigationController.GetMapTile(
                 baseUnit.CurrentSimplifiedPosition).MapTileType,
 
@@ -416,7 +418,6 @@ public class BaseUnit : MonoBehaviour
                 cameraController.CameraLookAtPosition(ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position, route.Count * .15f);
             }
         }
-        
 
         // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
         for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
