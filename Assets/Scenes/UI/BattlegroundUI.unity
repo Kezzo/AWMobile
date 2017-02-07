@@ -681,6 +681,7 @@ MonoBehaviour:
   m_rightHealthLeftBar: {fileID: 40657198}
   m_rightDamageTakenBar: {fileID: 641719717}
   m_battleSequenceCanvas: {fileID: 607167149}
+  m_healthBarAnimationSpeed: 1
 --- !u!1 &809459553
 GameObject:
   m_ObjectHideFlags: 0

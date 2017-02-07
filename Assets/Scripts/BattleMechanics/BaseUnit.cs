@@ -117,9 +117,13 @@ public class BaseUnit : MonoBehaviour
 
         SetRotation(directionToRotateTo);
 
-        PrepareAndShowBattleSequence(baseUnit, () =>
+        int damageToAttackedUnit = GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType);
+
+        //TODO: Implement counter attack
+
+        PrepareAndShowBattleSequence(baseUnit, damageToAttackedUnit, () =>
         {
-            baseUnit.StatManagement.TakeDamage(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType));
+            baseUnit.StatManagement.TakeDamage(damageToAttackedUnit);
             baseUnit.ChangeVisibiltyOfAttackMarker(false);
 
             UnitHasAttackedThisRound = true;
@@ -137,8 +141,9 @@ public class BaseUnit : MonoBehaviour
     /// Prepares and shows the battle sequence against a given unit.
     /// </summary>
     /// <param name="attackedUnit">The base unit.</param>
+    /// <param name="damageToAttackedUnit">The damage to attacked unit.</param>
     /// <param name="onBattleSequenceFinished">The on battle sequence finished.</param>
-    private void PrepareAndShowBattleSequence(BaseUnit attackedUnit, Action onBattleSequenceFinished)
+    private void PrepareAndShowBattleSequence(BaseUnit attackedUnit, int damageToAttackedUnit, Action onBattleSequenceFinished)
     {
         BattlegroundUI battlegroundUi;
 
@@ -148,7 +153,7 @@ public class BaseUnit : MonoBehaviour
             MapGenerationData.MapTile attackedUnitData = GetMapTileDataFromUnit(attackedUnit);
 
             battlegroundUi.ShowBattleSequence(attackingUnitData, this.StatManagement.CurrentHealth,
-                attackedUnitData, attackedUnit.StatManagement.CurrentHealth, onBattleSequenceFinished);
+                attackedUnitData, attackedUnit.StatManagement.CurrentHealth, damageToAttackedUnit, onBattleSequenceFinished);
         }
     }
 

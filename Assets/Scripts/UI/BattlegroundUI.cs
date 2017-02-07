@@ -39,16 +39,17 @@ public class BattlegroundUI : MonoBehaviour
     /// <param name="healthOfLeftUnit">The health of left unit.</param>
     /// <param name="rightMapTileData">The right map tile data.</param>
     /// <param name="healthOfRightUnit">The health of right unit.</param>
+    /// <param name="damageToRightUnit">The damage to right unit.</param>
     /// <param name="onBattleSequenceFinished">The on battle sequence finished.</param>
     public void ShowBattleSequence(MapGenerationData.MapTile leftMapTileData, int healthOfLeftUnit, 
-        MapGenerationData.MapTile rightMapTileData, int healthOfRightUnit, Action onBattleSequenceFinished)
+        MapGenerationData.MapTile rightMapTileData, int healthOfRightUnit, int damageToRightUnit, Action onBattleSequenceFinished)
     {
         bool activateEndTurnButton = m_endTurnButton.activeSelf;
 
         ChangeVisibilityOfEndTurnButton(false);
 
         m_battleSequenceUiElement.InitializeAndStartSequence(leftMapTileData, healthOfLeftUnit, 
-            rightMapTileData, healthOfRightUnit, () =>
+            rightMapTileData, healthOfRightUnit, damageToRightUnit, () =>
             {
                 if (onBattleSequenceFinished != null)
                 {
