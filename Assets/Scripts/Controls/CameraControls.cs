@@ -91,7 +91,7 @@ public class CameraControls : MonoBehaviour
     /// <summary>
     /// Listens to the mouse button input (touch also works) and handles a selected camera movement type.
     /// </summary>
-    private void Update()
+    private void LateUpdate()
     {
         if (IsBlocked)
         {
