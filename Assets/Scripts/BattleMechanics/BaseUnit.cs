@@ -117,24 +117,37 @@ public class BaseUnit : MonoBehaviour
 
         SetRotation(directionToRotateTo);
 
-        int damageToAttackedUnit = GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType);
+        baseUnit.ChangeVisibiltyOfAttackMarker(false);
+        baseUnit.StatManagement.TakeDamage(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType));
+        //Counter-attack    
 
-        //TODO: Implement counter attack
-
-        PrepareAndShowBattleSequence(baseUnit, damageToAttackedUnit, () =>
+        if (baseUnit.CanCounterAttack(this))
         {
-            baseUnit.StatManagement.TakeDamage(damageToAttackedUnit);
-            baseUnit.ChangeVisibiltyOfAttackMarker(false);
+            this.StatManagement.TakeDamage((int) (baseUnit.GetUnitBalancing().GetDamageOnUnitType(this.UnitType) * 0.5f));
+        }
 
-            UnitHasAttackedThisRound = true;
-            // An attack will always keep the unit from moving in this round.
-            UnitHasMovedThisRound = true;
+        UnitHasAttackedThisRound = true;
+        // An attack will always keep the unit from moving in this round.
+        UnitHasMovedThisRound = true;
 
-            if (onBattleSequenceFinished != null)
-            {
-                onBattleSequenceFinished();
-            }
-        }); 
+        if (onBattleSequenceFinished != null)
+        {
+            onBattleSequenceFinished();
+        }
+    }
+
+    /// <summary>
+    /// Determines whether this instance can counter attack a specified unit.
+    /// </summary>
+    /// <param name="unitToCounterAttack">The unit to counter attack.</param>
+    /// <returns>
+    ///   <c>true</c> if this instance [can counter attack] the specified unit to counter attack; otherwise, <c>false</c>.
+    /// </returns>
+    private bool CanCounterAttack(BaseUnit unitToCounterAttack)
+    {
+        return CanUnitAttackUnit(unitToCounterAttack) && 
+            ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                this.CurrentSimplifiedPosition, unitToCounterAttack.CurrentSimplifiedPosition) == 1;
     }
 
     /// <summary>
@@ -384,8 +397,8 @@ public class BaseUnit : MonoBehaviour
     /// <returns></returns>
     private bool TryToDisplayActionOnUnitsInRange(out List<BaseUnit> attackableUnits)
     {
-        List<BaseUnit> unitsInRange =
-            ControllerContainer.BattleController.GetUnitsInRange(this.CurrentSimplifiedPosition, GetUnitBalancing().m_AttackRange);
+        List<BaseUnit> unitsInRange = ControllerContainer.BattleController.GetUnitsInRange(
+            this.CurrentSimplifiedPosition, GetUnitBalancing().m_AttackRange);
 
         attackableUnits = new List<BaseUnit>();
 
