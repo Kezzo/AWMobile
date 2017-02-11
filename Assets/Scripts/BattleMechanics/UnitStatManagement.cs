@@ -59,4 +59,13 @@ public class UnitStatManagement : MonoBehaviour
             m_baseUnit.Die();
         }
     }
+
+    /// <summary>
+    /// Gets the health based damage modifier.
+    /// </summary>
+    /// <returns></returns>
+    public float GetHealthBasedDamageModifier()
+    {
+        return (float) m_currentHealth / m_maxHealth;
+    }
 }

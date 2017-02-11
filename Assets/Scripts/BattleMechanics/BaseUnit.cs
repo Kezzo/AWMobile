@@ -118,12 +118,14 @@ public class BaseUnit : MonoBehaviour
         SetRotation(directionToRotateTo);
 
         baseUnit.ChangeVisibiltyOfAttackMarker(false);
-        baseUnit.StatManagement.TakeDamage(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType));
+        baseUnit.StatManagement.TakeDamage((int) (GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType) * 
+            m_statManagement.GetHealthBasedDamageModifier()));
         //Counter-attack    
 
         if (baseUnit.CanCounterAttack(this))
         {
-            this.StatManagement.TakeDamage((int) (baseUnit.GetUnitBalancing().GetDamageOnUnitType(this.UnitType) * 0.5f));
+            this.StatManagement.TakeDamage((int) (baseUnit.GetUnitBalancing().GetDamageOnUnitType(this.UnitType) *
+            baseUnit.StatManagement.GetHealthBasedDamageModifier()));
         }
 
         UnitHasAttackedThisRound = true;
