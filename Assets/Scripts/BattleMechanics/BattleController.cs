@@ -167,13 +167,6 @@ public class BattleController
             turnStartEvent.Value(teamToStartNext);
         }
 
-        List<BaseUnit> unitsToReset = m_registeredUnits[teamToStartNext.m_TeamColor];
-
-        for (int unitIndex = 0; unitIndex < unitsToReset.Count; unitIndex++)
-        {
-            unitsToReset[unitIndex].ResetUnit();
-        }
-
         if (!teamToStartNext.m_IsPlayersTeam)
         {
             foreach (AIController ai in m_registeredAIs)
@@ -191,6 +184,13 @@ public class BattleController
     /// </summary>
     public void EndCurrentTurn()
     {
+        List<BaseUnit> unitsToReset = m_registeredUnits[GetCurrentlyPlayingTeam().m_TeamColor];
+
+        for (int unitIndex = 0; unitIndex < unitsToReset.Count; unitIndex++)
+        {
+            unitsToReset[unitIndex].ResetUnit();
+        }
+
         m_subTurnCount++;
 
         if (m_subTurnCount == m_teamThisBattle.Length)
