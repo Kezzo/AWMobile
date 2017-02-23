@@ -118,14 +118,14 @@ public class BaseUnit : MonoBehaviour
         SetRotation(directionToRotateTo);
 
         baseUnit.ChangeVisibiltyOfAttackMarker(false);
-        baseUnit.StatManagement.TakeDamage((int) (GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType) * 
-            m_statManagement.GetHealthBasedDamageModifier()));
+        baseUnit.StatManagement.HidePotentialDamage();
+
+        baseUnit.StatManagement.TakeDamage(GetDamageOnUnit(baseUnit));
         //Counter-attack    
 
         if (baseUnit.CanCounterAttack(this))
         {
-            this.StatManagement.TakeDamage((int) (baseUnit.GetUnitBalancing().GetDamageOnUnitType(this.UnitType) *
-            baseUnit.StatManagement.GetHealthBasedDamageModifier()));
+            this.StatManagement.TakeDamage(baseUnit.GetDamageOnUnit(this));
         }
 
         UnitHasAttackedThisRound = true;
@@ -136,6 +136,17 @@ public class BaseUnit : MonoBehaviour
         {
             onBattleSequenceFinished();
         }
+    }
+
+    /// <summary>
+    /// Gets the damage this unit does on a specific unit.
+    /// </summary>
+    /// <param name="baseUnit">The base unit.</param>
+    /// <returns></returns>
+    public int GetDamageOnUnit(BaseUnit baseUnit)
+    {
+        return (int)(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType) *
+                    m_statManagement.GetHealthBasedDamageModifier());
     }
 
     /// <summary>
@@ -241,6 +252,7 @@ public class BaseUnit : MonoBehaviour
     {
         m_selectionMarker.SetActive(false);
         ChangeVisibiltyOfAttackMarker(false);
+        StatManagement.HidePotentialDamage();
 
         SetWalkableTileFieldVisibiltyTo(false);
         HideAllRouteMarker();
@@ -386,6 +398,7 @@ public class BaseUnit : MonoBehaviour
         for (int unitIndex = 0; unitIndex < unitToClearActionsFrom.Count; unitIndex++)
         {
             unitToClearActionsFrom[unitIndex].ChangeVisibiltyOfAttackMarker(false);
+            unitToClearActionsFrom[unitIndex].StatManagement.HidePotentialDamage();
         }
 
         unitToClearActionsFrom.Clear();
@@ -411,6 +424,7 @@ public class BaseUnit : MonoBehaviour
             if (CanUnitAttackUnit(unit))
             {
                 unit.ChangeVisibiltyOfAttackMarker(true);
+                unit.StatManagement.DisplayPotentialDamage(this);
                 attackableUnits.Add(unit);
             }
             else

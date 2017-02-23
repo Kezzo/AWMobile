@@ -15,6 +15,9 @@ public class UnitStatManagement : MonoBehaviour
     [SerializeField]
     private Image m_healthLeftBar;
 
+    [SerializeField]
+    private Image m_potentialDamageBar;
+
     private int m_currentHealth;
     public int CurrentHealth { get { return m_currentHealth; } }
 
@@ -67,5 +70,36 @@ public class UnitStatManagement : MonoBehaviour
     public float GetHealthBasedDamageModifier()
     {
         return (float) m_currentHealth / m_maxHealth;
+    }
+
+    /// <summary>
+    /// Displays the potential damage.
+    /// </summary>
+    public void DisplayPotentialDamage(BaseUnit attackingUnit)
+    {
+        m_healthBarCanvas.gameObject.SetActive(true);
+
+        int potentialDamage = attackingUnit.GetDamageOnUnit(m_baseUnit);
+
+        float currentNormalizedHealthLeft = (float)m_currentHealth / m_maxHealth;
+
+        float potentialNormalizedHealthLeft = (float) (m_currentHealth - potentialDamage) / m_maxHealth;
+
+        m_potentialDamageBar.fillAmount =  1 - potentialNormalizedHealthLeft;
+
+        m_potentialDamageBar.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Hides the potential damage.
+    /// </summary>
+    public void HidePotentialDamage()
+    {
+        if (CurrentHealth == m_maxHealth)
+        {
+            m_healthBarCanvas.gameObject.SetActive(false);
+        }
+
+        m_potentialDamageBar.gameObject.SetActive(false);
     }
 }
