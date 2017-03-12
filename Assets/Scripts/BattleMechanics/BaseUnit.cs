@@ -33,6 +33,9 @@ public class BaseUnit : MonoBehaviour
     [SerializeField]
     private Color m_disabledColor;
 
+    [SerializeField]
+    private AnimationCurve m_movementAnimationCurve;
+
     public TeamColor TeamColor { get; private set; }
     public UnitType UnitType { get; private set; }
     public bool UnitHasMovedThisRound { get; private set; }
@@ -91,8 +94,6 @@ public class BaseUnit : MonoBehaviour
             UniqueIdent = ControllerContainer.BattleController.RegisterUnit(TeamColor, this);
             m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
         }
-
-        // Load balancing once here and keep for the round.
     }
 
     /// <summary>
@@ -101,7 +102,6 @@ public class BaseUnit : MonoBehaviour
     public void Die()
     {
         ControllerContainer.BattleController.RemoveRegisteredUnit(TeamColor, this);
-        // Play explosion effect and destroy delayed.
 
         m_attackMarker.SetActive(false);
         m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Death);
@@ -455,12 +455,15 @@ public class BaseUnit : MonoBehaviour
     /// <returns></returns>
     private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, Action onMoveFinished)
     {
+        Vector3 startPosition = this.transform.position;
+        Vector3 endPosition = ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position;
+
         if (!ControllerContainer.BattleController.IsPlayersTurn())
         {
             CameraControls cameraController;
             if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraController))
             {
-                cameraController.CameraLookAtPosition(ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position, route.Count * .25f);
+                cameraController.CameraLookAtPosition(endPosition, route.Count * .25f);
             }
         }
 
@@ -470,7 +473,7 @@ public class BaseUnit : MonoBehaviour
             Vector2 nodeToMoveTo = route[nodeIndex];
             Vector2 currentNode = route[nodeIndex - 1];
 
-            yield return MoveToNeighborNode(currentNode, nodeToMoveTo);
+            yield return MoveToNeighborNode(currentNode, nodeToMoveTo, (endPosition - startPosition).magnitude, endPosition);
 
             if (nodeIndex == route.Count - 1)
             {
@@ -501,7 +504,9 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="startNode">The start node.</param>
     /// <param name="destinationNode">The destination node.</param>
-    private IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode)
+    /// <param name="startDistanceToEndPosition">The distance to the end position when the movement was started. Used to calculate smooth movement.</param>
+    /// <param name="endWorldPosition">The last position (in world-coodinates) the unit has to move. Used to calculate smooth movement.</param>
+    private IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, float startDistanceToEndPosition, Vector3 endWorldPosition)
     {
         Vector2 nodePositionDiff = startNode - destinationNode;
 
@@ -528,7 +533,10 @@ public class BaseUnit : MonoBehaviour
         // Move to world position
         while (true)
         {
-            float movementStep = m_worldMovementSpeed * Time.deltaTime;
+            float currentDistanceToLastMaptile = (endWorldPosition - transform.position).magnitude;
+            float normalizedDistanceToLastMaptile = currentDistanceToLastMaptile / startDistanceToEndPosition;
+
+            float movementStep = (m_worldMovementSpeed * m_movementAnimationCurve.Evaluate(normalizedDistanceToLastMaptile)) * Time.deltaTime;
 
             transform.position = Vector3.MoveTowards(transform.position, targetWorldPosition, movementStep);
 

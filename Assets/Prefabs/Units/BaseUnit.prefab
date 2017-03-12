@@ -702,6 +702,42 @@ MonoBehaviour:
   m_statManagement: {fileID: 114839991524481696}
   m_unitParticleFxPlayer: {fileID: 114618257586196996}
   m_disabledColor: {r: 0.654902, g: 0.654902, b: 0.654902, a: 0}
+  m_movementAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: -0.002053388
+      value: 0.30518585
+      inSlope: 10.099326
+      outSlope: 10.099326
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.15076011
+      value: 0.99998087
+      inSlope: -0.35102773
+      outSlope: 0.04664999
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 0.5
+      value: 1
+      inSlope: -0.0046132375
+      outSlope: -0.0046132375
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.8508795
+      value: 0.9997896
+      inSlope: -0.042606298
+      outSlope: 0.18963449
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 1.0003902
+      value: 0.29960537
+      inSlope: -5.4123626
+      outSlope: -5.4123626
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114618257586196996
 MonoBehaviour:
   m_ObjectHideFlags: 1
