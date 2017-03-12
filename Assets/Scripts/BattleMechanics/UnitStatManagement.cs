@@ -59,6 +59,7 @@ public class UnitStatManagement : MonoBehaviour
 
         if (m_currentHealth == 0)
         {
+            m_healthBarCanvas.enabled = false;
             m_baseUnit.Die();
         }
     }

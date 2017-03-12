@@ -47,6 +47,11 @@ public class AIController
         get { return this.m_myTeam.m_TeamColor; }
     }
 
+    private BaseUnit CurrentlyControlledUnit
+    {
+        get { return this.m_myUnits[this.m_unitCounter]; }
+    }
+
     /// <summary>
     /// Starts the turn.
     /// </summary>
@@ -75,16 +80,20 @@ public class AIController
     {
         if (this.m_unitCounter < this.m_myUnits.Count)
         {
-            BaseMapTile tileToWalkTo = this.GetWalkableTileClosestToNextAttackableEnemy(this.m_myUnits[this.m_unitCounter]);
-            if (tileToWalkTo != null)
+            // To pause between each unit was moved
+            Root.Instance.CoroutineHelper.CallDelayed(CurrentlyControlledUnit, 0.2f, () =>
             {
-                var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
-                this.m_myUnits[this.m_unitCounter].MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(this.m_myUnits[this.m_unitCounter], tileToWalkTo, out dontCare), this.AttackIfPossible);
-            }
-            else
-            {
-                this.AttackIfPossible();
-            }
+                BaseMapTile tileToWalkTo = this.GetWalkableTileClosestToNextAttackableEnemy(CurrentlyControlledUnit);
+                if (tileToWalkTo != null)
+                {
+                    var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
+                    CurrentlyControlledUnit.MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(CurrentlyControlledUnit, tileToWalkTo, out dontCare), this.AttackIfPossible);
+                }
+                else
+                {
+                    this.AttackIfPossible();
+                }
+            });
         }
         else
         {
@@ -98,9 +107,10 @@ public class AIController
     /// </summary>
     private void AttackIfPossible()
     {
-        BaseUnit attackingUnit = this.m_myUnits[this.m_unitCounter];
-        List<BaseUnit> unitsInRange =
-            ControllerContainer.BattleController.GetUnitsInRange(attackingUnit.CurrentSimplifiedPosition, attackingUnit.GetUnitBalancing().m_AttackRange);
+        BaseUnit attackingUnit = CurrentlyControlledUnit;
+        List<BaseUnit> unitsInRange = ControllerContainer.BattleController.GetUnitsInRange(
+            attackingUnit.CurrentSimplifiedPosition, attackingUnit.GetUnitBalancing().m_AttackRange);
+
         for (int i = 0; i < unitsInRange.Count; i++)
         {
             if (attackingUnit.CanUnitAttackUnit(unitsInRange[i]))

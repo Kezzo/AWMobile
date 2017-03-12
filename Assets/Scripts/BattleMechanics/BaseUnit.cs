@@ -28,6 +28,9 @@ public class BaseUnit : MonoBehaviour
     public UnitStatManagement StatManagement { get { return m_statManagement; } }
 
     [SerializeField]
+    private UnitParticleFxPlayer m_unitParticleFxPlayer;
+
+    [SerializeField]
     private Color m_disabledColor;
 
     public TeamColor TeamColor { get; private set; }
@@ -100,7 +103,14 @@ public class BaseUnit : MonoBehaviour
         ControllerContainer.BattleController.RemoveRegisteredUnit(TeamColor, this);
         // Play explosion effect and destroy delayed.
 
-        Destroy(this.gameObject);
+        m_attackMarker.SetActive(false);
+        m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Death);
+        m_meshRenderer.enabled = false;
+
+        Root.Instance.CoroutineHelper.CallDelayed(this, 0.6f, () =>
+        {
+            Destroy(this.gameObject);
+        });
     }
 
     /// <summary>
@@ -121,8 +131,9 @@ public class BaseUnit : MonoBehaviour
         baseUnit.StatManagement.HidePotentialDamage();
 
         baseUnit.StatManagement.TakeDamage(GetDamageOnUnit(baseUnit));
-        //Counter-attack    
+        m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Attack);
 
+        //Counter-attack
         if (baseUnit.CanCounterAttack(this))
         {
             this.StatManagement.TakeDamage(baseUnit.GetDamageOnUnit(this));
@@ -449,7 +460,7 @@ public class BaseUnit : MonoBehaviour
             CameraControls cameraController;
             if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraController))
             {
-                cameraController.CameraLookAtPosition(ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position, route.Count * .15f);
+                cameraController.CameraLookAtPosition(ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position, route.Count * .25f);
             }
         }
 
