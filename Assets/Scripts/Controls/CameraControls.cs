@@ -41,10 +41,22 @@ public class CameraControls : MonoBehaviour
     [SerializeField]
     private MotionBlur m_motionBlur;
 
+    [Header("Auto-Zoom")]
+
+    [SerializeField]
+    [Range(0f, 100f)]
+    private float m_autoZoomSpeed;
+
+    [SerializeField]
+    private AnimationCurve m_autoZoomAnimationCurve;
+
     private Vector3 m_lastMousePosition;
     private Vector2 m_touchPositionLastFrame;
     private float m_cameraStartPosZ;
+
     private float m_zoomLevel;
+    public float CurrentZoomLevel { get { return m_zoomLevel; } }
+
     private int m_fingersOnScreenLastFrame;
 
     private bool m_startedDragging;
@@ -260,6 +272,52 @@ public class CameraControls : MonoBehaviour
     }
 
     /// <summary>
+    /// Automatically zooms to a given zoom level.
+    /// </summary>
+    /// <param name="zoomLevel">The zoom level.</param>
+    /// <returns></returns>
+    public void AutoZoom(float zoomLevel)
+    {
+        StartCoroutine(AutoZoomCoroutine(zoomLevel));
+    }
+
+    /// <summary>
+    /// Automatically zooms to a given zoom level.
+    /// </summary>
+    /// <param name="zoomLevel">The zoom level.</param>
+    /// <returns></returns>
+    private IEnumerator AutoZoomCoroutine(float zoomLevel)
+    {
+        float startZoomLevel = m_zoomLevel;
+
+        if (Mathf.Abs(startZoomLevel - zoomLevel) < 0.1f)
+        {
+            yield break;
+        }
+
+        bool zoomingOut = zoomLevel > startZoomLevel;
+
+        while (true)
+        {
+            float normalizedZoomedLength = (m_zoomLevel - startZoomLevel) / (zoomLevel - startZoomLevel);
+            float zoomLevelChangeThisFrame = m_autoZoomSpeed * m_autoZoomAnimationCurve.Evaluate(normalizedZoomedLength) * Time.deltaTime;
+
+            zoomLevelChangeThisFrame = zoomingOut ? zoomLevelChangeThisFrame : zoomLevelChangeThisFrame * -1;
+
+            Debug.Log(zoomLevelChangeThisFrame);
+
+            ChangeZoomLevel(Mathf.Clamp(zoomLevelChangeThisFrame, m_minZoomLevel, m_maxZoomLevel));
+
+            if (Mathf.Abs(m_zoomLevel - zoomLevel) <= 0.1f)
+            {
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
+
+    /// <summary>
     /// Changes the zoom level.
     /// </summary>
     private void ChangeZoomLevel(float zoomDelta)
@@ -272,10 +330,11 @@ public class CameraControls : MonoBehaviour
         else
         {
             m_zoomLevel = Mathf.Clamp(m_zoomLevel + zoomDelta * m_zoomSpeed, m_minZoomLevel, m_maxZoomLevel);
-            m_cameraToControl.transform.localPosition = new Vector3(CameraToControl.transform.localPosition.x, CameraToControl.transform.localPosition.y, m_cameraStartPosZ - m_zoomLevel);
+
+            m_cameraToControl.transform.localPosition = new Vector3(m_cameraToControl.transform.localPosition.x, 
+                m_cameraToControl.transform.localPosition.y, m_cameraStartPosZ - m_zoomLevel);
         }
     }
-
 
     /// <summary>
     /// Moves the Camera to look at position.
@@ -290,8 +349,8 @@ public class CameraControls : MonoBehaviour
                            Mathf.Sin(m_cameraMover.parent.rotation.eulerAngles.x);
         Vector3 cameraAimTarget = ray.GetPoint(hypotenuse);
         Vector3 cameraPosition = targetPos - (m_cameraMover.position - cameraAimTarget);
-        StartCoroutine(MoveCameraToPoint(cameraPosition, time));
 
+        StartCoroutine(MoveCameraToPoint(cameraPosition, time));
     }
 
     /// <summary>

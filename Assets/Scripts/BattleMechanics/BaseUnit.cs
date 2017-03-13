@@ -458,15 +458,6 @@ public class BaseUnit : MonoBehaviour
         Vector3 startPosition = this.transform.position;
         Vector3 endPosition = ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position;
 
-        if (!ControllerContainer.BattleController.IsPlayersTurn())
-        {
-            CameraControls cameraController;
-            if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraController))
-            {
-                cameraController.CameraLookAtPosition(endPosition, route.Count * .25f);
-            }
-        }
-
         // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
         for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
         {
