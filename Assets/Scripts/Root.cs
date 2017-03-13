@@ -64,21 +64,21 @@ public class Root : MonoBehaviour
                 m_TeamColor = TeamColor.Blue,
                 m_IsPlayersTeam = true
             },
-            new Team
-            {
-                m_TeamColor = TeamColor.Red,
-                m_IsPlayersTeam = false
-            },
+            //new Team
+            //{
+            //    m_TeamColor = TeamColor.Red,
+            //    m_IsPlayersTeam = false
+            //},
             new Team
             {
                 m_TeamColor = TeamColor.Yellow,
                 m_IsPlayersTeam = false
             },
-            new Team
-            {
-                m_TeamColor = TeamColor.Green,
-                m_IsPlayersTeam = false
-            }
+            //new Team
+            //{
+            //    m_TeamColor = TeamColor.Green,
+            //    m_IsPlayersTeam = false
+            //}
         });
 
         SceneLoading.LoadSceneAsync("BattlegroundUI", null, () =>
@@ -89,7 +89,7 @@ public class Root : MonoBehaviour
 
                 if (ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
                 {
-                    mapTileGeneratorEditor.LoadExistingMap("Level1");
+                    mapTileGeneratorEditor.LoadExistingMap("Level2");
                 }
 
                 ControllerContainer.BattleController.StartBattle();
