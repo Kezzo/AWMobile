@@ -64,6 +64,9 @@ public class CameraControls : MonoBehaviour
 
     public bool IsBlocked { get; set; }
 
+    private float m_zoomLevelInPlayerTurn;
+    private bool m_lastTurnWasPlayerTurn;
+
     public enum CameraType
     {
         Rotate,
@@ -98,6 +101,8 @@ public class CameraControls : MonoBehaviour
         }
 
         m_cameraStartPosZ = m_cameraToControl.transform.localPosition.z;
+
+        ControllerContainer.BattleController.AddTurnStartEvent("CameraAutoZoom", ZoomCameraBasedOnTheCurrentTeam);
     }
 
     /// <summary>
@@ -224,12 +229,12 @@ public class CameraControls : MonoBehaviour
                 }
 
                 // Change rotation direction when dragging on the other side of the screen.
-                if (Input.mousePosition.y < Screen.height / 2)
+                if (Input.mousePosition.y < Screen.height / 2f)
                 {
                     rotationChangeX *= -1;
                 }
 
-                if (Input.mousePosition.x > Screen.width / 2)
+                if (Input.mousePosition.x > Screen.width / 2f)
                 {
                     rotationChangeY *= -1;
                 }
@@ -272,11 +277,32 @@ public class CameraControls : MonoBehaviour
     }
 
     /// <summary>
+    /// Zooms the camera based on the currently playing team.
+    /// </summary>
+    private void ZoomCameraBasedOnTheCurrentTeam(Team currentlyPlayingTeam)
+    {
+        if (!currentlyPlayingTeam.m_IsPlayersTeam && m_lastTurnWasPlayerTurn)
+        {
+            m_zoomLevelInPlayerTurn = CurrentZoomLevel;
+            AutoZoom(10f);
+
+            m_lastTurnWasPlayerTurn = false;
+        }
+        else if(currentlyPlayingTeam.m_IsPlayersTeam)
+        {
+            //TODO: Handle multiple enemy teams
+            AutoZoom(m_zoomLevelInPlayerTurn);
+
+            m_lastTurnWasPlayerTurn = true;
+        }
+    }
+
+    /// <summary>
     /// Automatically zooms to a given zoom level.
     /// </summary>
     /// <param name="zoomLevel">The zoom level.</param>
     /// <returns></returns>
-    public void AutoZoom(float zoomLevel)
+    private void AutoZoom(float zoomLevel)
     {
         StartCoroutine(AutoZoomCoroutine(zoomLevel));
     }
@@ -303,8 +329,6 @@ public class CameraControls : MonoBehaviour
             float zoomLevelChangeThisFrame = m_autoZoomSpeed * m_autoZoomAnimationCurve.Evaluate(normalizedZoomedLength) * Time.deltaTime;
 
             zoomLevelChangeThisFrame = zoomingOut ? zoomLevelChangeThisFrame : zoomLevelChangeThisFrame * -1;
-
-            Debug.Log(zoomLevelChangeThisFrame);
 
             ChangeZoomLevel(Mathf.Clamp(zoomLevelChangeThisFrame, m_minZoomLevel, m_maxZoomLevel));
 

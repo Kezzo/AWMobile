@@ -9,7 +9,7 @@ public class AIController
     /// <summary>
     /// The team the AI is playing for.
     /// </summary>
-    private Team m_myTeam;
+    private readonly Team m_myTeam;
 
     /// <summary>
     /// Every Unit under this AI's Control.
@@ -87,7 +87,8 @@ public class AIController
                 if (tileToWalkTo != null)
                 {
                     var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
-                    CurrentlyControlledUnit.MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(CurrentlyControlledUnit, tileToWalkTo, out dontCare), this.AttackIfPossible);
+                    CurrentlyControlledUnit.MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(
+                        CurrentlyControlledUnit, tileToWalkTo, out dontCare), this.AttackIfPossible);
                 }
                 else
                 {

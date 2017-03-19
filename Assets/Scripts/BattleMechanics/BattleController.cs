@@ -24,8 +24,6 @@ public class BattleController
 
     private List<AIController> m_registeredAIs;
 
-    private float m_zoomLevelInPlayerTurn;
-
     /// <summary>
     /// Initializes a battle.
     /// </summary>
@@ -186,8 +184,6 @@ public class BattleController
     /// </summary>
     public void EndCurrentTurn()
     {
-        ZoomCameraBasedOnTheCurrentTeam();
-
         List<BaseUnit> unitsToReset = m_registeredUnits[GetCurrentlyPlayingTeam().m_TeamColor];
 
         for (int unitIndex = 0; unitIndex < unitsToReset.Count; unitIndex++)
@@ -204,31 +200,6 @@ public class BattleController
         }
 
         StartNextTurn();
-    }
-
-    /// <summary>
-    /// Zooms the camera based on the currently playing team.
-    /// </summary>
-    private void ZoomCameraBasedOnTheCurrentTeam()
-    {
-        CameraControls cameraController;
-        if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraController))
-        {
-            float zoomLevel;
-
-            if (GetCurrentlyPlayingTeam().m_IsPlayersTeam)
-            {
-                m_zoomLevelInPlayerTurn = cameraController.CurrentZoomLevel;
-                zoomLevel = 10f;
-            }
-            else
-            {
-                //TODO: Handle multiple enemy teams
-                zoomLevel = m_zoomLevelInPlayerTurn;
-            }
-
-            cameraController.AutoZoom(zoomLevel);
-        }
     }
 
     /// <summary>
