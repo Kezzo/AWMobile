@@ -64,8 +64,11 @@ public class CameraControls : MonoBehaviour
 
     public bool IsBlocked { get; set; }
 
+    private bool m_autoZoomIsRunning;
     private float m_zoomLevelInPlayerTurn;
     private bool m_lastTurnWasPlayerTurn;
+
+    private Coroutine m_lastRunningAutoZoomCoroutine;
 
     public enum CameraType
     {
@@ -283,7 +286,11 @@ public class CameraControls : MonoBehaviour
     {
         if (!currentlyPlayingTeam.m_IsPlayersTeam && m_lastTurnWasPlayerTurn)
         {
-            m_zoomLevelInPlayerTurn = CurrentZoomLevel;
+            if (!m_autoZoomIsRunning)
+            {
+                m_zoomLevelInPlayerTurn = CurrentZoomLevel;
+            }
+            
             AutoZoom(10f);
 
             m_lastTurnWasPlayerTurn = false;
@@ -304,7 +311,14 @@ public class CameraControls : MonoBehaviour
     /// <returns></returns>
     private void AutoZoom(float zoomLevel)
     {
-        StartCoroutine(AutoZoomCoroutine(zoomLevel));
+        if (m_lastRunningAutoZoomCoroutine != null)
+        {
+            StopCoroutine(m_lastRunningAutoZoomCoroutine);
+            m_lastRunningAutoZoomCoroutine = null;
+        }
+
+        m_lastRunningAutoZoomCoroutine = StartCoroutine(AutoZoomCoroutine(zoomLevel));
+        m_autoZoomIsRunning = true;
     }
 
     /// <summary>
@@ -318,6 +332,7 @@ public class CameraControls : MonoBehaviour
 
         if (Mathf.Abs(startZoomLevel - zoomLevel) < 0.1f)
         {
+            m_autoZoomIsRunning = false;
             yield break;
         }
 
@@ -334,6 +349,7 @@ public class CameraControls : MonoBehaviour
 
             if (Mathf.Abs(m_zoomLevel - zoomLevel) <= 0.1f)
             {
+                m_autoZoomIsRunning = false;
                 yield break;
             }
 
