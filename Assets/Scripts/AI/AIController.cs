@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -83,6 +84,8 @@ public class AIController
             // To pause between each unit was moved
             Root.Instance.CoroutineHelper.CallDelayed(CurrentlyControlledUnit, 0.2f, () =>
             {
+                //TODO: Get all units the current unit can walk to and check which on the 
+                // unit should walk to to attack the unit it can do the most damage on.
                 BaseMapTile tileToWalkTo = this.GetWalkableTileClosestToNextAttackableEnemy(CurrentlyControlledUnit);
                 if (tileToWalkTo != null)
                 {
@@ -112,23 +115,26 @@ public class AIController
         List<BaseUnit> unitsInRange = ControllerContainer.BattleController.GetUnitsInRange(
             attackingUnit.CurrentSimplifiedPosition, attackingUnit.GetUnitBalancing().m_AttackRange);
 
+        SortListByEffectivityAgainstUnit(attackingUnit, ref unitsInRange);
+
         for (int i = 0; i < unitsInRange.Count; i++)
         {
             if (attackingUnit.CanUnitAttackUnit(unitsInRange[i]))
             {
                 BaseUnit unitToAttack = unitsInRange[i];
                 Debug.LogFormat("{0} {1} attacks {2} {3}", attackingUnit.TeamColor, attackingUnit.UnitType, unitToAttack.TeamColor, unitToAttack.UnitType);
-                attackingUnit.AttackUnit(unitToAttack, () =>
-                        {
-                            // Check if unit died
-                            if (!ControllerContainer.BattleController.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
-                            {
-                                this.m_enemyUnits.Remove(unitToAttack);
-                            }
 
-                            this.m_unitCounter++;
-                            this.MoveNextUnit();
-                        });
+                attackingUnit.AttackUnit(unitToAttack, () =>
+                {
+                    // Check if unit died
+                    if (!ControllerContainer.BattleController.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
+                    {
+                        this.m_enemyUnits.Remove(unitToAttack);
+                    }
+
+                    this.m_unitCounter++;
+                    this.MoveNextUnit();
+                });
 
                 return;
             }
@@ -136,6 +142,35 @@ public class AIController
 
         this.m_unitCounter++;
         this.MoveNextUnit();
+    }
+
+    /// <summary>
+    /// Sorts the list by how effective the attacking unit is against the unit in the list.
+    /// The sorting goes from most effective [0] -> least effective [Count]
+    /// If the attacking unit does equal damage to two compared units, they will be sorted based on the range to the attacking unit.
+    /// So the closer unit is sorted higher than the unit more far away.
+    /// </summary>
+    /// <param name="attackingUnit"></param>
+    /// <param name="listToSort">The list to sort.</param>
+    private void SortListByEffectivityAgainstUnit(BaseUnit attackingUnit, ref List<BaseUnit> listToSort)
+    {
+        TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
+        Vector2 positionOfAttackingUnit = attackingUnit.CurrentSimplifiedPosition;
+
+        listToSort.Sort((unit1, unit2) =>
+        {
+            int unitComparisonValue = attackingUnit.GetDamageOnUnit(unit2).CompareTo(attackingUnit.GetDamageOnUnit(unit1));
+
+            // The attack unit does equal damage the compared units.
+            if (unitComparisonValue == 0)
+            {
+                // Compare the range to the unit to attack
+                unitComparisonValue = tileNavigationController.GetDistanceToCoordinate(positionOfAttackingUnit, unit1.CurrentSimplifiedPosition)
+                        .CompareTo(tileNavigationController.GetDistanceToCoordinate(positionOfAttackingUnit, unit2.CurrentSimplifiedPosition));
+            }
+
+            return unitComparisonValue;
+        });
     }
 
     /// <summary>
