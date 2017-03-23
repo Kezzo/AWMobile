@@ -169,7 +169,7 @@ public class BaseUnit : MonoBehaviour
     /// </returns>
     private bool CanCounterAttack(BaseUnit unitToCounterAttack)
     {
-        return CanUnitAttackUnit(unitToCounterAttack) && 
+        return CanAttackUnit(unitToCounterAttack) && 
             ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
                 this.CurrentSimplifiedPosition, unitToCounterAttack.CurrentSimplifiedPosition) == 1;
     }
@@ -341,7 +341,7 @@ public class BaseUnit : MonoBehaviour
     /// Determines whether this unit can attack a given unit.
     /// </summary>
     /// <param name="unitToCheck">The unit to check.</param>
-    public bool CanUnitAttackUnit(BaseUnit unitToCheck)
+    public bool CanAttackUnit(BaseUnit unitToCheck)
     {
         return TeamColor != unitToCheck.TeamColor && 
             GetUnitBalancing().m_AttackableUnitMetaTypes.Contains(unitToCheck.GetUnitBalancing().m_UnitMetaType);
@@ -432,7 +432,7 @@ public class BaseUnit : MonoBehaviour
         {
             BaseUnit unit = unitsInRange[unitIndex];
 
-            if (CanUnitAttackUnit(unit))
+            if (CanAttackUnit(unit))
             {
                 unit.ChangeVisibiltyOfAttackMarker(true);
                 unit.StatManagement.DisplayPotentialDamage(this);

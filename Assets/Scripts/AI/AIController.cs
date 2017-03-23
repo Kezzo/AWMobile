@@ -83,14 +83,15 @@ public class AIController
             // To pause between each unit that was moved
             Root.Instance.CoroutineHelper.CallDelayed(CurrentlyControlledUnit, 0.2f, () =>
             {
-                //TODO: Get all units the current unit can walk to and check which on the 
-                // unit should walk to to attack the unit it can do the most damage on.
                 BaseMapTile tileToWalkTo = GetWalkableTileClosestToNextAttackableEnemy(CurrentlyControlledUnit);
                 if (tileToWalkTo != null)
                 {
                     var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
-                    CurrentlyControlledUnit.MoveAlongRoute(ControllerContainer.TileNavigationController.GetBestWayToDestination(
-                        CurrentlyControlledUnit, tileToWalkTo, out dontCare), this.AttackIfPossible);
+
+                    List<Vector2> routeToMove = ControllerContainer.TileNavigationController.GetBestWayToDestination(
+                        CurrentlyControlledUnit, tileToWalkTo, out dontCare);
+
+                    CurrentlyControlledUnit.MoveAlongRoute(routeToMove, AttackIfPossible);
                 }
                 else
                 {
@@ -118,7 +119,7 @@ public class AIController
 
         for (int i = 0; i < unitsInRange.Count; i++)
         {
-            if (attackingUnit.CanUnitAttackUnit(unitsInRange[i]))
+            if (attackingUnit.CanAttackUnit(unitsInRange[i]))
             {
                 BaseUnit unitToAttack = unitsInRange[i];
                 Debug.LogFormat("{0} {1} attacks {2} {3}", attackingUnit.TeamColor, attackingUnit.UnitType, unitToAttack.TeamColor, unitToAttack.UnitType);
@@ -184,54 +185,48 @@ public class AIController
             return null;
         }
 
-        List<BaseMapTile> walkableTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(unit);
-        int unitWithLowestDistance = 0;
-        int lowestDistanceFound = int.MaxValue;
+        TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
 
-        // Get closest attackable enemy
-        for (int i = 0; i < this.m_enemyUnits.Count; i++)
-        {
-            if (!unit.CanUnitAttackUnit(this.m_enemyUnits[i]))
-            {
-                continue;
-            }
+        List<BaseMapTile> walkableTiles = tileNavigationController.GetWalkableMapTiles(unit);
 
-            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                unit.CurrentSimplifiedPosition, this.m_enemyUnits[i].CurrentSimplifiedPosition);
-
-            if (lowestDistanceFound > dist)
-            {
-                lowestDistanceFound = dist;
-                unitWithLowestDistance = i;
-            }
-        }
-
-        if (lowestDistanceFound <= unit.GetUnitBalancing().m_AttackRange)
+        if (walkableTiles.Count == 0)
         {
             return null;
         }
 
-        BaseMapTile tileWithLowestDistToEnemy = null;
-        lowestDistanceFound = int.MaxValue;
+        List<BaseUnit> enemiesToCheck = new List<BaseUnit>(m_enemyUnits);
+        enemiesToCheck.RemoveAll(enemyUnit => !unit.CanAttackUnit(enemyUnit));
 
-        // Get closest tile next to unit to attack
-        for (int i = 0; i < walkableTiles.Count; i++)
+        Vector2 positionOfCurrentUnit = unit.CurrentSimplifiedPosition;
+
+        enemiesToCheck.Sort((unit1, unit2) =>
         {
-            int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                walkableTiles[i].SimplifiedMapPosition, m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
+            int unitRangeComparisonValue = tileNavigationController.GetDistanceToCoordinate(positionOfCurrentUnit, unit1.CurrentSimplifiedPosition)
+                        .CompareTo(tileNavigationController.GetDistanceToCoordinate(positionOfCurrentUnit, unit2.CurrentSimplifiedPosition));
 
-            if (lowestDistanceFound > dist)
+            if (unitRangeComparisonValue == 0)
             {
-                lowestDistanceFound = dist;
-                if (lowestDistanceFound <= unit.GetUnitBalancing().m_AttackRange)
-                {
-                    return walkableTiles[i];
-                }
-
-                tileWithLowestDistToEnemy = walkableTiles[i];
+                unitRangeComparisonValue = Random.Range(-1, 2);
             }
-        }
 
-        return tileWithLowestDistToEnemy;
+            return unitRangeComparisonValue;
+        });
+
+        Vector2 closesEnemyPosition = enemiesToCheck[0].CurrentSimplifiedPosition;
+
+        walkableTiles.Sort((mapTile1, mapTile2) =>
+        {
+            int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile1.SimplifiedMapPosition, closesEnemyPosition)
+                .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile2.SimplifiedMapPosition, closesEnemyPosition));
+
+            if (mapTileDistanceComparison == 0)
+            {
+                mapTileDistanceComparison = Random.Range(-1, 2);
+            }
+
+            return mapTileDistanceComparison;
+        });
+
+        return walkableTiles[0];
     }
 }
