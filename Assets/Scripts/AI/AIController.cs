@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -33,8 +32,8 @@ public class AIController
     /// <param name="aiTeam">The AI team.</param>
     public AIController(Team aiTeam)
     {
-        this.m_myTeam = aiTeam;
-        this.m_enemyUnits = new List<BaseUnit>();
+        m_myTeam = aiTeam;
+        m_enemyUnits = new List<BaseUnit>();
     }
 
     /// <summary>
@@ -59,19 +58,19 @@ public class AIController
     public void StartTurn()
     {
         Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleController.RegisteredUnits;
-        this.m_myUnits = units[this.MyTeamColor];
-        this.m_enemyUnits = new List<BaseUnit>();
+        m_myUnits = units[this.MyTeamColor];
+        m_enemyUnits = new List<BaseUnit>();
 
         foreach (var item in units)
         {
-            if (item.Key != this.m_myTeam.m_TeamColor)
+            if (item.Key != m_myTeam.m_TeamColor)
             {
-                this.m_enemyUnits.AddRange(item.Value);
+                m_enemyUnits.AddRange(item.Value);
             }
         }
 
-        this.m_unitCounter = 0;
-        this.MoveNextUnit();
+        m_unitCounter = 0;
+        MoveNextUnit();
     }
 
     /// <summary>
@@ -79,14 +78,14 @@ public class AIController
     /// </summary>
     private void MoveNextUnit()
     {
-        if (this.m_unitCounter < this.m_myUnits.Count)
+        if (m_unitCounter < m_myUnits.Count)
         {
-            // To pause between each unit was moved
+            // To pause between each unit that was moved
             Root.Instance.CoroutineHelper.CallDelayed(CurrentlyControlledUnit, 0.2f, () =>
             {
                 //TODO: Get all units the current unit can walk to and check which on the 
                 // unit should walk to to attack the unit it can do the most damage on.
-                BaseMapTile tileToWalkTo = this.GetWalkableTileClosestToNextAttackableEnemy(CurrentlyControlledUnit);
+                BaseMapTile tileToWalkTo = GetWalkableTileClosestToNextAttackableEnemy(CurrentlyControlledUnit);
                 if (tileToWalkTo != null)
                 {
                     var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
@@ -95,13 +94,13 @@ public class AIController
                 }
                 else
                 {
-                    this.AttackIfPossible();
+                    AttackIfPossible();
                 }
             });
         }
         else
         {
-            this.m_unitCounter = 0;
+            m_unitCounter = 0;
             ControllerContainer.BattleController.EndCurrentTurn();
         }
     }
@@ -132,16 +131,16 @@ public class AIController
                         this.m_enemyUnits.Remove(unitToAttack);
                     }
 
-                    this.m_unitCounter++;
-                    this.MoveNextUnit();
+                    m_unitCounter++;
+                    MoveNextUnit();
                 });
 
                 return;
             }
         }
 
-        this.m_unitCounter++;
-        this.MoveNextUnit();
+        m_unitCounter++;
+        MoveNextUnit();
     }
 
     /// <summary>
@@ -180,7 +179,7 @@ public class AIController
     /// <returns>The tile closest to an enemy unit.</returns>
     private BaseMapTile GetWalkableTileClosestToNextAttackableEnemy(BaseUnit unit)
     {
-        if (this.m_enemyUnits.Count <= 0)
+        if (m_enemyUnits.Count <= 0)
         {
             return null;
         }
@@ -219,7 +218,7 @@ public class AIController
         for (int i = 0; i < walkableTiles.Count; i++)
         {
             int dist = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                walkableTiles[i].SimplifiedMapPosition, this.m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
+                walkableTiles[i].SimplifiedMapPosition, m_enemyUnits[unitWithLowestDistance].CurrentSimplifiedPosition);
 
             if (lowestDistanceFound > dist)
             {
