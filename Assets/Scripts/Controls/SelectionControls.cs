@@ -59,7 +59,7 @@ public class SelectionControls : MonoBehaviour
                 {
                     // Draw sphere
                     Handles.color = m_routeToDestinationField.Contains(node.Key) ? Color.red : Color.gray;
-                    Handles.SphereCap(0, baseMapTileOnPath.transform.position + Vector3.up, Quaternion.identity, 0.5f);
+                    Handles.SphereHandleCap(0, baseMapTileOnPath.transform.position + Vector3.up, Quaternion.identity, 0.5f, EventType.Repaint);
 
                     // Draw text label
                     GUIStyle guiStyle = new GUIStyle
