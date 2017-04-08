@@ -321,7 +321,7 @@ MonoBehaviour:
         m_Orientation: 1
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -331,28 +331,28 @@ MonoBehaviour:
     m_MapTiles:
     - m_PositionVector: {x: 0, y: 0}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -586,7 +586,7 @@ MonoBehaviour:
         m_Orientation: 1
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -879,7 +879,7 @@ MonoBehaviour:
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -972,7 +972,7 @@ MonoBehaviour:
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -996,7 +996,7 @@ MonoBehaviour:
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -1096,7 +1096,7 @@ MonoBehaviour:
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -1106,28 +1106,28 @@ MonoBehaviour:
     m_MapTiles:
     - m_PositionVector: {x: 0, y: 0}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -1199,14 +1199,14 @@ MonoBehaviour:
     m_MapTiles:
     - m_PositionVector: {x: 0, y: 0}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -1361,7 +1361,7 @@ MonoBehaviour:
         m_Orientation: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 1
         m_TeamColor: 0
@@ -1385,7 +1385,7 @@ MonoBehaviour:
     m_MapTiles:
     - m_PositionVector: {x: 0, y: 0}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -1633,7 +1633,7 @@ MonoBehaviour:
     m_MapTiles:
     - m_PositionVector: {x: 0, y: 0}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -1647,14 +1647,14 @@ MonoBehaviour:
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -1716,7 +1716,7 @@ MonoBehaviour:
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
@@ -1740,7 +1740,7 @@ MonoBehaviour:
         m_Orientation: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
-      m_MapTileType: 1
+      m_MapTileType: 4
       m_Unit:
         m_UnitType: 0
         m_TeamColor: 0
