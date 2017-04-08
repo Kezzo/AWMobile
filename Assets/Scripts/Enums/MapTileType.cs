@@ -6,5 +6,6 @@ public enum MapTileType
     Empty = 0,
     Grass = 1,
     Water = 2,
-    Mountain = 3
+    Mountain = 3,
+    Forest = 4
 }
