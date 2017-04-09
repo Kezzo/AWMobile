@@ -185,6 +185,14 @@ public class BaseMapTile : MonoBehaviour
 
             m_currentInstantiatedMapTileType = m_mapTileType;
             m_mapTileData.m_MapTileType = m_mapTileType;
+
+            EnvironmentInstantiateHelper environmentInstantiateHelper =
+                m_currentInstantiatedMapTile.GetComponent<EnvironmentInstantiateHelper>();
+
+            if (environmentInstantiateHelper != null)
+            {
+                environmentInstantiateHelper.InstantiateEnvironment();   
+            }
         }
         else
         {
