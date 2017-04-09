@@ -363,5 +363,14 @@ MonoBehaviour:
   - {fileID: 4886593951603022}
   - {fileID: 4396305345960900}
   m_prefabsToInstantiate:
-  - {fileID: 1614538852484488, guid: 2d0c86f2aa22c79498279d3ea353327a, type: 2}
-  m_maxRandomRange: 4
+  - Prefab: {fileID: 1614538852484488, guid: 2d0c86f2aa22c79498279d3ea353327a, type: 2}
+    RandomWeight: 10
+    RotateXAxis: 0
+    RotateYAxis: 1
+    RotateZAxis: 0
+  - Prefab: {fileID: 1252851182569692, guid: 7679bed2fed42924784327d2ed74a438, type: 2}
+    RandomWeight: 2
+    RotateXAxis: 1
+    RotateYAxis: 1
+    RotateZAxis: 1
+  m_maxRandomRange: 6
