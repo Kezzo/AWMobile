@@ -9,9 +9,6 @@ using UnityStandardAssets.CinematicEffects;
 public class CameraControls : MonoBehaviour
 {
     [SerializeField]
-    private CameraType m_cameraType;
-
-    [SerializeField]
     [Range(1f, 10f)]
     private float m_rotationSpeed;
 
@@ -50,14 +47,11 @@ public class CameraControls : MonoBehaviour
     [SerializeField]
     private AnimationCurve m_autoZoomAnimationCurve;
 
-    private Vector3 m_lastMousePosition;
-    private Vector2 m_touchPositionLastFrame;
+    private Vector2 m_lastMousePosition;
     private float m_cameraStartPosZ;
 
     private float m_zoomLevel;
     public float CurrentZoomLevel { get { return m_zoomLevel; } }
-
-    private int m_fingersOnScreenLastFrame;
 
     private bool m_startedDragging;
     public bool IsDragging { get; private set; }
@@ -70,27 +64,11 @@ public class CameraControls : MonoBehaviour
 
     private Coroutine m_lastRunningAutoZoomCoroutine;
 
-    public enum CameraType
-    {
-        Rotate,
-        Scroll
-    }
-
-    private Action m_cameraUpdateAction;
+    private int m_fingerIdUsedToScroll = -1;
 
     private void Awake()
     {
         ControllerContainer.MonoBehaviourRegistry.Register(this);
-
-        switch (m_cameraType)
-        {
-            case CameraType.Rotate:
-                m_cameraUpdateAction = HandleRotationCamera;
-                break;
-            case CameraType.Scroll:
-                m_cameraUpdateAction = HandleScrollCamera;
-                break;
-        }
     }
 
     /// <summary>
@@ -98,11 +76,6 @@ public class CameraControls : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        if (m_cameraType == CameraType.Rotate)
-        {
-            CameraLookAtWorldCenter();
-        }
-
         m_cameraStartPosZ = m_cameraToControl.transform.localPosition.z;
 
         ControllerContainer.BattleController.AddTurnStartEvent("CameraAutoZoom", ZoomCameraBasedOnTheCurrentTeam);
@@ -122,8 +95,8 @@ public class CameraControls : MonoBehaviour
             return;
         }
 
-        m_cameraUpdateAction();
-        HandleZoomPinch();
+        ScrollCamera();
+        ZoomCamera();
 
         m_motionBlur.enabled = IsDragging;
     }
@@ -131,59 +104,25 @@ public class CameraControls : MonoBehaviour
     /// <summary>
     /// Scrolls the camera when dragging on the screen.
     /// </summary>
-    private void HandleScrollCamera()
+    private void ScrollCamera()
     {
-        if (Application.platform == RuntimePlatform.WindowsEditor)
+        if (Application.platform != RuntimePlatform.WindowsEditor && 
+            Input.GetMouseButtonDown(0))
         {
-            ScrollCameraInEditor();
+            m_fingerIdUsedToScroll = Input.GetTouch(0).fingerId;
+            Debug.Log("Finger registered: "+ m_fingerIdUsedToScroll);
         }
-        else
-        {
-            ScrollCameraOnDevice();
-        }
-    }
 
-    /// <summary>
-    /// Scrolls the camera on a device (Android/iOS)
-    /// </summary>
-    private void ScrollCameraOnDevice()
-    {
-        if (Input.touchCount == 1)
-        {
-            Touch theTouch = Input.GetTouch(0);
-            if (theTouch.phase == TouchPhase.Began || m_fingersOnScreenLastFrame > 1)
-            {
-                m_touchPositionLastFrame = theTouch.position;
-            }
-            else if (theTouch.phase == TouchPhase.Moved)
-            {
-                Vector2 touchDelta = m_touchPositionLastFrame - theTouch.position;
-                IsDragging = true;
-                float yPosition = m_cameraMover.position.y;
-
-                //Changes the speed of the camera movement, depending on zoomlevel
-                float zoomScrollModifier = (m_zoomLevel - m_minZoomLevel) / (m_maxZoomLevel - m_minZoomLevel) + .3f;
-                m_cameraMover.localPosition += new Vector3(touchDelta.x * m_scrollSpeed * zoomScrollModifier, touchDelta.y * m_scrollSpeed * zoomScrollModifier, 0f);
-                m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
-                m_touchPositionLastFrame = theTouch.position;
-            }
-            else if (theTouch.phase == TouchPhase.Ended)
-            {
-                IsDragging = false;
-                m_touchPositionLastFrame = Vector2.zero;
-            }
-        }
-        m_fingersOnScreenLastFrame = Input.touchCount;
-    }
-
-    /// <summary>
-    /// Scrolls the camera in the editor.
-    /// </summary>
-    private void ScrollCameraInEditor()
-    {
         if (Input.GetMouseButton(0))
         {
-            Vector3 mouseDelta = m_lastMousePosition - Input.mousePosition;
+            Vector2 mousePosition = GetInputPosition();
+            Vector2 mouseDelta = m_lastMousePosition - mousePosition;
+
+            if (Application.platform != RuntimePlatform.WindowsEditor && 
+                Input.GetTouch(0).fingerId != m_fingerIdUsedToScroll)
+            {
+                CheckUsedScrollFinger(ref mousePosition, ref mouseDelta);
+            }
 
             if (m_startedDragging)
             {
@@ -194,11 +133,13 @@ public class CameraControls : MonoBehaviour
 
                 float yPosition = m_cameraMover.position.y;
 
-                m_cameraMover.localPosition += new Vector3(mouseDelta.x * m_scrollSpeed, mouseDelta.y * m_scrollSpeed, 0f);
+                float scrollSpeed = m_scrollSpeed * Mathf.Clamp(Mathf.InverseLerp(m_minZoomLevel, m_maxZoomLevel, m_zoomLevel), 0.2f, 1f);
+
+                m_cameraMover.localPosition += new Vector3(mouseDelta.x * scrollSpeed, mouseDelta.y * scrollSpeed, 0f);
                 m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
             }
 
-            m_lastMousePosition = Input.mousePosition;
+            m_lastMousePosition = mousePosition;
             m_startedDragging = true;
         }
         else if (Input.GetMouseButtonUp(0))
@@ -210,73 +151,78 @@ public class CameraControls : MonoBehaviour
     }
 
     /// <summary>
-    /// Rotates the cameras root when dragging on the screen
+    /// Checks the currently used scroll finger.
+    /// If touch fingers touch the screen and input from a different then the one that started the scrolling was received,
+    /// the correct scrolling will be used to set the mouseposition.
+    /// If the scroll finger was raised and a new finger is the scroll finger, the registered finger is updated.
     /// </summary>
-    private void HandleRotationCamera()
+    private void CheckUsedScrollFinger(ref Vector2 mousePosition, ref Vector2 mouseDelta)
     {
-        if (Input.GetMouseButton(0))
+        if (Input.touchCount > 1)
         {
-            Vector3 mouseDelta = m_lastMousePosition - Input.mousePosition;
-
-            if (m_startedDragging)
+            for (int i = 0; i < Input.touches.Length; i++)
             {
-                float rotationChangeX = mouseDelta.x * m_rotationSpeed * Time.deltaTime;
-                float rotationChangeY = mouseDelta.y * m_rotationSpeed * Time.deltaTime;
-
-                //Debug.LogFormat("Rotation Change X: '{0}' Y: '{1}'", rotationChangeX, rotationChangeY);
-
-                if (!IsDragging && (Mathf.Abs(rotationChangeX) > 0.1f || Mathf.Abs(rotationChangeX) > 0.1f))
+                if (Input.touches[i].fingerId == m_fingerIdUsedToScroll)
                 {
-                    //Debug.Log("Started Dragging");
-                    IsDragging = true;
+                    mouseDelta = m_lastMousePosition - Input.touches[i].position;
+                    mousePosition = Input.touches[i].position;
                 }
-
-                // Change rotation direction when dragging on the other side of the screen.
-                if (Input.mousePosition.y < Screen.height / 2f)
-                {
-                    rotationChangeX *= -1;
-                }
-
-                if (Input.mousePosition.x > Screen.width / 2f)
-                {
-                    rotationChangeY *= -1;
-                }
-
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, rotationChangeX + rotationChangeY, 0f));
             }
-
-            m_lastMousePosition = Input.mousePosition;
-            m_startedDragging = true;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else
         {
-            //Debug.Log("Stopped Dragging");
+            mouseDelta = Vector2.zero;
+            m_fingerIdUsedToScroll = Input.GetTouch(0).fingerId;
+        }
 
-            IsDragging = false;
-            m_startedDragging = false;
-            m_lastMousePosition = Vector3.zero;
+        Debug.Log("Finger are different! " + Input.GetTouch(0).fingerId + " " + m_fingerIdUsedToScroll);
+    }
+
+    /// <summary>
+    /// Gets the input position based on the platform the app is running and the amount of touches.
+    /// </summary>
+    /// <returns></returns>
+    private Vector2 GetInputPosition()
+    {
+        if (Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            return Input.mousePosition;
+        }
+        else
+        {
+            return Input.GetTouch(0).position;
         }
     }
 
     /// <summary>
     /// Handles the zoom pinch.
     /// </summary>
-    private void HandleZoomPinch()
+    private void ZoomCamera()
     {
-        if (Input.touchCount == 2)
+        float deltaMagnitudeDifference = 0f;
+
+        if (Application.platform == RuntimePlatform.WindowsEditor)
         {
-            Touch touchZero = Input.GetTouch(0);
-            Touch touchOne = Input.GetTouch(1);
-
-            Vector2 touchZeroPreviousPosition = touchZero.position - touchZero.deltaPosition;
-            Vector2 touchOnePreviousPosition = touchOne.position - touchOne.deltaPosition;
-
-            float previousTouchDeltaMagnitude = (touchZeroPreviousPosition - touchOnePreviousPosition).magnitude;
-            float touchDeltaMagnitude = (touchZero.position - touchOne.position).magnitude;
-
-            float deltaMagnitudeDifference = previousTouchDeltaMagnitude - touchDeltaMagnitude;
-            ChangeZoomLevel(deltaMagnitudeDifference);
+            deltaMagnitudeDifference = -(Input.mouseScrollDelta.y * 20f);
         }
+        else
+        {
+            if (Input.touchCount == 2)
+            {
+                Touch touchZero = Input.GetTouch(0);
+                Touch touchOne = Input.GetTouch(1);
+
+                Vector2 touchZeroPreviousPosition = touchZero.position - touchZero.deltaPosition;
+                Vector2 touchOnePreviousPosition = touchOne.position - touchOne.deltaPosition;
+
+                float previousTouchDeltaMagnitude = (touchZeroPreviousPosition - touchOnePreviousPosition).magnitude;
+                float touchDeltaMagnitude = (touchZero.position - touchOne.position).magnitude;
+
+                deltaMagnitudeDifference = previousTouchDeltaMagnitude - touchDeltaMagnitude;
+            }
+        }
+
+        ChangeZoomLevel(deltaMagnitudeDifference);
     }
 
     /// <summary>
@@ -341,6 +287,7 @@ public class CameraControls : MonoBehaviour
         while (true)
         {
             float normalizedZoomedLength = (m_zoomLevel - startZoomLevel) / (zoomLevel - startZoomLevel);
+
             float zoomLevelChangeThisFrame = m_autoZoomSpeed * m_autoZoomAnimationCurve.Evaluate(normalizedZoomedLength) * Time.deltaTime;
 
             zoomLevelChangeThisFrame = zoomingOut ? zoomLevelChangeThisFrame : zoomLevelChangeThisFrame * -1;
@@ -416,13 +363,5 @@ public class CameraControls : MonoBehaviour
             }
             yield return null;
         }
-    }
-
-    /// <summary>
-    /// Focuses the camera on the middle of the world.
-    /// </summary>
-    public void CameraLookAtWorldCenter()
-    {
-        m_cameraToControl.transform.LookAt(new Vector3(0, 0, 0));
     }
 }
