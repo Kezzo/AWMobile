@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CinematicEffects;
 
@@ -17,7 +16,7 @@ public class CameraControls : MonoBehaviour
     private float m_scrollSpeed;
 
     [SerializeField]
-    [Range(0.05f, 0.2f)]
+    [Range(0.01f, 0.2f)]
     private float m_zoomSpeed;
 
     [SerializeField]
@@ -35,13 +34,10 @@ public class CameraControls : MonoBehaviour
     [SerializeField]
     private Transform m_cameraMover;
 
-    [SerializeField]
-    private MotionBlur m_motionBlur;
-
     [Header("Auto-Zoom")]
 
     [SerializeField]
-    [Range(0f, 100f)]
+    [Range(0f, 200f)]
     private float m_autoZoomSpeed;
 
     [SerializeField]
@@ -53,8 +49,12 @@ public class CameraControls : MonoBehaviour
     private float m_zoomLevel;
     public float CurrentZoomLevel { get { return m_zoomLevel; } }
 
-    private bool m_startedDragging;
-    public bool IsDragging { get; private set; }
+    private bool m_isManuallyScrolling;
+    private bool m_startedScrolling;
+
+    private bool m_isManuallyZooming;
+
+    public bool IsMovingCamera { get { return m_isManuallyScrolling || m_isManuallyZooming; } }
 
     public bool IsBlocked { get; set; }
 
@@ -88,8 +88,11 @@ public class CameraControls : MonoBehaviour
     {
         if (IsBlocked)
         {
-            IsDragging = false;
-            m_startedDragging = false;
+            m_isManuallyScrolling = false;
+            m_startedScrolling = false;
+
+            m_isManuallyZooming = false;
+
             m_lastMousePosition = Vector3.zero;
 
             return;
@@ -97,8 +100,6 @@ public class CameraControls : MonoBehaviour
 
         ScrollCamera();
         ZoomCamera();
-
-        m_motionBlur.enabled = IsDragging;
     }
 
     /// <summary>
@@ -110,7 +111,6 @@ public class CameraControls : MonoBehaviour
             Input.GetMouseButtonDown(0))
         {
             m_fingerIdUsedToScroll = Input.GetTouch(0).fingerId;
-            Debug.Log("Finger registered: "+ m_fingerIdUsedToScroll);
         }
 
         if (Input.GetMouseButton(0))
@@ -124,11 +124,11 @@ public class CameraControls : MonoBehaviour
                 CheckUsedScrollFinger(ref mousePosition, ref mouseDelta);
             }
 
-            if (m_startedDragging)
+            if (m_startedScrolling)
             {
-                if (!IsDragging && (Mathf.Abs(mouseDelta.x) > 0.1f || Mathf.Abs(mouseDelta.y) > 0.1f))
+                if (!m_isManuallyScrolling && (Mathf.Abs(mouseDelta.x) > 0.1f || Mathf.Abs(mouseDelta.y) > 0.1f))
                 {
-                    IsDragging = true;
+                    m_isManuallyScrolling = true;
                 }
 
                 float yPosition = m_cameraMover.position.y;
@@ -140,12 +140,12 @@ public class CameraControls : MonoBehaviour
             }
 
             m_lastMousePosition = mousePosition;
-            m_startedDragging = true;
+            m_startedScrolling = true;
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            IsDragging = false;
-            m_startedDragging = false;
+            m_isManuallyScrolling = false;
+            m_startedScrolling = false;
             m_lastMousePosition = Vector3.zero;
         }
     }
@@ -174,8 +174,6 @@ public class CameraControls : MonoBehaviour
             mouseDelta = Vector2.zero;
             m_fingerIdUsedToScroll = Input.GetTouch(0).fingerId;
         }
-
-        Debug.Log("Finger are different! " + Input.GetTouch(0).fingerId + " " + m_fingerIdUsedToScroll);
     }
 
     /// <summary>
@@ -222,7 +220,17 @@ public class CameraControls : MonoBehaviour
             }
         }
 
-        ChangeZoomLevel(deltaMagnitudeDifference);
+        if (Mathf.Abs(deltaMagnitudeDifference) > 0.1f)
+        {
+            StopRunningAutoZoom();
+            ChangeZoomLevel(deltaMagnitudeDifference);
+
+            m_isManuallyZooming = true;
+        }
+        else
+        {
+            m_isManuallyZooming = false;
+        }
     }
 
     /// <summary>
@@ -257,14 +265,23 @@ public class CameraControls : MonoBehaviour
     /// <returns></returns>
     private void AutoZoom(float zoomLevel)
     {
+        StopRunningAutoZoom();
+
+        m_lastRunningAutoZoomCoroutine = StartCoroutine(AutoZoomCoroutine(zoomLevel));
+    }
+
+    /// <summary>
+    /// Stops the currently running auto zoom coroutine.
+    /// </summary>
+    private void StopRunningAutoZoom()
+    {
         if (m_lastRunningAutoZoomCoroutine != null)
         {
             StopCoroutine(m_lastRunningAutoZoomCoroutine);
             m_lastRunningAutoZoomCoroutine = null;
-        }
 
-        m_lastRunningAutoZoomCoroutine = StartCoroutine(AutoZoomCoroutine(zoomLevel));
-        m_autoZoomIsRunning = true;
+            m_autoZoomIsRunning = false;
+        }
     }
 
     /// <summary>
@@ -281,6 +298,7 @@ public class CameraControls : MonoBehaviour
             m_autoZoomIsRunning = false;
             yield break;
         }
+        m_autoZoomIsRunning = true;
 
         bool zoomingOut = zoomLevel > startZoomLevel;
 

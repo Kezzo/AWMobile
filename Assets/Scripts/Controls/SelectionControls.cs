@@ -96,7 +96,7 @@ public class SelectionControls : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButton(0) && m_cameraControls.IsDragging)
+        if (Input.GetMouseButton(0) && m_cameraControls.IsMovingCamera)
         {
             m_abortNextSelectionTry = true;
             //Debug.Log("Aborting Next Selection Try");
