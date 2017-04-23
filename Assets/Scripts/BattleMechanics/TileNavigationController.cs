@@ -52,6 +52,43 @@ public class TileNavigationController
     }
 
     /// <summary>
+    /// Returns all map tiles in range, ignoring the MapTileType and excluding the sourceNode.
+    /// </summary>
+    /// <param name="sourceNode">The source node.</param>
+    /// <param name="range">The range.</param>
+    /// <returns></returns>
+    public List<BaseMapTile> GetMapTilesInRange(Vector2 sourceNode, int range)
+    {
+        List<BaseMapTile> mapTilesInRange = new List<BaseMapTile>();
+
+        Queue<Vector2> nodesToCheck = new Queue<Vector2>();
+        nodesToCheck.Enqueue(sourceNode);
+
+        while (nodesToCheck.Count > 0)
+        {
+            Vector2 nodeToCheck = nodesToCheck.Dequeue();
+
+            List<Vector2> adjacentNodes = GetAdjacentNodes(nodeToCheck);
+
+            for (int i = 0; i < adjacentNodes.Count; i++)
+            {
+                if (GetDistanceToCoordinate(sourceNode, adjacentNodes[i]) <= range)
+                {
+                    BaseMapTile mapTileInRange = GetMapTile(adjacentNodes[i]);
+
+                    if (mapTileInRange != null && !mapTilesInRange.Contains(mapTileInRange))
+                    {
+                        mapTilesInRange.Add(mapTileInRange);
+                        nodesToCheck.Enqueue(adjacentNodes[i]);
+                    }
+                }
+            }
+        }
+
+        return mapTilesInRange;
+    }
+
+    /// <summary>
     /// Shows the movement fields for unit.
     /// </summary>
     /// <param name="unitToCheckFor">The unit.</param>

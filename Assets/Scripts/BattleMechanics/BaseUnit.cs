@@ -70,6 +70,7 @@ public class BaseUnit : MonoBehaviour
     public Vector2 CurrentSimplifiedPosition { get { return m_currentSimplifiedPosition; } }
 
     private List<BaseMapTile> m_currentWalkableMapTiles;
+    private List<BaseMapTile> m_currentAttackableMapTiles;
 
     private List<BaseUnit> m_attackableUnits;
 
@@ -127,7 +128,7 @@ public class BaseUnit : MonoBehaviour
 
         SetRotation(directionToRotateTo);
 
-        baseUnit.ChangeVisibiltyOfAttackMarker(false);
+        baseUnit.ChangeVisibilityOfAttackMarker(false);
         baseUnit.StatManagement.HidePotentialDamage();
 
         baseUnit.StatManagement.TakeDamage(GetDamageOnUnit(baseUnit));
@@ -247,13 +248,16 @@ public class BaseUnit : MonoBehaviour
         if (!UnitHasMovedThisRound)
         {
             m_currentWalkableMapTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(this);
-            SetWalkableTileFieldVisibiltyTo(true);
+            SetWalkableTileFieldVisibilityTo(true);
         }
 
         if (!UnitHasAttackedThisRound)
         {
             TryToDisplayActionOnUnitsInRange(out m_attackableUnits);
         }
+
+        HideAttackRange();
+        DislayAttackRange(CurrentSimplifiedPosition);
     }
 
     /// <summary>
@@ -262,24 +266,59 @@ public class BaseUnit : MonoBehaviour
     public void OnUnitWasDeselected()
     {
         m_selectionMarker.SetActive(false);
-        ChangeVisibiltyOfAttackMarker(false);
+        ChangeVisibilityOfAttackMarker(false);
         StatManagement.HidePotentialDamage();
 
-        SetWalkableTileFieldVisibiltyTo(false);
+        SetWalkableTileFieldVisibilityTo(false);
         HideAllRouteMarker();
 
         m_currentWalkableMapTiles = null;
 
         ClearAttackableUnits(m_attackableUnits);
+
+        HideAttackRange();
     }
 
     /// <summary>
-    /// Changes the visibilty of attack marker.
+    /// Changes the visibility of attack marker.
     /// </summary>
     /// <param name="setVisible">if set to <c>true</c> [set visible].</param>
-    private void ChangeVisibiltyOfAttackMarker(bool setVisible)
+    private void ChangeVisibilityOfAttackMarker(bool setVisible)
     {
         m_attackMarker.SetActive(setVisible);
+    }
+
+    /// <summary>
+    /// Changes the visibility of attack range marker.
+    /// </summary>
+    /// <param name="sourceNode">The source node to check the attack range from.</param>
+    private void DislayAttackRange(Vector2 sourceNode)
+    {
+        List<BaseMapTile> mapTileInAttackRange = ControllerContainer.TileNavigationController.
+            GetMapTilesInRange(sourceNode, GetUnitBalancing().m_AttackRange);
+
+        for (int i = 0; i < mapTileInAttackRange.Count; i++)
+        {
+            mapTileInAttackRange[i].ChangeVisibilityOfAttackRangeMarker(true, mapTileInAttackRange);
+        }
+
+        m_currentAttackableMapTiles = mapTileInAttackRange;
+    }
+
+    /// <summary>
+    /// Hides the currently displayed attack range marker.
+    /// </summary>
+    private void HideAttackRange()
+    {
+        if (m_currentAttackableMapTiles == null || m_currentAttackableMapTiles.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < m_currentAttackableMapTiles.Count; i++)
+        {
+            m_currentAttackableMapTiles[i].ChangeVisibilityOfAttackRangeMarker(false);
+        }
     }
 
     /// <summary>
@@ -300,20 +339,20 @@ public class BaseUnit : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the walkable tile field visibilty to.
+    /// Sets the walkable tile field visibility to.
     /// </summary>
-    /// <param name="setVisibiltyTo">if set to <c>true</c> [set visibilty to].</param>
-    private void SetWalkableTileFieldVisibiltyTo(bool setVisibiltyTo)
+    /// <param name="setVisibilityTo">if set to <c>true</c> [set visibility to].</param>
+    private void SetWalkableTileFieldVisibilityTo(bool setVisibilityTo)
     {
         if (m_currentWalkableMapTiles == null)
         {
-            //Debug.LogError("Redundant call of SetWalkableTileFieldVisibiltyTo.");
+            //Debug.LogError("Redundant call of SetWalkableTileFieldVisibilityTo.");
             return;
         }
 
         for (int tileIndex = 0; tileIndex < m_currentWalkableMapTiles.Count; tileIndex++)
         {
-            m_currentWalkableMapTiles[tileIndex].ChangeVisibiltyOfMovementField(setVisibiltyTo);
+            m_currentWalkableMapTiles[tileIndex].ChangeVisibilityOfMovementField(setVisibilityTo);
         }
     }
 
@@ -355,7 +394,10 @@ public class BaseUnit : MonoBehaviour
     public void DisplayRouteToDestination(List<Vector2> routeToDestination, Action<int> onUnitMovedToDestinationCallback)
     {
         HideAllRouteMarker();
-        SetWalkableTileFieldVisibiltyTo(true);
+        SetWalkableTileFieldVisibilityTo(true);
+
+        HideAttackRange();
+        DislayAttackRange(routeToDestination[routeToDestination.Count - 1]);
 
         var routeMarkerDefinitions = ControllerContainer.TileNavigationController.GetRouteMarkerDefinitions(routeToDestination);
 
@@ -375,7 +417,7 @@ public class BaseUnit : MonoBehaviour
         {
             ControllerContainer.BattleController.RemoveCurrentConfirmMoveButtonPressedListener();
 
-            SetWalkableTileFieldVisibiltyTo(false);
+            SetWalkableTileFieldVisibilityTo(false);
             ClearAttackableUnits(m_attackableUnits);
 
             MoveAlongRoute(routeToDestination, () =>
@@ -408,7 +450,7 @@ public class BaseUnit : MonoBehaviour
     {
         for (int unitIndex = 0; unitIndex < unitToClearActionsFrom.Count; unitIndex++)
         {
-            unitToClearActionsFrom[unitIndex].ChangeVisibiltyOfAttackMarker(false);
+            unitToClearActionsFrom[unitIndex].ChangeVisibilityOfAttackMarker(false);
             unitToClearActionsFrom[unitIndex].StatManagement.HidePotentialDamage();
         }
 
@@ -434,7 +476,7 @@ public class BaseUnit : MonoBehaviour
 
             if (CanAttackUnit(unit))
             {
-                unit.ChangeVisibiltyOfAttackMarker(true);
+                unit.ChangeVisibilityOfAttackMarker(true);
                 unit.StatManagement.DisplayPotentialDamage(this);
                 attackableUnits.Add(unit);
             }

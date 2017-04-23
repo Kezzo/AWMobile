@@ -28,6 +28,8 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private GameObject m_movementField;
 
+    #region RouteMarker
+
     [Serializable]
     public class RouteMarkerMapping
     {
@@ -37,6 +39,26 @@ public class BaseMapTile : MonoBehaviour
 
     [SerializeField]
     private List<RouteMarkerMapping> m_routeMarkerMappings;
+
+    #endregion
+
+    #region AttackRangeMarker
+
+    [Serializable]
+    public class AttackRangeMarkerMapping
+    {
+        public AreaTileType m_AreaTileType;
+        public bool m_IsFilled;
+        public Mesh m_AttackRangerMarkerPrefab;
+    }
+
+    [SerializeField]
+    private List<AttackRangeMarkerMapping> m_attackRangeMarkerMappings;
+
+    [SerializeField]
+    private MeshFilter m_attackRangeMeshFilter;
+
+    #endregion
 
     private GameObject m_currentInstantiatedMapTile;
     private MapTileType m_currentInstantiatedMapTileType;
@@ -242,12 +264,22 @@ public class BaseMapTile : MonoBehaviour
     }
 
     /// <summary>
-    /// Changes the visibilty of movement field.
+    /// Changes the visibility of movement field.
     /// </summary>
-    /// <param name="setVisibiltyTo">if set to <c>true</c> [set visibilty to].</param>
-    public void ChangeVisibiltyOfMovementField(bool setVisibiltyTo)
+    /// <param name="setVisibilityTo">if set to <c>true</c> [set visibility to].</param>
+    public void ChangeVisibilityOfMovementField(bool setVisibilityTo)
     {
-        m_movementField.SetActive(setVisibiltyTo);
+        m_movementField.SetActive(setVisibilityTo);
+    }
+
+    /// <summary>
+    /// Changes the visibility of attack range marker.
+    /// </summary>
+    /// <param name="setVisibilityTo">if set to <c>true</c> [set visibility to].</param>
+    /// <param name="attackableMapTiles">The maptiles attack by the selected unit at the position of the unit or the selected position.</param>
+    public void ChangeVisibilityOfAttackRangeMarker(bool setVisibilityTo, List<BaseMapTile> attackableMapTiles = null)
+    {
+        m_attackRangeMeshFilter.gameObject.SetActive(setVisibilityTo);
     }
 
     /// <summary>
@@ -267,7 +299,7 @@ public class BaseMapTile : MonoBehaviour
     /// <param name="routeMarkerDefinition">The route marker definition.</param>
     public void DisplayRouteMarker(RouteMarkerDefinition routeMarkerDefinition)
     {
-        ChangeVisibiltyOfMovementField(false);
+        ChangeVisibilityOfMovementField(false);
 
         RouteMarkerMapping routeMarkerMappingToUse = m_routeMarkerMappings.Find(
             routeMarkerMapping => routeMarkerMapping.m_RouteMarkerType == routeMarkerDefinition.RouteMarkerType);

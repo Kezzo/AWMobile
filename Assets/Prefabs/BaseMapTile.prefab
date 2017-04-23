@@ -525,3 +525,41 @@ MonoBehaviour:
     m_RouteMarkerPrefab: {fileID: 1314506070715280}
   - m_RouteMarkerType: 2
     m_RouteMarkerPrefab: {fileID: 1920910123957894}
+  m_attackRangeMarkerMappings:
+  - m_AreaTileType: 0
+    m_IsFilled: 1
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: a0981514d9be3774b8d776c5911725b0,
+      type: 3}
+  - m_AreaTileType: 1
+    m_IsFilled: 1
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: 88cfd006983cc7d4b8030591cc2baa66,
+      type: 3}
+  - m_AreaTileType: 4
+    m_IsFilled: 1
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: fb55fbd4c26abe74989d3308e2d2b32f,
+      type: 3}
+  - m_AreaTileType: 2
+    m_IsFilled: 1
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: 39552062f4c75884a976896b6992a18e,
+      type: 3}
+  - m_AreaTileType: 3
+    m_IsFilled: 1
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: 173d4d4448c5d7e47836a4b16cf439c3,
+      type: 3}
+  - m_AreaTileType: 1
+    m_IsFilled: 0
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: 9c64db565c8ffe24c9de9659678f41d9,
+      type: 3}
+  - m_AreaTileType: 4
+    m_IsFilled: 0
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: c8b2d3c0ac7532545b482b9c0414480e,
+      type: 3}
+  - m_AreaTileType: 2
+    m_IsFilled: 0
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: 6dbf7e0c12f727e49acc5f2902de82f2,
+      type: 3}
+  - m_AreaTileType: 3
+    m_IsFilled: 0
+    m_AttackRangerMarkerPrefab: {fileID: 4300000, guid: 88b68629bb3ca12448e4ea898c9cbb09,
+      type: 3}
+  m_attackRangeMeshFilter: {fileID: 33749569539669864}
