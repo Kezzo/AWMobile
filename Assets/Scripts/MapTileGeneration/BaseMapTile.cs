@@ -280,6 +280,86 @@ public class BaseMapTile : MonoBehaviour
     public void ChangeVisibilityOfAttackRangeMarker(bool setVisibilityTo, List<BaseMapTile> attackableMapTiles = null)
     {
         m_attackRangeMeshFilter.gameObject.SetActive(setVisibilityTo);
+
+        if (attackableMapTiles == null)
+        {
+            return;
+        }
+
+        List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(SimplifiedMapPosition);
+        List<BaseMapTile> adjacentAttackableTiles = new List<BaseMapTile>();
+
+        for (int i = 0; i < adjacentNodes.Count; i++)
+        {
+            BaseMapTile adjacentAttackableTile = attackableMapTiles.Find(mapTile => mapTile.SimplifiedMapPosition == adjacentNodes[i]);
+
+            if (adjacentAttackableTile != null)
+            {
+                adjacentAttackableTiles.Add(adjacentAttackableTile);
+            }
+        }
+
+        AreaTileType areaTileType = AreaTileType.NoBorders;
+
+        switch (adjacentAttackableTiles.Count)
+        {
+            case 0:
+                return;
+
+            case 1:
+                areaTileType = AreaTileType.ThreeBorders;
+                break;
+            case 2:
+                //TODO: Get correct two border type
+                break;
+            case 3:
+                //areaTileType = AreaTileType.OneBorder;
+
+                break;
+
+            case 4:
+                m_attackRangeMeshFilter.gameObject.SetActive(false);
+                return;
+        }
+
+        m_attackRangeMeshFilter.transform.localRotation = Quaternion.Euler(0f, 
+            GetAttackMarkerBorderRotation(areaTileType, adjacentNodes, adjacentAttackableTiles), 0f);
+
+        AttackRangeMarkerMapping uvCoordinateMeshToUse = m_attackRangeMarkerMappings.Find(mapping => mapping.m_AreaTileType == areaTileType && !mapping.m_IsFilled);
+
+        if (uvCoordinateMeshToUse != null)
+        {
+            m_attackRangeMeshFilter.mesh = uvCoordinateMeshToUse.m_AttackRangerMarkerPrefab;
+        }
+    }
+
+    /// <summary>
+    /// Returns the attack marker border rotation.
+    /// </summary>
+    /// <param name="areaTileType">The areaTileType of the attack marker.</param>
+    /// <param name="adjacentNodes">The adjacent nodes.</param>
+    /// <param name="adjacentAttackableTiles">The adjacent attackable tiles.</param>
+    private float GetAttackMarkerBorderRotation(AreaTileType areaTileType, List<Vector2> adjacentNodes, List<BaseMapTile> adjacentAttackableTiles)
+    {
+        Vector2 nodeToAttackRangeCircle = Vector2.zero;
+
+        switch (areaTileType)
+        {
+            case AreaTileType.OneBorder:
+                nodeToAttackRangeCircle = adjacentNodes.Find(node => !adjacentAttackableTiles.Exists(tile => tile.SimplifiedMapPosition == node));
+                break;
+            case AreaTileType.TwoBordersCorner:
+                break;
+            case AreaTileType.TwoBorderStraight:
+                break;
+            case AreaTileType.ThreeBorders:
+                nodeToAttackRangeCircle = adjacentAttackableTiles[0].SimplifiedMapPosition;
+                break;
+        }
+        
+        Vector2 nodePositionDiff = nodeToAttackRangeCircle - SimplifiedMapPosition;
+
+        return ControllerContainer.TileNavigationController.GetRotationFromCardinalDirection(ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(nodePositionDiff, false));
     }
 
     /// <summary>
@@ -301,8 +381,7 @@ public class BaseMapTile : MonoBehaviour
     {
         ChangeVisibilityOfMovementField(false);
 
-        RouteMarkerMapping routeMarkerMappingToUse = m_routeMarkerMappings.Find(
-            routeMarkerMapping => routeMarkerMapping.m_RouteMarkerType == routeMarkerDefinition.RouteMarkerType);
+        RouteMarkerMapping routeMarkerMappingToUse = m_routeMarkerMappings.Find(routeMarkerMapping => routeMarkerMapping.m_RouteMarkerType == routeMarkerDefinition.RouteMarkerType);
 
         if (routeMarkerMappingToUse != null)
         {

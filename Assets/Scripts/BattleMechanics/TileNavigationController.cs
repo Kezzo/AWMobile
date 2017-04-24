@@ -436,21 +436,7 @@ public class TileNavigationController
 
         if (routeMarkerType == RouteMarkerType.Destination)
         {
-            switch (comingFromDirection)
-            {
-                case CardinalDirection.North:
-                    rotation.y = 90f;
-                    break;
-                case CardinalDirection.East:
-                    rotation.y = 180f;
-                    break;
-                case CardinalDirection.South:
-                    rotation.y = 270f;
-                    break;
-                case CardinalDirection.West:
-                    rotation.y = 0f;
-                    break;
-            }
+            rotation.y = GetRotationFromCardinalDirection(comingFromDirection);
         }
         else if (routeMarkerType == RouteMarkerType.Straight)
         {
@@ -494,7 +480,34 @@ public class TileNavigationController
     }
 
     /// <summary>
-    /// Gets the cardinal direction from node posittion difference.
+    /// Returns the rotation from a cardinal direction.
+    /// </summary>
+    /// <param name="direction">The direction.</param>
+    public float GetRotationFromCardinalDirection(CardinalDirection direction)
+    {
+        float rotation = 0f;
+
+        switch (direction)
+        {
+            case CardinalDirection.North:
+                rotation = 90f;
+                break;
+            case CardinalDirection.East:
+                rotation = 180f;
+                break;
+            case CardinalDirection.South:
+                rotation = 270f;
+                break;
+            case CardinalDirection.West:
+                rotation = 0f;
+                break;
+        }
+
+        return rotation;
+    }
+
+    /// <summary>
+    /// Gets the cardinal direction from node position difference.
     /// </summary>
     /// <param name="nodePositionDiff">The node position difference.</param>
     /// <param name="comingFrom">if set to <c>true</c> [previous node].</param>
