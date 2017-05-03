@@ -299,7 +299,7 @@ public class BaseUnit : MonoBehaviour
 
         for (int i = 0; i < mapTileInAttackRange.Count; i++)
         {
-            mapTileInAttackRange[i].ChangeVisibilityOfAttackRangeMarker(true, mapTileInAttackRange);
+            mapTileInAttackRange[i].DisplayAttackRangeMarker(mapTileInAttackRange, sourceNode);
         }
 
         m_currentAttackableMapTiles = mapTileInAttackRange;
@@ -317,7 +317,7 @@ public class BaseUnit : MonoBehaviour
 
         for (int i = 0; i < m_currentAttackableMapTiles.Count; i++)
         {
-            m_currentAttackableMapTiles[i].ChangeVisibilityOfAttackRangeMarker(false);
+            m_currentAttackableMapTiles[i].HideAttackRangeMarker();
         }
     }
 
