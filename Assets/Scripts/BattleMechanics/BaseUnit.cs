@@ -292,7 +292,7 @@ public class BaseUnit : MonoBehaviour
     /// Changes the visibility of attack range marker.
     /// </summary>
     /// <param name="sourceNode">The source node to check the attack range from.</param>
-    private void DislayAttackRange(Vector2 sourceNode)
+    public void DislayAttackRange(Vector2 sourceNode)
     {
         List<BaseMapTile> mapTileInAttackRange = ControllerContainer.TileNavigationController.
             GetMapTilesInRange(sourceNode, GetUnitBalancing().m_AttackRange);
@@ -308,7 +308,7 @@ public class BaseUnit : MonoBehaviour
     /// <summary>
     /// Hides the currently displayed attack range marker.
     /// </summary>
-    private void HideAttackRange()
+    public void HideAttackRange()
     {
         if (m_currentAttackableMapTiles == null || m_currentAttackableMapTiles.Count == 0)
         {
@@ -448,6 +448,11 @@ public class BaseUnit : MonoBehaviour
     /// <param name="unitToClearActionsFrom">The unit to clear actions from.</param>
     private void ClearAttackableUnits(List<BaseUnit> unitToClearActionsFrom)
     {
+        if (unitToClearActionsFrom == null)
+        {
+            return;
+        }
+
         for (int unitIndex = 0; unitIndex < unitToClearActionsFrom.Count; unitIndex++)
         {
             unitToClearActionsFrom[unitIndex].ChangeVisibilityOfAttackMarker(false);
