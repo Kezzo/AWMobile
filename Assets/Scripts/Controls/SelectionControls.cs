@@ -180,12 +180,21 @@ public class SelectionControls : MonoBehaviour
     {
         BaseUnit selectedUnit = raycastHit.transform.GetComponent<BaseUnit>();
 
-        if (selectedUnit != null && selectedUnit.CanUnitTakeAction())
+        if (selectedUnit == null)
         {
-            DeselectCurrentUnit();
+            return;
+        }
 
-            m_currentlySelectedUnit = selectedUnit;
+        DeselectCurrentUnit();
+        m_currentlySelectedUnit = selectedUnit;
+
+        if (selectedUnit.CanUnitTakeAction())
+        {
             m_currentlySelectedUnit.OnUnitWasSelected();
+        }
+        else
+        {
+            m_currentlySelectedUnit.DislayAttackRange(selectedUnit.CurrentSimplifiedPosition);
         }
     }
 
