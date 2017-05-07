@@ -58,6 +58,16 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private MeshFilter m_attackRangeMeshFilter;
 
+    private EnvironmentInstantiateHelper m_environmentInstantiateHelper;
+    public EnvironmentInstantiateHelper EnvironmentInstantiateHelper
+    {
+        get
+        {
+            return m_environmentInstantiateHelper ?? 
+                (m_environmentInstantiateHelper = m_currentInstantiatedMapTile.GetComponent<EnvironmentInstantiateHelper>());
+        }
+    }
+
     #endregion
 
     private GameObject m_currentInstantiatedMapTile;
@@ -181,6 +191,11 @@ public class BaseMapTile : MonoBehaviour
         {
             InstantiateUnitPrefab(simplifiedPosition, registerUnit);
             m_mapTileData.m_Unit = m_unitOnThisTile;
+
+            if (EnvironmentInstantiateHelper != null)
+            {
+                EnvironmentInstantiateHelper.UpdateVisibilityOfEnvironment(true);
+            }
         }
     }
 
@@ -208,12 +223,9 @@ public class BaseMapTile : MonoBehaviour
             m_currentInstantiatedMapTileType = m_mapTileType;
             m_mapTileData.m_MapTileType = m_mapTileType;
 
-            EnvironmentInstantiateHelper environmentInstantiateHelper =
-                m_currentInstantiatedMapTile.GetComponent<EnvironmentInstantiateHelper>();
-
-            if (environmentInstantiateHelper != null)
+            if (EnvironmentInstantiateHelper != null)
             {
-                environmentInstantiateHelper.InstantiateEnvironment();   
+                EnvironmentInstantiateHelper.InstantiateEnvironment();   
             }
         }
         else

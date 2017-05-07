@@ -9,7 +9,16 @@ using Random = UnityEngine.Random;
 public class EnvironmentInstantiateHelper : MonoBehaviour
 {
     [SerializeField]
-    private List<Transform> m_possiblePlacementPosition;
+    private List<EnvironmentPlacementSettings> m_possiblePlacementPosition;
+
+    [Serializable]
+    private class EnvironmentPlacementSettings
+    {
+#pragma warning disable 649
+        public Transform m_PlacementRoot;
+        public bool m_HideWhenUnitIsOnTile;
+#pragma warning restore 649
+    }
 
     [SerializeField]
     private List<EnvironmentInstantiateSettings> m_prefabsToInstantiate;
@@ -18,12 +27,12 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
     private class EnvironmentInstantiateSettings
     {
 #pragma warning disable 649
-        public GameObject Prefab;
-        public int RandomWeight;
+        public GameObject m_Prefab;
+        public int m_RandomWeight;
 
-        public bool RotateXAxis;
-        public bool RotateYAxis;
-        public bool RotateZAxis;
+        public bool m_RotateXAxis;
+        public bool m_RotateYAxis;
+        public bool m_RotateZAxis;
 #pragma warning restore 649
     }
 
@@ -51,13 +60,13 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
             int checkedWeight = 0;
             for (int j = 0; j < m_prefabsToInstantiate.Count; j++)
             {
-                if (randomValue >= checkedWeight && randomValue < checkedWeight + m_prefabsToInstantiate[j].RandomWeight)
+                if (randomValue >= checkedWeight && randomValue < checkedWeight + m_prefabsToInstantiate[j].m_RandomWeight)
                 {
                     prefabToInstantiate = m_prefabsToInstantiate[j];
                     break;
                 }
 
-                checkedWeight += m_prefabsToInstantiate[j].RandomWeight;
+                checkedWeight += m_prefabsToInstantiate[j].m_RandomWeight;
             }
 
             if (prefabToInstantiate == null)
@@ -66,12 +75,12 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
                 continue;
             }
 
-            GameObject instantiatedPrefab = Instantiate(prefabToInstantiate.Prefab, m_possiblePlacementPosition[i]);
+            GameObject instantiatedPrefab = Instantiate(prefabToInstantiate.m_Prefab, m_possiblePlacementPosition[i].m_PlacementRoot);
 
             instantiatedPrefab.transform.localRotation = Quaternion.Euler(
-                prefabToInstantiate.RotateXAxis ? Random.Range(0f, 360f) : 0f, 
-                prefabToInstantiate.RotateYAxis ? Random.Range(0f, 360f) : 0f, 
-                prefabToInstantiate.RotateZAxis ? Random.Range(0f, 360f) : 0f);
+                prefabToInstantiate.m_RotateXAxis ? Random.Range(0f, 360f) : 0f, 
+                prefabToInstantiate.m_RotateYAxis ? Random.Range(0f, 360f) : 0f, 
+                prefabToInstantiate.m_RotateZAxis ? Random.Range(0f, 360f) : 0f);
         }
     }
 
@@ -86,7 +95,7 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
 
         for (int i = 0; i < listToGetTheWeightFrom.Count; i++)
         {
-            maxRollWeight += listToGetTheWeightFrom[i].RandomWeight;
+            maxRollWeight += listToGetTheWeightFrom[i].m_RandomWeight;
         }
 
         return maxRollWeight;
@@ -106,6 +115,19 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
             T value = listToShuffle[k];
             listToShuffle[k] = listToShuffle[n];
             listToShuffle[n] = value;
+        }
+    }
+
+    /// <summary>
+    /// Changes the visibility of the instantiated environment props.
+    /// </summary>
+    /// <param name="unitIsOnTile">if set to <c>true</c> a unit is on the tile this <see cref="EnvironmentInstantiateHelper"/> is used on.</param>
+    public void UpdateVisibilityOfEnvironment(bool unitIsOnTile)
+    {
+        foreach (var environmentPlacementSetting in m_possiblePlacementPosition)
+        {
+            bool hideEnvironmentProp = unitIsOnTile && environmentPlacementSetting.m_HideWhenUnitIsOnTile;
+            environmentPlacementSetting.m_PlacementRoot.gameObject.SetActive(!hideEnvironmentProp);
         }
     }
 }

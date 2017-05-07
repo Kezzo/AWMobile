@@ -354,23 +354,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_possiblePlacementPosition:
-  - {fileID: 4103291835839300}
-  - {fileID: 4276697699393800}
-  - {fileID: 4587857172828946}
-  - {fileID: 4660964645907278}
-  - {fileID: 4520193459654982}
-  - {fileID: 4023490587113964}
-  - {fileID: 4886593951603022}
-  - {fileID: 4396305345960900}
+  - m_PlacementRoot: {fileID: 4103291835839300}
+    m_HideWhenUnitIsOnTile: 0
+  - m_PlacementRoot: {fileID: 4276697699393800}
+    m_HideWhenUnitIsOnTile: 0
+  - m_PlacementRoot: {fileID: 4587857172828946}
+    m_HideWhenUnitIsOnTile: 0
+  - m_PlacementRoot: {fileID: 4660964645907278}
+    m_HideWhenUnitIsOnTile: 1
+  - m_PlacementRoot: {fileID: 4520193459654982}
+    m_HideWhenUnitIsOnTile: 0
+  - m_PlacementRoot: {fileID: 4023490587113964}
+    m_HideWhenUnitIsOnTile: 0
+  - m_PlacementRoot: {fileID: 4886593951603022}
+    m_HideWhenUnitIsOnTile: 0
+  - m_PlacementRoot: {fileID: 4396305345960900}
+    m_HideWhenUnitIsOnTile: 1
   m_prefabsToInstantiate:
-  - Prefab: {fileID: 1614538852484488, guid: 2d0c86f2aa22c79498279d3ea353327a, type: 2}
-    RandomWeight: 10
-    RotateXAxis: 0
-    RotateYAxis: 1
-    RotateZAxis: 0
-  - Prefab: {fileID: 1252851182569692, guid: 7679bed2fed42924784327d2ed74a438, type: 2}
-    RandomWeight: 2
-    RotateXAxis: 1
-    RotateYAxis: 1
-    RotateZAxis: 1
+  - m_Prefab: {fileID: 1614538852484488, guid: 2d0c86f2aa22c79498279d3ea353327a, type: 2}
+    m_RandomWeight: 10
+    m_RotateXAxis: 0
+    m_RotateYAxis: 1
+    m_RotateZAxis: 0
+  - m_Prefab: {fileID: 1252851182569692, guid: 7679bed2fed42924784327d2ed74a438, type: 2}
+    m_RandomWeight: 2
+    m_RotateXAxis: 1
+    m_RotateYAxis: 1
+    m_RotateZAxis: 1
   m_maxRandomRange: 6

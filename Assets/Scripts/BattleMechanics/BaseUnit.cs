@@ -59,7 +59,6 @@ public class BaseUnit : MonoBehaviour
             m_unitHasAttackedThisRound = value;
 
             m_materialPropertyBlock.SetColor("_Color", value ? m_disabledColor : Color.white);
-
             m_meshRenderer.SetPropertyBlock(m_materialPropertyBlock);
         }
     }
@@ -110,6 +109,7 @@ public class BaseUnit : MonoBehaviour
 
         Root.Instance.CoroutineHelper.CallDelayed(this, 0.6f, () =>
         {
+            UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
             Destroy(this.gameObject);
         });
     }
@@ -286,6 +286,22 @@ public class BaseUnit : MonoBehaviour
     private void ChangeVisibilityOfAttackMarker(bool setVisible)
     {
         m_attackMarker.SetActive(setVisible);
+    }
+
+    /// <summary>
+    /// Updates the visibility of the environment of a maptile that is searched based on the given position.
+    /// </summary>
+    /// <param name="positionOfTileToUpdate">The position of tile to update.</param>
+    /// <param name="unitIsOnTile">if set to <c>true</c> a unit is on the tile.</param>
+    private void UpdateEnvironmentVisibility(Vector2 positionOfTileToUpdate, bool unitIsOnTile)
+    {
+        BaseMapTile destinationMapTile = ControllerContainer.TileNavigationController
+                    .GetMapTile(positionOfTileToUpdate);
+
+        if (destinationMapTile != null && destinationMapTile.EnvironmentInstantiateHelper != null)
+        {
+            destinationMapTile.EnvironmentInstantiateHelper.UpdateVisibilityOfEnvironment(unitIsOnTile);
+        }
     }
 
     /// <summary>
@@ -532,9 +548,14 @@ public class BaseUnit : MonoBehaviour
     /// <param name="onMoveFinished">The on move finished.</param>
     public void MoveAlongRoute(List<Vector2> route, Action onMoveFinished)
     {
+        UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
         m_currentSimplifiedPosition = route[route.Count - 1];
 
-        StartCoroutine(MoveAlongRouteCoroutine(route, onMoveFinished));
+        StartCoroutine(MoveAlongRouteCoroutine(route, () =>
+        {
+            UpdateEnvironmentVisibility(route[route.Count - 1], true);
+            onMoveFinished();
+        }));
     }
 
     /// <summary>
