@@ -12,8 +12,10 @@ public class UnitParticleFxPlayer : MonoBehaviour
     [Serializable]
     private class ParticleMapping
     {
+#pragma warning disable 649
         public UnitParticleFx m_UnitParticleFx;
         public List<ParticleSystem> m_ParticleSystems;
+#pragma warning restore 649
     }
 
     /// <summary>
