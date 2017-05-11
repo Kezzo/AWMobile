@@ -83,8 +83,9 @@ public class AIController
             // To pause between each unit that was moved
             Root.Instance.CoroutineHelper.CallDelayed(CurrentlyControlledUnit, 0.2f, () =>
             {
-                BaseMapTile tileToWalkTo = GetWalkableTileClosestToNextAttackableEnemy(CurrentlyControlledUnit);
-                if (tileToWalkTo != null)
+                BaseMapTile tileToWalkTo = null;
+
+                if (TryGetWalkableTileClosestToNextAttackableEnemy(CurrentlyControlledUnit, out tileToWalkTo))
                 {
                     var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
 
@@ -174,15 +175,17 @@ public class AIController
     }
 
     /// <summary>
-    /// Gets the walkable tile nearest to an enemy unit.
+    /// Tries to get a walkable tile nearest to an attackable enemy unit.
     /// </summary>
-    /// <param name="unit">The unit.</param>
-    /// <returns>The tile closest to an enemy unit.</returns>
-    private BaseMapTile GetWalkableTileClosestToNextAttackableEnemy(BaseUnit unit)
+    /// <param name="unit">The unit the maptile should be found for.</param>
+    /// <param name="maptTile">The walkable tile closest to the next attackable enemy if available; otherwise null.</param>
+    /// <returns>Returns true, when a maptile was found; otherwise false..</returns>
+    private bool TryGetWalkableTileClosestToNextAttackableEnemy(BaseUnit unit, out BaseMapTile maptTile)
     {
+        maptTile = null;
         if (m_enemyUnits.Count <= 0)
         {
-            return null;
+            return false;
         }
 
         TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
@@ -191,11 +194,16 @@ public class AIController
 
         if (walkableTiles.Count == 0)
         {
-            return null;
+            return false;
         }
 
         List<BaseUnit> enemiesToCheck = new List<BaseUnit>(m_enemyUnits);
         enemiesToCheck.RemoveAll(enemyUnit => !unit.CanAttackUnit(enemyUnit));
+
+        if (enemiesToCheck.Count == 0)
+        {
+            return false;
+        }
 
         Vector2 positionOfCurrentUnit = unit.CurrentSimplifiedPosition;
 
@@ -227,6 +235,7 @@ public class AIController
             return mapTileDistanceComparison;
         });
 
-        return walkableTiles[0];
+        maptTile = walkableTiles[0];
+        return true;
     }
 }

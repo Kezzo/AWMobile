@@ -564,7 +564,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="startNode">The start node.</param>
     /// <param name="destinationNode">The destination node.</param>
     /// <param name="startDistanceToEndPosition">The distance to the end position when the movement was started. Used to calculate smooth movement.</param>
-    /// <param name="endWorldPosition">The last position (in world-coodinates) the unit has to move. Used to calculate smooth movement.</param>
+    /// <param name="endWorldPosition">The last position (in world-coordinates) the unit has to move. Used to calculate smooth movement.</param>
     private IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, float startDistanceToEndPosition, Vector3 endWorldPosition)
     {
         Vector2 nodePositionDiff = startNode - destinationNode;
