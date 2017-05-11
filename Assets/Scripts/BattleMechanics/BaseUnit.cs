@@ -137,7 +137,7 @@ public class BaseUnit : MonoBehaviour
         //Counter-attack
         if (baseUnit.CanCounterAttack(this))
         {
-            this.StatManagement.TakeDamage(baseUnit.GetDamageOnUnit(this));
+            this.StatManagement.TakeDamage(baseUnit.GetDamageOnUnit(this, true));
         }
 
         UnitHasAttackedThisRound = true;
@@ -154,11 +154,12 @@ public class BaseUnit : MonoBehaviour
     /// Gets the damage this unit does on a specific unit.
     /// </summary>
     /// <param name="baseUnit">The base unit.</param>
+    /// <param name="isCounterAttack">Determines if the damage should be calculated for a counter-attack.</param>
     /// <returns></returns>
-    public int GetDamageOnUnit(BaseUnit baseUnit)
+    public int GetDamageOnUnit(BaseUnit baseUnit, bool isCounterAttack = false)
     {
         return (int)(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType) *
-                    m_statManagement.GetHealthBasedDamageModifier());
+                    (isCounterAttack ? 0.5f : 1f));
     }
 
     /// <summary>
@@ -170,9 +171,10 @@ public class BaseUnit : MonoBehaviour
     /// </returns>
     private bool CanCounterAttack(BaseUnit unitToCounterAttack)
     {
-        return CanAttackUnit(unitToCounterAttack) && 
-            ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                this.CurrentSimplifiedPosition, unitToCounterAttack.CurrentSimplifiedPosition) == 1;
+        return !StatManagement.IsDead && 
+                CanAttackUnit(unitToCounterAttack) && 
+                ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                    this.CurrentSimplifiedPosition, unitToCounterAttack.CurrentSimplifiedPosition) == 1;
     }
 
     /// <summary>

@@ -21,6 +21,8 @@ public class UnitStatManagement : MonoBehaviour
     private int m_currentHealth;
     public int CurrentHealth { get { return m_currentHealth; } }
 
+    public bool IsDead { get { return CurrentHealth == 0; } }
+
     private int m_maxHealth;
     private BaseUnit m_baseUnit;
 
