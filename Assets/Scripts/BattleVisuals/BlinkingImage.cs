@@ -10,25 +10,28 @@ public class BlinkingImage : MonoBehaviour
 
     private Image m_imageToBlink;
     private bool m_increasingAlpha;
+    private float m_alphaValue;
 
     private void Start()
     {
         m_imageToBlink = GetComponent<Image>();
+        m_alphaValue = m_imageToBlink.color.a;
     }
 
 	// Update is called once per frame
 	private void Update ()
 	{
-	    float newAlphaValue = m_imageToBlink.color.a;
-	    newAlphaValue += m_increasingAlpha ? m_alphaValueChangePerTimestep : -m_alphaValueChangePerTimestep;
+        m_alphaValue += m_increasingAlpha ? m_alphaValueChangePerTimestep : -m_alphaValueChangePerTimestep;
 
-        m_imageToBlink.color = new Color(m_imageToBlink.color.r, m_imageToBlink.color.g, m_imageToBlink.color.b, newAlphaValue);
+	    float alphaToApply = Mathf.Round(m_alphaValue);
 
-	    if (m_imageToBlink.color.a > 0.99f)
+        m_imageToBlink.color = new Color(m_imageToBlink.color.r, m_imageToBlink.color.g, m_imageToBlink.color.b, alphaToApply);
+
+	    if (m_alphaValue > 0.99f)
 	    {
 	        m_increasingAlpha = false;
 	    }
-        else if (m_imageToBlink.color.a < 0.01f)
+        else if (m_alphaValue < 0.01f)
 	    {
 	        m_increasingAlpha = true;
 	    }
