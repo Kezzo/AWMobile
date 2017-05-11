@@ -6,23 +6,24 @@ public class BlinkingStandardShader : MonoBehaviour
     private Renderer m_renderer;
 
     [SerializeField]
-    private Color m_firstColor;
+    private float m_alphaMax;
 
     [SerializeField]
-    private Color m_secondColor;
+    private float m_alphaMin;
 
-    [Range(0f, 3f)]
+    [Range(0f, 5f)]
     [SerializeField]
     private float m_blinkTime;
 
-    private float m_colorClampValue;
+    private float m_alphaClampValue;
     private bool decreasingValue;
 
     private void OnEnable()
     {
-        m_colorClampValue = 0f;
+        m_alphaClampValue = m_alphaMax;
         decreasingValue = false;
-        m_renderer.material.color = m_firstColor;
+        m_renderer.material.SetFloat("_Alpha", m_alphaMax);
+        m_renderer.SetPropertyBlock(new MaterialPropertyBlock());
     }
 
     // Update is called once per frame
@@ -30,27 +31,25 @@ public class BlinkingStandardShader : MonoBehaviour
     {
         if (decreasingValue)
         {
-            m_colorClampValue -= m_blinkTime * Time.deltaTime;
+            m_alphaClampValue -= m_blinkTime * Time.deltaTime;
 
-            if (m_colorClampValue < 0f)
+            if (m_alphaClampValue <= m_alphaMin)
             {
                 decreasingValue = false;
             }
         }
         else
         {
-            m_colorClampValue += m_blinkTime * Time.deltaTime;
+            m_alphaClampValue += m_blinkTime * Time.deltaTime;
 
-            if (m_colorClampValue > 1f)
+            if (m_alphaClampValue >= m_alphaMax)
             {
                 decreasingValue = true;
             }
         }
 
-        m_colorClampValue = Mathf.Clamp(m_colorClampValue, 0f, 1f);
+        m_alphaClampValue = Mathf.Clamp(m_alphaClampValue, m_alphaMin, m_alphaMax);
 
-        //Debug.Log(m_colorClampValue);
-
-        m_renderer.material.color = Color.Lerp(m_firstColor, m_secondColor, m_colorClampValue);
+        m_renderer.material.SetFloat("_Alpha", m_alphaClampValue);
     }
 }

@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 33432416857699330}
   - component: {fileID: 23242575498507420}
   - component: {fileID: 65319333265934604}
-  - component: {fileID: 114909143021770954}
   m_Layer: 10
   m_Name: AttackMarker
   m_TagString: Untagged
@@ -809,21 +808,6 @@ MonoBehaviour:
   m_damageTakenBar: {fileID: 114544565461254876}
   m_healthLeftBar: {fileID: 114267321205398196}
   m_potentialDamageBar: {fileID: 114957865818730840}
---- !u!114 &114909143021770954
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1791988929165598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d35faf7d1aa076548a6cf6271c45fc45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_renderer: {fileID: 23242575498507420}
-  m_firstColor: {r: 1, g: 1, b: 1, a: 1}
-  m_secondColor: {r: 0, g: 0, b: 0, a: 1}
-  m_blinkTime: 2.5
 --- !u!114 &114957865818730840
 MonoBehaviour:
   m_ObjectHideFlags: 1
