@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class BlinkingStandardShader : MonoBehaviour
 {
@@ -15,41 +16,65 @@ public class BlinkingStandardShader : MonoBehaviour
     [SerializeField]
     private float m_blinkTime;
 
-    private float m_alphaClampValue;
-    private bool decreasingValue;
+    [Range(0f, 5f)]
+    [SerializeField]
+    private float m_blinkCooldown;
 
     private void OnEnable()
     {
-        m_alphaClampValue = m_alphaMax;
-        decreasingValue = false;
         m_renderer.material.SetFloat("_Alpha", m_alphaMax);
         m_renderer.SetPropertyBlock(new MaterialPropertyBlock());
+
+        StartCoroutine(BlinkWithCooldown());
     }
 
-    // Update is called once per frame
-    private void Update ()
+    /// <summary>
+    /// Triggers the BlinkOnce coroutine and waits for the defined blink cooldown as long as the gameobject is enabled.
+    /// </summary>
+    private IEnumerator BlinkWithCooldown()
     {
-        if (decreasingValue)
+        while (true)
         {
-            m_alphaClampValue -= m_blinkTime * Time.deltaTime;
+            yield return new WaitForSeconds(m_blinkCooldown);
 
-            if (m_alphaClampValue <= m_alphaMin)
-            {
-                decreasingValue = false;
-            }
+            yield return StartCoroutine(BlinkOnce());
         }
-        else
+    }
+
+    /// <summary>
+    /// Fades shader, this component is attached to, out once and fades it in again.
+    /// </summary>
+    private IEnumerator BlinkOnce()
+    {
+        float alphaClampValue = m_alphaMax;
+        bool decreasingValue = true;
+
+        while (true)
         {
-            m_alphaClampValue += m_blinkTime * Time.deltaTime;
-
-            if (m_alphaClampValue >= m_alphaMax)
+            if (decreasingValue)
             {
-                decreasingValue = true;
+                alphaClampValue -= m_blinkTime * Time.deltaTime;
+
+                if (alphaClampValue <= m_alphaMin)
+                {
+                    decreasingValue = false;
+                }
             }
+            else
+            {
+                alphaClampValue += m_blinkTime * Time.deltaTime;
+
+                if (alphaClampValue >= m_alphaMax)
+                {
+                    yield break;
+                }
+            }
+
+            alphaClampValue = Mathf.Clamp(alphaClampValue, m_alphaMin, m_alphaMax);
+
+            m_renderer.material.SetFloat("_Alpha", alphaClampValue);
+
+            yield return null;
         }
-
-        m_alphaClampValue = Mathf.Clamp(m_alphaClampValue, m_alphaMin, m_alphaMax);
-
-        m_renderer.material.SetFloat("_Alpha", m_alphaClampValue);
     }
 }

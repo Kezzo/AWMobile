@@ -515,7 +515,8 @@ MonoBehaviour:
   m_renderer: {fileID: 23677000553192748}
   m_alphaMax: 1
   m_alphaMin: 0
-  m_blinkTime: 2.7
+  m_blinkTime: 2.5
+  m_blinkCooldown: 1.1
 --- !u!114 &114299457545568046
 MonoBehaviour:
   m_ObjectHideFlags: 1
