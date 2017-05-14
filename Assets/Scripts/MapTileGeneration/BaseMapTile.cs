@@ -329,7 +329,7 @@ public class BaseMapTile : MonoBehaviour
                 
                 break;
             case 3:
-                //areaTileType = AreaTileType.OneBorder;
+                areaTileType = AreaTileType.OneBorder;
 
                 break;
 
@@ -385,12 +385,13 @@ public class BaseMapTile : MonoBehaviour
     private float GetAttackMarkerBorderRotation(AreaTileType areaTileType, List<Vector2> adjacentNodes, 
         List<BaseMapTile> adjacentAttackableTiles, Vector2 attackRangeCenterPosition)
     {
-        Vector2 nodeIntoTheAttackRangeCircle = Vector2.zero;
+        Vector2 nodePositionDiff = Vector2.zero;
 
         switch (areaTileType)
         {
             case AreaTileType.OneBorder:
-                nodeIntoTheAttackRangeCircle = adjacentNodes.Find(node => !adjacentAttackableTiles.Exists(tile => tile.SimplifiedMapPosition == node));
+                nodePositionDiff = SimplifiedMapPosition - adjacentNodes.Find(
+                    node => !adjacentAttackableTiles.Exists(tile => tile.SimplifiedMapPosition == node));
                 break;
             case AreaTileType.TwoBordersCorner:
                 return GetTwoBorderCornerRotation(adjacentAttackableTiles, attackRangeCenterPosition);
@@ -399,11 +400,9 @@ public class BaseMapTile : MonoBehaviour
                 break;
             case AreaTileType.ThreeBorders:
                 // There is only one adjacent attackable tile
-                nodeIntoTheAttackRangeCircle = adjacentAttackableTiles[0].SimplifiedMapPosition;
+                nodePositionDiff = adjacentAttackableTiles[0].SimplifiedMapPosition - SimplifiedMapPosition;
                 break;
         }
-        
-        Vector2 nodePositionDiff = nodeIntoTheAttackRangeCircle - SimplifiedMapPosition;
 
         return ControllerContainer.TileNavigationController.GetRotationFromCardinalDirection(
             ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(nodePositionDiff, false));
