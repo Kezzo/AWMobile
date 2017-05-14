@@ -139,7 +139,6 @@ GameObject:
   - component: {fileID: 33649251949301056}
   - component: {fileID: 23677000553192748}
   - component: {fileID: 65772472924417150}
-  - component: {fileID: 114055952369509024}
   m_Layer: 9
   m_Name: MovementMarker
   m_TagString: Untagged
@@ -501,22 +500,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.35, y: 0, z: 2.35}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114055952369509024
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1975797990548848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d35faf7d1aa076548a6cf6271c45fc45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_renderer: {fileID: 23677000553192748}
-  m_alphaMax: 1
-  m_alphaMin: 0
-  m_blinkTime: 2.5
-  m_blinkCooldown: 1.1
 --- !u!114 &114299457545568046
 MonoBehaviour:
   m_ObjectHideFlags: 1

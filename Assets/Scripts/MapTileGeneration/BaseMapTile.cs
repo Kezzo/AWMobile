@@ -282,6 +282,20 @@ public class BaseMapTile : MonoBehaviour
     public void ChangeVisibilityOfMovementField(bool setVisibilityTo)
     {
         m_movementField.SetActive(setVisibilityTo);
+
+        ShaderBlinkOrchestrator shaderBlinkOrchestrator = null;
+
+        if (ControllerContainer.MonoBehaviourRegistry.TryGet(out shaderBlinkOrchestrator))
+        {
+            if (setVisibilityTo)
+            {
+                shaderBlinkOrchestrator.AddRendererToBlink(SimplifiedMapPosition, m_movementField.GetComponent<MeshRenderer>());
+            }
+            else
+            {
+                shaderBlinkOrchestrator.RemoveRenderer(SimplifiedMapPosition);
+            }   
+        }
     }
 
     /// <summary>
