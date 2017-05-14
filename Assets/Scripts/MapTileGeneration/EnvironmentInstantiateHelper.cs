@@ -33,6 +33,9 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
         public bool m_RotateXAxis;
         public bool m_RotateYAxis;
         public bool m_RotateZAxis;
+
+        public float m_MinScale = 1f;
+        public float m_MaxScale = 1f;
 #pragma warning restore 649
     }
 
@@ -81,6 +84,11 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
                 prefabToInstantiate.m_RotateXAxis ? Random.Range(0f, 360f) : 0f, 
                 prefabToInstantiate.m_RotateYAxis ? Random.Range(0f, 360f) : 0f, 
                 prefabToInstantiate.m_RotateZAxis ? Random.Range(0f, 360f) : 0f);
+
+            instantiatedPrefab.transform.localScale = new Vector3(
+                Random.Range(prefabToInstantiate.m_MinScale, prefabToInstantiate.m_MaxScale),
+                Random.Range(prefabToInstantiate.m_MinScale, prefabToInstantiate.m_MaxScale), 
+                Random.Range(prefabToInstantiate.m_MinScale, prefabToInstantiate.m_MaxScale));
         }
     }
 

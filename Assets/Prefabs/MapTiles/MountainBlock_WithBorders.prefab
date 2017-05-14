@@ -283,14 +283,20 @@ MonoBehaviour:
     m_RotateXAxis: 0
     m_RotateYAxis: 1
     m_RotateZAxis: 0
+    m_MinScale: 0.8
+    m_MaxScale: 1.1
   - m_Prefab: {fileID: 1732681061762526, guid: 389a524997525d948bfb2741e2f45ff6, type: 2}
     m_RandomWeight: 5
     m_RotateXAxis: 0
     m_RotateYAxis: 1
     m_RotateZAxis: 0
+    m_MinScale: 0.8
+    m_MaxScale: 1.1
   - m_Prefab: {fileID: 1702016501822220, guid: 9c15b9e42cf1da042a3ca99d45de6e66, type: 2}
     m_RandomWeight: 1
     m_RotateXAxis: 0
     m_RotateYAxis: 1
     m_RotateZAxis: 0
+    m_MinScale: 0.8
+    m_MaxScale: 1.1
   m_maxRandomRange: 4
