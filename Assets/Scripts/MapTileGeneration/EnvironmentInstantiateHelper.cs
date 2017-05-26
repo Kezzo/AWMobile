@@ -34,8 +34,9 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
         public bool m_RotateYAxis;
         public bool m_RotateZAxis;
 
-        public float m_MinScale = 1f;
-        public float m_MaxScale = 1f;
+        public Vector2 m_ScaleX;
+        public Vector2 m_ScaleY;
+        public Vector2 m_ScaleZ;
 #pragma warning restore 649
     }
 
@@ -48,6 +49,11 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
     /// </summary>
     public void InstantiateEnvironment()
     {
+        if (m_prefabsToInstantiate.Count == 0)
+        {
+            return;
+        }
+
         for (int i = 0; i < m_possiblePlacementPosition.Count; i++)
         {
             if (Random.Range(0, m_maxRandomRange) < 1)
@@ -86,9 +92,9 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
                 prefabToInstantiate.m_RotateZAxis ? Random.Range(0f, 360f) : 0f);
 
             instantiatedPrefab.transform.localScale = new Vector3(
-                Random.Range(prefabToInstantiate.m_MinScale, prefabToInstantiate.m_MaxScale),
-                Random.Range(prefabToInstantiate.m_MinScale, prefabToInstantiate.m_MaxScale), 
-                Random.Range(prefabToInstantiate.m_MinScale, prefabToInstantiate.m_MaxScale));
+                Random.Range(prefabToInstantiate.m_ScaleX.x, prefabToInstantiate.m_ScaleX.y),
+                Random.Range(prefabToInstantiate.m_ScaleY.x, prefabToInstantiate.m_ScaleY.y),
+                Random.Range(prefabToInstantiate.m_ScaleZ.x, prefabToInstantiate.m_ScaleZ.y));
         }
     }
 
