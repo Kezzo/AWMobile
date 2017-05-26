@@ -377,7 +377,7 @@ MonoBehaviour:
     m_RotateYAxis: 1
     m_RotateZAxis: 0
     m_ScaleX: {x: 0.9, y: 1.2}
-    m_ScaleY: {x: 0.6, y: 1.4}
+    m_ScaleY: {x: 0.9, y: 1.4}
     m_ScaleZ: {x: 0.9, y: 1.2}
   - m_Prefab: {fileID: 1252851182569692, guid: 7679bed2fed42924784327d2ed74a438, type: 2}
     m_RandomWeight: 2
