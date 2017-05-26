@@ -387,4 +387,12 @@ MonoBehaviour:
     m_ScaleX: {x: 0.8, y: 1}
     m_ScaleY: {x: 1.2, y: 1.6}
     m_ScaleZ: {x: 0.8, y: 1}
-  m_maxRandomRange: 10
+  - m_Prefab: {fileID: 1678802437772782, guid: f661bd1eedeb0c84cb1b0e202ee28aaa, type: 2}
+    m_RandomWeight: 2
+    m_RotateXAxis: 0
+    m_RotateYAxis: 1
+    m_RotateZAxis: 0
+    m_ScaleX: {x: 1, y: 1.4}
+    m_ScaleY: {x: 1, y: 1.6}
+    m_ScaleZ: {x: 1, y: 1.4}
+  m_maxRandomRange: 15
