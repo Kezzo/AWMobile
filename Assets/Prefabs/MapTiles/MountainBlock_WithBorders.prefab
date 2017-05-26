@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1170322714757706}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.641, y: 1, z: 0.566}
+  m_LocalPosition: {x: 0.45, y: 1, z: 0.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4881389630197068}
@@ -139,7 +139,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541868318976892}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.606, y: 1, z: -0.489}
+  m_LocalPosition: {x: 0.44, y: 1, z: -0.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4881389630197068}
@@ -152,7 +152,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1538640637515204}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.509, y: 1, z: -0.483}
+  m_LocalPosition: {x: -0.55, y: 1, z: -0.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4881389630197068}
@@ -165,7 +165,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684886365073018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.569, y: 1, z: 0.57}
+  m_LocalPosition: {x: -0.55, y: 1, z: 0.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4881389630197068}
@@ -178,7 +178,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811806806885630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.062, y: 1, z: 0.13}
+  m_LocalPosition: {x: -0.01, y: 1, z: -0.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4881389630197068}
@@ -278,25 +278,12 @@ MonoBehaviour:
   - m_PlacementRoot: {fileID: 4181880150891832}
     m_HideWhenUnitIsOnTile: 0
   m_prefabsToInstantiate:
-  - m_Prefab: {fileID: 1362429636213634, guid: ed466b0e0a9200e45b8978b24ceefea2, type: 2}
-    m_RandomWeight: 10
+  - m_Prefab: {fileID: 1677341189973286, guid: d01020dff64432b46bd63a9a700741b8, type: 2}
+    m_RandomWeight: 2
     m_RotateXAxis: 0
     m_RotateYAxis: 1
     m_RotateZAxis: 0
-    m_MinScale: 0.8
-    m_MaxScale: 1.1
-  - m_Prefab: {fileID: 1732681061762526, guid: 389a524997525d948bfb2741e2f45ff6, type: 2}
-    m_RandomWeight: 5
-    m_RotateXAxis: 0
-    m_RotateYAxis: 1
-    m_RotateZAxis: 0
-    m_MinScale: 0.8
-    m_MaxScale: 1.1
-  - m_Prefab: {fileID: 1702016501822220, guid: 9c15b9e42cf1da042a3ca99d45de6e66, type: 2}
-    m_RandomWeight: 1
-    m_RotateXAxis: 0
-    m_RotateYAxis: 1
-    m_RotateZAxis: 0
-    m_MinScale: 0.8
-    m_MaxScale: 1.1
-  m_maxRandomRange: 4
+    m_ScaleX: {x: 0.8, y: 1}
+    m_ScaleY: {x: 1.2, y: 2}
+    m_ScaleZ: {x: 0.8, y: 1}
+  m_maxRandomRange: 6
