@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e01d36bb19d31c549a34b66b073458be
-timeCreated: 1494780930
+guid: cca2e302b0e232f4da162456a075d801
+timeCreated: 1495811187
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Icosphere
+    4300000: Plane_009
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -35,10 +35,10 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.37
+    globalScale: 0.3
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 0
@@ -54,8 +54,8 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 60
-    normalImportMode: 0
+    normalSmoothAngle: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 0
   copyAvatar: 0

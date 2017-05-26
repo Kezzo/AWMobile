@@ -312,7 +312,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_MotionVectors: 0
+  m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
@@ -376,13 +376,15 @@ MonoBehaviour:
     m_RotateXAxis: 0
     m_RotateYAxis: 1
     m_RotateZAxis: 0
-    m_MinScale: 0.9
-    m_MaxScale: 1.2
+    m_ScaleX: {x: 0.9, y: 1.2}
+    m_ScaleY: {x: 0.9, y: 1.4}
+    m_ScaleZ: {x: 0.9, y: 1.2}
   - m_Prefab: {fileID: 1252851182569692, guid: 7679bed2fed42924784327d2ed74a438, type: 2}
     m_RandomWeight: 2
     m_RotateXAxis: 1
     m_RotateYAxis: 1
     m_RotateZAxis: 1
-    m_MinScale: 0.8
-    m_MaxScale: 1
+    m_ScaleX: {x: 0.8, y: 1.2}
+    m_ScaleY: {x: 0.8, y: 1.2}
+    m_ScaleZ: {x: 0.8, y: 1.2}
   m_maxRandomRange: 6
