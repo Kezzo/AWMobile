@@ -103,8 +103,8 @@ public class MapTileGeneratorEditor : MonoBehaviour
         else
         {
             ClearMap();
-            ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
             m_currentlyVisibleMap = mapGenerationData;
+            ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
         }
     }
 

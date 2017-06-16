@@ -210,6 +210,13 @@ public class BaseMapTile : MonoBehaviour
             return;
         }
 
+        if (m_mapTileType != MapTileType.Water &&
+            ControllerContainer.MapTileGenerationService.IsMapTileNextToWater(SimplifiedMapPosition,
+                m_mapTileGeneratorEditor.CurrentlyVisibleMap))
+        {
+            Debug.LogFormat("MapTile at position: {0} is next to water!", SimplifiedMapPosition);
+        }
+
         // Instantiate MapTile
         GameObject mapTilePrefabToInstantiate = m_mapTileGeneratorEditor.GetPrefabOfMapTileType(m_mapTileType);
 
@@ -339,7 +346,8 @@ public class BaseMapTile : MonoBehaviour
                 areaTileType = AreaTileType.ThreeBorders;
                 break;
             case 2:
-                areaTileType = GetTwoBorderAreaTileType(adjacentAttackableTiles);
+                areaTileType = ControllerContainer.MapTileGenerationService.GetTwoBorderAreaTileType(
+                    SimplifiedMapPosition, adjacentAttackableTiles);
                 
                 break;
             case 3:
@@ -352,8 +360,8 @@ public class BaseMapTile : MonoBehaviour
                 return;
         }
 
-        float yRotation = GetAttackMarkerBorderRotation(areaTileType, adjacentNodes, 
-            adjacentAttackableTiles, attackRangeCenterPosition);
+        float yRotation = ControllerContainer.MapTileGenerationService.GetAttackMarkerBorderRotation(
+            SimplifiedMapPosition, areaTileType, adjacentNodes, adjacentAttackableTiles, attackRangeCenterPosition);
 
         m_attackRangeMeshFilter.transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
 
@@ -363,93 +371,6 @@ public class BaseMapTile : MonoBehaviour
         {
             m_attackRangeMeshFilter.mesh = uvCoordinateMeshToUse.m_AttackRangerMarkerPrefab;
         }
-    }
-
-    /// <summary>
-    /// Returns the either the corner or the straight version of the areatiletype depending on the given adjacent attackable tiles.
-    /// </summary>
-    /// <param name="adjacentAttackableTiles">The adjacent attackable tiles to base the selection on.</param>
-    private AreaTileType GetTwoBorderAreaTileType(List<BaseMapTile> adjacentAttackableTiles)
-    {
-        AreaTileType twoBorderAreaTileType = AreaTileType.NoBorders;
-
-        // We have to assume 2 as a count here, because otherwise this method was called incorrectly.
-        if (adjacentAttackableTiles.Count == 2)
-        {
-            Vector2 diffToFirstAdjacentTile = SimplifiedMapPosition - adjacentAttackableTiles[0].SimplifiedMapPosition;
-            Vector2 diffToSecondAdjacentTile = SimplifiedMapPosition - adjacentAttackableTiles[1].SimplifiedMapPosition;
-
-            Vector2 combindedDiff = diffToFirstAdjacentTile - diffToSecondAdjacentTile;
-
-            twoBorderAreaTileType = Mathf.Abs((int) combindedDiff.x) == 1 && Mathf.Abs((int)combindedDiff.y) == 1 ? 
-                AreaTileType.TwoBordersCorner :
-                AreaTileType.TwoBorderStraight;
-        }
-
-        return twoBorderAreaTileType;
-    }
-
-    /// <summary>
-    /// Returns the attack marker border rotation.
-    /// </summary>
-    /// <param name="areaTileType">The areaTileType of the attack marker.</param>
-    /// <param name="adjacentNodes">The adjacent nodes.</param>
-    /// <param name="adjacentAttackableTiles">The adjacent attackable tiles.</param>
-    /// <param name="attackRangeCenterPosition">The center position of the attack range border.</param>
-    private float GetAttackMarkerBorderRotation(AreaTileType areaTileType, List<Vector2> adjacentNodes, 
-        List<BaseMapTile> adjacentAttackableTiles, Vector2 attackRangeCenterPosition)
-    {
-        Vector2 nodePositionDiff = Vector2.zero;
-
-        switch (areaTileType)
-        {
-            case AreaTileType.OneBorder:
-                nodePositionDiff = SimplifiedMapPosition - adjacentNodes.Find(
-                    node => !adjacentAttackableTiles.Exists(tile => tile.SimplifiedMapPosition == node));
-                break;
-            case AreaTileType.TwoBordersCorner:
-                return GetTwoBorderCornerRotation(adjacentAttackableTiles, attackRangeCenterPosition);
-            case AreaTileType.TwoBorderStraight:
-
-                break;
-            case AreaTileType.ThreeBorders:
-                // There is only one adjacent attackable tile
-                nodePositionDiff = adjacentAttackableTiles[0].SimplifiedMapPosition - SimplifiedMapPosition;
-                break;
-        }
-
-        return ControllerContainer.TileNavigationController.GetRotationFromCardinalDirection(
-            ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(nodePositionDiff, false));
-    }
-
-    /// <summary>
-    /// Returns the attack range marker rotation for two border corner attack range marker.
-    /// </summary>
-    /// <param name="adjacentAttackableTiles">The adjacent attackable tiles.</param>
-    /// <param name="attackRangeCenterPosition">The center position of the attack range border.</param>
-    private float GetTwoBorderCornerRotation(List<BaseMapTile> adjacentAttackableTiles, Vector2 attackRangeCenterPosition)
-    {
-        float rotationToReturn = 0f;
-
-        Vector2 diffToFirstAdjacentTile = SimplifiedMapPosition - adjacentAttackableTiles[0].SimplifiedMapPosition;
-        Vector2 diffToSecondAdjacentTile = SimplifiedMapPosition - adjacentAttackableTiles[1].SimplifiedMapPosition;
-
-        Vector2 combindedDiff = diffToFirstAdjacentTile - diffToSecondAdjacentTile;
-
-        if (combindedDiff.Equals(new Vector2(1, -1)))
-        {
-            rotationToReturn = 90f;
-        }
-        else if (combindedDiff.Equals(new Vector2(-1, 1)))
-        {
-            rotationToReturn = 270f;
-        }
-        else if (SimplifiedMapPosition.x > attackRangeCenterPosition.x)
-        {
-            rotationToReturn = 180f;
-        }
-
-        return rotationToReturn;
     }
 
     /// <summary>
