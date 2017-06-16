@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33881833579526744}
   - component: {fileID: 23032198392204424}
   m_Layer: 0
-  m_Name: GrassWaterBorderBlock_Straight_LeftAligned
+  m_Name: GrassWaterBorder_Straight_LeftAligned
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,9 +50,9 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_MotionVectors: 2
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 2100000, guid: ea3709a35784bda46a8232523c3b0f1c, type: 2}
   m_StaticBatchInfo:
