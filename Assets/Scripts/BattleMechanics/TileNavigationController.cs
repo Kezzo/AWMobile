@@ -358,18 +358,26 @@ public class TileNavigationController
     /// Gets the adjacent nodes.
     /// </summary>
     /// <param name="sourceNode">The source node.</param>
+    /// <param name="includeAdjacentCorners">Includes the adjacent corners of the given <see cref="sourceNode"/>.</param>
     /// <returns></returns>
-    public List<Vector2> GetAdjacentNodes(Vector2 sourceNode)
+    public List<Vector2> GetAdjacentNodes(Vector2 sourceNode, bool includeAdjacentCorners = false)
     {
-        List<Vector2> adjacentNodes = new List<Vector2>(4);
+        List<Vector2> adjacentNodes = new List<Vector2>(includeAdjacentCorners ? 8 : 4);
 
-        Vector2[] adjacentModifier =
+        Vector2[] adjacentModifier = new Vector2[includeAdjacentCorners ? 8 : 4];
+
+        adjacentModifier[0] = new Vector2(1, 0);
+        adjacentModifier[1] = new Vector2(0, 1);
+        adjacentModifier[2] = new Vector2(-1, 0);
+        adjacentModifier[3] = new Vector2(0, -1);
+
+        if (includeAdjacentCorners)
         {
-            new Vector2(1, 0),
-            new Vector2(0, 1),
-            new Vector2(-1, 0),
-            new Vector2(0, -1)
-        };
+            adjacentModifier[4] = new Vector2(1, 1);
+            adjacentModifier[5] = new Vector2(1, -1);
+            adjacentModifier[6] = new Vector2(-1, 1);
+            adjacentModifier[7] = new Vector2(-1, -1);
+        }
 
         for (int modifierIndex = 0; modifierIndex < adjacentModifier.Length; modifierIndex++)
         {
@@ -408,7 +416,7 @@ public class TileNavigationController
             }
 
             Vector2 diffToPreviousNode = previousNode - nodeToGetRouteMarkerFor;
-            Vector2 diffToNextNode = !isDestinationNode ? nodeToGetRouteMarkerFor - nextNode : Vector2.zero;
+            Vector2 diffToNextNode = !isDestinationNode ? nextNode - nodeToGetRouteMarkerFor : Vector2.zero;
             routeMarkerDefinition.RouteMarkerType = GetRouteMarkerType(diffToPreviousNode, diffToNextNode);
             routeMarkerDefinition.Rotation = GetRouteMarkerRotation(diffToPreviousNode, diffToNextNode, routeMarkerDefinition.RouteMarkerType);
 
@@ -431,8 +439,8 @@ public class TileNavigationController
     {
         Vector3 rotation = Vector3.zero;
 
-        CardinalDirection comingFromDirection = GetCardinalDirectionFromNodePositionDiff(diffToPreviousNode, true);
-        CardinalDirection goingToDirection = GetCardinalDirectionFromNodePositionDiff(diffToNextNode, false);
+        CardinalDirection comingFromDirection = GetCardinalDirectionFromNodePositionDiff(diffToPreviousNode);
+        CardinalDirection goingToDirection = GetCardinalDirectionFromNodePositionDiff(diffToNextNode);
 
         if (routeMarkerType == RouteMarkerType.Destination)
         {
@@ -510,36 +518,55 @@ public class TileNavigationController
     /// Gets the cardinal direction from node position difference.
     /// </summary>
     /// <param name="nodePositionDiff">The node position difference.</param>
-    /// <param name="comingFrom">if set to <c>true</c> [previous node].</param>
-    /// <returns></returns>
-    public CardinalDirection GetCardinalDirectionFromNodePositionDiff(Vector2 nodePositionDiff, bool comingFrom)
+    public CardinalDirection GetCardinalDirectionFromNodePositionDiff(Vector2 nodePositionDiff)
     {
         CardinalDirection direction;
 
-        if (Mathf.Abs(nodePositionDiff.x) > 0)
+        if (Mathf.Abs(nodePositionDiff.x) > 0 && Mathf.Abs(nodePositionDiff.y) > 0)
         {
-            if (comingFrom)
+            direction = GetIntermediateDirection(nodePositionDiff);
+        }
+        else
+        {
+            if (Mathf.Abs(nodePositionDiff.x) > 0)
             {
                 direction = nodePositionDiff.x < 0 ? CardinalDirection.West : CardinalDirection.East;
             }
             else
             {
-                direction = nodePositionDiff.x > 0 ? CardinalDirection.West : CardinalDirection.East;
-            }
-        }
-        else
-        {
-            if (comingFrom)
-            {
                 direction = nodePositionDiff.y > 0 ? CardinalDirection.North : CardinalDirection.South;
-            }
-            else
-            {
-                direction = nodePositionDiff.y < 0 ? CardinalDirection.North : CardinalDirection.South;
             }
         }
 
         return direction;
+    }
+
+    /// <summary>
+    /// Returns the intermediate direction based on a given position diff.
+    /// </summary>
+    /// <param name="nodePositionDiff">The node position difference.</param>
+    private CardinalDirection GetIntermediateDirection(Vector2 nodePositionDiff)
+    {
+        CardinalDirection intermediateDirection;
+
+        if (nodePositionDiff.x > 0 && nodePositionDiff.y > 0)
+        {
+            intermediateDirection = CardinalDirection.NorthEast;
+        }
+        else if(nodePositionDiff.x > 0 && nodePositionDiff.y < 0)
+        {
+            intermediateDirection = CardinalDirection.SouthEast;
+        }
+        else if (nodePositionDiff.x < 0 && nodePositionDiff.y < 0)
+        {
+            intermediateDirection = CardinalDirection.SouthWest;
+        }
+        else
+        {
+            intermediateDirection = CardinalDirection.NorthWest;
+        }
+
+        return intermediateDirection;
     }
 
     /// <summary>

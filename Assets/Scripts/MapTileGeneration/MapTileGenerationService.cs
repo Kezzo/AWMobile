@@ -178,12 +178,12 @@ public class MapTileGenerationService
                 break;
             case AreaTileType.ThreeBorders:
                 // There is only one adjacent attackable tile
-                nodePositionDiff = adjacentAttackableTiles[0].SimplifiedMapPosition - simplifiedMapPosition;
+                nodePositionDiff = simplifiedMapPosition - adjacentAttackableTiles[0].SimplifiedMapPosition;
                 break;
         }
 
         return ControllerContainer.TileNavigationController.GetRotationFromCardinalDirection(
-            ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(nodePositionDiff, false));
+            ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(nodePositionDiff));
     }
 
     /// <summary>
@@ -218,24 +218,37 @@ public class MapTileGenerationService
     }
 
     /// <summary>
-    /// Checks the adjacent tiles of the given tileposition and checks if those tiles have the MapTileType.Water.
+    /// Checks the adjacent and corner-adjacent tiles of the given tileposition and checks if those tiles have the given MapTileType.
     /// </summary>
+    /// <param name="mapTileType">The MapTileType to check for.</param>
     /// <param name="tilePosition">The tile position to get the adjacent tiles from.</param>
     /// <param name="mapData">The map data that holds the type of each maptile at a specific position. 
     /// This is used to find the maptiles on the adjacent positions and get their MapTileType.</param>
+    /// <param name="adjacentWaterDirections">A list containing all cardinal directions the given MapTileType is adjacent to the given tile position.</param>
     /// <returns></returns>
-    public bool IsMapTileNextToWater(Vector2 tilePosition, MapGenerationData mapData)
+    public bool IsMapTileNextToType(MapTileType mapTileType, Vector2 tilePosition, MapGenerationData mapData, 
+        out List<CardinalDirection> adjacentWaterDirections)
     {
         bool isNextToWater = false;
-        List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(tilePosition);
+        List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(
+            tilePosition, includeAdjacentCorners: true);
+
+        adjacentWaterDirections = new List<CardinalDirection>();
 
         for (int i = 0; i < adjacentNodes.Count; i++)
         {
             MapGenerationData.MapTile mapTile = mapData.GetMapTileAtPosition(adjacentNodes[i]);
 
-            if (mapTile != null && mapTile.m_MapTileType == MapTileType.Water)
+            if (mapTile != null && mapTile.m_MapTileType == mapTileType)
             {
                 isNextToWater = true;
+
+                Vector2 positionDiff = tilePosition - adjacentNodes[i];
+
+                Debug.LogFormat("{0} Position: {1} is water! Diff: {2}", tilePosition, adjacentNodes[i], positionDiff);
+
+                adjacentWaterDirections.Add(ControllerContainer.TileNavigationController.
+                    GetCardinalDirectionFromNodePositionDiff(positionDiff));
             }
         }
 

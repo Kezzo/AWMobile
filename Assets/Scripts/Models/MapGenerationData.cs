@@ -119,16 +119,16 @@ public class MapGenerationData : ScriptableObject
     /// <param name="position">The position to get the MapTile for.</param>
     public MapTile GetMapTileAtPosition(Vector2 position)
     {
-        // find group
-        MapTileGroup closestMapTileGroup = m_MapTileGroups.Find(delegate(MapTileGroup mapTileGroup)
+        foreach (var mapTileGroup in m_MapTileGroups)
         {
-            Vector2 simplifiedPosition = mapTileGroup.GetSimplifiedPositionOnMap(m_MapTileGroupSize);
-            Vector2 positionDiff = simplifiedPosition - position;
+            MapTile mapTile = mapTileGroup.m_MapTiles.Find(tile => GetSimplifiedMapTilePosition(tile) == position);
 
-            return Mathf.Abs(positionDiff.x) <= 1 && Mathf.Abs(positionDiff.y) <= 1;
-        });
+            if (mapTile != null)
+            {
+                return mapTile;
+            }
+        }
 
-        // find correct maptile in group
-        return closestMapTileGroup.m_MapTiles.Find(mapTile => GetSimplifiedMapTilePosition(mapTile) == position);
+        return null;
     }
 }

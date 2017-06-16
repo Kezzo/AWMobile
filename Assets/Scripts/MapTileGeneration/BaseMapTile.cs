@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 #pragma warning disable 0649
@@ -84,13 +85,8 @@ public class BaseMapTile : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying)
+        if (Application.isPlaying && Root.Instance.DebugValues.m_ShowCoordinatesOnNodes)
         {
-            if (!Root.Instance.DebugValues.m_ShowCoordinatesOnNodes)
-            {
-                return;
-            }
-
             UnityEditor.Handles.Label(this.transform.position + Vector3.up,
                 string.Format("X{0}, Y{1}", SimplifiedMapPosition.x, SimplifiedMapPosition.y), new GUIStyle
                 {
@@ -210,11 +206,27 @@ public class BaseMapTile : MonoBehaviour
             return;
         }
 
+        m_currentInstantiatedMapTileType = m_mapTileType;
+        m_mapTileData.m_MapTileType = m_mapTileType;
+
+        List<CardinalDirection> adjacentWaterDirections;
+
         if (m_mapTileType != MapTileType.Water &&
-            ControllerContainer.MapTileGenerationService.IsMapTileNextToWater(SimplifiedMapPosition,
-                m_mapTileGeneratorEditor.CurrentlyVisibleMap))
+            ControllerContainer.MapTileGenerationService.IsMapTileNextToType(MapTileType.Water, SimplifiedMapPosition,
+                m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
         {
-            Debug.LogFormat("MapTile at position: {0} is next to water!", SimplifiedMapPosition);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < adjacentWaterDirections.Count; i++)
+            {
+                stringBuilder.Append(adjacentWaterDirections[i]);
+                stringBuilder.Append(" ");
+            }
+
+            Debug.LogFormat("MapTile at position: {0} is next to water! Directions: {1}", SimplifiedMapPosition, 
+                stringBuilder.ToString());
+
+            InstantiateComplexBorderMapTile(adjacentWaterDirections);
         }
 
         // Instantiate MapTile
@@ -222,24 +234,38 @@ public class BaseMapTile : MonoBehaviour
 
         if (mapTilePrefabToInstantiate != null)
         {
-            m_currentInstantiatedMapTile = Instantiate(mapTilePrefabToInstantiate);
-            m_currentInstantiatedMapTile.transform.SetParent(this.transform);
-            m_currentInstantiatedMapTile.transform.localPosition = Vector3.zero;
-            m_currentInstantiatedMapTile.transform.localRotation = Quaternion.Euler(Vector3.zero);
-
-            m_currentInstantiatedMapTileType = m_mapTileType;
-            m_mapTileData.m_MapTileType = m_mapTileType;
-
-            if (EnvironmentInstantiateHelper != null)
-            {
-                EnvironmentInstantiateHelper.InstantiateEnvironment();   
-            }
+            InstantiateSimpleMaptTile(mapTilePrefabToInstantiate);
         }
         else
         {
             Debug.LogErrorFormat("MapTile with Type: '{0}' was not found!", m_mapTileType);
-
             m_currentInstantiatedMapTileType = MapTileType.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Instantiates four corner prefabs that correctly face adjacent water maptiles.
+    /// </summary>
+    /// <param name="adjacentWaterDirections">The directions the water is adjacent.</param>
+    private void InstantiateComplexBorderMapTile(List<CardinalDirection> adjacentWaterDirections)
+    {
+        
+    }
+
+    /// <summary>
+    /// Instantiates a simple singular maptile prefab including the environment.
+    /// </summary>
+    /// <param name="mapTilePrefabToInstantiate">The maptile prefab to instantiate.</param>
+    private void InstantiateSimpleMaptTile(GameObject mapTilePrefabToInstantiate)
+    {
+        m_currentInstantiatedMapTile = Instantiate(mapTilePrefabToInstantiate);
+        m_currentInstantiatedMapTile.transform.SetParent(this.transform);
+        m_currentInstantiatedMapTile.transform.localPosition = Vector3.zero;
+        m_currentInstantiatedMapTile.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+        if (EnvironmentInstantiateHelper != null)
+        {
+            EnvironmentInstantiateHelper.InstantiateEnvironment();
         }
     }
 
