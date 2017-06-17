@@ -295,6 +295,7 @@ public class MapTileGenerationService
             if (TryGetFreeIntermediateDirection(
                 adjacentWaterDirections, out freeIntermediateDirection))
             {
+                adjacentWaterDirections.Add(freeIntermediateDirection);
                 borderDirections.Add(new KeyValuePair<CardinalDirection, MapTileBorderType>(
                     freeIntermediateDirection, MapTileBorderType.NoBorder));
             }

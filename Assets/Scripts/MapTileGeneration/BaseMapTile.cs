@@ -238,7 +238,7 @@ public class BaseMapTile : MonoBehaviour
 
             if (mapTilePrefabToInstantiate != null)
             {
-                InstantiateSimpleMaptTile(mapTilePrefabToInstantiate);
+                InstantiateMapTile(mapTilePrefabToInstantiate);
             }
             else
             {
@@ -256,15 +256,85 @@ public class BaseMapTile : MonoBehaviour
     {
         foreach (var borderDirection in m_mapGenService.GetBorderDirections(adjacentWaterDirections))
         {
-            InstantiateSimpleMaptTile(m_mapTileGeneratorEditor.GetMapTileBorderPrefab(m_mapTileType, borderDirection.Value));
+            //TODO use model here
+            MapTileBorderPrefabData positionAndRotationForBorder = new MapTileBorderPrefabData(
+                m_mapTileGeneratorEditor.GetMapTileBorderPrefab(m_mapTileType, borderDirection.Value));
+
+            ApplyPositionAndRotationToBorderData(ref positionAndRotationForBorder, borderDirection.Key, borderDirection.Value);
+
+            InstantiateMapTile(positionAndRotationForBorder.Prefab,
+                positionAndRotationForBorder.Position, positionAndRotationForBorder.Rotation);
         }
+    }
+
+    /// <summary>
+    /// Returns the position and rotation of a border based on the given direction it should face.
+    /// </summary>
+    private void ApplyPositionAndRotationToBorderData(ref MapTileBorderPrefabData borderPrefabData, 
+        CardinalDirection direction, MapTileBorderType borderType)
+    {
+        borderPrefabData.Position = Vector3.zero;
+        borderPrefabData.Rotation = Vector3.zero;
+
+        switch (direction)
+        {
+            case CardinalDirection.NorthEast:
+            case CardinalDirection.East:
+                borderPrefabData.Rotation = new Vector3(0f, 0f, 0f);
+
+                if (borderType == MapTileBorderType.StraightRightAligned)
+                {
+                    borderPrefabData.Position = new Vector3(0f, 0f, 1f);
+                }
+                break;
+            case CardinalDirection.NorthWest:
+            case CardinalDirection.North:
+                borderPrefabData.Rotation = new Vector3(0f, 270f, 0f);
+
+                if (borderType == MapTileBorderType.StraightRightAligned)
+                {
+                    borderPrefabData.Position = new Vector3(-1f, 0f, 0f);
+                }
+                break;
+            case CardinalDirection.SouthEast:
+            case CardinalDirection.South:
+                borderPrefabData.Rotation = new Vector3(0f, 90f, 0f);
+
+                if (borderType == MapTileBorderType.StraightRightAligned)
+                {
+                    borderPrefabData.Position = new Vector3(1f, 0f, 0f);
+                }
+                break;
+            case CardinalDirection.SouthWest:
+            case CardinalDirection.West:
+                borderPrefabData.Rotation = new Vector3(0f, 180f, 0f);
+
+                if (borderType == MapTileBorderType.StraightRightAligned)
+                {
+                    borderPrefabData.Position = new Vector3(0f, 0f, -1f);
+                }
+                break;
+            default:
+                throw new ArgumentOutOfRangeException("direction", direction, null);
+        }
+    }
+
+    /// <summary>
+    /// Instantiates a simple singular maptile prefab including the environment at the default position and with the default rotation.
+    /// </summary>
+    /// <param name="mapTilePrefabToInstantiate">The maptile prefab to instantiate.</param>
+    private void InstantiateMapTile(GameObject mapTilePrefabToInstantiate)
+    {
+        InstantiateMapTile(mapTilePrefabToInstantiate, Vector3.zero, Vector3.zero);
     }
 
     /// <summary>
     /// Instantiates a simple singular maptile prefab including the environment.
     /// </summary>
     /// <param name="mapTilePrefabToInstantiate">The maptile prefab to instantiate.</param>
-    private void InstantiateSimpleMaptTile(GameObject mapTilePrefabToInstantiate)
+    /// <param name="position">The local position the prefab should be set to.</param>
+    /// <param name="rotation">The local rotation the prefab should be set to.</param>
+    private void InstantiateMapTile(GameObject mapTilePrefabToInstantiate, Vector3 position, Vector3 rotation)
     {
         if (mapTilePrefabToInstantiate == null)
         {
@@ -274,8 +344,8 @@ public class BaseMapTile : MonoBehaviour
 
         m_currentInstantiatedMapTile = Instantiate(mapTilePrefabToInstantiate);
         m_currentInstantiatedMapTile.transform.SetParent(this.transform);
-        m_currentInstantiatedMapTile.transform.localPosition = Vector3.zero;
-        m_currentInstantiatedMapTile.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        m_currentInstantiatedMapTile.transform.localPosition = position;
+        m_currentInstantiatedMapTile.transform.localRotation = Quaternion.Euler(rotation);
 
         if (EnvironmentInstantiateHelper != null)
         {
@@ -308,11 +378,9 @@ public class BaseMapTile : MonoBehaviour
 
             if (baseUnit != null)
             {
-                baseUnit.Initialize(m_unitOnThisTile, m_mapTileGeneratorEditor.GetMeshOfUnitType(m_unitOnThisTile.m_UnitType), 
-                    simplifiedPosition, registerUnit);
+                baseUnit.Initialize(m_unitOnThisTile, m_mapTileGeneratorEditor.GetMeshOfUnitType(m_unitOnThisTile.m_UnitType), simplifiedPosition, registerUnit);
 
-                baseUnit.SetTeamColorMaterial(m_mapTileGeneratorEditor.GetMaterialForTeamColor(
-                    m_unitOnThisTile.m_UnitType, m_unitOnThisTile.m_TeamColor));
+                baseUnit.SetTeamColorMaterial(m_mapTileGeneratorEditor.GetMaterialForTeamColor(m_unitOnThisTile.m_UnitType, m_unitOnThisTile.m_TeamColor));
 
                 baseUnit.SetRotation(m_unitOnThisTile.m_Orientation);
             }
@@ -340,7 +408,7 @@ public class BaseMapTile : MonoBehaviour
             else
             {
                 shaderBlinkOrchestrator.RemoveRenderer(SimplifiedMapPosition);
-            }   
+            }
         }
     }
 
@@ -385,9 +453,8 @@ public class BaseMapTile : MonoBehaviour
                 areaTileType = AreaTileType.ThreeBorders;
                 break;
             case 2:
-                areaTileType = ControllerContainer.MapTileGenerationService.GetTwoBorderAreaTileType(
-                    SimplifiedMapPosition, adjacentAttackableTiles);
-                
+                areaTileType = ControllerContainer.MapTileGenerationService.GetTwoBorderAreaTileType(SimplifiedMapPosition, adjacentAttackableTiles);
+
                 break;
             case 3:
                 areaTileType = AreaTileType.OneBorder;
@@ -399,8 +466,7 @@ public class BaseMapTile : MonoBehaviour
                 return;
         }
 
-        float yRotation = ControllerContainer.MapTileGenerationService.GetAttackMarkerBorderRotation(
-            SimplifiedMapPosition, areaTileType, adjacentNodes, adjacentAttackableTiles, attackRangeCenterPosition);
+        float yRotation = ControllerContainer.MapTileGenerationService.GetAttackMarkerBorderRotation(SimplifiedMapPosition, areaTileType, adjacentNodes, adjacentAttackableTiles, attackRangeCenterPosition);
 
         m_attackRangeMeshFilter.transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
 
