@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Class that holds all map creation methods.
@@ -253,5 +256,284 @@ public class MapTileGenerationService
         }
 
         return isNextToWater;
+    }
+
+    /// <summary>
+    /// Gets border types mapped to cardinal directions to be able to correctly display border to water.
+    /// </summary>
+    /// <param name="adjacentWaterDirections">The adjacent water directions.</param>
+    public List<KeyValuePair<CardinalDirection, MapTileBorderType>> GetBorderDirections(List<CardinalDirection> adjacentWaterDirections)
+    {
+        var borderDirections = new List<KeyValuePair<CardinalDirection, MapTileBorderType>>();
+
+        for (int i = 0; i < adjacentWaterDirections.Count; i++)
+        {
+            if (!IsDirectionIntermediate(adjacentWaterDirections[i]))
+            {
+                AddNonIntermediateBorder(adjacentWaterDirections, borderDirections, adjacentWaterDirections[i], true);
+                AddNonIntermediateBorder(adjacentWaterDirections, borderDirections, adjacentWaterDirections[i],
+                    false);
+            }
+            else
+            {
+                var directionBorderPair = GetDirectionsNextToIntermediateDirection(adjacentWaterDirections[i]);
+
+                if (!adjacentWaterDirections.Contains(directionBorderPair[0]) && 
+                    !adjacentWaterDirections.Contains(directionBorderPair[1]))
+                {
+                    borderDirections.Add(new KeyValuePair<CardinalDirection, MapTileBorderType>(
+                        adjacentWaterDirections[i], MapTileBorderType.InnerCorner));
+                }
+            }
+        }
+      
+        // Fill up empty corner with no border blocks.
+        for (int i = borderDirections.Count; i < 4; i++)
+        {
+            CardinalDirection freeIntermediateDirection;
+
+            if (TryGetFreeIntermediateDirection(
+                adjacentWaterDirections, out freeIntermediateDirection))
+            {
+                borderDirections.Add(new KeyValuePair<CardinalDirection, MapTileBorderType>(
+                    freeIntermediateDirection, MapTileBorderType.NoBorder));
+            }
+        }
+
+        Assert.IsTrue(borderDirections.Count == 4);
+        return borderDirections;
+    }
+
+    /// <summary>
+    /// Adds a non intermediate border to the given border dictionary.
+    /// </summary>
+    /// <param name="adjacentWaterDirections">The adjacent water directions.</param>
+    /// <param name="borderDirections">The border dictionary to add the border to.</param>
+    /// <param name="cardinalDirection">The cardinal direction to add the border for.</param>
+    /// <param name="checkRightDirection">Determines if the adjacent direction right of the given direction should 
+    /// be checked to potentially add a corner border.</param>
+    private void AddNonIntermediateBorder(List<CardinalDirection> adjacentWaterDirections,
+        List<KeyValuePair<CardinalDirection, MapTileBorderType>> borderDirections, CardinalDirection cardinalDirection, bool checkRightDirection)
+    {
+        CardinalDirection adjacentDirection;
+
+        // Check if right/left is also water to add a outer corner.
+        if (ContainsAdjacentDirection(cardinalDirection, checkRightDirection,
+            adjacentWaterDirections, out adjacentDirection))
+        {
+            CardinalDirection intermediateCardinalDirection = GetIntermediateDirection(
+                cardinalDirection, adjacentDirection);
+
+            var directionBorderPair = new KeyValuePair<CardinalDirection, MapTileBorderType>(
+                intermediateCardinalDirection, MapTileBorderType.OuterCorner);
+
+            if (!borderDirections.Contains(directionBorderPair))
+            {
+                borderDirections.Add(directionBorderPair);
+            }
+        }
+        else // if right/left is no water a straight border can be added
+        {
+            borderDirections.Add(new KeyValuePair<CardinalDirection, MapTileBorderType>(cardinalDirection, checkRightDirection ?
+                MapTileBorderType.StraightRightAligned : MapTileBorderType.StraightLeftAligned));
+        }
+    }
+
+    /// <summary>
+    /// Checks all available directions to find a free intermediate direction. 
+    /// It's free the intermediate direction and adjacent directions are not in the list.
+    /// I.e. north-east is free, when north-east, north and east is not in the list.
+    /// </summary>
+    /// <param name="availableDirections">The available directions.</param>
+    /// <param name="freeIntermediateDirection">The free intermediate direction.</param>
+    /// <returns>Returns true when a free intermediate action was found; false otherwise.</returns>
+    private bool TryGetFreeIntermediateDirection(List<CardinalDirection> availableDirections, 
+        out CardinalDirection freeIntermediateDirection)
+    {
+        if (!availableDirections.Contains(CardinalDirection.NorthEast) &&
+                !availableDirections.Contains(CardinalDirection.North) &&
+                !availableDirections.Contains(CardinalDirection.East))
+        {
+            freeIntermediateDirection = CardinalDirection.NorthEast;
+            return true;
+        }
+
+        if (!availableDirections.Contains(CardinalDirection.NorthWest) &&
+            !availableDirections.Contains(CardinalDirection.North) &&
+            !availableDirections.Contains(CardinalDirection.West))
+        {
+            freeIntermediateDirection = CardinalDirection.NorthWest;
+            return true;
+        }
+
+        if (!availableDirections.Contains(CardinalDirection.SouthEast) &&
+            !availableDirections.Contains(CardinalDirection.South) &&
+            !availableDirections.Contains(CardinalDirection.East))
+        {
+            freeIntermediateDirection = CardinalDirection.SouthEast;
+            return true;
+        }
+
+        if (!availableDirections.Contains(CardinalDirection.SouthWest) &&
+                    !availableDirections.Contains(CardinalDirection.South) &&
+                    !availableDirections.Contains(CardinalDirection.West))
+        {
+            freeIntermediateDirection = CardinalDirection.SouthWest;
+            return true;
+        }
+
+        freeIntermediateDirection = CardinalDirection.East;
+        return false;
+    }
+
+    /// <summary>
+    /// Determines whether a given direction is an intermediate cardinal direction.
+    /// </summary>
+    /// <param name="direction">The given direction.</param>
+    /// <returns>True when it's an intermediate direction; otherwise false.</returns>
+    private bool IsDirectionIntermediate(CardinalDirection direction)
+    {
+        return direction == CardinalDirection.NorthEast ||
+               direction == CardinalDirection.NorthWest ||
+               direction == CardinalDirection.SouthEast ||
+               direction == CardinalDirection.SouthWest;
+    }
+
+    /// <summary>
+    /// Determines whether the opposite direction of the given action is contained in the given direction list.
+    /// </summary>
+    /// <param name="direction">The direction to base check on.</param>
+    /// <param name="directionsToCheck">The direction list to check.</param>
+    /// <returns>Returns true when opposite direction is in the list; otherwise false.</returns>
+    private bool ContainsOppositeDirection(CardinalDirection direction, List<CardinalDirection> directionsToCheck)
+    {
+        switch (direction)
+        {
+            case CardinalDirection.North:
+                return directionsToCheck.Contains(CardinalDirection.South);
+            case CardinalDirection.East:
+                return directionsToCheck.Contains(CardinalDirection.West);
+            case CardinalDirection.South:
+                return directionsToCheck.Contains(CardinalDirection.North);
+            case CardinalDirection.West:
+                return directionsToCheck.Contains(CardinalDirection.East);
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Determines whether an adjacent direction is in a directions list.
+    /// </summary>
+    /// <param name="direction">The direction.</param>
+    /// <param name="checkRight">If set to <c>true</c> check right of the given direction; 
+    /// otherwise the left direction is checked.</param>
+    /// <param name="directionsToCheck">The list of directions to check.</param>
+    /// <param name="adjacentDirection">The adjacent direction.</param>
+    /// <returns>Returns true when the adjacent direction is in the list.</returns>
+    private bool ContainsAdjacentDirection(CardinalDirection direction, bool checkRight, 
+        List<CardinalDirection> directionsToCheck, out CardinalDirection adjacentDirection)
+    {
+        switch (direction)
+        {
+            case CardinalDirection.North:
+                adjacentDirection = checkRight ? CardinalDirection.East : CardinalDirection.West;
+                return directionsToCheck.Contains(adjacentDirection);
+            case CardinalDirection.East:
+                adjacentDirection = checkRight ? CardinalDirection.South : CardinalDirection.North;
+                return directionsToCheck.Contains(adjacentDirection);
+            case CardinalDirection.South:
+                adjacentDirection = checkRight ? CardinalDirection.West : CardinalDirection.East;
+                return directionsToCheck.Contains(adjacentDirection);
+            case CardinalDirection.West:
+                adjacentDirection = checkRight ? CardinalDirection.North : CardinalDirection.South;
+                return directionsToCheck.Contains(adjacentDirection);
+            default:
+                throw new ArgumentOutOfRangeException("direction", direction, null);
+        }
+    }
+
+    /// <summary>
+    /// Returns the intermediate cardinal direction based on two given cardinal directions.
+    /// </summary>
+    /// <param name="firstDirection">The first cardinal direction.</param>
+    /// <param name="secondDirection">The second cardinal direction.</param>
+    private CardinalDirection GetIntermediateDirection(CardinalDirection firstDirection,
+        CardinalDirection secondDirection)
+    {
+        switch (firstDirection)
+        {
+            case CardinalDirection.North:
+                switch (secondDirection)
+                {
+                    case CardinalDirection.East:
+                        return CardinalDirection.NorthEast;
+                    case CardinalDirection.West:
+                        return CardinalDirection.NorthWest;
+                }
+                break;
+            case CardinalDirection.South:
+                switch (secondDirection)
+                {
+                    case CardinalDirection.East:
+                        return CardinalDirection.SouthEast;
+                    case CardinalDirection.West:
+                        return CardinalDirection.SouthWest;
+                }
+                break;
+            case CardinalDirection.East:
+                switch (secondDirection)
+                {
+                    case CardinalDirection.North:
+                        return CardinalDirection.NorthEast;
+                    case CardinalDirection.South:
+                        return CardinalDirection.SouthEast;
+                }
+                break;
+            case CardinalDirection.West:
+                switch (secondDirection)
+                {
+                    case CardinalDirection.North:
+                        return CardinalDirection.NorthWest;
+                    case CardinalDirection.South:
+                        return CardinalDirection.SouthWest;
+                }
+                break;
+        }
+
+        throw new InvalidEnumArgumentException();
+    }
+
+    /// <summary>
+    /// Returns the directions next to a given intermediate direction.
+    /// </summary>
+    /// <param name="intermediateDirection">The intermediate direction.</param>
+    private CardinalDirection[] GetDirectionsNextToIntermediateDirection(CardinalDirection intermediateDirection)
+    {
+        var directionsNextToGivenDirection = new CardinalDirection[2];
+
+        switch (intermediateDirection)
+        {
+            case CardinalDirection.NorthEast:
+                directionsNextToGivenDirection[0] = CardinalDirection.North;
+                directionsNextToGivenDirection[1] = CardinalDirection.East;
+                break;
+            case CardinalDirection.NorthWest:
+                directionsNextToGivenDirection[0] = CardinalDirection.North;
+                directionsNextToGivenDirection[1] = CardinalDirection.West;
+                break;
+            case CardinalDirection.SouthEast:
+                directionsNextToGivenDirection[0] = CardinalDirection.South;
+                directionsNextToGivenDirection[1] = CardinalDirection.East;
+                break;
+            case CardinalDirection.SouthWest:
+                directionsNextToGivenDirection[0] = CardinalDirection.South;
+                directionsNextToGivenDirection[1] = CardinalDirection.West;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException("intermediateDirection", intermediateDirection, null);
+        }
+
+        return directionsNextToGivenDirection;
     }
 }

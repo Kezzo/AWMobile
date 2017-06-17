@@ -65,7 +65,8 @@ public class BaseMapTile : MonoBehaviour
         get
         {
             return m_environmentInstantiateHelper ?? 
-                (m_environmentInstantiateHelper = m_currentInstantiatedMapTile.GetComponent<EnvironmentInstantiateHelper>());
+                (m_environmentInstantiateHelper = m_currentInstantiatedMapTile != null ? 
+                m_currentInstantiatedMapTile.GetComponent<EnvironmentInstantiateHelper>() : null);
         }
     }
 
@@ -79,6 +80,7 @@ public class BaseMapTile : MonoBehaviour
 
     private MapTileGeneratorEditor m_mapTileGeneratorEditor;
     private MapGenerationData.MapTile m_mapTileData;
+    private MapTileGenerationService m_mapGenService;
 
     public Vector2 SimplifiedMapPosition { get; private set; }
 
@@ -145,6 +147,7 @@ public class BaseMapTile : MonoBehaviour
         m_mapTileData = mapTileData;
         m_mapTileType = m_mapTileData.m_MapTileType;
         m_unitOnThisTile = m_mapTileData.m_Unit;
+        m_mapGenService = ControllerContainer.MapTileGenerationService;
     }
 
     /// <summary>
@@ -212,7 +215,7 @@ public class BaseMapTile : MonoBehaviour
         List<CardinalDirection> adjacentWaterDirections;
 
         if (m_mapTileType != MapTileType.Water &&
-            ControllerContainer.MapTileGenerationService.IsMapTileNextToType(MapTileType.Water, SimplifiedMapPosition,
+            m_mapGenService.IsMapTileNextToType(MapTileType.Water, SimplifiedMapPosition,
                 m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -228,18 +231,20 @@ public class BaseMapTile : MonoBehaviour
 
             InstantiateComplexBorderMapTile(adjacentWaterDirections);
         }
-
-        // Instantiate MapTile
-        GameObject mapTilePrefabToInstantiate = m_mapTileGeneratorEditor.GetPrefabOfMapTileType(m_mapTileType);
-
-        if (mapTilePrefabToInstantiate != null)
-        {
-            InstantiateSimpleMaptTile(mapTilePrefabToInstantiate);
-        }
         else
         {
-            Debug.LogErrorFormat("MapTile with Type: '{0}' was not found!", m_mapTileType);
-            m_currentInstantiatedMapTileType = MapTileType.Empty;
+            // Instantiate MapTile
+            GameObject mapTilePrefabToInstantiate = m_mapTileGeneratorEditor.GetPrefabOfMapTileType(m_mapTileType);
+
+            if (mapTilePrefabToInstantiate != null)
+            {
+                InstantiateSimpleMaptTile(mapTilePrefabToInstantiate);
+            }
+            else
+            {
+                Debug.LogErrorFormat("MapTile with Type: '{0}' was not found!", m_mapTileType);
+                m_currentInstantiatedMapTileType = MapTileType.Empty;
+            }
         }
     }
 
@@ -249,7 +254,10 @@ public class BaseMapTile : MonoBehaviour
     /// <param name="adjacentWaterDirections">The directions the water is adjacent.</param>
     private void InstantiateComplexBorderMapTile(List<CardinalDirection> adjacentWaterDirections)
     {
-        
+        foreach (var borderDirection in m_mapGenService.GetBorderDirections(adjacentWaterDirections))
+        {
+            InstantiateSimpleMaptTile(m_mapTileGeneratorEditor.GetMapTileBorderPrefab(m_mapTileType, borderDirection.Value));
+        }
     }
 
     /// <summary>
@@ -258,6 +266,12 @@ public class BaseMapTile : MonoBehaviour
     /// <param name="mapTilePrefabToInstantiate">The maptile prefab to instantiate.</param>
     private void InstantiateSimpleMaptTile(GameObject mapTilePrefabToInstantiate)
     {
+        if (mapTilePrefabToInstantiate == null)
+        {
+            Debug.LogWarning("Prefab to instantiate was null!");
+            return;
+        }
+
         m_currentInstantiatedMapTile = Instantiate(mapTilePrefabToInstantiate);
         m_currentInstantiatedMapTile.transform.SetParent(this.transform);
         m_currentInstantiatedMapTile.transform.localPosition = Vector3.zero;
@@ -289,7 +303,6 @@ public class BaseMapTile : MonoBehaviour
             m_currentInstantiatedUnitGameObject = Instantiate(unitPrefabToInstantiate);
             m_currentInstantiatedUnitGameObject.transform.SetParent(m_unitRoot);
             m_currentInstantiatedUnitGameObject.transform.localPosition = Vector3.zero;
-            m_currentInstantiatedMapTile.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
             BaseUnit baseUnit = m_currentInstantiatedUnitGameObject.GetComponent<BaseUnit>();
 

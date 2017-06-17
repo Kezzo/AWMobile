@@ -210,7 +210,12 @@ public class MapTileGeneratorEditor : MonoBehaviour
             MapTileBorderAssignment borderAssignment = mapTileTypeAssignment.m_MapTileBorders.Find(
                 assignment => assignment.m_BorderType == mapTileBorderType);
 
-            if (borderAssignment != null)
+            if (borderAssignment == null)
+            {
+                Debug.LogFormat("MapTileBorderPrefab couldn't be found! MapTileType: {0} MapTileBorderType: {1}",
+                    mapTileType, mapTileBorderType);
+            }
+            else
             {
                 borderPrefab = borderAssignment.m_BorderPrefab;
             }
