@@ -87,12 +87,12 @@ public class MapGenerationData : ScriptableObject
     }
 
     /// <summary>
-    /// Gets the coordinate on map outside of the group.
-    /// This is the coordinate if we would see every maptile as its own entity on the map.
+    /// Gets the position on map outside of the group.
+    /// This is the position if we would see every maptile as its own entity on the map.
     /// </summary>
     /// <param name="mapTile">The map tile to check against.</param>
     /// <returns></returns>
-    public Vector2 GetSimplifiedMapTileCoordinate(MapTile mapTile)
+    public Vector2 GetSimplifiedMapTilePosition(MapTile mapTile)
     {
         MapTileGroup mapTileGroupOfMapTile =
             m_MapTileGroups.Find(mapTileGroup => mapTileGroup.m_MapTiles.Contains(mapTile));
@@ -110,5 +110,25 @@ public class MapGenerationData : ScriptableObject
             (int)(simplifiedMapTileGroupPosition.y + mapTile.m_PositionVector.y));
 
         return simplifiedMapTilePositon;
+    }
+
+    /// <summary>
+    /// Returns the MapTile instance placed on the given position, ignoring the group it belongs to.
+    /// If no MapTile is on the given position null will be returned.
+    /// </summary>
+    /// <param name="position">The position to get the MapTile for.</param>
+    public MapTile GetMapTileAtPosition(Vector2 position)
+    {
+        foreach (var mapTileGroup in m_MapTileGroups)
+        {
+            MapTile mapTile = mapTileGroup.m_MapTiles.Find(tile => GetSimplifiedMapTilePosition(tile) == position);
+
+            if (mapTile != null)
+            {
+                return mapTile;
+            }
+        }
+
+        return null;
     }
 }

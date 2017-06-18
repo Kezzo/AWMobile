@@ -123,8 +123,8 @@ public class BaseUnit : MonoBehaviour
     {
         Vector2 unitPositionDiff = baseUnit.CurrentSimplifiedPosition - CurrentSimplifiedPosition;
 
-        CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(
-            unitPositionDiff, true);
+        CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.
+            GetCardinalDirectionFromNodePositionDiff(unitPositionDiff);
 
         SetRotation(directionToRotateTo);
 
@@ -300,9 +300,9 @@ public class BaseUnit : MonoBehaviour
         BaseMapTile destinationMapTile = ControllerContainer.TileNavigationController
                     .GetMapTile(positionOfTileToUpdate);
 
-        if (destinationMapTile != null && destinationMapTile.EnvironmentInstantiateHelper != null)
+        if (destinationMapTile != null)
         {
-            destinationMapTile.EnvironmentInstantiateHelper.UpdateVisibilityOfEnvironment(unitIsOnTile);
+            destinationMapTile.UpdateVisibilityOfEnvironment(unitIsOnTile);
         }
     }
 
@@ -569,11 +569,11 @@ public class BaseUnit : MonoBehaviour
     /// <param name="endWorldPosition">The last position (in world-coordinates) the unit has to move. Used to calculate smooth movement.</param>
     private IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, float startDistanceToEndPosition, Vector3 endWorldPosition)
     {
-        Vector2 nodePositionDiff = startNode - destinationNode;
+        Vector2 nodePositionDiff = destinationNode - startNode;
 
         // Rotate unit to destination node
-        CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(
-            nodePositionDiff, false);
+        CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.
+            GetCardinalDirectionFromNodePositionDiff(nodePositionDiff);
 
         SetRotation(directionToRotateTo);
 

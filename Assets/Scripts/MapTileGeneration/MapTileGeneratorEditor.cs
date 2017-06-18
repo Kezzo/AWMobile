@@ -39,6 +39,15 @@ public class MapTileGeneratorEditor : MonoBehaviour
     {
         public MapTileType m_MapTileType;
         public GameObject m_MapTilePrefab;
+
+        public List<MapTileBorderAssignment> m_MapTileBorders;
+    }
+
+    [Serializable]
+    public class MapTileBorderAssignment
+    {
+        public MapTileBorderType m_BorderType;
+        public GameObject m_BorderPrefab;
     }
 
     [SerializeField]
@@ -103,8 +112,8 @@ public class MapTileGeneratorEditor : MonoBehaviour
         else
         {
             ClearMap();
-            ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
             m_currentlyVisibleMap = mapGenerationData;
+            ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
         }
     }
 
@@ -171,9 +180,48 @@ public class MapTileGeneratorEditor : MonoBehaviour
     /// <returns></returns>
     public GameObject GetPrefabOfMapTileType(MapTileType mapTileType)
     {
-        MapTileTypeAssignment mapTileTypeAssignment = m_mapTileTypeAssignmentList.Find(prefab => prefab.m_MapTileType == mapTileType);
+        MapTileTypeAssignment mapTileTypeAssignment = GetMapTileAssignment(mapTileType);
 
         return mapTileTypeAssignment == null ? null : mapTileTypeAssignment.m_MapTilePrefab;
+    }
+
+    /// <summary>
+    /// Returns the serialized <see cref="MapTileTypeAssignment"/> based on the given <see cref="MapTileType"/>.
+    /// </summary>
+    /// <param name="mapTileType">The <see cref="MapTileType"/> to get the <see cref="MapTileTypeAssignment"/> for.</param>
+    private MapTileTypeAssignment GetMapTileAssignment(MapTileType mapTileType)
+    {
+        return m_mapTileTypeAssignmentList.Find(prefab => prefab.m_MapTileType == mapTileType);
+    }
+
+    /// <summary>
+    /// Returns the serialized <see cref="MapTileBorderAssignment"/> based on the given <see cref="MapTileType"/> and <see cref="MapTileBorderType"/>.
+    /// </summary>
+    /// <param name="mapTileType">The <see cref="MapTileType"/> to get the <see cref="MapTileBorderAssignment"/> for.</param>
+    /// <param name="mapTileBorderType">The <see cref="mapTileBorderType"/> to get the <see cref="MapTileBorderAssignment"/> for.</param>
+    /// <returns></returns>
+    public GameObject GetMapTileBorderPrefab(MapTileType mapTileType, MapTileBorderType mapTileBorderType)
+    {
+        GameObject borderPrefab = null;
+        MapTileTypeAssignment mapTileTypeAssignment = GetMapTileAssignment(mapTileType);
+
+        if (mapTileTypeAssignment != null)
+        {
+            MapTileBorderAssignment borderAssignment = mapTileTypeAssignment.m_MapTileBorders.Find(
+                assignment => assignment.m_BorderType == mapTileBorderType);
+
+            if (borderAssignment == null)
+            {
+                Debug.LogFormat("MapTileBorderPrefab couldn't be found! MapTileType: {0} MapTileBorderType: {1}",
+                    mapTileType, mapTileBorderType);
+            }
+            else
+            {
+                borderPrefab = borderAssignment.m_BorderPrefab;
+            }
+        }
+
+        return borderPrefab;
     }
 
     /// <summary>
