@@ -59,20 +59,28 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private MeshFilter m_attackRangeMeshFilter;
 
-    private EnvironmentInstantiateHelper m_environmentInstantiateHelper;
-    public EnvironmentInstantiateHelper EnvironmentInstantiateHelper
+    private List<EnvironmentInstantiateHelper> m_environmentInstantiateHelper;
+    private List<EnvironmentInstantiateHelper> EnvironmentInstantiateHelper
     {
         get
         {
-            return m_environmentInstantiateHelper ?? 
-                (m_environmentInstantiateHelper = m_currentInstantiatedMapTile != null ? 
-                m_currentInstantiatedMapTile.GetComponent<EnvironmentInstantiateHelper>() : null);
+            if (m_environmentInstantiateHelper == null)
+            {
+                m_environmentInstantiateHelper = new List<EnvironmentInstantiateHelper>(m_currentlyInstantiatedMapTiles.Count);
+
+                foreach (var mapTile in m_currentlyInstantiatedMapTiles)
+                {
+                    m_environmentInstantiateHelper.Add(mapTile.GetComponent<EnvironmentInstantiateHelper>());
+                }
+            }
+
+            return m_environmentInstantiateHelper;
         }
     }
 
     #endregion
 
-    private GameObject m_currentInstantiatedMapTile;
+    private List<GameObject> m_currentlyInstantiatedMapTiles = new List<GameObject>();
     private MapTileType m_currentInstantiatedMapTileType;
 
     private GameObject m_currentInstantiatedUnitGameObject;
@@ -156,14 +164,19 @@ public class BaseMapTile : MonoBehaviour
     /// </summary>
     public void ValidateMapTile()
     {
-        if (m_currentInstantiatedMapTileType == m_mapTileType && m_currentInstantiatedMapTile != null)
+        if (m_currentInstantiatedMapTileType == m_mapTileType && m_currentlyInstantiatedMapTiles != null)
         {
             return;
         }
 
-        if (m_currentInstantiatedMapTile != null)
+        if (m_currentlyInstantiatedMapTiles != null && m_currentlyInstantiatedMapTiles.Count > 0)
         {
-            DestroyImmediate(m_currentInstantiatedMapTile);
+            for (int i = m_currentlyInstantiatedMapTiles.Count - 1; i >= 0; i--)
+            {
+                DestroyImmediate(m_currentlyInstantiatedMapTiles[i]);
+            }
+
+            m_currentlyInstantiatedMapTiles = null;
         }
 
         if (m_mapTileType == MapTileType.Empty)
@@ -191,9 +204,26 @@ public class BaseMapTile : MonoBehaviour
             InstantiateUnitPrefab(simplifiedPosition, registerUnit);
             m_mapTileData.m_Unit = m_unitOnThisTile;
 
-            if (EnvironmentInstantiateHelper != null)
+            UpdateVisibilityOfEnvironment(true);
+        }
+    }
+
+    /// <summary>
+    /// Updates the visibility of all environment props of all EnvironmentInstantiateHelper of this maptile.
+    /// </summary>
+    /// <param name="visible">if set to <c>true</c> sets all props visible; otherwise invisible.</param>
+    public void UpdateVisibilityOfEnvironment(bool visible)
+    {
+        if (EnvironmentInstantiateHelper == null || EnvironmentInstantiateHelper.Count <= 0)
+        {
+            return;
+        }
+
+        foreach (var environmentInstantiateHelper in EnvironmentInstantiateHelper)
+        {
+            if (environmentInstantiateHelper != null)
             {
-                EnvironmentInstantiateHelper.UpdateVisibilityOfEnvironment(true);
+                environmentInstantiateHelper.UpdateVisibilityOfEnvironment(visible);
             }
         }
     }
@@ -218,18 +248,8 @@ public class BaseMapTile : MonoBehaviour
             m_mapGenService.IsMapTileNextToType(MapTileType.Water, SimplifiedMapPosition,
                 m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (int i = 0; i < adjacentWaterDirections.Count; i++)
-            {
-                stringBuilder.Append(adjacentWaterDirections[i]);
-                stringBuilder.Append(" ");
-            }
-
-            Debug.LogFormat("MapTile at position: {0} is next to water! Directions: {1}", SimplifiedMapPosition, 
-                stringBuilder.ToString());
-
             InstantiateComplexBorderMapTile(adjacentWaterDirections);
+            InstantiateEnvironment();
         }
         else
         {
@@ -239,6 +259,7 @@ public class BaseMapTile : MonoBehaviour
             if (mapTilePrefabToInstantiate != null)
             {
                 InstantiateMapTile(mapTilePrefabToInstantiate);
+                InstantiateEnvironment();
             }
             else
             {
@@ -256,7 +277,6 @@ public class BaseMapTile : MonoBehaviour
     {
         foreach (var borderDirection in m_mapGenService.GetBorderDirections(adjacentWaterDirections))
         {
-            //TODO use model here
             MapTileBorderPrefabData positionAndRotationForBorder = new MapTileBorderPrefabData(
                 m_mapTileGeneratorEditor.GetMapTileBorderPrefab(m_mapTileType, borderDirection.Value));
 
@@ -342,14 +362,28 @@ public class BaseMapTile : MonoBehaviour
             return;
         }
 
-        m_currentInstantiatedMapTile = Instantiate(mapTilePrefabToInstantiate);
-        m_currentInstantiatedMapTile.transform.SetParent(this.transform);
-        m_currentInstantiatedMapTile.transform.localPosition = position;
-        m_currentInstantiatedMapTile.transform.localRotation = Quaternion.Euler(rotation);
+        GameObject instantiatedMapTile = Instantiate(mapTilePrefabToInstantiate);
+        instantiatedMapTile.transform.SetParent(this.transform);
+        instantiatedMapTile.transform.localPosition = position;
+        instantiatedMapTile.transform.localRotation = Quaternion.Euler(rotation);
 
-        if (EnvironmentInstantiateHelper != null)
+        m_currentlyInstantiatedMapTiles.Add(instantiatedMapTile);
+    }
+
+    /// <summary>
+    /// Instantiates the environment on all currently instantiated maptile prefabs.
+    /// </summary>
+    private void InstantiateEnvironment()
+    {
+        if (EnvironmentInstantiateHelper != null && EnvironmentInstantiateHelper.Count > 0)
         {
-            EnvironmentInstantiateHelper.InstantiateEnvironment();
+            foreach (var environmentInstantiateHelper in EnvironmentInstantiateHelper)
+            {
+                if (environmentInstantiateHelper != null)
+                {
+                    environmentInstantiateHelper.InstantiateEnvironment();
+                }
+            }
         }
     }
 

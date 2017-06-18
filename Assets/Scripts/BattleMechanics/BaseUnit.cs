@@ -300,9 +300,9 @@ public class BaseUnit : MonoBehaviour
         BaseMapTile destinationMapTile = ControllerContainer.TileNavigationController
                     .GetMapTile(positionOfTileToUpdate);
 
-        if (destinationMapTile != null && destinationMapTile.EnvironmentInstantiateHelper != null)
+        if (destinationMapTile != null)
         {
-            destinationMapTile.EnvironmentInstantiateHelper.UpdateVisibilityOfEnvironment(unitIsOnTile);
+            destinationMapTile.UpdateVisibilityOfEnvironment(unitIsOnTile);
         }
     }
 

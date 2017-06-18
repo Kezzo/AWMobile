@@ -248,8 +248,6 @@ public class MapTileGenerationService
 
                 Vector2 positionDiff = tilePosition - adjacentNodes[i];
 
-                Debug.LogFormat("{0} Position: {1} is water! Diff: {2}", tilePosition, adjacentNodes[i], positionDiff);
-
                 adjacentWaterDirections.Add(ControllerContainer.TileNavigationController.
                     GetCardinalDirectionFromNodePositionDiff(positionDiff));
             }

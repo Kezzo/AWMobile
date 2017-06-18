@@ -109,6 +109,11 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
     /// </summary>
     public void ClearInstantiatedEnvironment()
     {
+        if (m_currentlyInstantiatedPrefabs == null || m_currentlyInstantiatedPrefabs.Count == 0)
+        {
+            return;
+        }
+
         for (int i = m_currentlyInstantiatedPrefabs.Count - 1; i >= 0; i--)
         {
 #if UNITY_EDITOR
