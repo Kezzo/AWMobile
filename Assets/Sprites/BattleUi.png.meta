@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f29ca9c9d0843744cb1f4b8e31181426
-timeCreated: 1483631787
+timeCreated: 1497905636
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -92,7 +92,7 @@ TextureImporter:
         width: 251
         height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -101,11 +101,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3
-        y: 283
+        y: 282
         width: 251
-        height: 45
+        height: 46
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -113,10 +113,10 @@ TextureImporter:
       name: BattleUi_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 130
-        width: 215
-        height: 123
+        x: 60
+        y: 96
+        width: 232
+        height: 120
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,19 +143,6 @@ TextureImporter:
         y: 3
         width: 258
         height: 265
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: BattleUi_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 366
-        height: 123
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
