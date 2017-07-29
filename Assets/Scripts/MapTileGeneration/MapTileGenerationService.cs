@@ -170,8 +170,8 @@ public class MapTileGenerationService
         switch (areaTileType)
         {
             case AreaTileType.OneBorder:
-                nodePositionDiff = simplifiedMapPosition - adjacentNodes.Find(
-                    node => !adjacentAttackableTiles.Exists(tile => tile.SimplifiedMapPosition == node));
+                nodePositionDiff = adjacentNodes.Find(
+                    node => !adjacentAttackableTiles.Exists(tile => tile.SimplifiedMapPosition == node)) - simplifiedMapPosition;
                 break;
             case AreaTileType.TwoBordersCorner:
                 return GetTwoBorderCornerRotation(simplifiedMapPosition,
