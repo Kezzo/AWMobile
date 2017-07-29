@@ -14,6 +14,8 @@ public class MapGenerationData : ScriptableObject
     public int m_MapTileGroupSize;
     public List<MapTileGroup> m_MapTileGroups;
 
+    public MapCloudShadowData m_MapCloudShadowData;
+
     [Serializable]
     public class MapTileGroup
     {

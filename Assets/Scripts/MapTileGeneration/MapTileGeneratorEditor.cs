@@ -32,6 +32,9 @@ public class MapTileGeneratorEditor : MonoBehaviour
     private GameObject m_baseUnitPrefab;
     public GameObject BaseUnitPrefab { get { return m_baseUnitPrefab; } }
 
+    [SerializeField]
+    private CloudShadowOrchestrator m_cloudShadowOrchestrator;
+
 #pragma warning disable 649
 
     [Serializable]
@@ -114,6 +117,9 @@ public class MapTileGeneratorEditor : MonoBehaviour
             ClearMap();
             m_currentlyVisibleMap = mapGenerationData;
             ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
+
+            m_cloudShadowOrchestrator.GenerateCloudPool(m_currentlyVisibleMap.m_MapCloudShadowData);
+            m_cloudShadowOrchestrator.StartCloudShadowDisplay();
         }
     }
 
