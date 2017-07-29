@@ -32,9 +32,8 @@ public class CloudShadow : MonoBehaviour
         m_cloudShadowOrchestrator = cloudShadowOrchestrator;
         m_meshFilter.mesh = m_availableCloudMeshes[Random.Range(0, m_availableCloudMeshes.Count)];
         this.transform.localPosition = startPosition;
-        Debug.Log("StartPosition: "+ this.transform.position);
 
-        //this.transform.localRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        this.transform.localRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
         StartCoroutine(MoveCloud(destinationPosition, speed));
     }
 
@@ -50,9 +49,11 @@ public class CloudShadow : MonoBehaviour
         {
             this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, destinationPosition, speed);
 
-            if ((this.transform.localPosition - destinationPosition).magnitude < 0.1f)
+            if (this.transform.localPosition.z - destinationPosition.z < 0.1f)
             {
-                //m_cloudShadowOrchestrator.ReAddCloudShadowToPool(this);
+                //Debug.Log(string.Format("Cloud arrived at destination. Current position: {0} Destination: {1}", this.transform.localPosition, destinationPosition));
+
+                m_cloudShadowOrchestrator.ReAddCloudShadowToPool(this);
                 yield break;
             }
 

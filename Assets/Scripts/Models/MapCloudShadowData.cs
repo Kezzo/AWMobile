@@ -20,12 +20,12 @@ public class MapCloudShadowData
     /// <summary>
     /// Gets or sets the maximal possible left spawn position.
     /// </summary>
-    public Vector3 m_MaxLeftSpawnPosition;
+    public float m_MaxLeftSpawnPosition;
 
     /// <summary>
     /// Gets or sets the maximum left spawn position.
     /// </summary>
-    public Vector3 m_MaxRightSpawnPosition;
+    public float m_MaxRightSpawnPosition;
 
     /// <summary>
     /// Gets or sets the flying distance of cloud shadows until they're not visible anymore and can be re-used by the pool.

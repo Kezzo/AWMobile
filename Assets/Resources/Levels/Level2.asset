@@ -2001,8 +2001,8 @@ MonoBehaviour:
         m_TeamColor: 0
         m_Orientation: 0
   m_MapCloudShadowData:
-    m_PoolSize: 25
-    m_MinVisibleClouds: 20
-    m_MaxLeftSpawnPosition: {x: -30, y: 0, z: 0}
-    m_MaxRightSpawnPosition: {x: 30, y: 0, z: 0}
-    m_FlyingDistance: 70
+    m_PoolSize: 50
+    m_MinVisibleClouds: 40
+    m_MaxLeftSpawnPosition: -30
+    m_MaxRightSpawnPosition: 30
+    m_FlyingDistance: 60
