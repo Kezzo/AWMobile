@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Root : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Root : MonoBehaviour
     [SerializeField]
     private SceneLoadingService m_sceneLoadingService;
     public SceneLoadingService SceneLoading { get { return m_sceneLoadingService; } }
+
+    public LoadingUI LoadingUi { get; set; }
 
 #if UNITY_EDITOR
     [SerializeField]
@@ -45,15 +48,18 @@ public class Root : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        Initialize();
-
-        CoroutineHelper.CallDelayed(this, 1f, LogScreenResolution);
+        SceneLoading.LoadSceneAsync("LoadingUI", null, () =>
+        {
+            Initialize(null);
+        });
+        
     }
 
     /// <summary>
-    /// Initializes the root.
+    /// Initializes the game.
     /// </summary>
-    private void Initialize()
+    /// <param name="initializationDone">Callback when the initialization is done.</param>
+    private void Initialize(Action initializationDone)
     {
         ControllerContainer.UnitBalancingProvider.InitializeBalancingData();
 
@@ -93,15 +99,34 @@ public class Root : MonoBehaviour
                 }
 
                 ControllerContainer.BattleController.StartBattle();
+
+                if (initializationDone != null)
+                {
+                    initializationDone();
+                }
             });
         });
     }
 
     /// <summary>
-    /// Logs the screen resolution.
+    /// Restarts the game.
     /// </summary>
-    private void LogScreenResolution()
+    /// <param name="onGameRestart">Called when the game was restarted.</param>
+    public void RestartGame(Action onGameRestart)
     {
-        Debug.Log("Resolution: " + Screen.currentResolution);
+        SceneLoading.UnloadSceneAsync("BattlegroundUI", null, () =>
+        {
+            SceneLoading.UnloadSceneAsync("Battleground", null, () =>
+            {
+                ControllerContainer.Reset();
+                Initialize(() =>
+                {
+                    if (onGameRestart != null)
+                    {
+                        onGameRestart();
+                    }
+                });
+            });
+        });
     }
 }

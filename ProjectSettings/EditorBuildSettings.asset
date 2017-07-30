@@ -7,7 +7,13 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Root.unity
+    guid: 157d49c2fe7f14b4ea4971a5c1aaff96
   - enabled: 1
     path: Assets/Scenes/Battleground.unity
+    guid: bb22b6495671e3140bb2edd44615a6f0
   - enabled: 1
     path: Assets/Scenes/UI/BattlegroundUI.unity
+    guid: 1314723144856c14783c7446f2e33a6a
+  - enabled: 1
+    path: Assets/Scenes/UI/LoadingUI.unity
+    guid: cbc8ed13264f94a409e63a65546aa38e

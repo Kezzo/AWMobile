@@ -22,6 +22,19 @@ public class SceneLoadingService : MonoBehaviour
     }
 
     /// <summary>
+    /// Unloads a scene asynchronous and calls a callback, when the scene unloading finished.
+    /// </summary>
+    /// <param name="sceneName">Name of the scene.</param>
+    /// <param name="onSceneLoadingProgress">The on scene unloading progress callback.</param>
+    /// <param name="onSceneLoaded">The on scene loaded callback.</param>
+    public void UnloadSceneAsync(string sceneName, Action<float> onSceneLoadingProgress, Action onSceneLoaded)
+    {
+        AsyncOperation asyncOperation = SceneManager.UnloadSceneAsync(sceneName);
+
+        StartCoroutine(AsyncSceneLoadingCoroutine(asyncOperation, onSceneLoadingProgress, onSceneLoaded));
+    }
+
+    /// <summary>
     /// Asynchronous the scene loading coroutine.
     /// </summary>
     /// <param name="asyncOperation">The asynchronous operation.</param>

@@ -23,5 +23,18 @@ public static class ControllerContainer
     private static AssetDatabaseService m_assetDatabaseService;
     public static AssetDatabaseService AssetDatabaseService { get { return m_assetDatabaseService ?? (m_assetDatabaseService = new AssetDatabaseService()); } }
 
+    /// <summary>
+    /// Resets this instance.
+    /// </summary>
+    public static void Reset()
+    {
+        m_mapTileGenerationService = new MapTileGenerationService();
+        m_monoBehaviourRegistry = new MonoBehaviourRegistry();
+        m_battleController = new BattleController();
+        m_tileNavigationController = new TileNavigationController();
+        m_unitBalancingProvider = new UnitBalancingProvider();
+        m_assetDatabaseService = new AssetDatabaseService();
+    }
+
 #pragma warning restore 649
 }

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controls the visibility of the BattleResultUI.
+/// </summary>
 public class BattleResultUI : MonoBehaviour
 {
     [SerializeField]
@@ -28,6 +31,11 @@ public class BattleResultUI : MonoBehaviour
     /// </summary>
     public void OnOkButtonPressed()
     {
-        //TODO: Implement restart.
+        Root.Instance.LoadingUi.Show();
+
+        Root.Instance.CoroutineHelper.CallDelayed(Root.Instance, 1.05f, () =>
+        {
+            Root.Instance.RestartGame(Root.Instance.LoadingUi.Hide);
+        });
     }
 }
