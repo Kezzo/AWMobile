@@ -15,10 +15,18 @@ public class BattlegroundUI : MonoBehaviour
     [SerializeField]
     private BattleSequenceUIElement m_battleSequenceUiElement;
 
+    [SerializeField]
+    private BattleResultUI m_battleResultUi;
+
+    private InputBlocker m_inputBlocker;
+
     private void Awake()
     {
         ControllerContainer.MonoBehaviourRegistry.Register(this);
         ControllerContainer.BattleController.AddBattleStartedEvent("BattleGroundUI - Initialize", Initialize);
+        ControllerContainer.BattleController.AddBattleEndedEvent("BattleGroundUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
+
+        m_inputBlocker = new InputBlocker();
     }
 
     /// <summary>
@@ -79,6 +87,20 @@ public class BattlegroundUI : MonoBehaviour
     private void ChangeVisibilityOfEndTurnButton(bool setVisible)
     {
         m_endTurnButton.SetActive(setVisible);
+    }
+
+    /// <summary>
+    /// Changes the visibility of the battle-end visuals.
+    /// </summary>
+    /// <param name="teamColorThatWon">The teamcolor of the team that won.</param>
+    private void ShowBattleEndVisuals(TeamColor teamColorThatWon)
+    {
+        m_inputBlocker.ChangeBattleControlInput(true);
+        ChangeVisibilityOfEndTurnButton(false);
+
+        m_battleResultUi.Show(teamColorThatWon);
+        // TODO: Improve visuals of ui
+        // TODO: Restart game when ok/retry button is pressed.
     }
 
     /// <summary>

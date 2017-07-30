@@ -57,7 +57,7 @@ public class AIController
     /// </summary>
     public void StartTurn()
     {
-        Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleController.RegisteredUnits;
+        Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleController.RegisteredTeams;
         m_myUnits = units[this.MyTeamColor];
         m_enemyUnits = new List<BaseUnit>();
 

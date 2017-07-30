@@ -16,9 +16,10 @@ public class BattleController
 
     private readonly Dictionary<string, Action<Team[]>> m_onBattleStartEvents = new Dictionary<string, Action<Team[]>>();
     private readonly Dictionary<string, Action<Team>> m_onTurnStartEvents = new Dictionary<string, Action<Team>>();
+    private readonly Dictionary<string, Action<TeamColor>> m_onTeamWonEvents = new Dictionary<string, Action<TeamColor>>();
 
-    private Dictionary<TeamColor, List<BaseUnit>> m_registeredUnits;
-    public Dictionary<TeamColor, List<BaseUnit>> RegisteredUnits { get { return m_registeredUnits; } }
+    private Dictionary<TeamColor, List<BaseUnit>> m_registeredTeams;
+    public Dictionary<TeamColor, List<BaseUnit>> RegisteredTeams { get { return m_registeredTeams; } }
 
     private List<int> m_uniqueUnitIdents;
 
@@ -34,7 +35,7 @@ public class BattleController
         m_subTurnCount = 0;
         m_turnCount = 0;
 
-        m_registeredUnits = new Dictionary<TeamColor, List<BaseUnit>>();
+        m_registeredTeams = new Dictionary<TeamColor, List<BaseUnit>>();
         m_uniqueUnitIdents = new List<int>();
 
         m_onConfirmMoveButtonPressed = null;
@@ -46,7 +47,7 @@ public class BattleController
         foreach (Team team in m_teamThisBattle)
         {
             List<BaseUnit> teamUnitList = new List<BaseUnit>();
-            m_registeredUnits.Add(team.m_TeamColor, teamUnitList);
+            m_registeredTeams.Add(team.m_TeamColor, teamUnitList);
             if (!team.m_IsPlayersTeam)
             {
                 m_registeredAIs.Add(new AIController(team));
@@ -68,6 +69,32 @@ public class BattleController
     }
 
     /// <summary>
+    /// Called when a battle happened.
+    /// Will check if now all units in a team are dead to end the match.
+    /// </summary>
+    public void OnBattleDone()
+    {
+        List<TeamColor> stillPlayingTeams = new List<TeamColor>();
+
+        foreach (var team in m_registeredTeams)
+        {
+            if (team.Value.Exists(unit => !unit.StatManagement.IsDead))
+            {
+                stillPlayingTeams.Add(team.Key);
+            }
+        }
+
+        // all units of a team is dead
+        if (stillPlayingTeams.Count == 1)
+        {
+            foreach (var onTeamWonEvent in m_onTeamWonEvents)
+            {
+                onTeamWonEvent.Value(stillPlayingTeams[0]);
+            }
+        }
+    }
+
+    /// <summary>
     /// Registers a unit and returns a unique id for the unit, so we can always identify a certain unit.
     /// </summary>
     /// <param name="teamColor">Color of the team.</param>
@@ -75,7 +102,7 @@ public class BattleController
     /// <returns></returns>
     public int RegisterUnit(TeamColor teamColor, BaseUnit baseUnit)
     {
-        m_registeredUnits[teamColor].Add(baseUnit);
+        m_registeredTeams[teamColor].Add(baseUnit);
 
         int unitIdent = m_uniqueUnitIdents.Count > 0 ? m_uniqueUnitIdents[m_uniqueUnitIdents.Count - 1] + 1 : 0;
 
@@ -91,7 +118,7 @@ public class BattleController
     /// <param name="baseUnit">The base unit.</param>
     public void RemoveRegisteredUnit(TeamColor teamColor, BaseUnit baseUnit)
     {
-        m_registeredUnits[teamColor].Remove(baseUnit);
+        m_registeredTeams[teamColor].Remove(baseUnit);
     }
 
     /// <summary>
@@ -103,7 +130,7 @@ public class BattleController
     /// </returns>
     public bool IsUnitOnNode(Vector2 node)
     {
-        foreach (var item in m_registeredUnits)
+        foreach (var item in m_registeredTeams)
         {
             if (item.Value.Exists(unit => unit.CurrentSimplifiedPosition == node))
             {
@@ -121,7 +148,7 @@ public class BattleController
     /// <returns></returns>
     public BaseUnit GetUnitOnNode(Vector2 node)
     {
-        foreach (var item in m_registeredUnits)
+        foreach (var item in m_registeredTeams)
         {
             BaseUnit foundUnit = item.Value.Find(unit => unit.CurrentSimplifiedPosition == node);
             if (foundUnit != null)
@@ -184,7 +211,7 @@ public class BattleController
     /// </summary>
     public void EndCurrentTurn()
     {
-        List<BaseUnit> unitsToReset = m_registeredUnits[GetCurrentlyPlayingTeam().m_TeamColor];
+        List<BaseUnit> unitsToReset = m_registeredTeams[GetCurrentlyPlayingTeam().m_TeamColor];
 
         for (int unitIndex = 0; unitIndex < unitsToReset.Count; unitIndex++)
         {
@@ -226,6 +253,32 @@ public class BattleController
     public void RemoveBattleStartedEvent(string key)
     {
         m_onBattleStartEvents.Remove(key);
+    }
+
+    /// <summary>
+    /// Adds a turn end event.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <param name="actionToAdd">The action that should be called when a turn ends.</param>
+    public void AddBattleEndedEvent(string key, Action<TeamColor> actionToAdd)
+    {
+        if (m_onTeamWonEvents.ContainsKey(key))
+        {
+            Debug.LogError("Trying to add turn end event with already existing key!");
+        }
+        else
+        {
+            m_onTeamWonEvents.Add(key, actionToAdd);
+        }
+    }
+
+    /// <summary>
+    /// Removes a turn end event.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    public void RemoveBattleEndedEvent(string key)
+    {
+        m_onTeamWonEvents.Remove(key);
     }
 
     /// <summary>

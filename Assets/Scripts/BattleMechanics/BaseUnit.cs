@@ -148,6 +148,8 @@ public class BaseUnit : MonoBehaviour
         {
             onBattleSequenceFinished();
         }
+
+        ControllerContainer.BattleController.OnBattleDone();
     }
 
     /// <summary>
