@@ -16,6 +16,9 @@ public class Root : MonoBehaviour
 
     public LoadingUI LoadingUi { get; set; }
 
+    [SerializeField]
+    private GameObject m_blackScreen;
+
 #if UNITY_EDITOR
     [SerializeField]
     private DebugValues m_debugValues;
@@ -50,9 +53,17 @@ public class Root : MonoBehaviour
 
         SceneLoading.LoadSceneAsync("LoadingUI", null, () =>
         {
-            Initialize(null);
+            LoadingUi.Show();
+
+            Initialize(() =>
+            {
+                CoroutineHelper.CallDelayed(this, 0.1f, () =>
+                {
+                    m_blackScreen.gameObject.SetActive(false);
+                    LoadingUi.Hide();
+                });
+            });
         });
-        
     }
 
     /// <summary>

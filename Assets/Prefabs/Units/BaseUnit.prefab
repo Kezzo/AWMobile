@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 224876036536949364}
   - component: {fileID: 222980067950244184}
   - component: {fileID: 114267321205398196}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Image_HealthLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 224703858330848510}
   - component: {fileID: 222332645512846136}
   - component: {fileID: 114544565461254876}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Image_DamageTaken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 223726072747398986}
   - component: {fileID: 114730407404330514}
   - component: {fileID: 114059613094398564}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 222337553635878268}
   - component: {fileID: 114957865818730840}
   - component: {fileID: 114775952208740058}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Image_PotentialDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

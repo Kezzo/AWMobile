@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 103337308}
   - component: {fileID: 103337309}
   - component: {fileID: 103337310}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BattleResult
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,6 +428,38 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1368251129349816, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1492244914234912, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323773061353520, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920910123957894, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314506070715280, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060625448712082, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975797990548848, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183636062271928, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
   m_IsPrefabParent: 0
@@ -450,7 +482,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 280909862}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LeftUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +512,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 338103313}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MapTileRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -546,7 +578,7 @@ GameObject:
   - component: {fileID: 406581154}
   - component: {fileID: 406581156}
   - component: {fileID: 406581155}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BattleResultText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,6 +777,38 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1368251129349816, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920910123957894, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060625448712082, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1492244914234912, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323773061353520, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314506070715280, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975797990548848, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183636062271928, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e, type: 2}
   m_IsPrefabParent: 0
@@ -836,7 +900,7 @@ GameObject:
   m_Component:
   - component: {fileID: 733457108}
   - component: {fileID: 733457109}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BattleSequence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1173,7 +1237,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1026551961}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 3DUnits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1203,7 +1267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1049177530}
   - component: {fileID: 1049177531}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1649,7 +1713,7 @@ GameObject:
   - component: {fileID: 1371470732}
   - component: {fileID: 1371470734}
   - component: {fileID: 1371470733}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2094,7 +2158,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1599810877}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2162,7 +2226,7 @@ GameObject:
   - component: {fileID: 1671043620}
   - component: {fileID: 1671043619}
   - component: {fileID: 1671043617}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BattlegroundUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2271,7 +2335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1761924548}
   - component: {fileID: 1761924549}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2335,7 +2399,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1836867900}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BattleControls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2370,7 +2434,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1909892666}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MapTileRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2399,7 +2463,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1934764192}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RightUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
