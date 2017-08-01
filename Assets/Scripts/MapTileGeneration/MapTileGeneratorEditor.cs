@@ -118,8 +118,11 @@ public class MapTileGeneratorEditor : MonoBehaviour
             m_currentlyVisibleMap = mapGenerationData;
             ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
 
-            m_cloudShadowOrchestrator.GenerateCloudPool(m_currentlyVisibleMap.m_MapCloudShadowData);
-            m_cloudShadowOrchestrator.StartCloudShadowDisplay();
+            if (Application.isPlaying)
+            {
+                m_cloudShadowOrchestrator.GenerateCloudPool(m_currentlyVisibleMap.m_MapCloudShadowData);
+                m_cloudShadowOrchestrator.StartCloudShadowDisplay();
+            }
         }
     }
 
