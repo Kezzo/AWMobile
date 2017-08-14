@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rotationSpeed: 5
-  m_scrollSpeed: 0.05
+  m_scrollSpeed: 0.02
   m_zoomSpeed: 0.03
   m_maxZoomLevel: 1
   m_minZoomLevel: -10
