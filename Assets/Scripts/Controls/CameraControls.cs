@@ -133,7 +133,7 @@ public class CameraControls : MonoBehaviour
 
                 float yPosition = m_cameraMover.position.y;
 
-                float scrollSpeed = m_scrollSpeed * Mathf.Clamp(Mathf.InverseLerp(m_minZoomLevel, m_maxZoomLevel, m_zoomLevel), 0.2f, 1f);
+                float scrollSpeed = m_scrollSpeed * Mathf.Clamp(Mathf.InverseLerp(m_minZoomLevel, m_maxZoomLevel, m_zoomLevel), 0.3f, 1f);
 
                 m_cameraMover.localPosition += new Vector3(mouseDelta.x * scrollSpeed, mouseDelta.y * scrollSpeed, 0f);
                 m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
