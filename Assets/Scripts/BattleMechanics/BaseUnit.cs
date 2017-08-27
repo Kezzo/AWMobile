@@ -271,8 +271,12 @@ public class BaseUnit : MonoBehaviour
     {
         m_selectionMarker.SetActive(false);
         ChangeVisibilityOfAttackMarker(false);
-        StatManagement.HidePotentialDamage();
 
+        foreach (var attackableUnit in m_attackableUnits)
+        {
+            attackableUnit.StatManagement.HidePotentialDamage();
+        }
+        
         SetWalkableTileFieldVisibilityTo(false);
         HideAllRouteMarker();
 
@@ -510,6 +514,8 @@ public class BaseUnit : MonoBehaviour
                 //TODO: Handle interaction with friendly units.
             }
         }
+
+        //TODO: Display self-damage
 
         return attackableUnits.Count > 0; // || supportableUnits.Count > 0;
     }

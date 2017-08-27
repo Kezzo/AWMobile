@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f29ca9c9d0843744cb1f4b8e31181426
-timeCreated: 1497905636
+timeCreated: 1503847031
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,15 @@ TextureImporter:
     21300006: BattleUi_3
     21300008: BattleUi_4
     21300010: BattleUi_5
+    21300012: BattleUi_6
+    21300014: BattleUi_7
+    21300016: BattleUi_8
+    21300018: BattleUi_9
+    21300020: BattleUi_10
+    21300022: BattleUi_11
+    21300024: BattleUi_12
+    21300026: BattleUi_13
+    21300028: BattleUi_14
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -87,12 +96,12 @@ TextureImporter:
       name: BattleUi_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 340
-        width: 251
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 398
+        y: 408
+        width: 209
+        height: 35
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -100,12 +109,12 @@ TextureImporter:
       name: BattleUi_1
       rect:
         serializedVersion: 2
-        x: 3
-        y: 282
-        width: 251
-        height: 46
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 657
+        y: 408
+        width: 101
+        height: 35
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -113,12 +122,12 @@ TextureImporter:
       name: BattleUi_2
       rect:
         serializedVersion: 2
-        x: 60
-        y: 96
-        width: 232
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 788
+        y: 408
+        width: 48
+        height: 35
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -126,12 +135,12 @@ TextureImporter:
       name: BattleUi_3
       rect:
         serializedVersion: 2
-        x: 380
-        y: 0
-        width: 192
-        height: 249
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 895
+        y: 408
+        width: 22
+        height: 35
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -139,12 +148,142 @@ TextureImporter:
       name: BattleUi_4
       rect:
         serializedVersion: 2
+        x: 3
+        y: 340
+        width: 251
+        height: 45
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_5
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 300
+        width: 209
+        height: 35
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_6
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 300
+        width: 101
+        height: 35
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_7
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 300
+        width: 48
+        height: 35
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_8
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 300
+        width: 22
+        height: 35
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_9
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 282
+        width: 251
+        height: 46
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_10
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 96
+        width: 232
+        height: 120
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_11
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 0
+        width: 192
+        height: 249
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_12
+      rect:
+        serializedVersion: 2
         x: 568
         y: 3
         width: 258
         height: 265
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_13
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 89
+        width: 345
+        height: 369
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BattleUi_14
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 290
+        width: 592
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
