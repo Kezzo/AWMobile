@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Name: Level2
   m_EditorClassIdentifier: 
   m_LevelName: Level2
+  m_Teams:
+  - m_TeamColor: 0
+    m_IsPlayersTeam: 1
+  - m_TeamColor: 3
+    m_IsPlayersTeam: 0
   m_LevelSize: {x: 16, y: 16}
   m_MapTileMargin: 2
   m_MapTileGroupSize: 2

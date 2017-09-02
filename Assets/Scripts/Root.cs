@@ -74,41 +74,23 @@ public class Root : MonoBehaviour
     {
         ControllerContainer.UnitBalancingProvider.InitializeBalancingData();
 
-        ControllerContainer.BattleController.IntializeBattle(new[] {
-            new Team
-            {
-                //TODO: Move this setup into Scriptable Object
-                m_TeamColor = TeamColor.Blue,
-                m_IsPlayersTeam = true
-            },
-            //new Team
-            //{
-            //    m_TeamColor = TeamColor.Red,
-            //    m_IsPlayersTeam = false
-            //},
-            new Team
-            {
-                m_TeamColor = TeamColor.Yellow,
-                m_IsPlayersTeam = false
-            },
-            //new Team
-            //{
-            //    m_TeamColor = TeamColor.Green,
-            //    m_IsPlayersTeam = false
-            //}
-        });
-
         SceneLoading.LoadSceneAsync("BattlegroundUI", null, () =>
         {
             SceneLoading.LoadSceneAsync(m_initialSceneToLoad, null, () =>
             {
                 MapTileGeneratorEditor mapTileGeneratorEditor;
 
-                if (ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
+                if (!ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
                 {
-                    mapTileGeneratorEditor.LoadExistingMap("Level2");
+                    Debug.Log("MapTileGeneratorEditor can't be retrieved.");
+                    return;
                 }
 
+                MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData("Level2");
+
+                ControllerContainer.BattleController.IntializeBattle(mapGenerationData.m_Teams);
+
+                mapTileGeneratorEditor.LoadExistingMap(mapGenerationData);
                 ControllerContainer.BattleController.StartBattle();
 
                 if (initializationDone != null)

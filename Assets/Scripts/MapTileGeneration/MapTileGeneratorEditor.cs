@@ -100,17 +100,12 @@ public class MapTileGeneratorEditor : MonoBehaviour
     /// <summary>
     /// Loads an existing map.
     /// </summary>
-    public void LoadExistingMap(string levelNameToLoad = "")
+    /// <param name="mapGenerationData">The map generation data used to generate the map.</param>
+    public void LoadExistingMap(MapGenerationData mapGenerationData)
     {
-        string levelToLoad = Application.isPlaying ? levelNameToLoad : m_levelToEdit;
-
-        string assetPath = string.Format("Levels/{0}", levelToLoad);
-
-        MapGenerationData mapGenerationData = ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<MapGenerationData>(assetPath);
-
         if (mapGenerationData == null)
         {
-            Debug.LogErrorFormat("There is no existing map with name: '{0}' in the path: '{1}'", levelToLoad, assetPath);
+            Debug.LogErrorFormat("Given MapGenerationData is null! Unable to load existing map.");
         }
         else
         {
@@ -124,6 +119,27 @@ public class MapTileGeneratorEditor : MonoBehaviour
                 m_cloudShadowOrchestrator.StartCloudShadowDisplay();
             }
         }
+    }
+
+    /// <summary>
+    /// Loads a map generation data.
+    /// </summary>
+    /// <param name="levelNameToLoad">The level name to load.</param>
+    public MapGenerationData LoadMapGenerationData(string levelNameToLoad = "")
+    {
+        string levelToLoad = Application.isPlaying ? levelNameToLoad : m_levelToEdit;
+
+        string assetPath = string.Format("Levels/{0}", levelToLoad);
+
+        MapGenerationData mapGenerationData =
+            ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<MapGenerationData>(assetPath);
+
+        if (mapGenerationData == null)
+        {
+            Debug.LogErrorFormat("There is no existing map with name: '{0}' in the path: '{1}'", levelToLoad, assetPath);
+        }
+
+        return mapGenerationData;
     }
 
 #if UNITY_EDITOR

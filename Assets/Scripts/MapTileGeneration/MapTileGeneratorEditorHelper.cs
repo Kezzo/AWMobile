@@ -30,7 +30,7 @@ public class MapTileGeneratorEditorHelper : Editor
 
         if (GUILayout.Button("Load Map File"))
         {
-            mapTileGeneratorEditor.LoadExistingMap();
+            mapTileGeneratorEditor.LoadExistingMap(mapTileGeneratorEditor.LoadMapGenerationData());
         }
 
         if (GUILayout.Button("Update Map File"))

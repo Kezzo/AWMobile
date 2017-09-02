@@ -8,6 +8,9 @@ using UnityEngine;
 public class MapGenerationData : ScriptableObject
 {
     public string m_LevelName;
+
+    public Team[] m_Teams;
+
     public Vector2 m_LevelSize;
     public float m_MapTileMargin;
 
