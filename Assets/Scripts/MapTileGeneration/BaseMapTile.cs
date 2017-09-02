@@ -176,7 +176,7 @@ public class BaseMapTile : MonoBehaviour
                 DestroyImmediate(m_currentlyInstantiatedMapTiles[i]);
             }
 
-            m_currentlyInstantiatedMapTiles = null;
+            m_currentlyInstantiatedMapTiles = new List<GameObject>();
         }
 
         if (m_mapTileType == MapTileType.Empty)
