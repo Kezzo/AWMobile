@@ -435,9 +435,22 @@ public class BaseUnit : MonoBehaviour
 
             SetWalkableTileFieldVisibilityTo(false);
             ClearAttackableUnits(m_attackableUnits);
+            UnitHasMovedThisRound = true;
 
             MoveAlongRoute(routeToDestination, () =>
             {
+                if (!UnitHasMovedThisRound)
+                {
+                    // turn was ended before unit reached it's destination
+
+                    if (onUnitMovedToDestinationCallback != null)
+                    {
+                        onUnitMovedToDestinationCallback(UniqueIdent);
+                    }
+
+                    return;
+                }
+
                 if (TryToDisplayActionOnUnitsInRange(out m_attackableUnits))
                 {
                     Debug.Log("Attackable units: "+m_attackableUnits.Count);
@@ -531,8 +544,6 @@ public class BaseUnit : MonoBehaviour
 
             if (nodeIndex == route.Count - 1)
             {
-                UnitHasMovedThisRound = true;
-
                 if (onMoveFinished != null)
                 {
                     onMoveFinished();
