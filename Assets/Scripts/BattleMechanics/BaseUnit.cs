@@ -71,7 +71,7 @@ public class BaseUnit : MonoBehaviour
     private List<BaseMapTile> m_currentWalkableMapTiles;
     private List<BaseMapTile> m_currentAttackableMapTiles;
 
-    private List<BaseUnit> m_attackableUnits;
+    private List<BaseUnit> m_attackableUnits = new List<BaseUnit>();
 
     /// <summary>
     /// Initializes the specified team.
