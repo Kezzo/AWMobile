@@ -134,12 +134,6 @@ public class BaseUnit : MonoBehaviour
         baseUnit.StatManagement.TakeDamage(GetDamageOnUnit(baseUnit));
         m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Attack);
 
-        //Counter-attack
-        if (baseUnit.CanCounterAttack(this))
-        {
-            this.StatManagement.TakeDamage(baseUnit.GetDamageOnUnit(this, true));
-        }
-
         UnitHasAttackedThisRound = true;
         // An attack will always keep the unit from moving in this round.
         UnitHasMovedThisRound = true;
@@ -156,12 +150,10 @@ public class BaseUnit : MonoBehaviour
     /// Gets the damage this unit does on a specific unit.
     /// </summary>
     /// <param name="baseUnit">The base unit.</param>
-    /// <param name="isCounterAttack">Determines if the damage should be calculated for a counter-attack.</param>
     /// <returns></returns>
-    public int GetDamageOnUnit(BaseUnit baseUnit, bool isCounterAttack = false)
+    public int GetDamageOnUnit(BaseUnit baseUnit)
     {
-        return (int)(GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType) *
-                    (isCounterAttack ? 0.5f : 1f));
+        return GetUnitBalancing().GetDamageOnUnitType(baseUnit.UnitType);
     }
 
     /// <summary>
@@ -171,7 +163,7 @@ public class BaseUnit : MonoBehaviour
     /// <returns>
     ///   <c>true</c> if this instance [can counter attack] the specified unit to counter attack; otherwise, <c>false</c>.
     /// </returns>
-    private bool CanCounterAttack(BaseUnit unitToCounterAttack)
+    public bool CanCounterAttack(BaseUnit unitToCounterAttack)
     {
         return !StatManagement.IsDead && 
                 CanAttackUnit(unitToCounterAttack) && 
@@ -515,9 +507,7 @@ public class BaseUnit : MonoBehaviour
             }
         }
 
-        //TODO: Display self-damage
-
-        return attackableUnits.Count > 0; // || supportableUnits.Count > 0;
+        return attackableUnits.Count > 0;
     }
 
     /// <summary>
