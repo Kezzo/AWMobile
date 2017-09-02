@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.CinematicEffects;
 
 /// <summary>
 /// Controls the camera movement.
@@ -30,6 +29,10 @@ public class CameraControls : MonoBehaviour
     [SerializeField]
     private Camera m_cameraToControl;
     public Camera CameraToControl { get { return m_cameraToControl; } }
+
+    [SerializeField]
+    private Camera m_secondayCameraToControl;
+    public Camera SecondaryCameraToControl { get { return m_secondayCameraToControl; } }
 
     [SerializeField]
     private Transform m_cameraMover;
@@ -77,6 +80,7 @@ public class CameraControls : MonoBehaviour
     private void Start()
     {
         m_cameraStartPosZ = m_cameraToControl.transform.localPosition.z;
+        m_secondayCameraToControl.transform.localPosition = m_cameraToControl.transform.localPosition;
 
         ControllerContainer.BattleController.AddTurnStartEvent("CameraAutoZoom", ZoomCameraBasedOnTheCurrentTeam);
     }
@@ -223,7 +227,8 @@ public class CameraControls : MonoBehaviour
         if (Mathf.Abs(deltaMagnitudeDifference) > 0.1f)
         {
             StopRunningAutoZoom();
-            ChangeZoomLevel(deltaMagnitudeDifference);
+            ChangeZoomLevel(deltaMagnitudeDifference, m_cameraToControl);
+            ChangeZoomLevel(deltaMagnitudeDifference, m_secondayCameraToControl);
 
             m_isManuallyZooming = true;
         }
@@ -309,8 +314,10 @@ public class CameraControls : MonoBehaviour
             float zoomLevelChangeThisFrame = m_autoZoomSpeed * m_autoZoomAnimationCurve.Evaluate(normalizedZoomedLength) * Time.deltaTime;
 
             zoomLevelChangeThisFrame = zoomingOut ? zoomLevelChangeThisFrame : zoomLevelChangeThisFrame * -1;
+            zoomLevelChangeThisFrame = Mathf.Clamp(zoomLevelChangeThisFrame, m_minZoomLevel, m_maxZoomLevel);
 
-            ChangeZoomLevel(Mathf.Clamp(zoomLevelChangeThisFrame, m_minZoomLevel, m_maxZoomLevel));
+            ChangeZoomLevel(zoomLevelChangeThisFrame, m_cameraToControl);
+            ChangeZoomLevel(zoomLevelChangeThisFrame, m_secondayCameraToControl);
 
             if (Mathf.Abs(m_zoomLevel - zoomLevel) <= 0.1f)
             {
@@ -323,21 +330,23 @@ public class CameraControls : MonoBehaviour
     }
 
     /// <summary>
-    /// Changes the zoom level.
+    /// Changes the zoom level of a given camera.
     /// </summary>
-    private void ChangeZoomLevel(float zoomDelta)
+    /// <param name="zoomDelta">The zoom delta.</param>
+    /// <param name="cameraToZoom">The camera to zoom.</param>
+    private void ChangeZoomLevel(float zoomDelta, Camera cameraToZoom)
     {
-        if (m_cameraToControl.orthographic)
+        if (cameraToZoom.orthographic)
         {
-            m_cameraToControl.orthographicSize += zoomDelta;
-            m_cameraToControl.orthographicSize = Mathf.Clamp(m_cameraToControl.orthographicSize, .5f, 15.0f);
+            cameraToZoom.orthographicSize += zoomDelta;
+            cameraToZoom.orthographicSize = Mathf.Clamp(cameraToZoom.orthographicSize, .5f, 15.0f);
         }
         else
         {
             m_zoomLevel = Mathf.Clamp(m_zoomLevel + zoomDelta * m_zoomSpeed, m_minZoomLevel, m_maxZoomLevel);
 
-            m_cameraToControl.transform.localPosition = new Vector3(m_cameraToControl.transform.localPosition.x, 
-                m_cameraToControl.transform.localPosition.y, m_cameraStartPosZ - m_zoomLevel);
+            cameraToZoom.transform.localPosition = new Vector3(cameraToZoom.transform.localPosition.x,
+                cameraToZoom.transform.localPosition.y, m_cameraStartPosZ - m_zoomLevel);
         }
     }
 

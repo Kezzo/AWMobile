@@ -13,7 +13,7 @@ public class RotateWorldSpaceUIToCamera : MonoBehaviour
 
             if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraControls))
             {
-                m_cameraToOrientTo = cameraControls.CameraToControl;
+                m_cameraToOrientTo = cameraControls.SecondaryCameraToControl;
             }
         }
         else
