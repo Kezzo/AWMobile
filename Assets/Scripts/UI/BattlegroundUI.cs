@@ -84,7 +84,7 @@ public class BattlegroundUI : MonoBehaviour
     /// Changes the visibility of end turn button.
     /// </summary>
     /// <param name="setVisible">if set to <c>true</c> [set visible].</param>
-    private void ChangeVisibilityOfEndTurnButton(bool setVisible)
+    public void ChangeVisibilityOfEndTurnButton(bool setVisible)
     {
         m_endTurnButton.SetActive(setVisible);
     }

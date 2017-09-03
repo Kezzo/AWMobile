@@ -87,6 +87,7 @@ public class Root : MonoBehaviour
                 }
 
                 MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData("LevelSelection");
+                ControllerContainer.MonoBehaviourRegistry.Get<BattlegroundUI>().ChangeVisibilityOfEndTurnButton(false);
 
                 ControllerContainer.BattleController.IntializeBattle(mapGenerationData.m_Teams);
 
