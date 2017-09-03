@@ -141,8 +141,8 @@ public class MapTileGenerationService
         // We have to assume 2 as a count here, because otherwise this method was called incorrectly.
         if (adjacentAttackableTiles.Count == 2)
         {
-            Vector2 diffToFirstAdjacentTile = simplifiedMapPosition - adjacentAttackableTiles[0].SimplifiedMapPosition;
-            Vector2 diffToSecondAdjacentTile = simplifiedMapPosition - adjacentAttackableTiles[1].SimplifiedMapPosition;
+            Vector2 diffToFirstAdjacentTile = simplifiedMapPosition - adjacentAttackableTiles[0].m_SimplifiedMapPosition;
+            Vector2 diffToSecondAdjacentTile = simplifiedMapPosition - adjacentAttackableTiles[1].m_SimplifiedMapPosition;
 
             Vector2 combindedDiff = diffToFirstAdjacentTile - diffToSecondAdjacentTile;
 
@@ -171,7 +171,7 @@ public class MapTileGenerationService
         {
             case AreaTileType.OneBorder:
                 nodePositionDiff = adjacentNodes.Find(
-                    node => !adjacentAttackableTiles.Exists(tile => tile.SimplifiedMapPosition == node)) - simplifiedMapPosition;
+                    node => !adjacentAttackableTiles.Exists(tile => tile.m_SimplifiedMapPosition == node)) - simplifiedMapPosition;
                 break;
             case AreaTileType.TwoBordersCorner:
                 return GetTwoBorderCornerRotation(simplifiedMapPosition,
@@ -181,7 +181,7 @@ public class MapTileGenerationService
                 break;
             case AreaTileType.ThreeBorders:
                 // There is only one adjacent attackable tile
-                nodePositionDiff = simplifiedMapPosition - adjacentAttackableTiles[0].SimplifiedMapPosition;
+                nodePositionDiff = simplifiedMapPosition - adjacentAttackableTiles[0].m_SimplifiedMapPosition;
                 break;
         }
 
@@ -199,8 +199,8 @@ public class MapTileGenerationService
     {
         float rotationToReturn = 0f;
 
-        Vector2 diffToFirstAdjacentTile = simplifiedMapPosition - adjacentAttackableTiles[0].SimplifiedMapPosition;
-        Vector2 diffToSecondAdjacentTile = simplifiedMapPosition - adjacentAttackableTiles[1].SimplifiedMapPosition;
+        Vector2 diffToFirstAdjacentTile = simplifiedMapPosition - adjacentAttackableTiles[0].m_SimplifiedMapPosition;
+        Vector2 diffToSecondAdjacentTile = simplifiedMapPosition - adjacentAttackableTiles[1].m_SimplifiedMapPosition;
 
         Vector2 combindedDiff = diffToFirstAdjacentTile - diffToSecondAdjacentTile;
 

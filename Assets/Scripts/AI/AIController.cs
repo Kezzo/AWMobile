@@ -224,8 +224,8 @@ public class AIController
 
         walkableTiles.Sort((mapTile1, mapTile2) =>
         {
-            int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile1.SimplifiedMapPosition, closesEnemyPosition)
-                .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile2.SimplifiedMapPosition, closesEnemyPosition));
+            int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile1.m_SimplifiedMapPosition, closesEnemyPosition)
+                .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile2.m_SimplifiedMapPosition, closesEnemyPosition));
 
             if (mapTileDistanceComparison == 0)
             {

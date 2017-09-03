@@ -96,7 +96,7 @@ public class BaseMapTile : MonoBehaviour
     private MapGenerationData.MapTile m_mapTileData;
     private MapTileGenerationService m_mapGenService;
 
-    public Vector2 SimplifiedMapPosition { get; private set; }
+    public Vector2 m_SimplifiedMapPosition;
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -104,7 +104,7 @@ public class BaseMapTile : MonoBehaviour
         if (Application.isPlaying && Root.Instance.DebugValues.m_ShowCoordinatesOnNodes)
         {
             UnityEditor.Handles.Label(this.transform.position + Vector3.up,
-                string.Format("X{0}, Y{1}", SimplifiedMapPosition.x, SimplifiedMapPosition.y), new GUIStyle
+                string.Format("X{0}, Y{1}", m_SimplifiedMapPosition.x, m_SimplifiedMapPosition.y), new GUIStyle
                 {
                     alignment = TextAnchor.MiddleCenter,
                     normal = new GUIStyleState
@@ -125,7 +125,7 @@ public class BaseMapTile : MonoBehaviour
     {
         InitializeBaseValues(mapTileData);
 
-        SimplifiedMapPosition = simplifiedPosition;
+        m_SimplifiedMapPosition = simplifiedPosition;
 
         ValidateMapTile();
         ValidateUnitType(true, simplifiedPosition);
@@ -251,7 +251,7 @@ public class BaseMapTile : MonoBehaviour
         List<CardinalDirection> adjacentWaterDirections;
 
         if (m_mapTileType != MapTileType.Water &&
-            m_mapGenService.IsMapTileNextToType(MapTileType.Water, SimplifiedMapPosition,
+            m_mapGenService.IsMapTileNextToType(MapTileType.Water, m_SimplifiedMapPosition,
                 m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
         {
             InstantiateComplexBorderMapTile(adjacentWaterDirections);
@@ -281,7 +281,7 @@ public class BaseMapTile : MonoBehaviour
             levelSelector.transform.localPosition = Vector3.zero;
             levelSelector.transform.localScale = Vector3.one;
 
-            levelSelector.GetComponent<LevelSelector>().SetLevelName(m_mapTileData.m_LevelNameToStart);
+            levelSelector.GetComponent<LevelSelector>().SetLevelName(m_mapTileData.m_LevelNameToStart, this);
         }
     }
 
@@ -453,11 +453,11 @@ public class BaseMapTile : MonoBehaviour
         {
             if (setVisibilityTo)
             {
-                shaderBlinkOrchestrator.AddRendererToBlink(SimplifiedMapPosition, m_movementField.GetComponent<MeshRenderer>());
+                shaderBlinkOrchestrator.AddRendererToBlink(m_SimplifiedMapPosition, m_movementField.GetComponent<MeshRenderer>());
             }
             else
             {
-                shaderBlinkOrchestrator.RemoveRenderer(SimplifiedMapPosition);
+                shaderBlinkOrchestrator.RemoveRenderer(m_SimplifiedMapPosition);
             }
         }
     }
@@ -479,12 +479,12 @@ public class BaseMapTile : MonoBehaviour
     {
         m_attackRangeMeshFilter.gameObject.SetActive(true);
 
-        List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(SimplifiedMapPosition);
+        List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(m_SimplifiedMapPosition);
         List<BaseMapTile> adjacentAttackableTiles = new List<BaseMapTile>();
 
         for (int i = 0; i < adjacentNodes.Count; i++)
         {
-            BaseMapTile adjacentAttackableTile = attackableMapTiles.Find(mapTile => mapTile.SimplifiedMapPosition == adjacentNodes[i]);
+            BaseMapTile adjacentAttackableTile = attackableMapTiles.Find(mapTile => mapTile.m_SimplifiedMapPosition == adjacentNodes[i]);
 
             if (adjacentAttackableTile != null)
             {
@@ -503,7 +503,7 @@ public class BaseMapTile : MonoBehaviour
                 areaTileType = AreaTileType.ThreeBorders;
                 break;
             case 2:
-                areaTileType = ControllerContainer.MapTileGenerationService.GetTwoBorderAreaTileType(SimplifiedMapPosition, adjacentAttackableTiles);
+                areaTileType = ControllerContainer.MapTileGenerationService.GetTwoBorderAreaTileType(m_SimplifiedMapPosition, adjacentAttackableTiles);
 
                 break;
             case 3:
@@ -516,7 +516,7 @@ public class BaseMapTile : MonoBehaviour
                 return;
         }
 
-        float yRotation = ControllerContainer.MapTileGenerationService.GetAttackMarkerBorderRotation(SimplifiedMapPosition, areaTileType, adjacentNodes, adjacentAttackableTiles, attackRangeCenterPosition);
+        float yRotation = ControllerContainer.MapTileGenerationService.GetAttackMarkerBorderRotation(m_SimplifiedMapPosition, areaTileType, adjacentNodes, adjacentAttackableTiles, attackRangeCenterPosition);
 
         m_attackRangeMeshFilter.transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
 

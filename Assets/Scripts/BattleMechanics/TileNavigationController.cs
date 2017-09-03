@@ -191,7 +191,7 @@ public class TileNavigationController
     public List<Vector2> GetBestWayToDestination(BaseUnit unitToMove, BaseMapTile destinationMapTile, out Dictionary<Vector2, PathfindingNodeDebugData> pathfindingNodeDebugData)
     {
         Vector2 startNode = unitToMove.CurrentSimplifiedPosition;
-        Vector2 destinationNode = destinationMapTile.SimplifiedMapPosition;
+        Vector2 destinationNode = destinationMapTile.m_SimplifiedMapPosition;
         UnitBalancingData unitBalancing = unitToMove.GetUnitBalancing();
 
 #if UNITY_EDITOR
