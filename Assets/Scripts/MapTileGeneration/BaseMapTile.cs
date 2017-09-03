@@ -170,8 +170,8 @@ public class BaseMapTile : MonoBehaviour
         m_mapTileData = mapTileData;
         m_mapTileType = m_mapTileData.m_MapTileType;
         m_unitOnThisTile = m_mapTileData.m_Unit;
-        m_isLevelSelector = mapTileData.m_IsLevelSelector;
-        m_levelNameToStart = mapTileData.m_LevelNameToStart;
+        m_isLevelSelector = m_mapTileData.m_IsLevelSelector;
+        m_levelNameToStart = m_mapTileData.m_LevelNameToStart;
         m_mapGenService = ControllerContainer.MapTileGenerationService;
     }
 
@@ -230,8 +230,8 @@ public class BaseMapTile : MonoBehaviour
     /// </summary>
     public void ValidateLevelSelector(bool forceCreation = false)
     {
-        if (!forceCreation && m_isLevelSelector == m_mapTileData.m_IsLevelSelector &&
-            string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart))
+        if (m_mapTileData == null || (!forceCreation && m_isLevelSelector == m_mapTileData.m_IsLevelSelector &&
+            string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart)))
         {
             return;
         }
