@@ -86,12 +86,14 @@ public class Root : MonoBehaviour
                     return;
                 }
 
-                MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData("Level2");
+                MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData("LevelSelection");
 
                 ControllerContainer.BattleController.IntializeBattle(mapGenerationData.m_Teams);
 
                 mapTileGeneratorEditor.LoadExistingMap(mapGenerationData);
                 ControllerContainer.BattleController.StartBattle();
+
+                ControllerContainer.MonoBehaviourRegistry.Get<SelectionControls>().IsInLevelSelection = true;
 
                 if (initializationDone != null)
                 {

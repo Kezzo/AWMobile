@@ -29,6 +29,12 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private GameObject m_movementField;
 
+    [SerializeField]
+    private Transform m_levelSelectionRoot;
+
+    [SerializeField]
+    private GameObject m_levelSelectorPrefab;
+
     #region RouteMarker
 
     [Serializable]
@@ -266,6 +272,16 @@ public class BaseMapTile : MonoBehaviour
                 Debug.LogErrorFormat("MapTile with Type: '{0}' was not found!", m_mapTileType);
                 m_currentInstantiatedMapTileType = MapTileType.Empty;
             }
+        }
+
+        if (m_mapTileData.m_IsLevelSelector)
+        {
+            GameObject levelSelector = Instantiate(m_levelSelectorPrefab);
+            levelSelector.transform.SetParent(m_levelSelectionRoot);
+            levelSelector.transform.localPosition = Vector3.zero;
+            levelSelector.transform.localScale = Vector3.one;
+
+            levelSelector.GetComponent<LevelSelector>().SetLevelName(m_mapTileData.m_LevelNameToStart);
         }
     }
 

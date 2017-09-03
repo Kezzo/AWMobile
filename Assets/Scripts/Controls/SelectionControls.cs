@@ -27,6 +27,9 @@ public class SelectionControls : MonoBehaviour
     private LayerMask m_moveDestinationFieldLayerMask;
 
     [SerializeField]
+    private LayerMask m_levelSelectionLayerMask;
+
+    [SerializeField]
     private CameraControls m_cameraControls;
 
     private BaseUnit m_currentlySelectedUnit;
@@ -37,6 +40,7 @@ public class SelectionControls : MonoBehaviour
     private Dictionary<Vector2, PathfindingNodeDebugData> m_pathfindingNodeDebug;
 
     public bool IsBlocked { get; set; }
+    public bool IsInLevelSelection { get; set; }
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -111,42 +115,53 @@ public class SelectionControls : MonoBehaviour
         {
             RaycastHit raycastHit;
 
-            if (m_currentlySelectedUnit != null && TrySelection(m_battlegroundCamera, m_attackFieldLayerMask, out raycastHit))
+            if (IsInLevelSelection)
             {
-                Debug.Log("Selected attack field");
-
-                // Select attack field
-                StartUnitAttack(raycastHit);
+                if (TrySelection(m_battlegroundCamera, m_levelSelectionLayerMask, out raycastHit))
+                {
+                    raycastHit.transform.GetComponent<LevelSelector>().OnSelected();
+                }
             }
-            else if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
+            else
             {
-                Debug.Log("Selected unit");
+                if (m_currentlySelectedUnit != null &&
+                    TrySelection(m_battlegroundCamera, m_attackFieldLayerMask, out raycastHit))
+                {
+                    Debug.Log("Selected attack field");
 
-                // Select Unit
-                SelectUnit(raycastHit);
-            }
-            else if (m_currentlySelectedUnit != null &&
-                     TrySelection(m_battlegroundCamera, m_movementFieldLayerMask, out raycastHit))
-            {
-                Debug.Log("Selected movement field");
+                    // Select attack field
+                    StartUnitAttack(raycastHit);
+                }
+                else if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
+                {
+                    Debug.Log("Selected unit");
 
-                // Select movement field
-                CalculateRouteToMovementField(raycastHit);
+                    // Select Unit
+                    SelectUnit(raycastHit);
+                }
+                else if (m_currentlySelectedUnit != null &&
+                         TrySelection(m_battlegroundCamera, m_movementFieldLayerMask, out raycastHit))
+                {
+                    Debug.Log("Selected movement field");
 
-            }
-            else if (m_currentlySelectedUnit != null &&
-                     TrySelection(m_battlegroundCamera, m_moveDestinationFieldLayerMask, out raycastHit))
-            {
-                Debug.Log("Selected destination movement field");
+                    // Select movement field
+                    CalculateRouteToMovementField(raycastHit);
 
-                // confirm move
-                ControllerContainer.BattleController.OnConfirmMove();
-            }
-            else if (m_currentlySelectedUnit != null && !IsPointerOverUIObject())
-            {
-                // Deselect unit
-                DeselectCurrentUnit();
-                Debug.Log("Deselected Unit");
+                }
+                else if (m_currentlySelectedUnit != null &&
+                         TrySelection(m_battlegroundCamera, m_moveDestinationFieldLayerMask, out raycastHit))
+                {
+                    Debug.Log("Selected destination movement field");
+
+                    // confirm move
+                    ControllerContainer.BattleController.OnConfirmMove();
+                }
+                else if (m_currentlySelectedUnit != null && !IsPointerOverUIObject())
+                {
+                    // Deselect unit
+                    DeselectCurrentUnit();
+                    Debug.Log("Deselected Unit");
+                }
             }
         }
         else if (m_abortNextSelectionTry)

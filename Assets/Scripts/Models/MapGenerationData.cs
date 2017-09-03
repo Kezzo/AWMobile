@@ -61,6 +61,9 @@ public class MapGenerationData : ScriptableObject
         public MapTileType m_MapTileType;
         public Unit m_Unit;
 
+        public bool m_IsLevelSelector;
+        public string m_LevelNameToStart;
+
         public override string ToString()
         {
             return string.Format("PositionVector: '{0}', LocalPositionInGroup: '{1}', MapTileType: '{2}'",
