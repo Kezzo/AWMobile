@@ -35,6 +35,12 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private GameObject m_levelSelectorPrefab;
 
+    [SerializeField]
+    private bool m_isLevelSelector;
+
+    [SerializeField]
+    private string m_levelNameToStart;
+
     #region RouteMarker
 
     [Serializable]
@@ -91,6 +97,7 @@ public class BaseMapTile : MonoBehaviour
 
     private GameObject m_currentInstantiatedUnitGameObject;
     private MapGenerationData.Unit m_currentInstantiatedUnit;
+    private GameObject m_currentInstantiateLevelSelector;
 
     private MapTileGeneratorEditor m_mapTileGeneratorEditor;
     private MapGenerationData.MapTile m_mapTileData;
@@ -128,6 +135,7 @@ public class BaseMapTile : MonoBehaviour
         m_SimplifiedMapPosition = simplifiedPosition;
 
         ValidateMapTile();
+        ValidateLevelSelector(true);
         ValidateUnitType(true, simplifiedPosition);
     }
 
@@ -140,6 +148,7 @@ public class BaseMapTile : MonoBehaviour
         InitializeBaseValues(mapTileData);
 
         ValidateMapTile();
+        ValidateLevelSelector(true);
         ValidateUnitType();
     }
 
@@ -161,6 +170,8 @@ public class BaseMapTile : MonoBehaviour
         m_mapTileData = mapTileData;
         m_mapTileType = m_mapTileData.m_MapTileType;
         m_unitOnThisTile = m_mapTileData.m_Unit;
+        m_isLevelSelector = mapTileData.m_IsLevelSelector;
+        m_levelNameToStart = mapTileData.m_LevelNameToStart;
         m_mapGenService = ControllerContainer.MapTileGenerationService;
     }
 
@@ -211,6 +222,36 @@ public class BaseMapTile : MonoBehaviour
             m_mapTileData.m_Unit = m_unitOnThisTile;
 
             UpdateVisibilityOfEnvironment(true);
+        }
+    }
+
+    /// <summary>
+    /// Validates the state of the instantiated level selector based on the values set in the inspector.
+    /// </summary>
+    public void ValidateLevelSelector(bool forceCreation = false)
+    {
+        if (!forceCreation && m_isLevelSelector == m_mapTileData.m_IsLevelSelector &&
+            string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart))
+        {
+            return;
+        }
+
+        if (m_currentInstantiateLevelSelector != null)
+        {
+            DestroyImmediate(m_currentInstantiateLevelSelector);
+        }
+
+        m_mapTileData.m_IsLevelSelector = m_isLevelSelector;
+        m_mapTileData.m_LevelNameToStart = m_levelNameToStart;
+
+        if (m_mapTileData.m_IsLevelSelector)
+        {
+            m_currentInstantiateLevelSelector = Instantiate(m_levelSelectorPrefab);
+            m_currentInstantiateLevelSelector.transform.SetParent(m_levelSelectionRoot);
+            m_currentInstantiateLevelSelector.transform.localPosition = Vector3.zero;
+            m_currentInstantiateLevelSelector.transform.localScale = Vector3.one;
+
+            m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().SetLevelName(m_mapTileData.m_LevelNameToStart, this);
         }
     }
 
@@ -272,16 +313,6 @@ public class BaseMapTile : MonoBehaviour
                 Debug.LogErrorFormat("MapTile with Type: '{0}' was not found!", m_mapTileType);
                 m_currentInstantiatedMapTileType = MapTileType.Empty;
             }
-        }
-
-        if (m_mapTileData.m_IsLevelSelector)
-        {
-            GameObject levelSelector = Instantiate(m_levelSelectorPrefab);
-            levelSelector.transform.SetParent(m_levelSelectionRoot);
-            levelSelector.transform.localPosition = Vector3.zero;
-            levelSelector.transform.localScale = Vector3.one;
-
-            levelSelector.GetComponent<LevelSelector>().SetLevelName(m_mapTileData.m_LevelNameToStart, this);
         }
     }
 

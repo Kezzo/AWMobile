@@ -24,6 +24,7 @@ public class BaseMapTileGroup : MonoBehaviour
         {
             baseMapTile.MapTileType = m_mapTileType;
             baseMapTile.ValidateMapTile();
+            baseMapTile.ValidateLevelSelector();
         }
     }
 }

@@ -33,6 +33,7 @@ public class BaseMapTileEditor : Editor
             if (baseMapTile != null)
             {
                 baseMapTile.ValidateMapTile();
+                baseMapTile.ValidateLevelSelector();
                 baseMapTile.ValidateUnitType();
             }
         }
