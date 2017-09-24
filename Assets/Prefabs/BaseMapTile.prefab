@@ -207,7 +207,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1744833279772196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.75, y: 1, z: -0.75}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4724182072872532}
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_levelSelectionRoot: {fileID: 4529451017387636}
   m_levelSelectorPrefab: {fileID: 1271424514082214, guid: 13a81ca04ef8fc449a75e95170737664,
     type: 2}
-  m_isLevelSelector: 0
+  m_levelSelectionRouteType: 0
   m_levelNameToStart: 
   m_routeMarkerMappings:
   - m_RouteMarkerType: 0

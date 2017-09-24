@@ -36,7 +36,7 @@ public class BaseMapTile : MonoBehaviour
     private GameObject m_levelSelectorPrefab;
 
     [SerializeField]
-    private bool m_isLevelSelector;
+    private LevelSelectionRouteType m_levelSelectionRouteType;
 
     [SerializeField]
     private string m_levelNameToStart;
@@ -170,7 +170,7 @@ public class BaseMapTile : MonoBehaviour
         m_mapTileData = mapTileData;
         m_mapTileType = m_mapTileData.m_MapTileType;
         m_unitOnThisTile = m_mapTileData.m_Unit;
-        m_isLevelSelector = m_mapTileData.m_IsLevelSelector;
+        m_levelSelectionRouteType = m_mapTileData.m_LevelSelectionRouteType;
         m_levelNameToStart = m_mapTileData.m_LevelNameToStart;
         m_mapGenService = ControllerContainer.MapTileGenerationService;
     }
@@ -230,7 +230,7 @@ public class BaseMapTile : MonoBehaviour
     /// </summary>
     public void ValidateLevelSelector(bool forceCreation = false)
     {
-        if (m_mapTileData == null || (!forceCreation && m_isLevelSelector == m_mapTileData.m_IsLevelSelector &&
+        if (m_mapTileData == null || (!forceCreation && m_levelSelectionRouteType == m_mapTileData.m_LevelSelectionRouteType &&
             string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart)))
         {
             return;
@@ -241,17 +241,23 @@ public class BaseMapTile : MonoBehaviour
             DestroyImmediate(m_currentInstantiateLevelSelector);
         }
 
-        m_mapTileData.m_IsLevelSelector = m_isLevelSelector;
+        m_mapTileData.m_LevelSelectionRouteType = m_levelSelectionRouteType;
         m_mapTileData.m_LevelNameToStart = m_levelNameToStart;
 
-        if (m_mapTileData.m_IsLevelSelector)
-        {
-            m_currentInstantiateLevelSelector = Instantiate(m_levelSelectorPrefab);
-            m_currentInstantiateLevelSelector.transform.SetParent(m_levelSelectionRoot);
-            m_currentInstantiateLevelSelector.transform.localPosition = Vector3.zero;
-            m_currentInstantiateLevelSelector.transform.localScale = Vector3.one;
 
-            m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().SetLevelName(m_mapTileData.m_LevelNameToStart, this);
+        switch (m_levelSelectionRouteType)
+        {
+            case LevelSelectionRouteType.LevelSelectionRoute:
+                //TODO: Instantiate level selection route prefab.
+                break;
+            case LevelSelectionRouteType.LevelSelector:
+                m_currentInstantiateLevelSelector = Instantiate(m_levelSelectorPrefab);
+                m_currentInstantiateLevelSelector.transform.SetParent(m_levelSelectionRoot);
+                m_currentInstantiateLevelSelector.transform.localPosition = Vector3.zero;
+                m_currentInstantiateLevelSelector.transform.localScale = Vector3.one;
+
+                m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().SetLevelName(m_mapTileData.m_LevelNameToStart, this);
+                break;
         }
     }
 
@@ -291,9 +297,7 @@ public class BaseMapTile : MonoBehaviour
 
         List<CardinalDirection> adjacentWaterDirections;
 
-        if (m_mapTileType != MapTileType.Water &&
-            m_mapGenService.IsMapTileNextToType(MapTileType.Water, m_SimplifiedMapPosition,
-                m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
+        if (m_mapTileType != MapTileType.Water && m_mapGenService.IsMapTileNextToType(MapTileType.Water, m_SimplifiedMapPosition, m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
         {
             InstantiateComplexBorderMapTile(adjacentWaterDirections);
             InstantiateEnvironment();
@@ -324,21 +328,18 @@ public class BaseMapTile : MonoBehaviour
     {
         foreach (var borderDirection in m_mapGenService.GetBorderDirections(adjacentWaterDirections))
         {
-            MapTileBorderPrefabData positionAndRotationForBorder = new MapTileBorderPrefabData(
-                m_mapTileGeneratorEditor.GetMapTileBorderPrefab(m_mapTileType, borderDirection.Value));
+            MapTileBorderPrefabData positionAndRotationForBorder = new MapTileBorderPrefabData(m_mapTileGeneratorEditor.GetMapTileBorderPrefab(m_mapTileType, borderDirection.Value));
 
             ApplyPositionAndRotationToBorderData(ref positionAndRotationForBorder, borderDirection.Key, borderDirection.Value);
 
-            InstantiateMapTile(positionAndRotationForBorder.Prefab,
-                positionAndRotationForBorder.Position, positionAndRotationForBorder.Rotation);
+            InstantiateMapTile(positionAndRotationForBorder.Prefab, positionAndRotationForBorder.Position, positionAndRotationForBorder.Rotation);
         }
     }
 
     /// <summary>
     /// Returns the position and rotation of a border based on the given direction it should face.
     /// </summary>
-    private void ApplyPositionAndRotationToBorderData(ref MapTileBorderPrefabData borderPrefabData, 
-        CardinalDirection direction, MapTileBorderType borderType)
+    private void ApplyPositionAndRotationToBorderData(ref MapTileBorderPrefabData borderPrefabData, CardinalDirection direction, MapTileBorderType borderType)
     {
         borderPrefabData.Position = Vector3.zero;
         borderPrefabData.Rotation = Vector3.zero;
