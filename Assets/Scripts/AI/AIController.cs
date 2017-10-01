@@ -93,7 +93,7 @@ public class AIController
                         CurrentlyControlledUnit.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition, 
                         new UnitBalancingMovementCostResolver(CurrentlyControlledUnit.GetUnitBalancing()), out dontCare);
 
-                    CurrentlyControlledUnit.MoveAlongRoute(routeToMove, AttackIfPossible);
+                    CurrentlyControlledUnit.MoveAlongRoute(routeToMove, null, AttackIfPossible);
                 }
                 else
                 {

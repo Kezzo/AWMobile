@@ -223,6 +223,31 @@ public class BaseUnit : MonoBehaviour
     }
 
     /// <summary>
+    /// Changes the unit mesh based on the unit type.
+    /// </summary>
+    /// <param name="unitType">Type of the unit.</param>
+    public void ChangeVisualsTo(UnitType unitType)
+    {
+        if (unitType == UnitType)
+        {
+            // Already showing correct mesh.
+            return;
+        }
+
+        MapTileGeneratorEditor mapTileGeneratorEditor;
+        if (!ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
+        {
+            return;
+        }
+
+        m_meshFilter.mesh = mapTileGeneratorEditor.GetMeshOfUnitType(unitType);
+        m_meshRenderer.material = mapTileGeneratorEditor.GetMaterialForTeamColor(unitType, TeamColor);
+        UnitType = unitType;
+
+        Debug.Log(string.Format("Changed unit visuals from '{0}' to '{1}'", unitType, UnitType));
+    }
+
+    /// <summary>
     /// Resets the unit.
     /// </summary>
     public void ResetUnit()
@@ -438,7 +463,7 @@ public class BaseUnit : MonoBehaviour
             ClearAttackableUnits(m_attackableUnits);
             UnitHasMovedThisRound = true;
 
-            MoveAlongRoute(routeToDestination, () =>
+            MoveAlongRoute(routeToDestination, null, () =>
             {
                 if (!UnitHasMovedThisRound)
                 {
@@ -528,9 +553,10 @@ public class BaseUnit : MonoBehaviour
     /// Moves the along route.
     /// </summary>
     /// <param name="route">The route.</param>
+    /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
     /// <param name="onMoveFinished">The on move finished.</param>
     /// <returns></returns>
-    private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, Action onMoveFinished)
+    private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, Action<BaseMapTile> onReachedTile, Action onMoveFinished)
     {
         Vector3 startPosition = this.transform.position;
         Vector3 endPosition = ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position;
@@ -541,7 +567,8 @@ public class BaseUnit : MonoBehaviour
             Vector2 nodeToMoveTo = route[nodeIndex];
             Vector2 currentNode = route[nodeIndex - 1];
 
-            yield return MoveToNeighborNode(currentNode, nodeToMoveTo, (endPosition - startPosition).magnitude, endPosition);
+            yield return MoveToNeighborNode(currentNode, nodeToMoveTo, 
+                (endPosition - startPosition).magnitude, endPosition, onReachedTile);
 
             if (nodeIndex == route.Count - 1)
             {
@@ -557,13 +584,14 @@ public class BaseUnit : MonoBehaviour
     /// Moves the along route. This method will also instantly set the unit position to the destination node to avoid units standing on the same position.
     /// </summary>
     /// <param name="route">The route.</param>
-    /// <param name="onMoveFinished">The on move finished.</param>
-    public void MoveAlongRoute(List<Vector2> route, Action onMoveFinished)
+    /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
+    /// <param name="onMoveFinished">Invoked when the unit was successfully moved.</param>
+    public void MoveAlongRoute(List<Vector2> route, Action<BaseMapTile> onReachedTile, Action onMoveFinished)
     {
         UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
         m_currentSimplifiedPosition = route[route.Count - 1];
 
-        StartCoroutine(MoveAlongRouteCoroutine(route, () =>
+        StartCoroutine(MoveAlongRouteCoroutine(route, onReachedTile, () =>
         {
             UpdateEnvironmentVisibility(route[route.Count - 1], true);
             onMoveFinished();
@@ -577,7 +605,9 @@ public class BaseUnit : MonoBehaviour
     /// <param name="destinationNode">The destination node.</param>
     /// <param name="startDistanceToEndPosition">The distance to the end position when the movement was started. Used to calculate smooth movement.</param>
     /// <param name="endWorldPosition">The last position (in world-coordinates) the unit has to move. Used to calculate smooth movement.</param>
-    public IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, float startDistanceToEndPosition, Vector3 endWorldPosition)
+    /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
+    public IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, float startDistanceToEndPosition, 
+        Vector3 endWorldPosition, Action<BaseMapTile> onReachedTile)
     {
         Vector2 nodePositionDiff = destinationNode - startNode;
 
@@ -601,6 +631,8 @@ public class BaseUnit : MonoBehaviour
             yield break;
         }
 
+        bool reachedMapTile = false;
+
         // Move to world position
         while (true)
         {
@@ -610,6 +642,18 @@ public class BaseUnit : MonoBehaviour
             float movementStep = (m_worldMovementSpeed * m_movementAnimationCurve.Evaluate(normalizedDistanceToLastMaptile)) * Time.deltaTime;
 
             transform.position = Vector3.MoveTowards(transform.position, targetWorldPosition, movementStep);
+
+            float distanceToNeighbourTile = (targetWorldPosition - transform.position).magnitude;
+
+            if (!reachedMapTile && distanceToNeighbourTile <= 1f)
+            {
+                reachedMapTile = true;
+
+                if (onReachedTile != null)
+                {
+                    onReachedTile(mapTile);
+                }
+            }
 
             if (transform.position == targetWorldPosition)
             {

@@ -44,11 +44,7 @@ public class TileNavigationController
     /// <returns></returns>
     public BaseMapTile GetMapTile(Vector2 mapTilePosition)
     {
-        BaseMapTile baseMapTile = null;
-
-        m_mapTilePositions.TryGetValue(mapTilePosition, out baseMapTile);
-
-        return baseMapTile;
+        return m_mapTilePositions[mapTilePosition];
     }
 
     /// <summary>

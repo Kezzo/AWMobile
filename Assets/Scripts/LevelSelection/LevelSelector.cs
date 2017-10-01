@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,7 +45,21 @@ public class LevelSelector : MonoBehaviour
         m_inputBlocker.ChangeBattleControlInput(true);
         //TODO: hide opened level info.
         //TODO: Inject additional action to get maptile type updates while moving to switch visual of unit.
-        levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, () =>
+        levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, tile =>
+        {
+            switch (tile.MapTileType)
+            {
+                case MapTileType.Grass:
+                case MapTileType.Forest:
+                    levelSelectionUnit.ChangeVisualsTo(UnitType.BattleTank);
+                    break;
+                case MapTileType.Water: //TODO: Change to ship once visual are in.
+                case MapTileType.Mountain:
+                    levelSelectionUnit.ChangeVisualsTo(UnitType.Bomber);
+                    break;
+            }
+
+        }, () =>
         {
             m_inputBlocker.ChangeBattleControlInput(false);
             //TODO: display level info.
