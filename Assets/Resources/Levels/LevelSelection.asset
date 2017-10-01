@@ -1005,7 +1005,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
@@ -1023,7 +1023,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
@@ -1317,7 +1317,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
@@ -1335,7 +1335,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
@@ -1374,7 +1374,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
@@ -1383,7 +1383,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
   - m_GroupPositionVector: {x: 4, y: 3}
     m_GroupPosition: {x: 1, y: 0, z: -3}
@@ -1413,7 +1413,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
@@ -1638,7 +1638,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
@@ -1668,7 +1668,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
@@ -1707,7 +1707,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
@@ -1929,7 +1929,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
   - m_GroupPositionVector: {x: 6, y: 1}
     m_GroupPosition: {x: 9, y: 0, z: -11}
@@ -1959,7 +1959,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
@@ -1968,7 +1968,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
   - m_GroupPositionVector: {x: 6, y: 2}
     m_GroupPosition: {x: 9, y: 0, z: -7}
@@ -1998,8 +1998,8 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
-      m_LevelNameToStart: 
+      m_LevelSelectionRouteType: 2
+      m_LevelNameToStart: Level2
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -2007,7 +2007,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
   - m_GroupPositionVector: {x: 6, y: 3}
     m_GroupPosition: {x: 9, y: 0, z: -3}
@@ -2019,7 +2019,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
@@ -2037,7 +2037,7 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 0
+      m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
@@ -2223,8 +2223,8 @@ MonoBehaviour:
         m_UnitType: 1
         m_TeamColor: 0
         m_Orientation: 3
-      m_LevelSelectionRouteType: 0
-      m_LevelNameToStart: 
+      m_LevelSelectionRouteType: 2
+      m_LevelNameToStart: Level1
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2292,8 +2292,8 @@ MonoBehaviour:
         m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 0
-      m_LevelSelectionRouteType: 2
-      m_LevelNameToStart: Level2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
