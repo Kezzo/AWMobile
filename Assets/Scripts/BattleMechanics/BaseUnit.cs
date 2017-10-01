@@ -243,7 +243,8 @@ public class BaseUnit : MonoBehaviour
 
         if (!UnitHasMovedThisRound)
         {
-            m_currentWalkableMapTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(this);
+            m_currentWalkableMapTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(
+                this.CurrentSimplifiedPosition, new UnitBalancingMovementCostResolver(GetUnitBalancing()));
             SetWalkableTileFieldVisibilityTo(true);
         }
 

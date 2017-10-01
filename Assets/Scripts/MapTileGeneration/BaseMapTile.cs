@@ -37,6 +37,7 @@ public class BaseMapTile : MonoBehaviour
 
     [SerializeField]
     private LevelSelectionRouteType m_levelSelectionRouteType;
+    public LevelSelectionRouteType LevelSelectionRouteType { get { return m_levelSelectionRouteType; } }
 
     [SerializeField]
     private string m_levelNameToStart;

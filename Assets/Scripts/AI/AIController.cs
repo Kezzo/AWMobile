@@ -90,7 +90,8 @@ public class AIController
                     var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
 
                     List<Vector2> routeToMove = ControllerContainer.TileNavigationController.GetBestWayToDestination(
-                        CurrentlyControlledUnit, tileToWalkTo, out dontCare);
+                        CurrentlyControlledUnit.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition, 
+                        new UnitBalancingMovementCostResolver(CurrentlyControlledUnit.GetUnitBalancing()), out dontCare);
 
                     CurrentlyControlledUnit.MoveAlongRoute(routeToMove, AttackIfPossible);
                 }
@@ -190,7 +191,8 @@ public class AIController
 
         TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
 
-        List<BaseMapTile> walkableTiles = tileNavigationController.GetWalkableMapTiles(unit);
+        List<BaseMapTile> walkableTiles = tileNavigationController.GetWalkableMapTiles(
+            unit.CurrentSimplifiedPosition, new UnitBalancingMovementCostResolver(unit.GetUnitBalancing()));
 
         if (walkableTiles.Count == 0)
         {

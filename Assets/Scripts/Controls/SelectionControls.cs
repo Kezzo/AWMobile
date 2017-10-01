@@ -224,7 +224,8 @@ public class SelectionControls : MonoBehaviour
         if (baseMapTile != null)
         {
             m_routeToDestinationField = ControllerContainer.TileNavigationController.
-                GetBestWayToDestination(m_currentlySelectedUnit, baseMapTile, out m_pathfindingNodeDebug);
+                GetBestWayToDestination(m_currentlySelectedUnit.CurrentSimplifiedPosition, baseMapTile.m_SimplifiedMapPosition, 
+                new UnitBalancingMovementCostResolver(m_currentlySelectedUnit.GetUnitBalancing()) , out m_pathfindingNodeDebug);
             m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);
         }
     }

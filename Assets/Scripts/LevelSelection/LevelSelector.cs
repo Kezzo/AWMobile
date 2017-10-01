@@ -7,6 +7,8 @@ public class LevelSelector : MonoBehaviour
     private string m_levelName;
     private BaseMapTile m_rootMapTile;
 
+    private InputBlocker m_inputBlocker;
+
     /// <summary>
     /// Sets the name of the level this selector should start.
     /// </summary>
@@ -25,41 +27,27 @@ public class LevelSelector : MonoBehaviour
     {
         Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
 
+        // There is always only one unit in the level selection.
         BaseUnit levelSelectionUnit = ControllerContainer.BattleController.RegisteredTeams[TeamColor.Blue][0];
 
-        StartCoroutine(MoveToThisSelector(levelSelectionUnit, new List<Vector2>
+        Dictionary<Vector2, PathfindingNodeDebugData> dontCare;
+
+        var routeToLevelSelector = ControllerContainer.TileNavigationController.GetBestWayToDestination(
+            levelSelectionUnit.CurrentSimplifiedPosition, m_rootMapTile.m_SimplifiedMapPosition,
+            new LevelSelectionMovementCostResolver(), out dontCare);
+
+        if (m_inputBlocker == null)
         {
-            new Vector2(14, 1),
-            new Vector2(13, 1),
-            new Vector2(13, 2),
-            new Vector2(13, 3),
-            new Vector2(13, 4),
-            new Vector2(14, 4)
-        }));
-    }
-
-    /// <summary>
-    /// Moves to this selector.
-    /// </summary>
-    /// <param name="levelSelectionUnit">The level selection unit.</param>
-    /// <param name="route">The route to take.</param>
-    private IEnumerator MoveToThisSelector(BaseUnit levelSelectionUnit, List<Vector2> route)
-    {
-        Vector3 startPosition = levelSelectionUnit.transform.position;
-        Vector3 endPosition = ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position;
-
-        // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
-        for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
-        {
-            Vector2 nodeToMoveTo = route[nodeIndex];
-            Vector2 currentNode = route[nodeIndex - 1];
-
-            yield return levelSelectionUnit.MoveToNeighborNode(currentNode, nodeToMoveTo, (endPosition - startPosition).magnitude, endPosition);
-
-            BaseMapTile currentMapTile = ControllerContainer.TileNavigationController
-                    .GetMapTile(nodeToMoveTo);
-
-            // Change unit visual depending on maptile. ground => Tank, water => ship, mountain => plane
+            m_inputBlocker = new InputBlocker();
         }
+
+        m_inputBlocker.ChangeBattleControlInput(true);
+        //TODO: hide opened level info.
+        //TODO: Inject additional action to get maptile type updates while moving to switch visual of unit.
+        levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, () =>
+        {
+            m_inputBlocker.ChangeBattleControlInput(false);
+            //TODO: display level info.
+        });
     }
 }
