@@ -90,9 +90,10 @@ public class AIController
                     var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
 
                     List<Vector2> routeToMove = ControllerContainer.TileNavigationController.GetBestWayToDestination(
-                        CurrentlyControlledUnit, tileToWalkTo, out dontCare);
+                        CurrentlyControlledUnit.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition, 
+                        new UnitBalancingMovementCostResolver(CurrentlyControlledUnit.GetUnitBalancing()), out dontCare);
 
-                    CurrentlyControlledUnit.MoveAlongRoute(routeToMove, AttackIfPossible);
+                    CurrentlyControlledUnit.MoveAlongRoute(routeToMove, null, AttackIfPossible);
                 }
                 else
                 {
@@ -190,7 +191,8 @@ public class AIController
 
         TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
 
-        List<BaseMapTile> walkableTiles = tileNavigationController.GetWalkableMapTiles(unit);
+        List<BaseMapTile> walkableTiles = tileNavigationController.GetWalkableMapTiles(
+            unit.CurrentSimplifiedPosition, new UnitBalancingMovementCostResolver(unit.GetUnitBalancing()));
 
         if (walkableTiles.Count == 0)
         {
@@ -224,8 +226,8 @@ public class AIController
 
         walkableTiles.Sort((mapTile1, mapTile2) =>
         {
-            int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile1.SimplifiedMapPosition, closesEnemyPosition)
-                .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile2.SimplifiedMapPosition, closesEnemyPosition));
+            int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile1.m_SimplifiedMapPosition, closesEnemyPosition)
+                .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile2.m_SimplifiedMapPosition, closesEnemyPosition));
 
             if (mapTileDistanceComparison == 0)
             {

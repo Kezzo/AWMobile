@@ -311,6 +311,11 @@ Prefab:
       propertyPath: m_cloudShadowOrchestrator
       value: 
       objectReference: {fileID: 2045801722}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_levelToEdit
+      value: LevelSelection
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c615998201b0c9446abfe997af2386b0, type: 2}
   m_IsPrefabParent: 0
@@ -405,6 +410,9 @@ MonoBehaviour:
   m_moveDestinationFieldLayerMask:
     serializedVersion: 2
     m_Bits: 2048
+  m_levelSelectionLayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
   m_cameraControls: {fileID: 912165073}
 --- !u!114 &912165073
 MonoBehaviour:

@@ -23,17 +23,18 @@ public static class ControllerContainer
     private static AssetDatabaseService m_assetDatabaseService;
     public static AssetDatabaseService AssetDatabaseService { get { return m_assetDatabaseService ?? (m_assetDatabaseService = new AssetDatabaseService()); } }
 
+    private static LevelSelectionInitializationController m_levelSelectionInitializationController;
+    public static LevelSelectionInitializationController LevelSelectionInitializationController { get { return m_levelSelectionInitializationController ?? (m_levelSelectionInitializationController = new LevelSelectionInitializationController()); } }
+
     /// <summary>
     /// Resets this instance.
+    /// Will only reset stateful controller.
     /// </summary>
     public static void Reset()
     {
-        m_mapTileGenerationService = new MapTileGenerationService();
         m_monoBehaviourRegistry = new MonoBehaviourRegistry();
         m_battleController = new BattleController();
         m_tileNavigationController = new TileNavigationController();
-        m_unitBalancingProvider = new UnitBalancingProvider();
-        m_assetDatabaseService = new AssetDatabaseService();
     }
 
 #pragma warning restore 649

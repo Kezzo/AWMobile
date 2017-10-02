@@ -66,4 +66,76 @@ public class SceneLoadingService : MonoBehaviour
             yield return null;
         }
     }
+
+    /// <summary>
+    /// If invoked will load to the level selection.
+    /// </summary>
+    /// <param name="onLoadedToLevelSelection">Invoked when the level selection was loaded.</param>
+    public void LoadToLevelSelection(Action onLoadedToLevelSelection)
+    {
+        LoadToLevel("LevelSelection", () =>
+        {
+            ControllerContainer.MonoBehaviourRegistry.Get<BattlegroundUI>().ChangeVisibilityOfEndTurnButton(false);
+            ControllerContainer.MonoBehaviourRegistry.Get<SelectionControls>().IsInLevelSelection = true;
+
+            if (onLoadedToLevelSelection != null)
+            {
+                onLoadedToLevelSelection();
+            }
+        });
+    }
+
+    /// <summary>
+    /// If invoked will load to the level with the given name.
+    /// </summary>
+    /// <param name="levelName">Name of the level.</param>
+    /// <param name="onLoadedToLevel">Invoked when the level is loaded.</param>
+    public void LoadToLevel(string levelName, Action onLoadedToLevel)
+    {
+        //TODO: Implement loading progress display.
+        LoadSceneAsync("BattlegroundUI", null, () =>
+        {
+            LoadSceneAsync("Battleground", null, () =>
+            {
+                MapTileGeneratorEditor mapTileGeneratorEditor;
+
+                if (!ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
+                {
+                    Debug.Log("MapTileGeneratorEditor can't be retrieved.");
+                    return;
+                }
+
+                MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData(levelName);
+                ControllerContainer.BattleController.IntializeBattle(mapGenerationData.m_Teams);
+
+                mapTileGeneratorEditor.LoadExistingMap(mapGenerationData);
+                ControllerContainer.BattleController.StartBattle();
+
+                if (onLoadedToLevel != null)
+                {
+                    onLoadedToLevel();
+                }
+            });
+        });
+    }
+
+    /// <summary>
+    /// Unloads the existing scenes.
+    /// </summary>
+    /// <param name="onScenesUnloaded">Invoked when the existing scene are unloaded.</param>
+    public void UnloadExistingScenes(Action onScenesUnloaded)
+    {
+        UnloadSceneAsync("BattlegroundUI", null, () =>
+        {
+            UnloadSceneAsync("Battleground", null, () =>
+            {
+                ControllerContainer.Reset();
+
+                if (onScenesUnloaded != null)
+                {
+                    onScenesUnloaded();
+                }
+            });
+        });
+    }
 }

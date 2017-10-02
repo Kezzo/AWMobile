@@ -8,6 +8,7 @@ using UnityEngine;
 public class MapGenerationData : ScriptableObject
 {
     public string m_LevelName;
+    public bool m_IsLevelSelection;
 
     public Team[] m_Teams;
 
@@ -60,6 +61,10 @@ public class MapGenerationData : ScriptableObject
 
         public MapTileType m_MapTileType;
         public Unit m_Unit;
+
+        public LevelSelectionRouteType m_LevelSelectionRouteType;
+        public string m_LevelNameToStart;
+        public int m_LevelSelectionOrder;
 
         public override string ToString()
         {

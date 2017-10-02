@@ -45,6 +45,16 @@ public class MonoBehaviourRegistry
     }
 
     /// <summary>
+    /// Returns a registered instance.
+    /// </summary>
+    public T Get<T>() where T : MonoBehaviour
+    {
+        Type typeToGet = typeof (T);
+
+        return (T) m_registeredMonoBehaviours[typeToGet];
+    }
+
+    /// <summary>
     /// Removes this instance.
     /// </summary>
     /// <typeparam name="T"></typeparam>

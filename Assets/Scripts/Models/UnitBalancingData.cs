@@ -34,28 +34,6 @@ public class UnitBalancingData : ScriptableObject
     }
 
     /// <summary>
-    /// Determines whether a unit can walk on a map tile type.
-    /// </summary>
-    /// <param name="mapTileType">Type of the map tile.</param>
-    /// <returns></returns>
-    public bool CanUnitWalkOnMapTileType(MapTileType mapTileType)
-    {
-        return m_WalkableMapTileTypes.Exists(walkableMapTile => walkableMapTile.m_MapTileType == mapTileType);
-    }
-
-    /// <summary>
-    /// Gets the movement cost to walk on a map tile with a certain type.
-    /// </summary>
-    /// <param name="mapTileType">Type of the map tile.</param>
-    /// <returns></returns>
-    public int GetMovementCostToWalkOnMapTileType(MapTileType mapTileType)
-    {
-        var walkMapToCheck = m_WalkableMapTileTypes.Find(walkableMapTile => walkableMapTile.m_MapTileType == mapTileType);
-
-        return walkMapToCheck == null ? 0 : walkMapToCheck.m_MovementCost;
-    }
-
-    /// <summary>
     /// Gets the type of the damage on unit.
     /// </summary>
     /// <param name="unitType">Type of the unit.</param>

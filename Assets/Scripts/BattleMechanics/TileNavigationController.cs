@@ -44,11 +44,7 @@ public class TileNavigationController
     /// <returns></returns>
     public BaseMapTile GetMapTile(Vector2 mapTilePosition)
     {
-        BaseMapTile baseMapTile = null;
-
-        m_mapTilePositions.TryGetValue(mapTilePosition, out baseMapTile);
-
-        return baseMapTile;
+        return m_mapTilePositions[mapTilePosition];
     }
 
     /// <summary>
@@ -89,15 +85,14 @@ public class TileNavigationController
     }
 
     /// <summary>
-    /// Shows the movement fields for unit.
+    /// Returns a list of walkable maptiles.
     /// </summary>
-    /// <param name="unitToCheckFor">The unit.</param>
-    public List<BaseMapTile> GetWalkableMapTiles(BaseUnit unitToCheckFor)
+    /// <param name="unitPosition">The unit position.</param>
+    /// <param name="movementCostResolver">The movement cost resolver.</param>
+    public List<BaseMapTile> GetWalkableMapTiles(Vector2 unitPosition, IMovementCostResolver movementCostResolver)
     {
-        UnitBalancingData unitBalancing = unitToCheckFor.GetUnitBalancing();
-
         Queue<Vector2> nodesToCheck = new Queue<Vector2>();
-        nodesToCheck.Enqueue(unitToCheckFor.CurrentSimplifiedPosition);
+        nodesToCheck.Enqueue(unitPosition);
 
         Dictionary<Vector2, int> costToMoveToNodes = new Dictionary<Vector2, int>();
 
@@ -108,7 +103,7 @@ public class TileNavigationController
             int walkingCostToNode;
             costToMoveToNodes.TryGetValue(nodeToCheck, out walkingCostToNode);
 
-            List<Vector2> adjacentNodes = GetWalkableAdjacentNodes(nodeToCheck, unitBalancing, walkingCostToNode);
+            List<Vector2> adjacentNodes = GetWalkableAdjacentNodes(nodeToCheck, movementCostResolver, walkingCostToNode);
 
             for (int nodeIndex = 0; nodeIndex < adjacentNodes.Count; nodeIndex++)
             {
@@ -122,7 +117,7 @@ public class TileNavigationController
                 }
 
                 int costToMoveToNode = walkingCostToNode +
-                                       unitBalancing.GetMovementCostToWalkOnMapTileType(baseMapTile.MapTileType);
+                                       movementCostResolver.GetMovementCostToWalkOnMapTileType(baseMapTile.MapTileType);
 
                 // Only add node, if it wasn't added before or if a shorter path to the node was found.
                 if (!costToMoveToNodes.ContainsKey(adjacentNode))
@@ -184,16 +179,14 @@ public class TileNavigationController
     /// The best way is shortest walkable way to the maptile.
     /// Used the A* pathfinding algorithm to find the best path.
     /// </summary>
-    /// <param name="unitToMove">The unit to move.</param>
-    /// <param name="destinationMapTile">The destination map tile.</param>
+    /// <param name="startNode">The node to start from.</param>
+    /// <param name="destinationNode">The destination node to move to.</param>
+    /// <param name="movementCostResolver">Used to determine how cost of movement and movement allowance is calculated.</param>
     /// <param name="pathfindingNodeDebugData">The pathfinding node debug data.</param>
     /// <returns></returns>
-    public List<Vector2> GetBestWayToDestination(BaseUnit unitToMove, BaseMapTile destinationMapTile, out Dictionary<Vector2, PathfindingNodeDebugData> pathfindingNodeDebugData)
+    public List<Vector2> GetBestWayToDestination(Vector2 startNode, Vector2 destinationNode, IMovementCostResolver movementCostResolver, 
+        out Dictionary<Vector2, PathfindingNodeDebugData> pathfindingNodeDebugData)
     {
-        Vector2 startNode = unitToMove.CurrentSimplifiedPosition;
-        Vector2 destinationNode = destinationMapTile.SimplifiedMapPosition;
-        UnitBalancingData unitBalancing = unitToMove.GetUnitBalancing();
-
 #if UNITY_EDITOR
         pathfindingNodeDebugData = new Dictionary<Vector2, PathfindingNodeDebugData>();
 #else
@@ -221,7 +214,7 @@ public class TileNavigationController
             int costToGetToPreviousMapTile = 0;
             costToMoveToNodes.TryGetValue(nodeToGetNeighboursFrom, out costToGetToPreviousMapTile);
 
-            List<Vector2> adjacentNodes = GetWalkableAdjacentNodes(nodeToGetNeighboursFrom, unitBalancing, costToGetToPreviousMapTile);
+            List<Vector2> adjacentNodes = GetWalkableAdjacentNodes(nodeToGetNeighboursFrom, movementCostResolver, costToGetToPreviousMapTile);
 
             for (int nodeIndex = 0; nodeIndex < adjacentNodes.Count; nodeIndex++)
             {
@@ -235,7 +228,7 @@ public class TileNavigationController
                 }
 
                 int costToMoveToNode = costToGetToPreviousMapTile +
-                                       unitBalancing.GetMovementCostToWalkOnMapTileType(baseMapTile.MapTileType);
+                                       movementCostResolver.GetMovementCostToWalkOnMapTileType(baseMapTile.MapTileType);
 
                 int existingCostToMoveToNode = 0;
 
@@ -322,10 +315,10 @@ public class TileNavigationController
     /// This method considers only the previously registered maptiles.
     /// </summary>
     /// <param name="sourceToGetNeighboursFrom">The sourceToGetNeighboursFrom.</param>
-    /// <param name="unitBalancing">The unit balancing.</param>
+    /// <param name="movementCostResolver">Used to determine how cost of movement and movement allowance is calculated.</param>
     /// <param name="walkingCostToNode">The already walked map tiles.</param>
     /// <returns></returns>
-    private List<Vector2> GetWalkableAdjacentNodes(Vector2 sourceToGetNeighboursFrom, UnitBalancingData unitBalancing, 
+    private List<Vector2> GetWalkableAdjacentNodes(Vector2 sourceToGetNeighboursFrom, IMovementCostResolver movementCostResolver, 
         int walkingCostToNode)
     {
         List<Vector2> walkableAdjacentNodes = new List<Vector2>();
@@ -341,11 +334,11 @@ public class TileNavigationController
             // Is tile position registered?
             if (m_mapTilePositions.TryGetValue(adjacentTile, out adjacenBaseMapTile) &&
                 // Is MapTile walkable by unit?
-                unitBalancing.CanUnitWalkOnMapTileType(adjacenBaseMapTile.MapTileType) &&
+                movementCostResolver.CanUnitWalkOnMapTile(adjacenBaseMapTile) &&
                 // Is there a unit on the positon? (rendering it unwalkable)
                 !ControllerContainer.BattleController.IsUnitOnNode(adjacentTile) &&
                 // Can unit walk on the node, base on the movement range of the unit.
-                walkingCostToNode + unitBalancing.GetMovementCostToWalkOnMapTileType(adjacenBaseMapTile.MapTileType) <= unitBalancing.m_MovementRangePerRound)
+                movementCostResolver.HasUnitEnoughMovementRangeLeft(walkingCostToNode + movementCostResolver.GetMovementCostToWalkOnMapTileType(adjacenBaseMapTile.MapTileType)))
             {
                 walkableAdjacentNodes.Add(adjacentTile);
             }
