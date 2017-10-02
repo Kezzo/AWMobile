@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: LevelSelection
   m_EditorClassIdentifier: 
   m_LevelName: LevelSelection
-  m_IsLevelSelection: 0
+  m_IsLevelSelection: 1
   m_Teams:
   - m_TeamColor: 0
     m_IsPlayersTeam: 1
@@ -32,6 +32,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -41,6 +42,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -50,6 +52,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -59,6 +62,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 0, y: 1}
     m_GroupPosition: {x: -15, y: 0, z: -11}
     m_MapTiles:
@@ -71,6 +75,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -80,6 +85,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -89,6 +95,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -98,6 +105,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 0, y: 2}
     m_GroupPosition: {x: -15, y: 0, z: -7}
     m_MapTiles:
@@ -110,6 +118,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -119,6 +128,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -128,6 +138,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -137,6 +148,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 0, y: 3}
     m_GroupPosition: {x: -15, y: 0, z: -3}
     m_MapTiles:
@@ -149,6 +161,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -158,6 +171,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -167,6 +181,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -176,6 +191,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 0, y: 4}
     m_GroupPosition: {x: -15, y: 0, z: 1}
     m_MapTiles:
@@ -188,6 +204,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -197,6 +214,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -206,6 +224,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -215,6 +234,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 0, y: 5}
     m_GroupPosition: {x: -15, y: 0, z: 5}
     m_MapTiles:
@@ -227,6 +247,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -236,6 +257,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -245,6 +267,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -254,6 +277,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 0, y: 6}
     m_GroupPosition: {x: -15, y: 0, z: 9}
     m_MapTiles:
@@ -266,6 +290,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -275,6 +300,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -284,6 +310,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -293,6 +320,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 0, y: 7}
     m_GroupPosition: {x: -15, y: 0, z: 13}
     m_MapTiles:
@@ -305,6 +333,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -314,6 +343,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -323,6 +353,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -332,6 +363,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 1, y: 0}
     m_GroupPosition: {x: -11, y: 0, z: -15}
     m_MapTiles:
@@ -344,6 +376,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -353,6 +386,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -362,6 +396,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -371,6 +406,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 1, y: 1}
     m_GroupPosition: {x: -11, y: 0, z: -11}
     m_MapTiles:
@@ -383,6 +419,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -392,6 +429,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -401,6 +439,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -410,6 +449,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 1, y: 2}
     m_GroupPosition: {x: -11, y: 0, z: -7}
     m_MapTiles:
@@ -422,6 +462,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -431,6 +472,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -440,6 +482,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -449,6 +492,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 1, y: 3}
     m_GroupPosition: {x: -11, y: 0, z: -3}
     m_MapTiles:
@@ -461,6 +505,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -470,6 +515,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -479,6 +525,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -488,6 +535,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 1, y: 4}
     m_GroupPosition: {x: -11, y: 0, z: 1}
     m_MapTiles:
@@ -500,6 +548,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -509,6 +558,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -518,6 +568,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -527,6 +578,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 1, y: 5}
     m_GroupPosition: {x: -11, y: 0, z: 5}
     m_MapTiles:
@@ -539,6 +591,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -548,6 +601,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -557,6 +611,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -566,6 +621,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 1, y: 6}
     m_GroupPosition: {x: -11, y: 0, z: 9}
     m_MapTiles:
@@ -578,6 +634,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -587,6 +644,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -596,6 +654,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -605,6 +664,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 1, y: 7}
     m_GroupPosition: {x: -11, y: 0, z: 13}
     m_MapTiles:
@@ -617,6 +677,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -626,6 +687,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -635,6 +697,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -644,6 +707,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 2, y: 0}
     m_GroupPosition: {x: -7, y: 0, z: -15}
     m_MapTiles:
@@ -656,6 +720,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -665,6 +730,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -674,6 +740,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -683,6 +750,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 2, y: 1}
     m_GroupPosition: {x: -7, y: 0, z: -11}
     m_MapTiles:
@@ -695,6 +763,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -704,6 +773,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -713,6 +783,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -722,6 +793,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 2, y: 2}
     m_GroupPosition: {x: -7, y: 0, z: -7}
     m_MapTiles:
@@ -734,6 +806,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -743,6 +816,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -752,6 +826,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -761,6 +836,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 2, y: 3}
     m_GroupPosition: {x: -7, y: 0, z: -3}
     m_MapTiles:
@@ -773,6 +849,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -782,6 +859,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -791,6 +869,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -800,6 +879,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 2, y: 4}
     m_GroupPosition: {x: -7, y: 0, z: 1}
     m_MapTiles:
@@ -812,6 +892,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -821,6 +902,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -830,6 +912,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -839,6 +922,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 2, y: 5}
     m_GroupPosition: {x: -7, y: 0, z: 5}
     m_MapTiles:
@@ -851,6 +935,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -860,6 +945,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -869,6 +955,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -878,6 +965,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 2, y: 6}
     m_GroupPosition: {x: -7, y: 0, z: 9}
     m_MapTiles:
@@ -890,6 +978,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -899,6 +988,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -908,6 +998,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -917,6 +1008,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 2, y: 7}
     m_GroupPosition: {x: -7, y: 0, z: 13}
     m_MapTiles:
@@ -929,6 +1021,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -938,6 +1031,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -947,6 +1041,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -956,6 +1051,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 3, y: 0}
     m_GroupPosition: {x: -3, y: 0, z: -15}
     m_MapTiles:
@@ -968,6 +1064,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -977,6 +1074,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -986,6 +1084,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -995,6 +1094,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 3, y: 1}
     m_GroupPosition: {x: -3, y: 0, z: -11}
     m_MapTiles:
@@ -1007,6 +1107,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -1016,6 +1117,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level5
+      m_LevelSelectionOrder: 4
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 4
@@ -1025,6 +1127,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -1034,6 +1137,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 3, y: 2}
     m_GroupPosition: {x: -3, y: 0, z: -7}
     m_MapTiles:
@@ -1046,6 +1150,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1055,6 +1160,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1064,6 +1170,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1073,6 +1180,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 3, y: 3}
     m_GroupPosition: {x: -3, y: 0, z: -3}
     m_MapTiles:
@@ -1085,6 +1193,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1094,6 +1203,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1103,6 +1213,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1112,6 +1223,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 3, y: 4}
     m_GroupPosition: {x: -3, y: 0, z: 1}
     m_MapTiles:
@@ -1124,6 +1236,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1133,6 +1246,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1142,6 +1256,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1151,6 +1266,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 3, y: 5}
     m_GroupPosition: {x: -3, y: 0, z: 5}
     m_MapTiles:
@@ -1163,6 +1279,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1172,6 +1289,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1181,6 +1299,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1190,6 +1309,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 3, y: 6}
     m_GroupPosition: {x: -3, y: 0, z: 9}
     m_MapTiles:
@@ -1202,6 +1322,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1211,6 +1332,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1220,6 +1342,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1229,6 +1352,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 3, y: 7}
     m_GroupPosition: {x: -3, y: 0, z: 13}
     m_MapTiles:
@@ -1241,6 +1365,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1250,6 +1375,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1259,6 +1385,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1268,6 +1395,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 4, y: 0}
     m_GroupPosition: {x: 1, y: 0, z: -15}
     m_MapTiles:
@@ -1280,6 +1408,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1289,6 +1418,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1298,6 +1428,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1307,6 +1438,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 4, y: 1}
     m_GroupPosition: {x: 1, y: 0, z: -11}
     m_MapTiles:
@@ -1319,6 +1451,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1328,6 +1461,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1337,6 +1471,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1346,6 +1481,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 4, y: 2}
     m_GroupPosition: {x: 1, y: 0, z: -7}
     m_MapTiles:
@@ -1358,6 +1494,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1367,6 +1504,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1376,6 +1514,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1385,6 +1524,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 4, y: 3}
     m_GroupPosition: {x: 1, y: 0, z: -3}
     m_MapTiles:
@@ -1397,6 +1537,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1406,6 +1547,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -1415,6 +1557,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1424,6 +1567,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 4, y: 4}
     m_GroupPosition: {x: 1, y: 0, z: 1}
     m_MapTiles:
@@ -1436,6 +1580,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1445,6 +1590,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1454,6 +1600,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1463,6 +1610,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 4, y: 5}
     m_GroupPosition: {x: 1, y: 0, z: 5}
     m_MapTiles:
@@ -1475,6 +1623,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1484,6 +1633,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1493,6 +1643,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1502,6 +1653,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 4, y: 6}
     m_GroupPosition: {x: 1, y: 0, z: 9}
     m_MapTiles:
@@ -1514,6 +1666,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1523,6 +1676,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1532,6 +1686,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1541,6 +1696,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 4, y: 7}
     m_GroupPosition: {x: 1, y: 0, z: 13}
     m_MapTiles:
@@ -1553,6 +1709,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1562,6 +1719,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1571,6 +1729,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1580,6 +1739,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 5, y: 0}
     m_GroupPosition: {x: 5, y: 0, z: -15}
     m_MapTiles:
@@ -1592,6 +1752,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1601,6 +1762,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1610,6 +1772,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1619,6 +1782,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 5, y: 1}
     m_GroupPosition: {x: 5, y: 0, z: -11}
     m_MapTiles:
@@ -1631,6 +1795,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level4
+      m_LevelSelectionOrder: 3
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1640,6 +1805,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1649,6 +1815,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1658,6 +1825,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 5, y: 2}
     m_GroupPosition: {x: 5, y: 0, z: -7}
     m_MapTiles:
@@ -1670,6 +1838,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1679,6 +1848,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1688,6 +1858,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 3
@@ -1697,6 +1868,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 5, y: 3}
     m_GroupPosition: {x: 5, y: 0, z: -3}
     m_MapTiles:
@@ -1709,6 +1881,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -1718,6 +1891,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 4
@@ -1727,6 +1901,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level3
+      m_LevelSelectionOrder: 2
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 4
@@ -1736,6 +1911,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 5, y: 4}
     m_GroupPosition: {x: 5, y: 0, z: 1}
     m_MapTiles:
@@ -1748,6 +1924,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1757,6 +1934,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1766,6 +1944,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1775,6 +1954,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 5, y: 5}
     m_GroupPosition: {x: 5, y: 0, z: 5}
     m_MapTiles:
@@ -1787,6 +1967,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1796,6 +1977,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1805,6 +1987,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1814,6 +1997,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 5, y: 6}
     m_GroupPosition: {x: 5, y: 0, z: 9}
     m_MapTiles:
@@ -1826,6 +2010,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1835,6 +2020,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1844,6 +2030,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1853,6 +2040,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 5, y: 7}
     m_GroupPosition: {x: 5, y: 0, z: 13}
     m_MapTiles:
@@ -1865,6 +2053,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1874,6 +2063,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1883,6 +2073,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1892,6 +2083,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 6, y: 0}
     m_GroupPosition: {x: 9, y: 0, z: -15}
     m_MapTiles:
@@ -1904,6 +2096,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 4
@@ -1913,6 +2106,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1922,6 +2116,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -1931,6 +2126,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 6, y: 1}
     m_GroupPosition: {x: 9, y: 0, z: -11}
     m_MapTiles:
@@ -1943,6 +2139,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1952,6 +2149,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -1961,6 +2159,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -1970,6 +2169,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 6, y: 2}
     m_GroupPosition: {x: 9, y: 0, z: -7}
     m_MapTiles:
@@ -1982,6 +2182,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 3
@@ -1991,6 +2192,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -2000,6 +2202,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level2
+      m_LevelSelectionOrder: 1
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -2009,6 +2212,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 6, y: 3}
     m_GroupPosition: {x: 9, y: 0, z: -3}
     m_MapTiles:
@@ -2021,6 +2225,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2030,6 +2235,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -2039,6 +2245,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 1
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2048,6 +2255,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 6, y: 4}
     m_GroupPosition: {x: 9, y: 0, z: 1}
     m_MapTiles:
@@ -2060,6 +2268,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2069,6 +2278,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2078,6 +2288,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2087,6 +2298,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 6, y: 5}
     m_GroupPosition: {x: 9, y: 0, z: 5}
     m_MapTiles:
@@ -2099,6 +2311,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2108,6 +2321,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2117,6 +2331,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2126,6 +2341,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 6, y: 6}
     m_GroupPosition: {x: 9, y: 0, z: 9}
     m_MapTiles:
@@ -2138,6 +2354,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2147,6 +2364,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2156,6 +2374,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2165,6 +2384,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 6, y: 7}
     m_GroupPosition: {x: 9, y: 0, z: 13}
     m_MapTiles:
@@ -2177,6 +2397,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2186,6 +2407,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2195,6 +2417,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2204,6 +2427,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 7, y: 0}
     m_GroupPosition: {x: 13, y: 0, z: -15}
     m_MapTiles:
@@ -2216,6 +2440,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -2225,6 +2450,7 @@ MonoBehaviour:
         m_Orientation: 3
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level1
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2234,6 +2460,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2243,6 +2470,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 7, y: 1}
     m_GroupPosition: {x: 13, y: 0, z: -11}
     m_MapTiles:
@@ -2255,6 +2483,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 4
@@ -2264,6 +2493,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2273,6 +2503,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2282,6 +2513,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 7, y: 2}
     m_GroupPosition: {x: 13, y: 0, z: -7}
     m_MapTiles:
@@ -2294,6 +2526,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2303,6 +2536,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2312,6 +2546,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2321,6 +2556,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 7, y: 3}
     m_GroupPosition: {x: 13, y: 0, z: -3}
     m_MapTiles:
@@ -2333,6 +2569,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2342,6 +2579,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2351,6 +2589,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2360,6 +2599,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 7, y: 4}
     m_GroupPosition: {x: 13, y: 0, z: 1}
     m_MapTiles:
@@ -2372,6 +2612,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2381,6 +2622,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2390,6 +2632,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2399,6 +2642,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 7, y: 5}
     m_GroupPosition: {x: 13, y: 0, z: 5}
     m_MapTiles:
@@ -2411,6 +2655,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2420,6 +2665,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2429,6 +2675,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2438,6 +2685,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 7, y: 6}
     m_GroupPosition: {x: 13, y: 0, z: 9}
     m_MapTiles:
@@ -2450,6 +2698,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2459,6 +2708,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2468,6 +2718,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2477,6 +2728,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   - m_GroupPositionVector: {x: 7, y: 7}
     m_GroupPosition: {x: 13, y: 0, z: 13}
     m_MapTiles:
@@ -2489,6 +2741,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2498,6 +2751,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -2507,6 +2761,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2516,6 +2771,7 @@ MonoBehaviour:
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
   m_MapCloudShadowData:
     m_PoolSize: 0
     m_MinVisibleClouds: 0

@@ -5,6 +5,7 @@ public class LevelSelector : MonoBehaviour
 {
     private string m_levelName;
     private BaseMapTile m_rootMapTile;
+    public BaseMapTile RootMapTile { get { return m_rootMapTile; } }
 
     private InputBlocker m_inputBlocker;
 
@@ -12,11 +13,14 @@ public class LevelSelector : MonoBehaviour
     /// Sets the name of the level this selector should start.
     /// </summary>
     /// <param name="levelName">Name of the level.</param>
+    /// <param name="orderNumber">The order number of this level selector.</param>
     /// <param name="rootMapTile">The maptile this levelselector lives on.</param>
-    public void SetLevelName(string levelName, BaseMapTile rootMapTile)
+    public void Initialize(string levelName, int orderNumber, BaseMapTile rootMapTile)
     {
         m_levelName = levelName;
         m_rootMapTile = rootMapTile;
+
+        ControllerContainer.LevelSelectionInitializationController.RegisterLevelSelector(orderNumber, this);
     }
 
     /// <summary>
@@ -62,5 +66,27 @@ public class LevelSelector : MonoBehaviour
             m_inputBlocker.ChangeBattleControlInput(false);
             //TODO: display level info.
         });
+    }
+
+    /// <summary>
+    /// Draws a map marker route to the given level selector.
+    /// It's assumed that a connection exists.
+    /// </summary>
+    /// <param name="levelSelector">The level selector to draw a route to.</param>
+    public void DrawRouteToLevelSelector(LevelSelector levelSelector)
+    {
+        var navigationController = ControllerContainer.TileNavigationController;
+        Dictionary <Vector2, PathfindingNodeDebugData> dontCare;
+
+        var routeToLevelSelector = navigationController.GetBestWayToDestination(
+            RootMapTile.m_SimplifiedMapPosition, levelSelector.RootMapTile.m_SimplifiedMapPosition,
+            new LevelSelectionMovementCostResolver(), out dontCare);
+
+        var routeMarkerDefinitions = navigationController.GetRouteMarkerDefinitions(routeToLevelSelector);
+
+        foreach (var routeMarkerDefinition in routeMarkerDefinitions)
+        {
+            navigationController.GetMapTile(routeMarkerDefinition.Key).InstantiateLevelSelectionRoute(routeMarkerDefinition.Value);
+        }
     }
 }

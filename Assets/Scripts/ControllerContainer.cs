@@ -23,6 +23,9 @@ public static class ControllerContainer
     private static AssetDatabaseService m_assetDatabaseService;
     public static AssetDatabaseService AssetDatabaseService { get { return m_assetDatabaseService ?? (m_assetDatabaseService = new AssetDatabaseService()); } }
 
+    private static LevelSelectionInitializationController m_levelSelectionInitializationController;
+    public static LevelSelectionInitializationController LevelSelectionInitializationController { get { return m_levelSelectionInitializationController ?? (m_levelSelectionInitializationController = new LevelSelectionInitializationController()); } }
+
     /// <summary>
     /// Resets this instance.
     /// </summary>

@@ -29,6 +29,9 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private GameObject m_movementField;
 
+#region level selection
+    [Header("LevelSelection")]
+
     [SerializeField]
     private Transform m_levelSelectionRoot;
 
@@ -42,6 +45,14 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private string m_levelNameToStart;
 
+    [SerializeField]
+    private int m_levelSelectionOrder;
+
+    [SerializeField]
+    private List<RouteMarkerMapping> m_levelSelectionRouteMarkerMappings;
+
+    #endregion
+
     #region RouteMarker
 
     [Serializable]
@@ -51,6 +62,7 @@ public class BaseMapTile : MonoBehaviour
         public GameObject m_RouteMarkerPrefab;
     }
 
+    [Header("RouteMarker")]
     [SerializeField]
     private List<RouteMarkerMapping> m_routeMarkerMappings;
 
@@ -65,6 +77,8 @@ public class BaseMapTile : MonoBehaviour
         public bool m_IsFilled;
         public Mesh m_AttackRangerMarkerPrefab;
     }
+
+    [Header("AttackRangeMarker")]
 
     [SerializeField]
     private List<AttackRangeMarkerMapping> m_attackRangeMarkerMappings;
@@ -173,6 +187,7 @@ public class BaseMapTile : MonoBehaviour
         m_unitOnThisTile = m_mapTileData.m_Unit;
         m_levelSelectionRouteType = m_mapTileData.m_LevelSelectionRouteType;
         m_levelNameToStart = m_mapTileData.m_LevelNameToStart;
+        m_levelSelectionOrder = m_mapTileData.m_LevelSelectionOrder;
         m_mapGenService = ControllerContainer.MapTileGenerationService;
     }
 
@@ -232,7 +247,7 @@ public class BaseMapTile : MonoBehaviour
     public void ValidateLevelSelector(bool forceCreation = false)
     {
         if (m_mapTileData == null || (!forceCreation && m_levelSelectionRouteType == m_mapTileData.m_LevelSelectionRouteType &&
-            string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart)))
+            string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart) && m_levelSelectionOrder == m_mapTileData.m_LevelSelectionOrder))
         {
             return;
         }
@@ -244,22 +259,17 @@ public class BaseMapTile : MonoBehaviour
 
         m_mapTileData.m_LevelSelectionRouteType = m_levelSelectionRouteType;
         m_mapTileData.m_LevelNameToStart = m_levelNameToStart;
+        m_mapTileData.m_LevelSelectionOrder = m_levelSelectionOrder;
 
-
-        switch (m_levelSelectionRouteType)
+        if (m_levelSelectionRouteType == LevelSelectionRouteType.LevelSelector)
         {
-            case LevelSelectionRouteType.LevelSelectionRoute:
-                //TODO: Instantiate level selection route prefab.
-                break;
-            case LevelSelectionRouteType.LevelSelector:
-                m_currentInstantiateLevelSelector = Instantiate(m_levelSelectorPrefab);
-                m_currentInstantiateLevelSelector.transform.SetParent(m_levelSelectionRoot);
-                m_currentInstantiateLevelSelector.transform.localPosition = Vector3.zero;
-                m_currentInstantiateLevelSelector.transform.localScale = Vector3.one;
+            m_currentInstantiateLevelSelector = Instantiate(m_levelSelectorPrefab);
+            m_currentInstantiateLevelSelector.transform.SetParent(m_levelSelectionRoot);
+            m_currentInstantiateLevelSelector.transform.localPosition = Vector3.zero;
+            m_currentInstantiateLevelSelector.transform.localScale = Vector3.one;
 
-                m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().SetLevelName(m_mapTileData.m_LevelNameToStart, this);
-                break;
-        }
+            m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().Initialize(m_mapTileData.m_LevelNameToStart, m_levelSelectionOrder, this);
+        }           
     }
 
     /// <summary>
@@ -587,5 +597,23 @@ public class BaseMapTile : MonoBehaviour
             routeMarkerMappingToUse.m_RouteMarkerPrefab.SetActive(true);
             routeMarkerMappingToUse.m_RouteMarkerPrefab.transform.rotation = Quaternion.Euler(routeMarkerDefinition.Rotation);
         }
+    }
+
+    /// <summary>
+    /// Instantiates a part of the level selection route.
+    /// </summary>
+    public void InstantiateLevelSelectionRoute(RouteMarkerDefinition routeMarkerDefinition)
+    {
+        if (routeMarkerDefinition.RouteMarkerType == RouteMarkerType.Destination)
+        {
+            return;
+        }
+
+        RouteMarkerMapping routeMarkerMappingToUse = m_levelSelectionRouteMarkerMappings.Find(
+            routeMarkerMapping => routeMarkerMapping.m_RouteMarkerType == routeMarkerDefinition.RouteMarkerType);
+
+        GameObject instatiatedRoute = Instantiate(routeMarkerMappingToUse.m_RouteMarkerPrefab, m_levelSelectionRoot);
+        instatiatedRoute.transform.localPosition = Vector3.zero;
+        instatiatedRoute.transform.rotation = Quaternion.Euler(routeMarkerDefinition.Rotation);
     }
 }

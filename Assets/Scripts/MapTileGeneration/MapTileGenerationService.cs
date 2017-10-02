@@ -72,6 +72,11 @@ public class MapTileGenerationService
                 }
             }
         }
+
+        if (mapGenerationData.m_IsLevelSelection)
+        {
+            ControllerContainer.LevelSelectionInitializationController.InitializeLevelSelectionVisuals();
+        }
     }
 
     /// <summary>
