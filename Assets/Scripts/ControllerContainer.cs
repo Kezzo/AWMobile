@@ -28,15 +28,13 @@ public static class ControllerContainer
 
     /// <summary>
     /// Resets this instance.
+    /// Will only reset stateful controller.
     /// </summary>
     public static void Reset()
     {
-        m_mapTileGenerationService = new MapTileGenerationService();
         m_monoBehaviourRegistry = new MonoBehaviourRegistry();
         m_battleController = new BattleController();
         m_tileNavigationController = new TileNavigationController();
-        m_unitBalancingProvider = new UnitBalancingProvider();
-        m_assetDatabaseService = new AssetDatabaseService();
     }
 
 #pragma warning restore 649

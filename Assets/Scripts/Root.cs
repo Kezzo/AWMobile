@@ -73,55 +73,23 @@ public class Root : MonoBehaviour
     private void Initialize(Action initializationDone)
     {
         ControllerContainer.UnitBalancingProvider.InitializeBalancingData();
-
-        SceneLoading.LoadSceneAsync("BattlegroundUI", null, () =>
-        {
-            SceneLoading.LoadSceneAsync(m_initialSceneToLoad, null, () =>
-            {
-                MapTileGeneratorEditor mapTileGeneratorEditor;
-
-                if (!ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
-                {
-                    Debug.Log("MapTileGeneratorEditor can't be retrieved.");
-                    return;
-                }
-
-                MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData("LevelSelection");
-                ControllerContainer.MonoBehaviourRegistry.Get<BattlegroundUI>().ChangeVisibilityOfEndTurnButton(false);
-
-                ControllerContainer.BattleController.IntializeBattle(mapGenerationData.m_Teams);
-
-                mapTileGeneratorEditor.LoadExistingMap(mapGenerationData);
-                ControllerContainer.BattleController.StartBattle();
-
-                ControllerContainer.MonoBehaviourRegistry.Get<SelectionControls>().IsInLevelSelection = true;
-
-                if (initializationDone != null)
-                {
-                    initializationDone();
-                }
-            });
-        });
+        m_sceneLoadingService.LoadToLevelSelection(initializationDone);
     }
 
     /// <summary>
     /// Restarts the game.
     /// </summary>
-    /// <param name="onGameRestart">Called when the game was restarted.</param>
-    public void RestartGame(Action onGameRestart)
+    /// <param name="onGameRestarted">Called when the game was restarted.</param>
+    public void RestartGame(Action onGameRestarted)
     {
-        SceneLoading.UnloadSceneAsync("BattlegroundUI", null, () =>
+        m_sceneLoadingService.UnloadExistingScenes(() =>
         {
-            SceneLoading.UnloadSceneAsync("Battleground", null, () =>
+            Initialize(() =>
             {
-                ControllerContainer.Reset();
-                Initialize(() =>
+                if (onGameRestarted != null)
                 {
-                    if (onGameRestart != null)
-                    {
-                        onGameRestart();
-                    }
-                });
+                    onGameRestarted();
+                }
             });
         });
     }

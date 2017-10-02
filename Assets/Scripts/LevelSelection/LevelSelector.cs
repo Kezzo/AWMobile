@@ -30,19 +30,32 @@ public class LevelSelector : MonoBehaviour
     {
         Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
 
+        if (m_inputBlocker == null)
+        {
+            m_inputBlocker = new InputBlocker();
+        }
+
         // There is always only one unit in the level selection.
         BaseUnit levelSelectionUnit = ControllerContainer.BattleController.RegisteredTeams[TeamColor.Blue][0];
+
+        if (levelSelectionUnit.CurrentSimplifiedPosition == m_rootMapTile.m_SimplifiedMapPosition)
+        {
+            //TODO: Enter level.
+            Debug.Log(string.Format("Entering level: {0}", m_levelName));
+            m_inputBlocker.ChangeBattleControlInput(true);
+
+            SwitchToLevel();
+
+            return;
+        }
+
+        Debug.Log(string.Format("Moving to level selector of level: {0}", m_levelName));
 
         Dictionary<Vector2, PathfindingNodeDebugData> dontCare;
 
         var routeToLevelSelector = ControllerContainer.TileNavigationController.GetBestWayToDestination(
             levelSelectionUnit.CurrentSimplifiedPosition, m_rootMapTile.m_SimplifiedMapPosition,
             new LevelSelectionMovementCostResolver(), out dontCare);
-
-        if (m_inputBlocker == null)
-        {
-            m_inputBlocker = new InputBlocker();
-        }
 
         m_inputBlocker.ChangeBattleControlInput(true);
         //TODO: hide opened level info.
@@ -88,5 +101,25 @@ public class LevelSelector : MonoBehaviour
         {
             navigationController.GetMapTile(routeMarkerDefinition.Key).InstantiateLevelSelectionRoute(routeMarkerDefinition.Value);
         }
+    }
+
+    /// <summary>
+    /// Switches to the level of this selector.
+    /// </summary>
+    private void SwitchToLevel()
+    {
+        Root.Instance.LoadingUi.Show();
+
+        Root.Instance.CoroutineHelper.CallDelayed(Root.Instance, 1.05f, () =>
+        {
+            Root.Instance.SceneLoading.UnloadExistingScenes(() =>
+            {
+                Root.Instance.SceneLoading.LoadToLevel(m_levelName, () =>
+                {
+                    m_inputBlocker.ChangeBattleControlInput(false);
+                    Root.Instance.LoadingUi.Hide();
+                });
+            });
+        });
     }
 }
