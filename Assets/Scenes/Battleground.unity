@@ -314,7 +314,17 @@ Prefab:
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
       propertyPath: m_levelToEdit
-      value: LevelSelection
+      value: Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_levelSize.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_levelSize.y
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c615998201b0c9446abfe997af2386b0, type: 2}
