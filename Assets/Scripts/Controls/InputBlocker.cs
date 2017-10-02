@@ -8,18 +8,25 @@ public class InputBlocker
     /// Changes the battle control input.
     /// </summary>
     /// <param name="block">if set to <c>true</c> [block].</param>
-    public void ChangeBattleControlInput(bool block)
+    /// <param name="inputBlockMode">Determines which type of input should be blocked.</param>
+    public void ChangeBattleControlInput(bool block, InputBlockMode inputBlockMode = InputBlockMode.All)
     {
-        CameraControls cameraControls;
-        if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraControls))
+        if (inputBlockMode == InputBlockMode.All || inputBlockMode == InputBlockMode.CameraOnly)
         {
-            cameraControls.IsBlocked = block;
+            CameraControls cameraControls;
+            if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraControls))
+            {
+                cameraControls.IsBlocked = block;
+            }
         }
 
-        SelectionControls selectionControls;
-        if (ControllerContainer.MonoBehaviourRegistry.TryGet(out selectionControls))
+        if (inputBlockMode == InputBlockMode.All || inputBlockMode == InputBlockMode.SelectionOnly)
         {
-            selectionControls.IsBlocked = block;
+            SelectionControls selectionControls;
+            if (ControllerContainer.MonoBehaviourRegistry.TryGet(out selectionControls))
+            {
+                selectionControls.IsBlocked = block;
+            }
         }
     }
 }

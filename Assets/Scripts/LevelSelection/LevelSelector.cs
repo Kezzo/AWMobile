@@ -57,7 +57,7 @@ public class LevelSelector : MonoBehaviour
             levelSelectionUnit.CurrentSimplifiedPosition, m_rootMapTile.m_SimplifiedMapPosition,
             new LevelSelectionMovementCostResolver(), out dontCare);
 
-        m_inputBlocker.ChangeBattleControlInput(true);
+        m_inputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
         //TODO: hide opened level info.
         //TODO: Inject additional action to get maptile type updates while moving to switch visual of unit.
         levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, tile =>
@@ -76,7 +76,7 @@ public class LevelSelector : MonoBehaviour
 
         }, () =>
         {
-            m_inputBlocker.ChangeBattleControlInput(false);
+            m_inputBlocker.ChangeBattleControlInput(false, InputBlockMode.SelectionOnly);
             //TODO: display level info.
         });
     }
