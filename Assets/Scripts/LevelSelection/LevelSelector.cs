@@ -61,7 +61,9 @@ public class LevelSelector : MonoBehaviour
                 case MapTileType.Forest:
                     levelSelectionUnit.ChangeVisualsTo(UnitType.BattleTank);
                     break;
-                case MapTileType.Water: //TODO: Change to ship once visual are in.
+                case MapTileType.Water:
+                    levelSelectionUnit.ChangeVisualsTo(UnitType.WarShip);
+                    break;
                 case MapTileType.Mountain:
                     levelSelectionUnit.ChangeVisualsTo(UnitType.Bomber);
                     break;

@@ -31,3 +31,5 @@ MonoBehaviour:
     m_Damage: 8
   - m_UnitType: 2
     m_Damage: 8
+  - m_UnitType: 4
+    m_Damage: 8

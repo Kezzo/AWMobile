@@ -9,27 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 657ba65e0ad6a4e408f7cd97f5bf15ab, type: 3}
-  m_Name: AntiAirTank
+  m_Name: WarShip
   m_EditorClassIdentifier: 
-  m_UnitType: 2
-  m_UnitMetaType: 0
+  m_UnitType: 4
+  m_UnitMetaType: 2
   m_MovementRangePerRound: 3
   m_WalkableMapTileTypes:
-  - m_MapTileType: 1
+  - m_MapTileType: 2
     m_MovementCost: 1
-  - m_MapTileType: 3
-    m_MovementCost: 2
-  - m_MapTileType: 4
-    m_MovementCost: 2
-  m_Health: 4
-  m_AttackRange: 3
-  m_AttackableUnitMetaTypes: 010000000000000002000000
+  m_Health: 8
+  m_AttackRange: 2
+  m_AttackableUnitMetaTypes: 0000000002000000
   m_DamageOnUnitsList:
   - m_UnitType: 1
-    m_Damage: 1
+    m_Damage: 2
   - m_UnitType: 2
-    m_Damage: 2
-  - m_UnitType: 3
-    m_Damage: 4
+    m_Damage: 3
   - m_UnitType: 4
-    m_Damage: 2
+    m_Damage: 3

@@ -269,6 +269,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4542102564054624, guid: c615998201b0c9446abfe997af2386b0, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -326,6 +336,51 @@ Prefab:
       propertyPath: m_levelSize.y
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_UnitType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_UnitMesh
+      value: 
+      objectReference: {fileID: 4300000, guid: cc112b2b6781e27408c44a3861f3e77c, type: 3}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.data[0].m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: b1107c384276a5c43b581053dbc10082, type: 2}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.data[1].m_TeamColor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.data[1].m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: d1c2b2c80c983274f80d14e38452dd86, type: 2}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.data[2].m_TeamColor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.data[2].m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 845bd83a3b01bd54c840c79b23602230, type: 2}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.data[3].m_TeamColor
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.data[3].m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: ad30afbc231f4c94f9a638cb38e62837, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c615998201b0c9446abfe997af2386b0, type: 2}
   m_IsPrefabParent: 0
