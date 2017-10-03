@@ -558,17 +558,14 @@ public class BaseUnit : MonoBehaviour
     /// <returns></returns>
     private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, Action<BaseMapTile> onReachedTile, Action onMoveFinished)
     {
-        Vector3 startPosition = this.transform.position;
-        Vector3 endPosition = ControllerContainer.TileNavigationController.GetMapTile(route[route.Count - 1]).UnitRoot.position;
-
         // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
         for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
         {
             Vector2 nodeToMoveTo = route[nodeIndex];
             Vector2 currentNode = route[nodeIndex - 1];
 
-            yield return MoveToNeighborNode(currentNode, nodeToMoveTo, 
-                (endPosition - startPosition).magnitude, endPosition, onReachedTile);
+            yield return MoveToNeighborNode(currentNode, nodeToMoveTo,
+                nodeIndex == 1, nodeIndex == route.Count - 1, onReachedTile);
 
             if (nodeIndex == route.Count - 1)
             {
@@ -603,11 +600,17 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="startNode">The start node.</param>
     /// <param name="destinationNode">The destination node.</param>
-    /// <param name="startDistanceToEndPosition">The distance to the end position when the movement was started. Used to calculate smooth movement.</param>
-    /// <param name="endWorldPosition">The last position (in world-coordinates) the unit has to move. Used to calculate smooth movement.</param>
+    /// <param name="isMovingFromFirstTile">
+    /// Determines if this method is moving from the first tile.
+    /// Needed to properly evaluate movement animation curve the same for all distances.
+    /// </param>
+    /// <param name="isMovingToLastTile">
+    /// Determines if this method is moving to the last tile.
+    /// Needed to properly evaluate movement animation curve the same for all distances.
+    /// </param>
     /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
-    public IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, float startDistanceToEndPosition, 
-        Vector3 endWorldPosition, Action<BaseMapTile> onReachedTile)
+    public IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, 
+        bool isMovingFromFirstTile, bool isMovingToLastTile, Action<BaseMapTile> onReachedTile)
     {
         Vector2 nodePositionDiff = destinationNode - startNode;
 
@@ -632,18 +635,33 @@ public class BaseUnit : MonoBehaviour
         }
 
         bool reachedMapTile = false;
+        float distanceToNeighbourTile = (targetWorldPosition - transform.position).magnitude;
+        float startDistanceToNeighbourTile = distanceToNeighbourTile;
 
         // Move to world position
         while (true)
         {
-            float currentDistanceToLastMaptile = (endWorldPosition - transform.position).magnitude;
-            float normalizedDistanceToLastMaptile = currentDistanceToLastMaptile / startDistanceToEndPosition;
+            float animationCurveValue = 0.5f;
 
-            float movementStep = (m_worldMovementSpeed * m_movementAnimationCurve.Evaluate(normalizedDistanceToLastMaptile)) * Time.deltaTime;
+            if (isMovingFromFirstTile)
+            {
+                animationCurveValue = 0.5f - (distanceToNeighbourTile / startDistanceToNeighbourTile) / 2;
+
+                Debug.Log(string.Format("isMovingFromFirstTile: '{0}'", animationCurveValue));
+            }
+
+            if (isMovingToLastTile)
+            {
+                animationCurveValue = 1f - (distanceToNeighbourTile / startDistanceToNeighbourTile) / 2;
+
+                Debug.Log(string.Format("isMovingToLastTile: '{0}'", animationCurveValue));
+            }
+
+            float movementStep = (m_worldMovementSpeed * m_movementAnimationCurve.Evaluate(animationCurveValue)) * Time.deltaTime;
 
             transform.position = Vector3.MoveTowards(transform.position, targetWorldPosition, movementStep);
 
-            float distanceToNeighbourTile = (targetWorldPosition - transform.position).magnitude;
+            distanceToNeighbourTile = (targetWorldPosition - transform.position).magnitude;
 
             if (!reachedMapTile && distanceToNeighbourTile <= 1f)
             {

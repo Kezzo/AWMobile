@@ -840,22 +840,22 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.14533679
-      value: 0.99909157
-      inSlope: 0.037048507
-      outSlope: 0.037048507
+      time: 0.24969855
+      value: 0.7999224
+      inSlope: 2.3661091
+      outSlope: 2.3661091
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.5022723
+      time: 0.49970603
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.8508145
-      value: 0.9985907
-      inSlope: -0.04182274
-      outSlope: -0.04182274
+      time: 0.7499178
+      value: 0.8001088
+      inSlope: -2.3218741
+      outSlope: -2.3218741
       tangentMode: 0
     - serializedVersion: 2
       time: 1.0029072
