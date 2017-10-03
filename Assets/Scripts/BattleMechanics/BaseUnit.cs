@@ -179,14 +179,14 @@ public class BaseUnit : MonoBehaviour
     /// <param name="onBattleSequenceFinished">The on battle sequence finished.</param>
     private void PrepareAndShowBattleSequence(BaseUnit attackedUnit, int damageToAttackedUnit, Action onBattleSequenceFinished)
     {
-        BattlegroundUI battlegroundUi;
+        BattleUI battleUi;
 
-        if (ControllerContainer.MonoBehaviourRegistry.TryGet(out battlegroundUi))
+        if (ControllerContainer.MonoBehaviourRegistry.TryGet(out battleUi))
         {
             MapGenerationData.MapTile attackingUnitData = GetMapTileDataFromUnit(this);
             MapGenerationData.MapTile attackedUnitData = GetMapTileDataFromUnit(attackedUnit);
 
-            battlegroundUi.ShowBattleSequence(attackingUnitData, this.StatManagement.CurrentHealth,
+            battleUi.ShowBattleSequence(attackingUnitData, this.StatManagement.CurrentHealth,
                 attackedUnitData, attackedUnit.StatManagement.CurrentHealth, damageToAttackedUnit, onBattleSequenceFinished);
         }
     }

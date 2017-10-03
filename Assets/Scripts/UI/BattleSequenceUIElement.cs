@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Part of the BattlegroundUI.
+/// Part of the BattleUI.
 /// Handles initialization of the battle sequences.
 /// </summary>
 public class BattleSequenceUIElement : MonoBehaviour
@@ -46,8 +46,7 @@ public class BattleSequenceUIElement : MonoBehaviour
     public void InitializeAndStartSequence(MapGenerationData.MapTile leftMapTileData, int currentHealthOfLeftUnit,
         MapGenerationData.MapTile rightMapTileData, int currentHealthOfRightUnit, int damageDoneToRightUnit, Action onBattleSequenceFinished)
     {
-        InputBlocker inputBlocker = new InputBlocker();
-        inputBlocker.ChangeBattleControlInput(true);
+        ControllerContainer.InputBlocker.ChangeBattleControlInput(true);
 
         leftMapTileData.m_Unit.m_Orientation = CardinalDirection.East;
         m_leftBaseMapTile.InitializeVisually(leftMapTileData);
@@ -83,7 +82,7 @@ public class BattleSequenceUIElement : MonoBehaviour
                 onBattleSequenceFinished();
             }
 
-            inputBlocker.ChangeBattleControlInput(false);
+            ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
         });
     }
 

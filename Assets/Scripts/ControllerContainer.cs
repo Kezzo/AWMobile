@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿using System.Linq.Expressions;
+
+/// <summary>
 /// Container class that holds static instances of all controller and provides easy to them.
 /// </summary>
 public static class ControllerContainer
@@ -25,6 +27,9 @@ public static class ControllerContainer
 
     private static LevelSelectionInitializationController m_levelSelectionInitializationController;
     public static LevelSelectionInitializationController LevelSelectionInitializationController { get { return m_levelSelectionInitializationController ?? (m_levelSelectionInitializationController = new LevelSelectionInitializationController()); } }
+
+    private static InputBlocker m_inputBlocker;
+    public static InputBlocker InputBlocker { get { return m_inputBlocker ?? (m_inputBlocker = new InputBlocker()); } }
 
     /// <summary>
     /// Resets this instance.

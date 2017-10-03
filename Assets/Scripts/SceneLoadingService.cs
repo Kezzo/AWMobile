@@ -75,7 +75,7 @@ public class SceneLoadingService : MonoBehaviour
     {
         LoadToLevel("LevelSelection", () =>
         {
-            ControllerContainer.MonoBehaviourRegistry.Get<BattlegroundUI>().ChangeVisibilityOfEndTurnButton(false);
+            ControllerContainer.MonoBehaviourRegistry.Get<BattleUI>().ChangeVisibilityOfBattleUI(false);
             ControllerContainer.MonoBehaviourRegistry.Get<SelectionControls>().IsInLevelSelection = true;
 
             if (onLoadedToLevelSelection != null)
@@ -93,7 +93,7 @@ public class SceneLoadingService : MonoBehaviour
     public void LoadToLevel(string levelName, Action onLoadedToLevel)
     {
         //TODO: Implement loading progress display.
-        LoadSceneAsync("BattlegroundUI", null, () =>
+        LoadSceneAsync("BattleUI", null, () =>
         {
             LoadSceneAsync("Battleground", null, () =>
             {
@@ -125,7 +125,7 @@ public class SceneLoadingService : MonoBehaviour
     /// <param name="onScenesUnloaded">Invoked when the existing scene are unloaded.</param>
     public void UnloadExistingScenes(Action onScenesUnloaded)
     {
-        UnloadSceneAsync("BattlegroundUI", null, () =>
+        UnloadSceneAsync("BattleUI", null, () =>
         {
             UnloadSceneAsync("Battleground", null, () =>
             {

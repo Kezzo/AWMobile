@@ -4,13 +4,13 @@ using UnityEngine;
 /// <summary>
 /// Class to handle UI initialization and interaction in the Battleground
 /// </summary>
-public class BattlegroundUI : MonoBehaviour
+public class BattleUI : MonoBehaviour
 {
     [SerializeField]
-    private GameObject m_confirmMoveButton;
+    private GameObject m_endTurnButton;
 
     [SerializeField]
-    private GameObject m_endTurnButton;
+    private GameObject m_pauseButton;
 
     [SerializeField]
     private BattleSequenceUIElement m_battleSequenceUiElement;
@@ -18,15 +18,14 @@ public class BattlegroundUI : MonoBehaviour
     [SerializeField]
     private BattleResultUI m_battleResultUi;
 
-    private InputBlocker m_inputBlocker;
+    [SerializeField]
+    private BattlePauseUI m_battlePauseUi;
 
     private void Awake()
     {
         ControllerContainer.MonoBehaviourRegistry.Register(this);
-        ControllerContainer.BattleController.AddBattleStartedEvent("BattleGroundUI - Initialize", Initialize);
-        ControllerContainer.BattleController.AddBattleEndedEvent("BattleGroundUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
-
-        m_inputBlocker = new InputBlocker();
+        ControllerContainer.BattleController.AddBattleStartedEvent("BattleUI - Initialize", Initialize);
+        ControllerContainer.BattleController.AddBattleEndedEvent("BattleUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
     }
 
     /// <summary>
@@ -36,8 +35,8 @@ public class BattlegroundUI : MonoBehaviour
     private void Initialize(Team[] teamsThisBattle)
     {
         //TODO: Display team stats and show battle introduction etc.
-        ControllerContainer.BattleController.AddTurnStartEvent("BattleGroundUI - Initialize", teamToStartNext => 
-            ChangeVisibilityOfEndTurnButton(teamToStartNext.m_IsPlayersTeam));
+        ControllerContainer.BattleController.AddTurnStartEvent("BattleUI - Initialize", teamToStartNext =>
+            m_endTurnButton.SetActive(teamToStartNext.m_IsPlayersTeam));
     }
 
     /// <summary>
@@ -54,7 +53,7 @@ public class BattlegroundUI : MonoBehaviour
     {
         bool activateEndTurnButton = m_endTurnButton.activeSelf;
 
-        ChangeVisibilityOfEndTurnButton(false);
+        ChangeVisibilityOfBattleUI(false);
 
         m_battleSequenceUiElement.InitializeAndStartSequence(leftMapTileData, healthOfLeftUnit, 
             rightMapTileData, healthOfRightUnit, damageToRightUnit, () =>
@@ -66,27 +65,19 @@ public class BattlegroundUI : MonoBehaviour
 
                 if (activateEndTurnButton)
                 {
-                    ChangeVisibilityOfEndTurnButton(true);
+                    ChangeVisibilityOfBattleUI(true);
                 }
             });
-    }
-
-    /// <summary>
-    /// Changes the visibility of the confirm move button.
-    /// </summary>
-    /// <param name="setVisible">if set to <c>true</c> [set visible].</param>
-    public void ChangeVisibilityOfConfirmMoveButton(bool setVisible)
-    {
-        m_confirmMoveButton.SetActive(setVisible);
     }
 
     /// <summary>
     /// Changes the visibility of end turn button.
     /// </summary>
     /// <param name="setVisible">if set to <c>true</c> [set visible].</param>
-    public void ChangeVisibilityOfEndTurnButton(bool setVisible)
+    public void ChangeVisibilityOfBattleUI(bool setVisible)
     {
         m_endTurnButton.SetActive(setVisible);
+        m_pauseButton.SetActive(setVisible);
     }
 
     /// <summary>
@@ -95,20 +86,11 @@ public class BattlegroundUI : MonoBehaviour
     /// <param name="teamColorThatWon">The teamcolor of the team that won.</param>
     private void ShowBattleEndVisuals(TeamColor teamColorThatWon)
     {
-        m_inputBlocker.ChangeBattleControlInput(true);
-        ChangeVisibilityOfEndTurnButton(false);
+        ControllerContainer.InputBlocker.ChangeBattleControlInput(true);
+        ChangeVisibilityOfBattleUI(false);
 
         m_battleResultUi.Show(teamColorThatWon);
         // TODO: Improve visuals of ui
-        // TODO: Restart game when ok/retry button is pressed.
-    }
-
-    /// <summary>
-    /// Called when the confirm move button was pressed.
-    /// </summary>
-    public void OnConfirmMoveButtonPressed()
-    {
-        ControllerContainer.BattleController.OnConfirmMove();
     }
 
     /// <summary>
@@ -117,5 +99,14 @@ public class BattlegroundUI : MonoBehaviour
     public void OnEndTurnButtonPressed()
     {
         ControllerContainer.BattleController.EndCurrentTurn();
+    }
+
+    /// <summary>
+    /// Called when the pause button was pressed.
+    /// </summary>
+    public void OnPauseButtonPressed()
+    {
+        ChangeVisibilityOfBattleUI(false);
+        m_battlePauseUi.Show();
     }
 }

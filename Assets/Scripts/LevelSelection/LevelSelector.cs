@@ -7,8 +7,6 @@ public class LevelSelector : MonoBehaviour
     private BaseMapTile m_rootMapTile;
     public BaseMapTile RootMapTile { get { return m_rootMapTile; } }
 
-    private InputBlocker m_inputBlocker;
-
     /// <summary>
     /// Sets the name of the level this selector should start.
     /// </summary>
@@ -30,11 +28,6 @@ public class LevelSelector : MonoBehaviour
     {
         Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
 
-        if (m_inputBlocker == null)
-        {
-            m_inputBlocker = new InputBlocker();
-        }
-
         // There is always only one unit in the level selection.
         BaseUnit levelSelectionUnit = ControllerContainer.BattleController.RegisteredTeams[TeamColor.Blue][0];
 
@@ -42,7 +35,7 @@ public class LevelSelector : MonoBehaviour
         {
             //TODO: Enter level.
             Debug.Log(string.Format("Entering level: {0}", m_levelName));
-            m_inputBlocker.ChangeBattleControlInput(true);
+            ControllerContainer.InputBlocker.ChangeBattleControlInput(true);
 
             SwitchToLevel();
 
@@ -57,7 +50,7 @@ public class LevelSelector : MonoBehaviour
             levelSelectionUnit.CurrentSimplifiedPosition, m_rootMapTile.m_SimplifiedMapPosition,
             new LevelSelectionMovementCostResolver(), out dontCare);
 
-        m_inputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
+        ControllerContainer.InputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
         //TODO: hide opened level info.
         //TODO: Inject additional action to get maptile type updates while moving to switch visual of unit.
         levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, tile =>
@@ -76,7 +69,7 @@ public class LevelSelector : MonoBehaviour
 
         }, () =>
         {
-            m_inputBlocker.ChangeBattleControlInput(false, InputBlockMode.SelectionOnly);
+            ControllerContainer.InputBlocker.ChangeBattleControlInput(false, InputBlockMode.SelectionOnly);
             //TODO: display level info.
         });
     }
@@ -116,7 +109,7 @@ public class LevelSelector : MonoBehaviour
             {
                 Root.Instance.SceneLoading.LoadToLevel(m_levelName, () =>
                 {
-                    m_inputBlocker.ChangeBattleControlInput(false);
+                    ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
                     Root.Instance.LoadingUi.Hide();
                 });
             });

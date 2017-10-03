@@ -15,8 +15,6 @@ public class BattleResultUI : MonoBehaviour
     [SerializeField]
     private Animator m_animator;
 
-    private InputBlocker m_inputBlocker;
-
     /// <summary>
     /// Shows this UI.
     /// </summary>
@@ -33,12 +31,7 @@ public class BattleResultUI : MonoBehaviour
     /// </summary>
     public void OnOkButtonPressed()
     {
-        if (m_inputBlocker == null)
-        {
-            m_inputBlocker = new InputBlocker();
-        }
-
-        m_inputBlocker.ChangeBattleControlInput(true);
+        ControllerContainer.InputBlocker.ChangeBattleControlInput(true);
 
         Root.Instance.LoadingUi.Show();
 
@@ -48,7 +41,7 @@ public class BattleResultUI : MonoBehaviour
             {
                 Root.Instance.SceneLoading.LoadToLevelSelection(() =>
                 {
-                    m_inputBlocker.ChangeBattleControlInput(false);
+                    ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
                     Root.Instance.LoadingUi.Hide();
                 });
             });
