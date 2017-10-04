@@ -242,9 +242,10 @@ public class BaseUnit : MonoBehaviour
 
         m_meshFilter.mesh = mapTileGeneratorEditor.GetMeshOfUnitType(unitType);
         m_meshRenderer.material = mapTileGeneratorEditor.GetMaterialForTeamColor(unitType, TeamColor);
-        UnitType = unitType;
 
-        Debug.Log(string.Format("Changed unit visuals from '{0}' to '{1}'", unitType, UnitType));
+        Debug.Log(string.Format("Changed unit visuals from '{0}' to '{1}'", UnitType, unitType));
+
+        UnitType = unitType;
     }
 
     /// <summary>
@@ -646,15 +647,11 @@ public class BaseUnit : MonoBehaviour
             if (isMovingFromFirstTile)
             {
                 animationCurveValue = 0.5f - (distanceToNeighbourTile / startDistanceToNeighbourTile) / 2;
-
-                Debug.Log(string.Format("isMovingFromFirstTile: '{0}'", animationCurveValue));
             }
 
             if (isMovingToLastTile)
             {
                 animationCurveValue = 1f - (distanceToNeighbourTile / startDistanceToNeighbourTile) / 2;
-
-                Debug.Log(string.Format("isMovingToLastTile: '{0}'", animationCurveValue));
             }
 
             float movementStep = (m_worldMovementSpeed * m_movementAnimationCurve.Evaluate(animationCurveValue)) * Time.deltaTime;
