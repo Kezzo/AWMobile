@@ -31,6 +31,16 @@ public static class ControllerContainer
     private static InputBlocker m_inputBlocker;
     public static InputBlocker InputBlocker { get { return m_inputBlocker ?? (m_inputBlocker = new InputBlocker()); } }
 
+    private static PlayerProgressionService m_playerProgressionService;
+    public static PlayerProgressionService PlayerProgressionService
+    {
+        get
+        {
+            return m_playerProgressionService ?? 
+                (m_playerProgressionService = new PlayerProgressionService(new NewtonsoftJsonSerializer(), new PlayerPrefsStorageHelper()));
+        }
+    }
+
     /// <summary>
     /// Resets this instance.
     /// Will only reset stateful controller.
