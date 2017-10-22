@@ -551,6 +551,17 @@ public class BaseUnit : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets the position of this unit to the given <see cref="BaseMapTile"/>.
+    /// </summary>
+    /// <param name="mapTile">The base map tile to position the unit on.</param>
+    public void SetPositionTo(BaseMapTile mapTile)
+    {
+        this.transform.SetParent(mapTile.UnitRoot);
+        this.transform.localPosition = Vector3.zero;
+        m_currentSimplifiedPosition = mapTile.m_SimplifiedMapPosition;
+    }
+
+    /// <summary>
     /// Moves the along route.
     /// </summary>
     /// <param name="route">The route.</param>

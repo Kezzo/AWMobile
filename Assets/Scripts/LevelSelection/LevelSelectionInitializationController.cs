@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class LevelSelectionInitializationController
 {
@@ -38,12 +39,27 @@ public class LevelSelectionInitializationController
 
         while (true)
         {
+            bool lastLevelSelectorReached = false;
             LevelSelector levelSelectorToInitialize;
-            LevelSelector nextLevelSelector;
+            LevelSelector nextLevelSelector = null;
 
             // This breaks on the last level selector, because no route has to drawn from it.
             if (!m_registeredLevelSelectors.TryGetValue(levelSelectionCounter, out levelSelectorToInitialize) ||
                 !m_registeredLevelSelectors.TryGetValue(levelSelectionCounter + 1, out nextLevelSelector))
+            {
+                lastLevelSelectorReached = true;
+            }
+
+            if (levelSelectorToInitialize == null)
+            {
+                Debug.LogError(string.Format("Expected LevelSelector with order number '{0}' not found!", 
+                    levelSelectionCounter));
+                break;
+            }
+
+            levelSelectorToInitialize.ValidateLevelSelectionUnitsPosition();
+
+            if (lastLevelSelectorReached)
             {
                 break;
             }

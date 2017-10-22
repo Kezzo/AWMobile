@@ -4,8 +4,21 @@ using UnityEngine;
 public class LevelSelector : MonoBehaviour
 {
     private string m_levelName;
+    public string LevelName { get { return m_levelName; } }
+
     private BaseMapTile m_rootMapTile;
     public BaseMapTile RootMapTile { get { return m_rootMapTile; } }
+
+    private BaseUnit m_levelSelectionUnit;
+    private BaseUnit LevelSelectionUnit
+    {
+        get
+        {
+            // Lazily get and store level selection unit.
+            return m_levelSelectionUnit ?? 
+                (m_levelSelectionUnit = ControllerContainer.BattleController.RegisteredTeams[TeamColor.Blue][0]);
+        }
+    }
 
     /// <summary>
     /// Sets the name of the level this selector should start.
@@ -29,9 +42,9 @@ public class LevelSelector : MonoBehaviour
         Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
 
         // There is always only one unit in the level selection.
-        BaseUnit levelSelectionUnit = ControllerContainer.BattleController.RegisteredTeams[TeamColor.Blue][0];
+        BaseUnit levelSelectionUnit = LevelSelectionUnit;
 
-        if (levelSelectionUnit.CurrentSimplifiedPosition == m_rootMapTile.m_SimplifiedMapPosition)
+        if (LevelSelectionUnit.CurrentSimplifiedPosition == m_rootMapTile.m_SimplifiedMapPosition)
         {
             //TODO: Enter level.
             Debug.Log(string.Format("Entering level: {0}", m_levelName));
@@ -55,25 +68,34 @@ public class LevelSelector : MonoBehaviour
         //TODO: Inject additional action to get maptile type updates while moving to switch visual of unit.
         levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, tile =>
         {
-            switch (tile.MapTileType)
-            {
-                case MapTileType.Grass:
-                case MapTileType.Forest:
-                    levelSelectionUnit.ChangeVisualsTo(UnitType.BattleTank);
-                    break;
-                case MapTileType.Water:
-                    levelSelectionUnit.ChangeVisualsTo(UnitType.WarShip);
-                    break;
-                case MapTileType.Mountain:
-                    levelSelectionUnit.ChangeVisualsTo(UnitType.Bomber);
-                    break;
-            }
+            UpdateUnitVisuals(tile.MapTileType);
 
         }, () =>
         {
             ControllerContainer.InputBlocker.ChangeBattleControlInput(false, InputBlockMode.SelectionOnly);
             //TODO: display level info.
         });
+    }
+
+    /// <summary>
+    /// Updates the visuals of level selection unit, based on the given <see cref="MapTileType"/>.
+    /// </summary>
+    /// <param name="mapTileType">Type of the map tile.</param>
+    private void UpdateUnitVisuals(MapTileType mapTileType)
+    {
+        switch (mapTileType)
+        {
+            case MapTileType.Grass:
+            case MapTileType.Forest:
+                LevelSelectionUnit.ChangeVisualsTo(UnitType.BattleTank);
+                break;
+            case MapTileType.Water:
+                LevelSelectionUnit.ChangeVisualsTo(UnitType.WarShip);
+                break;
+            case MapTileType.Mountain:
+                LevelSelectionUnit.ChangeVisualsTo(UnitType.Bomber);
+                break;
+        }
     }
 
     /// <summary>
@@ -99,6 +121,19 @@ public class LevelSelector : MonoBehaviour
     }
 
     /// <summary>
+    /// Checks the level played level. When this level selector is representing that level, 
+    /// it'll position the level selection unit on it.
+    /// </summary>
+    public void ValidateLevelSelectionUnitsPosition()
+    {
+        if (m_levelName.Equals(ControllerContainer.PlayerProgressionService.LastPlayedLevel))
+        {
+            LevelSelectionUnit.SetPositionTo(m_rootMapTile);
+            UpdateUnitVisuals(m_rootMapTile.MapTileType);
+        }
+    }
+
+    /// <summary>
     /// Switches to the level of this selector.
     /// </summary>
     private void SwitchToLevel()
@@ -111,6 +146,7 @@ public class LevelSelector : MonoBehaviour
             {
                 Root.Instance.SceneLoading.LoadToLevel(m_levelName, () =>
                 {
+                    ControllerContainer.PlayerProgressionService.LastPlayedLevel = m_levelName;
                     ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
                     Root.Instance.LoadingUi.Hide();
                 });

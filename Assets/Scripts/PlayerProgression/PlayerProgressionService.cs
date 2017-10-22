@@ -6,9 +6,7 @@
 public class PlayerProgressionService
 {
     private readonly ISerializer m_serializer;
-
     private readonly IStorageHelper m_storageHelper;
-
     private readonly PlayerProgressionData m_latestPlayerProgressionData;
 
     /// <summary>
@@ -20,6 +18,7 @@ public class PlayerProgressionService
         {
             return m_latestPlayerProgressionData.LastPlayedLevelName;
         }
+
         set
         {
             m_latestPlayerProgressionData.LastPlayedLevelName = value;
@@ -47,8 +46,14 @@ public class PlayerProgressionService
     {
         string payloadFromStorage = m_storageHelper.GetData(StorageKey.PlayerProgression);
 
-        var playerProgressionData = string.IsNullOrEmpty(payloadFromStorage) ? 
-            new PlayerProgressionData() : m_serializer.Deserialize<PlayerProgressionData>(payloadFromStorage);
+        bool playerDataExistent = !string.IsNullOrEmpty(payloadFromStorage);
+        var playerProgressionData = playerDataExistent ?
+           m_serializer.Deserialize<PlayerProgressionData>(payloadFromStorage) : new PlayerProgressionData();
+
+        if (!playerDataExistent)
+        {
+            playerProgressionData.LastPlayedLevelName = "Level1";
+        }
 
         return playerProgressionData;
     }
