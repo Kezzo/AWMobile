@@ -144,9 +144,9 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 2100000, guid: a3d7dea83b20b8b4f91e5ef6594201a0, type: 2}
   m_StaticBatchInfo:
@@ -204,3 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fca2fbc7b8c88499d0664e21b535ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_levelFlagMeshRenderer: {fileID: 23915945125698526}
+  m_levelCompleteMaterial: {fileID: 2100000, guid: 26dd8ef3ed645e741b92b4360cd56089,
+    type: 2}
+  m_levelNotCompleteMaterial: {fileID: 2100000, guid: a3d7dea83b20b8b4f91e5ef6594201a0,
+    type: 2}

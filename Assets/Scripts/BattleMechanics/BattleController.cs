@@ -5,6 +5,7 @@ using UnityEngine;
 public class BattleController
 {
     private Team[] m_teamThisBattle;
+    private string m_levelNameOfBattle;
 
     // Defines the turn of one round. After the round ends and another battle turn begins, this gets reset to 0.
     private int m_subTurnCount;
@@ -29,9 +30,11 @@ public class BattleController
     /// Initializes a battle.
     /// </summary>
     /// <param name="teamsThisBattle">The teams this battle.</param>
-    public void IntializeBattle(Team[] teamsThisBattle)
+    /// <param name="levelName">The name of the level to initialize.</param>
+    public void IntializeBattle(Team[] teamsThisBattle, string levelName)
     {
         m_teamThisBattle = teamsThisBattle;
+        m_levelNameOfBattle = levelName;
         m_subTurnCount = 0;
         m_turnCount = 0;
 
@@ -87,6 +90,11 @@ public class BattleController
         // all units of a team is dead
         if (stillPlayingTeams.Count == 1)
         {
+            if (IsTeamWithColorPlayersTeam(stillPlayingTeams[0]))
+            {
+                ControllerContainer.PlayerProgressionService.TrackLevelAsCompleted(m_levelNameOfBattle);
+            }
+
             foreach (var onTeamWonEvent in m_onTeamWonEvents)
             {
                 onTeamWonEvent.Value(stillPlayingTeams[0]);
@@ -167,6 +175,23 @@ public class BattleController
     public Team GetCurrentlyPlayingTeam()
     {
         return m_teamThisBattle[m_subTurnCount];
+    }
+
+    /// <summary>
+    /// Determines if the given teamcolor is the color of the players team.
+    /// </summary>
+    /// <param name="playerTeamColor">Color of the player team.</param>
+    private bool IsTeamWithColorPlayersTeam(TeamColor playerTeamColor)
+    {
+        foreach (var team in m_teamThisBattle)
+        {
+            if (team.m_TeamColor == playerTeamColor)
+            {
+                return team.m_IsPlayersTeam;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

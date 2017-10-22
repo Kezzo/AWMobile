@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class LevelSelector : MonoBehaviour
 {
+    [SerializeField]
+    private MeshRenderer m_levelFlagMeshRenderer;
+
+    [SerializeField]
+    private Material m_levelCompleteMaterial;
+
+    [SerializeField]
+    private Material m_levelNotCompleteMaterial;
+
     private string m_levelName;
     public string LevelName { get { return m_levelName; } }
 
@@ -30,6 +39,10 @@ public class LevelSelector : MonoBehaviour
     {
         m_levelName = levelName;
         m_rootMapTile = rootMapTile;
+
+        // Color flag blue when level was completed; red otherwise
+        m_levelFlagMeshRenderer.material = ControllerContainer.PlayerProgressionService.IsLevelCompleted(levelName)
+            ? m_levelCompleteMaterial : m_levelNotCompleteMaterial;
 
         ControllerContainer.LevelSelectionInitializationController.RegisterLevelSelector(orderNumber, this);
     }

@@ -96,7 +96,8 @@ public class PlayerProgressionService
     /// </summary>
     public bool IsLevelCompleted(string nameOfLevelToCheck)
     {
-        return m_latestPlayerProgressionData.CompletedLevelNames.Contains(nameOfLevelToCheck);
+        return m_latestPlayerProgressionData.CompletedLevelNames != null &&
+            m_latestPlayerProgressionData.CompletedLevelNames.Contains(nameOfLevelToCheck);
     }
 
 #endregion

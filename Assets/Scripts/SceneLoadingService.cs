@@ -106,7 +106,7 @@ public class SceneLoadingService : MonoBehaviour
                 }
 
                 MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData(levelName);
-                ControllerContainer.BattleController.IntializeBattle(mapGenerationData.m_Teams);
+                ControllerContainer.BattleController.IntializeBattle(mapGenerationData.m_Teams, levelName);
 
                 mapTileGeneratorEditor.LoadExistingMap(mapGenerationData);
                 ControllerContainer.BattleController.StartBattle();
