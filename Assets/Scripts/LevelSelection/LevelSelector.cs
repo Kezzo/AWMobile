@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelSelector : MonoBehaviour
@@ -116,10 +117,11 @@ public class LevelSelector : MonoBehaviour
     /// It's assumed that a connection exists.
     /// </summary>
     /// <param name="levelSelector">The level selector to draw a route to.</param>
-    public void DrawRouteToLevelSelector(LevelSelector levelSelector)
+    /// <param name="isLastRoute">Determines if this drawn route is the last unlocked route leading to the newest level.</param>
+    public void DrawRouteToLevelSelector(LevelSelector levelSelector, bool isLastRoute)
     {
         var navigationController = ControllerContainer.TileNavigationController;
-        Dictionary <Vector2, PathfindingNodeDebugData> dontCare;
+        Dictionary<Vector2, PathfindingNodeDebugData> dontCare;
 
         var routeToLevelSelector = navigationController.GetBestWayToDestination(
             RootMapTile.m_SimplifiedMapPosition, levelSelector.RootMapTile.m_SimplifiedMapPosition,
@@ -127,10 +129,48 @@ public class LevelSelector : MonoBehaviour
 
         var routeMarkerDefinitions = navigationController.GetRouteMarkerDefinitions(routeToLevelSelector);
 
+        List<GameObject> routeGameObjects = new List<GameObject>();
         foreach (var routeMarkerDefinition in routeMarkerDefinitions)
         {
-            navigationController.GetMapTile(routeMarkerDefinition.Key).InstantiateLevelSelectionRoute(routeMarkerDefinition.Value);
+            GameObject instantiatedRoute = navigationController.GetMapTile(routeMarkerDefinition.Key).InstantiateLevelSelectionRoute(routeMarkerDefinition.Value);
+
+            if (instantiatedRoute != null)
+            {
+                routeGameObjects.Add(instantiatedRoute);
+            }
         }
+
+        if (isLastRoute)
+        {
+            StartCoroutine(ShowLevelSelectionRoute(routeGameObjects, levelSelector, 0.3f));
+        }
+        else
+        {
+            foreach (var routeGameObject in routeGameObjects)
+            {
+                routeGameObject.SetActive(true);
+            }
+
+            levelSelector.gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Displays an instantiated route to a level selector.
+    /// </summary>
+    /// <param name="routeGameObjects">The route objects to show.</param>
+    /// <param name="targetLevelSelector">The level selector the route leads to.</param>
+    /// <param name="displayDelay">The delay inbetween display an object of the route.</param>
+    private IEnumerator ShowLevelSelectionRoute(List<GameObject> routeGameObjects, LevelSelector targetLevelSelector, float displayDelay)
+    {
+        foreach (var routeGameObject in routeGameObjects)
+        {
+            yield return new WaitForSeconds(displayDelay);
+            routeGameObject.SetActive(true);
+        }
+        
+        yield return new WaitForSeconds(displayDelay);
+        targetLevelSelector.gameObject.SetActive(true);
     }
 
     /// <summary>

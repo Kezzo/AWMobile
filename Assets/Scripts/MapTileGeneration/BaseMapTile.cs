@@ -269,6 +269,7 @@ public class BaseMapTile : MonoBehaviour
             m_currentInstantiateLevelSelector.transform.localScale = Vector3.one;
 
             m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().Initialize(m_mapTileData.m_LevelNameToStart, m_levelSelectionOrder, this);
+            m_currentInstantiateLevelSelector.SetActive(false); // will be enabled when all levelselectors are initialized in this level selector is found to be unlocked.
         }           
     }
 
@@ -602,11 +603,11 @@ public class BaseMapTile : MonoBehaviour
     /// <summary>
     /// Instantiates a part of the level selection route.
     /// </summary>
-    public void InstantiateLevelSelectionRoute(RouteMarkerDefinition routeMarkerDefinition)
+    public GameObject InstantiateLevelSelectionRoute(RouteMarkerDefinition routeMarkerDefinition)
     {
         if (routeMarkerDefinition.RouteMarkerType == RouteMarkerType.Destination)
         {
-            return;
+            return null;
         }
 
         RouteMarkerMapping routeMarkerMappingToUse = m_levelSelectionRouteMarkerMappings.Find(
@@ -615,5 +616,8 @@ public class BaseMapTile : MonoBehaviour
         GameObject instatiatedRoute = Instantiate(routeMarkerMappingToUse.m_RouteMarkerPrefab, m_levelSelectionRoot);
         instatiatedRoute.transform.localPosition = Vector3.zero;
         instatiatedRoute.transform.rotation = Quaternion.Euler(routeMarkerDefinition.Rotation);
+        instatiatedRoute.SetActive(false);
+
+        return instatiatedRoute;
     }
 }

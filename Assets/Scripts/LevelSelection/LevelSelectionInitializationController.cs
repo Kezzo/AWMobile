@@ -57,6 +57,12 @@ public class LevelSelectionInitializationController
                 break;
             }
 
+            // First level selector should always be active.
+            if (levelSelectionCounter == 0)
+            {
+                levelSelectorToInitialize.gameObject.SetActive(true);
+            }
+
             levelSelectorToInitialize.ValidateLevelSelectionUnitsPosition();
 
             if (lastLevelSelectorReached)
@@ -64,7 +70,11 @@ public class LevelSelectionInitializationController
                 break;
             }
 
-            levelSelectorToInitialize.DrawRouteToLevelSelector(nextLevelSelector);
+            if (ControllerContainer.PlayerProgressionService.IsLevelCompleted(levelSelectorToInitialize.LevelName))
+            {
+                levelSelectorToInitialize.DrawRouteToLevelSelector(nextLevelSelector, 
+                    !ControllerContainer.PlayerProgressionService.IsLevelCompleted(nextLevelSelector.LevelName));
+            }
 
             levelSelectionCounter++;
         }
