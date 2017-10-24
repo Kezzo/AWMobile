@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -290,6 +291,27 @@ public class BaseMapTile : MonoBehaviour
             {
                 environmentInstantiateHelper.UpdateVisibilityOfEnvironment(visible);
             }
+        }
+    }
+
+    /// <summary>
+    /// Returns the meshfilter components of all generated maptile prefabs.
+    /// </summary>
+    public List<MeshFilter> GetMeshFilters()
+    {
+        return m_currentlyInstantiatedMapTiles.Select(
+            currentlyInstantiatedMapTile => currentlyInstantiatedMapTile.GetComponent<MeshFilter>()).ToList();
+    }
+
+    /// <summary>
+    /// This will remove all rendering components from the generated maptile prefabs.
+    /// </summary>
+    public void RemoveRenderingComponents()
+    {
+        foreach (var currentlyInstantiatedMapTile in m_currentlyInstantiatedMapTiles)
+        {
+            Destroy(currentlyInstantiatedMapTile.GetComponent<MeshRenderer>());
+            Destroy(currentlyInstantiatedMapTile.GetComponent<MeshFilter>());
         }
     }
 

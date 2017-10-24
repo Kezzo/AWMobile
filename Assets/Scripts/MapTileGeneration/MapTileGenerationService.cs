@@ -18,8 +18,10 @@ public class MapTileGenerationService
     public void LoadGeneratedMap(MapGenerationData mapGenerationData, GameObject prefab, Transform root)
     {
         ControllerContainer.TileNavigationController.Initialize(mapGenerationData.m_LevelSize);
-        Vector2 groupsToGenerate = new Vector2(mapGenerationData.m_LevelSize.x / mapGenerationData.m_MapTileGroupSize, 
+        Vector2 groupsToGenerate = new Vector2(mapGenerationData.m_LevelSize.x / mapGenerationData.m_MapTileGroupSize,
             mapGenerationData.m_LevelSize.y / mapGenerationData.m_MapTileGroupSize);
+
+        List<BaseMapTile> generatedMapTiles = new List<BaseMapTile>((int)(mapGenerationData.m_LevelSize.x * mapGenerationData.m_LevelSize.y));
 
         for (int xGroup = 0; xGroup < groupsToGenerate.x; xGroup++)
         {
@@ -39,7 +41,7 @@ public class MapTileGenerationService
                 rowRoot.AddComponent<BaseMapTileGroup>();
                 rowRoot.transform.SetParent(root);
                 rowRoot.transform.position = mapTileGroup.m_GroupPosition;
-                rowRoot.name = string.Format("MapTileGroup {0}x{1}",xGroup, zGroup);
+                rowRoot.name = string.Format("MapTileGroup {0}x{1}", xGroup, zGroup);
 
                 for (int x = 0; x < mapGenerationData.m_MapTileGroupSize; x++)
                 {
@@ -64,6 +66,8 @@ public class MapTileGenerationService
 
                             ControllerContainer.TileNavigationController.RegisterMapTile(simplifiedMapTilePosition, baseMapTile);
                             baseMapTile.Initialize(ref mapTile, simplifiedMapTilePosition);
+
+                            generatedMapTiles.Add(baseMapTile);
                         }
 
                         //Debug.LogFormat(levelTile, "Generated MapTile at simplified coordinate: '{0}'", 
@@ -76,6 +80,38 @@ public class MapTileGenerationService
         if (mapGenerationData.m_IsLevelSelection)
         {
             ControllerContainer.LevelSelectionInitializationController.InitializeLevelSelectionVisuals();
+        }
+
+        CombineMaptileMeshes(root, generatedMapTiles);
+    }
+
+    /// <summary>
+    /// Will get the meshes of all generated maptiles and combine them.
+    /// This is done for performance improvements.
+    /// </summary>
+    /// <param name="root">The root object under which all maptiles are parented. Will hold the combined mesh.</param>
+    /// <param name="generatedMapTiles">All generated map tiles. Needed to access the meshes to combine.</param>
+    private void CombineMaptileMeshes(Transform root, List<BaseMapTile> generatedMapTiles)
+    {
+        List<CombineInstance> combineInstances = new List<CombineInstance>();
+        foreach (var generatedMapTile in generatedMapTiles)
+        {
+            foreach (var meshFilter in generatedMapTile.GetMeshFilters())
+            {
+                combineInstances.Add(new CombineInstance
+                {
+                    mesh = meshFilter.sharedMesh,
+                    transform = meshFilter.transform.localToWorldMatrix
+                });
+            }
+        }
+
+        root.gameObject.AddComponent<MeshFilter>().mesh = new Mesh();
+        root.gameObject.GetComponent<MeshFilter>().mesh.CombineMeshes(combineInstances.ToArray());
+
+        foreach (var generatedMapTile in generatedMapTiles)
+        {
+            generatedMapTile.RemoveRenderingComponents();
         }
     }
 
