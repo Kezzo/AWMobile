@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerSettingsResetter
@@ -10,3 +11,4 @@ public class PlayerSettingsResetter
     }
 	
 }
+#endif
