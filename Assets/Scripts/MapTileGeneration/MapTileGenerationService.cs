@@ -82,7 +82,10 @@ public class MapTileGenerationService
             ControllerContainer.LevelSelectionInitializationController.InitializeLevelSelectionVisuals();
         }
 
-        CombineMaptileMeshes(root, generatedMapTiles);
+        if (Application.isPlaying)
+        {
+            CombineMaptileMeshes(root, generatedMapTiles);
+        }   
     }
 
     /// <summary>
