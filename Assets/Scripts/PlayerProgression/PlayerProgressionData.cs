@@ -17,4 +17,10 @@ public class PlayerProgressionData
     /// Needed to position the level selection unit at that level everytime the user enters the level selection.
     /// </summary>
     public string LastPlayedLevelName { get; set; }
+
+    /// <summary>
+    /// Holds the name of the last unlocked level.
+    /// Needed to display an unlocked animation for newly unlocked level.
+    /// </summary>
+    public string LastUnlockedLevelName { get; set; }
 }

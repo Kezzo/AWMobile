@@ -140,9 +140,10 @@ public class LevelSelector : MonoBehaviour
             }
         }
 
-        if (isLastRoute)
+        if (isLastRoute && !ControllerContainer.PlayerProgressionService.LastUnlockedLevel.Equals(levelSelector.LevelName))
         {
             StartCoroutine(ShowLevelSelectionRoute(routeGameObjects, levelSelector, 0.3f));
+            ControllerContainer.PlayerProgressionService.LastUnlockedLevel = levelSelector.LevelName;
         }
         else
         {

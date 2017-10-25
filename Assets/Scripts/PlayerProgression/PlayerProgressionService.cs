@@ -27,6 +27,20 @@ public class PlayerProgressionService
     }
 
     /// <summary>
+    /// Gets or sets the name of the last unlocked level.
+    /// </summary>
+    public string LastUnlockedLevel
+    {
+        get { return m_latestPlayerProgressionData.LastUnlockedLevelName; }
+
+        set
+        {
+            m_latestPlayerProgressionData.LastUnlockedLevelName = value;
+            UpdateStoredData();
+        }
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="PlayerProgressionService"/> class.
     /// </summary>
     /// <param name="serializer">The serializer used to serialize/deserialize the stored payload.</param>
@@ -46,13 +60,17 @@ public class PlayerProgressionService
     {
         string payloadFromStorage = m_storageHelper.GetData(StorageKey.PlayerProgression);
 
-        bool playerDataExistent = !string.IsNullOrEmpty(payloadFromStorage);
-        var playerProgressionData = playerDataExistent ?
+        var playerProgressionData = !string.IsNullOrEmpty(payloadFromStorage) ?
            m_serializer.Deserialize<PlayerProgressionData>(payloadFromStorage) : new PlayerProgressionData();
 
-        if (!playerDataExistent)
+        if (string.IsNullOrEmpty(playerProgressionData.LastPlayedLevelName))
         {
             playerProgressionData.LastPlayedLevelName = "Level1";
+        }
+
+        if (string.IsNullOrEmpty(playerProgressionData.LastUnlockedLevelName))
+        {
+            playerProgressionData.LastUnlockedLevelName = "Level1";
         }
 
         return playerProgressionData;
