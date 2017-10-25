@@ -1571,8 +1571,8 @@ MonoBehaviour:
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
   m_MapCloudShadowData:
-    m_PoolSize: 0
-    m_MinVisibleClouds: 0
-    m_MaxLeftSpawnPosition: 0
-    m_MaxRightSpawnPosition: 0
-    m_FlyingDistance: 0
+    m_PoolSize: 40
+    m_MinVisibleClouds: 30
+    m_MaxLeftSpawnPosition: -25
+    m_MaxRightSpawnPosition: 25
+    m_FlyingDistance: 60
