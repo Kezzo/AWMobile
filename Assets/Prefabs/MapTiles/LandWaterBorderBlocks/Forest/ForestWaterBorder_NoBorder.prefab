@@ -216,7 +216,8 @@ MonoBehaviour:
   - m_PlacementRoot: {fileID: 4170493356161148}
     m_HideWhenUnitIsOnTile: 0
   m_prefabsToInstantiate:
-  - m_Prefab: {fileID: 1252851182569692, guid: 7679bed2fed42924784327d2ed74a438, type: 2}
+  - m_PropType: 1
+    m_Prefab: {fileID: 1252851182569692, guid: 7679bed2fed42924784327d2ed74a438, type: 2}
     m_RandomWeight: 2
     m_RotateXAxis: 1
     m_RotateYAxis: 1
@@ -224,7 +225,8 @@ MonoBehaviour:
     m_ScaleX: {x: 0.8, y: 1.2}
     m_ScaleY: {x: 0.8, y: 1.2}
     m_ScaleZ: {x: 0.8, y: 1.2}
-  - m_Prefab: {fileID: 1614538852484488, guid: 2d0c86f2aa22c79498279d3ea353327a, type: 2}
+  - m_PropType: 0
+    m_Prefab: {fileID: 1614538852484488, guid: 2d0c86f2aa22c79498279d3ea353327a, type: 2}
     m_RandomWeight: 10
     m_RotateXAxis: 0
     m_RotateYAxis: 1

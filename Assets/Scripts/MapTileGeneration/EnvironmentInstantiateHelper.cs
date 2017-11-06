@@ -27,6 +27,7 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
     private class EnvironmentInstantiateSettings
     {
 #pragma warning disable 649
+        public EnvironmentPropType m_PropType;
         public GameObject m_Prefab;
         public int m_RandomWeight;
 
@@ -39,11 +40,18 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
         public Vector2 m_ScaleZ;
 #pragma warning restore 649
     }
+    
 
     [SerializeField]
     private int m_maxRandomRange;
 
-    private List<GameObject> m_currentlyInstantiatedPrefabs;
+    private Dictionary<EnvironmentPropType, List<InstantiatedEnvironmentProp>> m_currentlyInstantiatedPrefabs;
+
+    private struct InstantiatedEnvironmentProp
+    {
+        public bool m_HiddenWhenUnitIsOnTile;
+        public GameObject m_InstantiatedPrefab;
+    }
 
     /// <summary>
     /// Instantiates the serialized environment prefabs under the defines transform roots,
@@ -56,7 +64,7 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
             return;
         }
 
-        m_currentlyInstantiatedPrefabs = new List<GameObject>();
+        m_currentlyInstantiatedPrefabs = new Dictionary<EnvironmentPropType, List<InstantiatedEnvironmentProp>>();
 
         for (int i = 0; i < m_possiblePlacementPosition.Count; i++)
         {
@@ -100,7 +108,20 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
                 Random.Range(prefabToInstantiate.m_ScaleY.x, prefabToInstantiate.m_ScaleY.y),
                 Random.Range(prefabToInstantiate.m_ScaleZ.x, prefabToInstantiate.m_ScaleZ.y));
 
-            m_currentlyInstantiatedPrefabs.Add(instantiatedPrefab);
+            var instantiatedProp = new InstantiatedEnvironmentProp
+            {
+                m_HiddenWhenUnitIsOnTile = m_possiblePlacementPosition[i].m_HideWhenUnitIsOnTile,
+                m_InstantiatedPrefab = instantiatedPrefab
+            };
+
+            if (m_currentlyInstantiatedPrefabs.ContainsKey(prefabToInstantiate.m_PropType))
+            {
+                m_currentlyInstantiatedPrefabs[prefabToInstantiate.m_PropType].Add(instantiatedProp);
+            }
+            else
+            {
+                m_currentlyInstantiatedPrefabs.Add(prefabToInstantiate.m_PropType, new List<InstantiatedEnvironmentProp> { instantiatedProp });
+            }
         }
     }
 
@@ -114,14 +135,46 @@ public class EnvironmentInstantiateHelper : MonoBehaviour
             return;
         }
 
-        for (int i = m_currentlyInstantiatedPrefabs.Count - 1; i >= 0; i--)
+        foreach (var currentlyInstantiatedPrefab in m_currentlyInstantiatedPrefabs)
         {
+            for (int i = currentlyInstantiatedPrefab.Value.Count - 1; i >= 0; i--)
+            {
 #if UNITY_EDITOR
-            DestroyImmediate(m_currentlyInstantiatedPrefabs[i]);
+                DestroyImmediate(currentlyInstantiatedPrefab.Value[i].m_InstantiatedPrefab);
 #else
-            Destroy(m_currentlyInstantiatedPrefabs[i]);
+                Destroy(currentlyInstantiatedPrefab.Value[i].m_InstantiatedPrefab);
 #endif
+
+                currentlyInstantiatedPrefab.Value.RemoveAt(i);
+            }
         }
+    }
+
+    /// <summary>
+    /// Returns the mesh filter components of all generated props by their type as key.
+    /// </summary>
+    public Dictionary<EnvironmentPropType, List<GameObject>> GetMergeablePropsByType()
+    {
+        Dictionary <EnvironmentPropType, List<GameObject>> meshFiltersByPropType = 
+            new Dictionary<EnvironmentPropType, List<GameObject>>(m_currentlyInstantiatedPrefabs.Count);
+
+        foreach (var currentlyInstantiatedPrefabPair in m_currentlyInstantiatedPrefabs)
+        {
+            foreach (var environmentProp in currentlyInstantiatedPrefabPair.Value)
+            {
+                if (!environmentProp.m_HiddenWhenUnitIsOnTile)
+                {
+                    if (!meshFiltersByPropType.ContainsKey(currentlyInstantiatedPrefabPair.Key))
+                    {
+                        meshFiltersByPropType.Add(currentlyInstantiatedPrefabPair.Key, new List<GameObject>());
+                    }
+
+                    meshFiltersByPropType[currentlyInstantiatedPrefabPair.Key].Add(environmentProp.m_InstantiatedPrefab);
+                }
+            }
+        }
+
+        return meshFiltersByPropType;
     }
 
     /// <summary>

@@ -85,6 +85,7 @@ public class MapTileGenerationService
         if (Application.isPlaying)
         {
             CombineMaptileMeshes(root, generatedMapTiles);
+            CombineEnvironmentPropMeshes(root, generatedMapTiles);
         }   
     }
 
@@ -115,6 +116,81 @@ public class MapTileGenerationService
         foreach (var generatedMapTile in generatedMapTiles)
         {
             generatedMapTile.RemoveRenderingComponents();
+        }
+    }
+
+    /// <summary>
+    /// Combines the environment prop meshes of the given maptiles.
+    /// </summary>
+    /// <param name="root">The root to get the root transform from.</param>
+    /// <param name="generatedMapTiles">The generated map tiles.</param>
+    private void CombineEnvironmentPropMeshes(Transform root, List<BaseMapTile> generatedMapTiles)
+    {
+        Dictionary<EnvironmentPropType, List<GameObject>> mergeableEnvironmentProps = new Dictionary<EnvironmentPropType, List<GameObject>>();
+           
+        // Get mergeable environment props per type
+        foreach (var generatedMapTile in generatedMapTiles)
+        {
+            foreach (var environmentInstantiateHelper in generatedMapTile.EnvironmentInstantiateHelper)
+            {
+                if (environmentInstantiateHelper == null)
+                {
+                    continue;
+                }
+
+                foreach (var environmentProp in environmentInstantiateHelper.GetMergeablePropsByType())
+                {
+                    if (!mergeableEnvironmentProps.ContainsKey(environmentProp.Key))
+                    {
+                        mergeableEnvironmentProps.Add(environmentProp.Key, new List<GameObject>());
+                    }
+
+                    mergeableEnvironmentProps[environmentProp.Key].AddRange(environmentProp.Value);
+                }
+            }
+        }
+
+        Dictionary<EnvironmentPropType, List<CombineInstance>> combineInstancesByType = new Dictionary<EnvironmentPropType, List<CombineInstance>>();
+
+        MeshFilter meshFilter = null;
+
+        // Create a list of combine instance per environment type
+        foreach (var mergeableEnvironmentProp in mergeableEnvironmentProps)
+        {
+            if (!combineInstancesByType.ContainsKey(mergeableEnvironmentProp.Key))
+            {
+                combineInstancesByType.Add(mergeableEnvironmentProp.Key, new List<CombineInstance>());
+            }
+
+            foreach (var environmentProp in mergeableEnvironmentProp.Value)
+            {
+                meshFilter = environmentProp.GetComponent<MeshFilter>();
+
+                combineInstancesByType[mergeableEnvironmentProp.Key].Add(new CombineInstance
+                {
+                    mesh = meshFilter.sharedMesh,
+                    transform = meshFilter.transform.localToWorldMatrix
+                });
+            }
+        }
+
+        EnvironmentPropRootHelper environmentPropRootHelper = root.GetComponent<EnvironmentPropRootHelper>();
+
+        // Combine meshes of the same environment type.
+        foreach (var combineInstances in combineInstancesByType)
+        {
+            Transform environmentRoot = environmentPropRootHelper.GetEnvironmentPropTypeRoot(combineInstances.Key);
+
+            environmentRoot.gameObject.AddComponent<MeshFilter>().mesh = new Mesh();
+            environmentRoot.gameObject.GetComponent<MeshFilter>().mesh.CombineMeshes(combineInstances.Value.ToArray());
+        }
+
+        foreach (var mergeableEnvironmentProp in mergeableEnvironmentProps)
+        {
+            foreach (var gameObject in mergeableEnvironmentProp.Value)
+            {
+                environmentPropRootHelper.RemoveRenderingComponents(gameObject);
+            }
         }
     }
 

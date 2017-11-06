@@ -87,8 +87,10 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private MeshFilter m_attackRangeMeshFilter;
 
+    #endregion
+
     private List<EnvironmentInstantiateHelper> m_environmentInstantiateHelper;
-    private List<EnvironmentInstantiateHelper> EnvironmentInstantiateHelper
+    public List<EnvironmentInstantiateHelper> EnvironmentInstantiateHelper
     {
         get
         {
@@ -106,7 +108,7 @@ public class BaseMapTile : MonoBehaviour
         }
     }
 
-    #endregion
+    
 
     private List<GameObject> m_currentlyInstantiatedMapTiles = new List<GameObject>();
     private MapTileType m_currentInstantiatedMapTileType;
