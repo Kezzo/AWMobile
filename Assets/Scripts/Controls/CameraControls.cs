@@ -15,6 +15,10 @@ public class CameraControls : MonoBehaviour
     private float m_scrollSpeed;
 
     [SerializeField]
+    [Range(0f, 1f)]
+    private float m_scrollSpeedOrthographic;
+
+    [SerializeField]
     [Range(0.01f, 0.2f)]
     private float m_zoomSpeed;
 
@@ -25,6 +29,14 @@ public class CameraControls : MonoBehaviour
     [SerializeField]
     [Range(-10.0f, 0.0f)]
     private float m_minZoomLevel;
+
+    [SerializeField]
+    [Range(0.0f, 20.0f)]
+    private float m_maxZoomLevelOrthographic;
+
+    [SerializeField]
+    [Range(0.0f, 20.0f)]
+    private float m_minZoomLevelOrthographic;
 
     [SerializeField]
     private Camera m_cameraToControl;
@@ -83,6 +95,8 @@ public class CameraControls : MonoBehaviour
         m_secondayCameraToControl.transform.localPosition = m_cameraToControl.transform.localPosition;
 
         ControllerContainer.BattleController.AddTurnStartEvent("CameraAutoZoom", ZoomCameraBasedOnTheCurrentTeam);
+
+        m_zoomLevel = CameraToControl.orthographic ? CameraToControl.orthographicSize : 0f;
     }
 
     /// <summary>
@@ -137,7 +151,9 @@ public class CameraControls : MonoBehaviour
 
                 float yPosition = m_cameraMover.position.y;
 
-                float scrollSpeed = m_scrollSpeed * Mathf.Clamp(Mathf.InverseLerp(m_minZoomLevel, m_maxZoomLevel, m_zoomLevel), 0.3f, 1f);
+                float scrollSpeed = (CameraToControl.orthographic ? m_scrollSpeedOrthographic : m_scrollSpeed) * Mathf.Clamp(Mathf.InverseLerp(
+                    CameraToControl.orthographic ? m_minZoomLevelOrthographic : m_minZoomLevel,
+                    CameraToControl.orthographic ? m_maxZoomLevelOrthographic : m_maxZoomLevel, m_zoomLevel), 0.3f, 1f);
 
                 m_cameraMover.localPosition += new Vector3(mouseDelta.x * scrollSpeed, mouseDelta.y * scrollSpeed, 0f);
                 m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
@@ -338,8 +354,9 @@ public class CameraControls : MonoBehaviour
     {
         if (cameraToZoom.orthographic)
         {
-            cameraToZoom.orthographicSize += zoomDelta;
-            cameraToZoom.orthographicSize = Mathf.Clamp(cameraToZoom.orthographicSize, .5f, 15.0f);
+            cameraToZoom.orthographicSize += zoomDelta * m_zoomSpeed;
+            cameraToZoom.orthographicSize = Mathf.Clamp(cameraToZoom.orthographicSize, m_minZoomLevelOrthographic, m_maxZoomLevelOrthographic);
+            m_zoomLevel = cameraToZoom.orthographicSize;
         }
         else
         {
