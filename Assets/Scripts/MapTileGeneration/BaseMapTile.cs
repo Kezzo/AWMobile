@@ -49,6 +49,10 @@ public class BaseMapTile : MonoBehaviour
     [SerializeField]
     private int m_levelSelectionOrder;
 
+    // the camera position when this level selector is in the view center. Used to focus a level selector.
+    [SerializeField]
+    private Vector3 m_centeredCameraPosition;
+
     [SerializeField]
     private List<RouteMarkerMapping> m_levelSelectionRouteMarkerMappings;
 
@@ -191,6 +195,7 @@ public class BaseMapTile : MonoBehaviour
         m_levelSelectionRouteType = m_mapTileData.m_LevelSelectionRouteType;
         m_levelNameToStart = m_mapTileData.m_LevelNameToStart;
         m_levelSelectionOrder = m_mapTileData.m_LevelSelectionOrder;
+        m_centeredCameraPosition = m_mapTileData.m_CenteredCameraPosition;
         m_mapGenService = ControllerContainer.MapTileGenerationService;
     }
 
@@ -249,8 +254,11 @@ public class BaseMapTile : MonoBehaviour
     /// </summary>
     public void ValidateLevelSelector(bool forceCreation = false)
     {
-        if (m_mapTileData == null || (!forceCreation && m_levelSelectionRouteType == m_mapTileData.m_LevelSelectionRouteType &&
-            string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart) && m_levelSelectionOrder == m_mapTileData.m_LevelSelectionOrder))
+        if (m_mapTileData == null || (!forceCreation && 
+            m_levelSelectionRouteType == m_mapTileData.m_LevelSelectionRouteType &&
+            string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart) && 
+            m_levelSelectionOrder == m_mapTileData.m_LevelSelectionOrder) && 
+            m_centeredCameraPosition == m_mapTileData.m_CenteredCameraPosition)
         {
             return;
         }
@@ -263,6 +271,7 @@ public class BaseMapTile : MonoBehaviour
         m_mapTileData.m_LevelSelectionRouteType = m_levelSelectionRouteType;
         m_mapTileData.m_LevelNameToStart = m_levelNameToStart;
         m_mapTileData.m_LevelSelectionOrder = m_levelSelectionOrder;
+        m_mapTileData.m_CenteredCameraPosition = m_centeredCameraPosition;
 
         if (m_levelSelectionRouteType == LevelSelectionRouteType.LevelSelector)
         {
@@ -271,7 +280,8 @@ public class BaseMapTile : MonoBehaviour
             m_currentInstantiateLevelSelector.transform.localPosition = Vector3.zero;
             m_currentInstantiateLevelSelector.transform.localScale = Vector3.one;
 
-            m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().Initialize(m_mapTileData.m_LevelNameToStart, m_levelSelectionOrder, this);
+            m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().Initialize(
+                m_mapTileData.m_LevelNameToStart, m_levelSelectionOrder, this, m_centeredCameraPosition);
             m_currentInstantiateLevelSelector.SetActive(false); // will be enabled when all levelselectors are initialized in this level selector is found to be unlocked.
         }           
     }

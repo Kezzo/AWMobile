@@ -30,16 +30,20 @@ public class LevelSelector : MonoBehaviour
         }
     }
 
+    private Vector3 m_centeredCameraPosition;
+
     /// <summary>
     /// Sets the name of the level this selector should start.
     /// </summary>
     /// <param name="levelName">Name of the level.</param>
     /// <param name="orderNumber">The order number of this level selector.</param>
     /// <param name="rootMapTile">The maptile this levelselector lives on.</param>
-    public void Initialize(string levelName, int orderNumber, BaseMapTile rootMapTile)
+    /// <param name="centeredCameraPosition">The position of the camera when this level selector is in the view center.</param>
+    public void Initialize(string levelName, int orderNumber, BaseMapTile rootMapTile, Vector3 centeredCameraPosition)
     {
         m_levelName = levelName;
         m_rootMapTile = rootMapTile;
+        m_centeredCameraPosition = centeredCameraPosition;
 
         // Color flag blue when level was completed; red otherwise
         m_levelFlagMeshRenderer.material = ControllerContainer.PlayerProgressionService.IsLevelCompleted(levelName)
@@ -184,6 +188,8 @@ public class LevelSelector : MonoBehaviour
         {
             LevelSelectionUnit.SetPositionTo(m_rootMapTile);
             UpdateUnitVisuals(m_rootMapTile.MapTileType);
+
+            ControllerContainer.MonoBehaviourRegistry.Get<CameraControls>().SetCameraPositionTo(m_centeredCameraPosition);
         }
     }
 

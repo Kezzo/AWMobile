@@ -65,6 +65,7 @@ public class MapGenerationData : ScriptableObject
         public LevelSelectionRouteType m_LevelSelectionRouteType;
         public string m_LevelNameToStart;
         public int m_LevelSelectionOrder;
+        public Vector3 m_CenteredCameraPosition;
 
         public override string ToString()
         {

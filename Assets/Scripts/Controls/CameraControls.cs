@@ -368,6 +368,15 @@ public class CameraControls : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets the position of the camera mover to the given vector.
+    /// </summary>
+    /// <param name="cameraPosition">The position to set the camera to.</param>
+    public void SetCameraPositionTo(Vector3 cameraPosition)
+    {
+        m_cameraMover.localPosition = cameraPosition;
+    }
+
+    /// <summary>
     /// Moves the Camera to look at position.
     /// </summary>
     /// <param name="targetPos">The target position.</param>
