@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AWM.Enums;
+using AWM.System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -79,7 +80,7 @@ namespace AWM.MapTileGeneration
                 int randomValue = Random.Range(0, GetMaxRollWeight(m_prefabsToInstantiate));
                 EnvironmentInstantiateSettings prefabToInstantiate = null;
 
-                ShuffleList(ref m_prefabsToInstantiate);
+                ListHelper.ShuffleList(ref m_prefabsToInstantiate);
 
                 int checkedWeight = 0;
                 for (int j = 0; j < m_prefabsToInstantiate.Count; j++)
@@ -195,23 +196,6 @@ namespace AWM.MapTileGeneration
             }
 
             return maxRollWeight;
-        }
-
-        /// <summary>
-        /// Shuffles a given list.
-        /// </summary>
-        /// <param name="listToShuffle">The list to shuffle.</param>
-        private void ShuffleList<T>(ref List<T> listToShuffle) where T : class
-        {
-            int n = listToShuffle.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = Random.Range(0, n + 1);
-                T value = listToShuffle[k];
-                listToShuffle[k] = listToShuffle[n];
-                listToShuffle[n] = value;
-            }
         }
 
         /// <summary>

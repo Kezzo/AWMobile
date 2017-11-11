@@ -22,7 +22,7 @@ namespace AWM.AI
         /// <summary>
         /// Every Unit under this AI's Control.
         /// </summary>
-        private List<BaseUnit> m_myUnits;
+        private List<BaseUnit> m_aiUnits;
 
         /// <summary>
         /// Every Unit not under the AI's Control.
@@ -57,7 +57,7 @@ namespace AWM.AI
 
         private BaseUnit CurrentlyControlledUnit
         {
-            get { return this.m_myUnits[this.m_unitCounter]; }
+            get { return this.m_aiUnits[this.m_unitCounter]; }
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace AWM.AI
         public void StartTurn()
         {
             Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleController.RegisteredTeams;
-            m_myUnits = units[this.MyTeamColor];
+            m_aiUnits = units[this.MyTeamColor];
             m_enemyUnits = new List<BaseUnit>();
 
             foreach (var item in units)
@@ -77,6 +77,9 @@ namespace AWM.AI
                 }
             }
 
+            // to avoid same move sequence
+            ListHelper.ShuffleList(ref m_aiUnits);
+
             m_unitCounter = 0;
             MoveNextUnit();
         }
@@ -86,7 +89,7 @@ namespace AWM.AI
         /// </summary>
         private void MoveNextUnit()
         {
-            if (m_unitCounter < m_myUnits.Count)
+            if (m_unitCounter < m_aiUnits.Count)
             {
                 // To pause between each unit that was moved
                 Root.Instance.CoroutineHelper.CallDelayed(CurrentlyControlledUnit, 0.2f, () =>
