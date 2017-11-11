@@ -35,6 +35,12 @@ public class LevelSelectionInitializationController
     /// </summary>
     public void InitializeLevelSelectionVisuals()
     {
+        if (!Application.isPlaying)
+        {
+            // to not break the level generation editor.
+            return;
+        }
+
         int levelSelectionCounter = 0;
 
         while (true)
