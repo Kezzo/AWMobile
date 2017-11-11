@@ -217,6 +217,7 @@ namespace AWM.AI
 
             Vector2 positionOfCurrentUnit = unit.CurrentSimplifiedPosition;
 
+            // Find closest attackable unit
             enemiesToCheck.Sort((unit1, unit2) =>
             {
                 int unitRangeComparisonValue = tileNavigationController.GetDistanceToCoordinate(positionOfCurrentUnit, unit1.CurrentSimplifiedPosition)
@@ -232,20 +233,50 @@ namespace AWM.AI
 
             Vector2 closesEnemyPosition = enemiesToCheck[0].CurrentSimplifiedPosition;
 
-            walkableTiles.Sort((mapTile1, mapTile2) =>
+            List<BaseMapTile> mapTilesToAttackFrom = new List<BaseMapTile>();
+
+            // get list of maptiles where closest enemy is attackable from
+            foreach (var walkableTile in walkableTiles)
             {
-                int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile1.m_SimplifiedMapPosition, closesEnemyPosition)
-                    .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile2.m_SimplifiedMapPosition, closesEnemyPosition));
-
-                if (mapTileDistanceComparison == 0)
+                if (tileNavigationController.GetDistanceToCoordinate(walkableTile.m_SimplifiedMapPosition, 
+                    closesEnemyPosition) <= unit.GetUnitBalancing().m_AttackRange)
                 {
-                    mapTileDistanceComparison = Random.Range(-1, 2);
+                    mapTilesToAttackFrom.Add(walkableTile);
                 }
+            }
 
-                return mapTileDistanceComparison;
-            });
+            if (mapTilesToAttackFrom.Count > 0)
+            {
+                // find maptile with max range where the unit can still attack
+                mapTilesToAttackFrom.Sort((mapTile1, mapTile2) =>
+                {
+                    int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile2.m_SimplifiedMapPosition, closesEnemyPosition)
+                        .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile1.m_SimplifiedMapPosition, closesEnemyPosition));
 
-            maptTile = walkableTiles[0];
+                    return mapTileDistanceComparison;
+                });
+
+                maptTile = mapTilesToAttackFrom[0];
+            }
+            else
+            {
+                // Find closest walkable (also no unit on it) maptile to attackable unit
+                walkableTiles.Sort((mapTile1, mapTile2) =>
+                {
+                    int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile1.m_SimplifiedMapPosition, closesEnemyPosition)
+                        .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile2.m_SimplifiedMapPosition, closesEnemyPosition));
+
+                    if (mapTileDistanceComparison == 0)
+                    {
+                        mapTileDistanceComparison = Random.Range(-1, 2);
+                    }
+
+                    return mapTileDistanceComparison;
+                });
+
+                maptTile = walkableTiles[0];
+            }
+            
             return true;
         }
     }
