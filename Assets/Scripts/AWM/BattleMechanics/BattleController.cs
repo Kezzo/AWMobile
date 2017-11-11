@@ -47,10 +47,6 @@ namespace AWM.BattleMechanics
             m_registeredTeams = new Dictionary<TeamColor, List<BaseUnit>>();
             m_uniqueUnitIdents = new List<int>();
 
-            m_onConfirmMoveButtonPressed = null;
-            m_onTurnStartEvents.Clear();
-            m_onBattleStartEvents.Clear();
-
             m_registeredAIs = new List<AIController>();
 
             foreach (Team team in m_teamThisBattle)
