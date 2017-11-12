@@ -35,6 +35,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -45,6 +46,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -55,6 +57,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -65,6 +68,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 0, y: 1}
     m_GroupPosition: {x: -11, y: 0, z: -7}
     m_MapTiles:
@@ -78,6 +82,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -88,6 +93,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -98,6 +104,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -108,6 +115,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 0, y: 2}
     m_GroupPosition: {x: -11, y: 0, z: -3}
     m_MapTiles:
@@ -121,6 +129,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -131,6 +140,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -141,6 +151,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 4
@@ -151,6 +162,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 0, y: 3}
     m_GroupPosition: {x: -11, y: 0, z: 1}
     m_MapTiles:
@@ -164,6 +176,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -174,6 +187,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 4
@@ -184,6 +198,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -194,6 +209,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 0, y: 4}
     m_GroupPosition: {x: -11, y: 0, z: 5}
     m_MapTiles:
@@ -207,6 +223,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -217,6 +234,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -227,6 +245,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -237,6 +256,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 0, y: 5}
     m_GroupPosition: {x: -11, y: 0, z: 9}
     m_MapTiles:
@@ -250,6 +270,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -260,6 +281,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -270,6 +292,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -280,6 +303,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 1, y: 0}
     m_GroupPosition: {x: -7, y: 0, z: -11}
     m_MapTiles:
@@ -293,6 +317,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -303,6 +328,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -313,6 +339,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -323,6 +350,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 1, y: 1}
     m_GroupPosition: {x: -7, y: 0, z: -7}
     m_MapTiles:
@@ -336,6 +364,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -346,6 +375,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 4
@@ -356,6 +386,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -366,6 +397,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 1, y: 2}
     m_GroupPosition: {x: -7, y: 0, z: -3}
     m_MapTiles:
@@ -379,6 +411,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -389,6 +422,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -399,6 +433,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -409,6 +444,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 1, y: 3}
     m_GroupPosition: {x: -7, y: 0, z: 1}
     m_MapTiles:
@@ -422,6 +458,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -432,6 +469,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -442,6 +480,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 4
@@ -452,6 +491,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 1, y: 4}
     m_GroupPosition: {x: -7, y: 0, z: 5}
     m_MapTiles:
@@ -465,6 +505,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 4
@@ -475,6 +516,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 4
@@ -485,6 +527,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 4
@@ -495,6 +538,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 1, y: 5}
     m_GroupPosition: {x: -7, y: 0, z: 9}
     m_MapTiles:
@@ -508,6 +552,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -518,6 +563,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -528,6 +574,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -538,6 +585,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 2, y: 0}
     m_GroupPosition: {x: -3, y: 0, z: -11}
     m_MapTiles:
@@ -551,6 +599,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -561,6 +610,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -571,6 +621,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -581,6 +632,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 2, y: 1}
     m_GroupPosition: {x: -3, y: 0, z: -7}
     m_MapTiles:
@@ -594,6 +646,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -604,6 +657,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 4
@@ -614,6 +668,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -624,6 +679,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 2, y: 2}
     m_GroupPosition: {x: -3, y: 0, z: -3}
     m_MapTiles:
@@ -637,6 +693,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -647,6 +704,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 3
@@ -657,6 +715,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 3
@@ -667,6 +726,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 2, y: 3}
     m_GroupPosition: {x: -3, y: 0, z: 1}
     m_MapTiles:
@@ -680,6 +740,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 3
@@ -690,6 +751,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 3
@@ -700,6 +762,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -710,6 +773,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 2, y: 4}
     m_GroupPosition: {x: -3, y: 0, z: 5}
     m_MapTiles:
@@ -723,6 +787,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -733,6 +798,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -743,6 +809,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 4
@@ -753,6 +820,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 2, y: 5}
     m_GroupPosition: {x: -3, y: 0, z: 9}
     m_MapTiles:
@@ -766,6 +834,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -776,6 +845,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -786,6 +856,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -796,6 +867,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 3, y: 0}
     m_GroupPosition: {x: 1, y: 0, z: -11}
     m_MapTiles:
@@ -809,6 +881,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 4
@@ -819,6 +892,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -829,6 +903,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -839,6 +914,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 3, y: 1}
     m_GroupPosition: {x: 1, y: 0, z: -7}
     m_MapTiles:
@@ -852,6 +928,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -862,6 +939,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -872,6 +950,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -882,6 +961,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 3, y: 2}
     m_GroupPosition: {x: 1, y: 0, z: -3}
     m_MapTiles:
@@ -895,6 +975,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 3
@@ -905,6 +986,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -915,6 +997,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -925,6 +1008,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 3, y: 3}
     m_GroupPosition: {x: 1, y: 0, z: 1}
     m_MapTiles:
@@ -938,6 +1022,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -948,6 +1033,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -958,6 +1044,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -968,6 +1055,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 3, y: 4}
     m_GroupPosition: {x: 1, y: 0, z: 5}
     m_MapTiles:
@@ -981,6 +1069,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 4
@@ -991,6 +1080,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -1001,6 +1091,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -1011,6 +1102,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 3, y: 5}
     m_GroupPosition: {x: 1, y: 0, z: 9}
     m_MapTiles:
@@ -1024,6 +1116,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1034,6 +1127,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1044,6 +1138,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1054,6 +1149,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 4, y: 0}
     m_GroupPosition: {x: 5, y: 0, z: -11}
     m_MapTiles:
@@ -1067,6 +1163,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1077,6 +1174,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1087,6 +1185,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -1097,6 +1196,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 4, y: 1}
     m_GroupPosition: {x: 5, y: 0, z: -7}
     m_MapTiles:
@@ -1110,6 +1210,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -1120,6 +1221,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -1130,6 +1232,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -1140,6 +1243,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 4, y: 2}
     m_GroupPosition: {x: 5, y: 0, z: -3}
     m_MapTiles:
@@ -1153,6 +1257,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 4
@@ -1163,6 +1268,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 4
@@ -1173,6 +1279,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 4
@@ -1183,6 +1290,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 4, y: 3}
     m_GroupPosition: {x: 5, y: 0, z: 1}
     m_MapTiles:
@@ -1196,6 +1304,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -1206,6 +1315,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -1216,6 +1326,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 1
@@ -1226,6 +1337,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 4, y: 4}
     m_GroupPosition: {x: 5, y: 0, z: 5}
     m_MapTiles:
@@ -1239,6 +1351,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1249,6 +1362,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1259,6 +1373,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1269,6 +1384,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 4, y: 5}
     m_GroupPosition: {x: 5, y: 0, z: 9}
     m_MapTiles:
@@ -1282,6 +1398,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1292,6 +1409,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1302,6 +1420,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1312,6 +1431,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 5, y: 0}
     m_GroupPosition: {x: 9, y: 0, z: -11}
     m_MapTiles:
@@ -1325,6 +1445,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1335,6 +1456,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1345,6 +1467,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1355,6 +1478,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 5, y: 1}
     m_GroupPosition: {x: 9, y: 0, z: -7}
     m_MapTiles:
@@ -1368,6 +1492,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 1
@@ -1378,6 +1503,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1388,6 +1514,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1398,6 +1525,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 5, y: 2}
     m_GroupPosition: {x: 9, y: 0, z: -3}
     m_MapTiles:
@@ -1411,6 +1539,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 4
@@ -1421,6 +1550,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1431,6 +1561,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1441,6 +1572,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 5, y: 3}
     m_GroupPosition: {x: 9, y: 0, z: 1}
     m_MapTiles:
@@ -1454,6 +1586,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1464,6 +1597,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1474,6 +1608,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1484,6 +1619,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 5, y: 4}
     m_GroupPosition: {x: 9, y: 0, z: 5}
     m_MapTiles:
@@ -1497,6 +1633,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1507,6 +1644,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1517,6 +1655,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1527,6 +1666,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   - m_GroupPositionVector: {x: 5, y: 5}
     m_GroupPosition: {x: 9, y: 0, z: 9}
     m_MapTiles:
@@ -1540,6 +1680,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -1550,6 +1691,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
@@ -1560,6 +1702,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -1570,9 +1713,10 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   m_MapCloudShadowData:
-    m_PoolSize: 40
-    m_MinVisibleClouds: 30
-    m_MaxLeftSpawnPosition: -25
+    m_PoolSize: 25
+    m_MinVisibleClouds: 15
+    m_MaxLeftSpawnPosition: -15
     m_MaxRightSpawnPosition: 25
     m_FlyingDistance: 60
