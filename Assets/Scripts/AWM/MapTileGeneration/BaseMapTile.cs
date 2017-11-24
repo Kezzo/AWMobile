@@ -264,8 +264,8 @@ namespace AWM.MapTileGeneration
             if (m_mapTileData == null || (!forceCreation && 
                                           m_levelSelectionRouteType == m_mapTileData.m_LevelSelectionRouteType &&
                                           string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart) && 
-                                          m_levelSelectionOrder == m_mapTileData.m_LevelSelectionOrder) && 
-                m_centeredCameraPosition == m_mapTileData.m_CenteredCameraPosition)
+                                          m_levelSelectionOrder == m_mapTileData.m_LevelSelectionOrder && 
+                m_centeredCameraPosition == m_mapTileData.m_CenteredCameraPosition))
             {
                 return;
             }
