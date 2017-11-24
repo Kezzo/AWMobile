@@ -796,7 +796,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level6
       m_LevelSelectionOrder: 5
-      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+      m_CenteredCameraPosition: {x: -4.23027, y: 13.48581, z: 5.636209}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
