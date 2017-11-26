@@ -1,13 +1,13 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace AWM.DevHelper
 {
     public class FpsCounter : MonoBehaviour
     {
         [SerializeField]
-        private Text m_fpsCounterText;
+        private TextMeshProUGUI m_fpsCounterText;
 
         private int m_framesPerSecond;
 

@@ -1,7 +1,7 @@
 ﻿using AWM.Enums;
 using AWM.System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace AWM.UI
 {
@@ -14,7 +14,7 @@ namespace AWM.UI
         private GameObject m_gameEndVisuals;
 
         [SerializeField]
-        private Text m_battleResultText;
+        private TextMeshProUGUI m_battleResultText;
 
         [SerializeField]
         private Animator m_animator;

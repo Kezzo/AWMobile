@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using AWM.Models;
 using AWM.System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace AWM.UI
 {
@@ -15,7 +15,7 @@ namespace AWM.UI
         private Animator m_animator;
 
         [SerializeField]
-        private Text m_text;
+        private TextMeshProUGUI m_text;
 
         private string m_uiTextToUse;
 
