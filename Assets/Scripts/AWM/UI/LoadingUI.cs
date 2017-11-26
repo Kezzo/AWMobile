@@ -11,6 +11,8 @@ namespace AWM.UI
         [SerializeField]
         private Animator m_animator;
 
+        public bool Visible { get; private set; }
+
         /// <summary>
         /// Registers it self at the MonoBehaviourRegistry.
         /// </summary>
@@ -24,6 +26,7 @@ namespace AWM.UI
         /// </summary>
         public void Show()
         {
+            Visible = true;
             m_animator.SetTrigger("Show");
         }
 
@@ -33,6 +36,14 @@ namespace AWM.UI
         public void Hide()
         {
             m_animator.SetTrigger("Hide");
+        }
+
+        /// <summary>
+        /// Invoked by an animation event at the end of the hide animation.
+        /// </summary>
+        public void HiddenAnimationDone()
+        {
+            Visible = false;
         }
     }
 }
