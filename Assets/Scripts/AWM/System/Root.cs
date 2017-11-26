@@ -61,7 +61,8 @@ namespace AWM.System
 
                 Initialize(() =>
                 {
-                    CoroutineHelper.CallDelayed(this, 0.1f, () =>
+                    // 0.5 second delay needed here to have a smooth animation.
+                    CoroutineHelper.CallDelayed(this, 0.5f, () =>
                     {
                         m_blackScreen.gameObject.SetActive(false);
                         LoadingUi.Hide();
