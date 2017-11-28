@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using AWM.Controls;
 using AWM.MapTileGeneration;
 using AWM.Models;
-using AWM.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +12,8 @@ namespace AWM.System
     /// </summary>
     public class SceneLoadingService : MonoBehaviour
     {
+        public bool IsInLevelSelection { get; private set; }
+
         /// <summary>
         /// Loads a scene asynchronous and calls a callback, when the scene loading finished.
         /// </summary>
@@ -79,16 +79,7 @@ namespace AWM.System
         /// <param name="onLoadedToLevelSelection">Invoked when the level selection was loaded.</param>
         public void LoadToLevelSelection(Action onLoadedToLevelSelection)
         {
-            LoadToLevel("LevelSelection", () =>
-            {
-                ControllerContainer.MonoBehaviourRegistry.Get<BattleUI>().ChangeVisibilityOfBattleUI(false);
-                ControllerContainer.MonoBehaviourRegistry.Get<SelectionControls>().IsInLevelSelection = true;
-
-                if (onLoadedToLevelSelection != null)
-                {
-                    onLoadedToLevelSelection();
-                }
-            });
+            LoadToLevel("LevelSelection", onLoadedToLevelSelection, true);
         }
 
         /// <summary>
@@ -96,8 +87,14 @@ namespace AWM.System
         /// </summary>
         /// <param name="levelName">Name of the level.</param>
         /// <param name="onLoadedToLevel">Invoked when the level is loaded.</param>
-        public void LoadToLevel(string levelName, Action onLoadedToLevel)
+        /// <param name="isInLevelSelection">
+        /// Determines if the current level loaded is the level selection. 
+        /// Required to properly hide specific UIs and handle input differently.
+        /// </param>
+        public void LoadToLevel(string levelName, Action onLoadedToLevel, bool isInLevelSelection = false)
         {
+            IsInLevelSelection = isInLevelSelection;
+
             //TODO: Implement loading progress display.
             LoadSceneAsync("BattleUI", null, () =>
             {

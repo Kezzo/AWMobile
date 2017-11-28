@@ -29,8 +29,17 @@ namespace AWM.UI
         private void Awake()
         {
             ControllerContainer.MonoBehaviourRegistry.Register(this);
-            ControllerContainer.BattleController.AddBattleStartedEvent("BattleUI - Initialize", Initialize);
-            ControllerContainer.BattleController.AddBattleEndedEvent("BattleUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
+
+            if (Root.Instance.SceneLoading.IsInLevelSelection)
+            {
+                ChangeVisibilityOfBattleUI(false);
+            }
+            else
+            {
+                ControllerContainer.BattleController.AddBattleStartedEvent("BattleUI - Initialize", Initialize);
+                ControllerContainer.BattleController.AddBattleEndedEvent("BattleUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
+                m_battlePauseUi.SetVisibilityCallback(ChangeVisibilityOfBattleUI);
+            }
         }
 
         /// <summary>
@@ -111,7 +120,6 @@ namespace AWM.UI
         /// </summary>
         public void OnPauseButtonPressed()
         {
-            ChangeVisibilityOfBattleUI(false);
             m_battlePauseUi.Show();
         }
     }

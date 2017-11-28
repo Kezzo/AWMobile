@@ -46,7 +46,6 @@ namespace AWM.Controls
         private Dictionary<Vector2, PathfindingNodeDebugData> m_pathfindingNodeDebug;
 
         public bool IsBlocked { get; set; }
-        public bool IsInLevelSelection { get; set; }
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
@@ -121,7 +120,7 @@ namespace AWM.Controls
             {
                 RaycastHit raycastHit;
 
-                if (IsInLevelSelection)
+                if (Root.Instance.SceneLoading.IsInLevelSelection)
                 {
                     if (TrySelection(m_battlegroundCamera, m_levelSelectionLayerMask, out raycastHit))
                     {
