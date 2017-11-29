@@ -64,5 +64,25 @@ namespace AWM.UI
                 m_onVisibilityChange(true);
             }
         }
+
+        /// <summary>
+        /// Called when the back button pressed.
+        /// </summary>
+        public void OnBackButtonPressed()
+        {
+            Root.Instance.LoadingUi.Show();
+
+            Root.Instance.CoroutineHelper.CallDelayed(Root.Instance, 1.05f, () =>
+            {
+                Root.Instance.SceneLoading.UnloadExistingScenes(() =>
+                {
+                    Root.Instance.SceneLoading.LoadToLevelSelection(() =>
+                    {
+                        ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
+                        Root.Instance.LoadingUi.Hide();
+                    });
+                });
+            });
+        }
     }
 }
