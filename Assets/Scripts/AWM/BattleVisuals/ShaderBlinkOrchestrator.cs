@@ -29,9 +29,12 @@ namespace AWM.BattleVisuals
         private bool m_blinkingInProgress;
         private Coroutine m_runningBlinkingCoroutine;
 
+        private MaterialPropertyBlock m_materialPropertyBlock;
+
         private void Start()
         {
             ControllerContainer.MonoBehaviourRegistry.Register(this);
+            m_materialPropertyBlock = new MaterialPropertyBlock();
         }
 
         /// <summary>
@@ -76,11 +79,11 @@ namespace AWM.BattleVisuals
                     }
                 }
 
-                alphaClampValue = Mathf.Clamp(alphaClampValue, m_alphaMin, m_alphaMax);
+                m_materialPropertyBlock.SetFloat("_Alpha", Mathf.Clamp(alphaClampValue, m_alphaMin, m_alphaMax));
 
                 foreach (var rendererToBlink in m_rendererToBlink.Values)
                 {
-                    rendererToBlink.material.SetFloat("_Alpha", alphaClampValue);
+                    rendererToBlink.SetPropertyBlock(m_materialPropertyBlock);
                 }
 
                 yield return null;
@@ -94,16 +97,18 @@ namespace AWM.BattleVisuals
         /// <param name="rendererToBlink">The renderer to blink.</param>
         public void AddRendererToBlink(Vector2 position, Renderer rendererToBlink)
         {
-            rendererToBlink.material.SetFloat("_Alpha", m_alphaMax);
-            rendererToBlink.SetPropertyBlock(new MaterialPropertyBlock());
-
             m_rendererToBlink[position] = rendererToBlink;
+
+            rendererToBlink.GetPropertyBlock(m_materialPropertyBlock);
 
             if (!m_blinkingInProgress)
             {
+                m_materialPropertyBlock.SetFloat("_Alpha", m_alphaMax);
                 m_blinkingInProgress = true;
                 m_runningBlinkingCoroutine = StartCoroutine(BlinkWithCooldown());
             }
+
+            rendererToBlink.SetPropertyBlock(m_materialPropertyBlock);
         }
 
         /// <summary>
