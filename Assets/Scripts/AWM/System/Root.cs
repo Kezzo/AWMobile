@@ -39,7 +39,6 @@ namespace AWM.System
         private void Awake()
         {
             Application.targetFrameRate = 30;
-            Screen.SetResolution((int) (Screen.width * 0.7f), (int) (Screen.height * 0.7f), true);
 
             Input.multiTouchEnabled = true;
 
