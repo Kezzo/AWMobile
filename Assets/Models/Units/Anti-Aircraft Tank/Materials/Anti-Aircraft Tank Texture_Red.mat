@@ -10,7 +10,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: 64dacdf009856484da55af3acbd2ac35, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
