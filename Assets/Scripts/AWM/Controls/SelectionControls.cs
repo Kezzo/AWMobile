@@ -258,7 +258,7 @@ namespace AWM.Controls
         /// <param name="cameraToBaseSelectionOn">The camera to base selection on.</param>
         /// <param name="selectionMask">The selection mask.</param>
         /// <param name="selectionTarget">The selection target.</param>
-        /// <returns></returns>
+        /// <returns>Returns true when a target was hit, false otherwise.</returns>
         private bool TrySelection(Camera cameraToBaseSelectionOn, LayerMask selectionMask, out RaycastHit selectionTarget)
         {
             Ray selectionRay = cameraToBaseSelectionOn.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));

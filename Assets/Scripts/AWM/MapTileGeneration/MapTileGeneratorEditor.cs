@@ -16,6 +16,7 @@ namespace AWM.MapTileGeneration
     /// <summary>
     /// Class to generation a map from maptiles in the editor.
     /// </summary>
+    [ExecuteInEditMode]
     public class MapTileGeneratorEditor : MonoBehaviour
     {
         [SerializeField]
@@ -26,6 +27,8 @@ namespace AWM.MapTileGeneration
 
         [SerializeField]
         private float m_tileMargin;
+
+        [Header("Data Setup")]
 
         [SerializeField]
         private GameObject m_tilePrefab;
@@ -82,13 +85,140 @@ namespace AWM.MapTileGeneration
 
 #pragma warning restore 649
 
+        [Header("Map Creation Hotkey Setup")]
+
+        [SerializeField]
+        private List<QuickTileTypeSwitchHotKey> m_quickTileTypeSwitcherHotKeys;
+
+        [Serializable]
+        public class QuickTileTypeSwitchHotKey
+        {
+            public KeyCode m_KeyCode;
+            public MapTileType m_MapTileType;
+        }
+
+        [SerializeField]
+        private LayerMask m_mapTileSelectorLayer;
+
+        [SerializeField]
+        private Camera m_mapTileSelectionCamera;
+
+        public bool HotkeysActive { get; set; }
+        public MapTileType m_lastToggledTileType = MapTileType.Empty;
+        private List<BaseMapTile> m_instantiatedBaseMapTiles;
+
         private MapGenerationData m_currentlyVisibleMap;
         public MapGenerationData CurrentlyVisibleMap { get { return m_currentlyVisibleMap; } }
 
         private void Awake()
         {
-            ControllerContainer.MonoBehaviourRegistry.Register(this);
+            if (Application.isPlaying)
+            {
+                ControllerContainer.MonoBehaviourRegistry.Register(this);
+            }
         }
+
+#region live map editing
+
+        private void OnGUI()
+        {
+            if (Application.isPlaying || !HotkeysActive || Event.current == null)
+            {
+                return;
+            }
+
+            if (Event.current.type == EventType.KeyDown)
+            {
+                TryToUpdateToggledTileType(Event.current.keyCode);
+            }
+            else if (Event.current.type == EventType.MouseDown && Event.current.button == 1)
+            {
+                RaycastHit raycastHit;
+                if (!TryToRaycastMapTileColliderAtMouse(Event.current.mousePosition, out raycastHit))
+                {
+                    return;
+                }
+
+                UpdateTypeOfMapTileAtWorldPosition(raycastHit.point);
+            }
+        }
+
+        /// <summary>
+        /// This will update the <see cref="MapTileType"/> of the <see cref="BaseMapTile"/> closest to the given world position.
+        /// </summary>
+        /// <param name="worldPosition">The world position to find the closest <see cref="BaseMapTile"/> for.</param>
+        private void UpdateTypeOfMapTileAtWorldPosition(Vector3 worldPosition)
+        {
+            BaseMapTile closestBaseMapTile = null;
+            float closestDistanceToRaycastHit = float.MaxValue;
+
+            foreach (var instantiatedBaseMapTile in m_instantiatedBaseMapTiles)
+            {
+                float distanceToRaycastHit = Vector3.Distance(instantiatedBaseMapTile.transform.position, worldPosition);
+
+                if (distanceToRaycastHit < closestDistanceToRaycastHit)
+                {
+                    closestBaseMapTile = instantiatedBaseMapTile;
+                    closestDistanceToRaycastHit = distanceToRaycastHit;
+                }
+            }
+
+            if (closestBaseMapTile == null)
+            {
+                return;
+            }
+
+            closestBaseMapTile.MapTileType = m_lastToggledTileType;
+            closestBaseMapTile.ValidateMapTile();
+        }
+
+        /// <summary>
+        /// Tries to raycast the maptile collider at the given mouse position.
+        /// </summary>
+        /// <param name="mousePosition">The mouse position at which the raycast should be done.</param>
+        /// <param name="raycastHit">The result of the raycast. Is null when no collider was hit.</param>
+        /// <returns>Returns true when a collider was hit, false otherwise.</returns>
+        private bool TryToRaycastMapTileColliderAtMouse(Vector2 mousePosition, out RaycastHit raycastHit)
+        {
+            Ray selectionRay =
+                Camera.main.ScreenPointToRay(new Vector3(mousePosition.x,
+                    Screen.height - mousePosition.y, 0f));
+
+            if (Camera.main.orthographic)
+            {
+                selectionRay.direction = Camera.main.transform.forward.normalized;
+            }
+
+            Debug.DrawRay(selectionRay.origin, selectionRay.direction*100f, Color.yellow, 1f);
+
+            return Physics.Raycast(selectionRay, out raycastHit, 100f, m_mapTileSelectorLayer);
+        }
+
+        /// <summary>
+        /// This method will try to update the currently toggled <see cref="MapTileType"/> that is used for quickly changing a <see cref="BaseMapTile"/>.
+        /// </summary>
+        private void TryToUpdateToggledTileType(KeyCode pressedKeyCode)
+        {
+            foreach (var quickTileTypeSwitcherHotKey in m_quickTileTypeSwitcherHotKeys)
+            {
+                if (pressedKeyCode == quickTileTypeSwitcherHotKey.m_KeyCode)
+                {
+                    m_lastToggledTileType = quickTileTypeSwitcherHotKey.m_MapTileType;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds a instantiated base map tile to a list.
+        /// This is needed to find the map tiles later and edit them.
+        /// </summary>
+        /// <param name="baseMapTile">The instance to add.</param>
+        public void AddInstantiatedBaseMapTile(BaseMapTile baseMapTile)
+        {
+            m_instantiatedBaseMapTiles.Add(baseMapTile);
+        }
+
+#endregion
 
         /// <summary>
         /// Generates the map.
@@ -96,6 +226,8 @@ namespace AWM.MapTileGeneration
         public void GenerateMap()
         {
             ClearMap();
+
+            m_instantiatedBaseMapTiles = new List<BaseMapTile>((int)(m_levelSize.x * m_levelSize.y));
 
             m_currentlyVisibleMap = ControllerContainer.MapTileGenerationService.GenerateMapGroups(m_levelSize, m_tileMargin, 2);
 
@@ -116,6 +248,9 @@ namespace AWM.MapTileGeneration
             {
                 ClearMap();
                 m_currentlyVisibleMap = mapGenerationData;
+
+                m_instantiatedBaseMapTiles = new List<BaseMapTile>((int)(m_levelSize.x * m_levelSize.y));
+
                 ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
 
                 if (Application.isPlaying)

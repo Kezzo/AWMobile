@@ -405,6 +405,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
       propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -453,7 +458,7 @@ Prefab:
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
       propertyPath: m_levelToEdit
-      value: Level4
+      value: LevelSelection
       objectReference: {fileID: 0}
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
@@ -510,9 +515,85 @@ Prefab:
       propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.data[3].m_Material
       value: 
       objectReference: {fileID: 2100000, guid: ad30afbc231f4c94f9a638cb38e62837, type: 2}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[0].m_MapTileType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[1].m_MapTileType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[2].m_MapTileType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[3].m_MapTileType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[0].m_KeyCode
+      value: 113
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[1].m_KeyCode
+      value: 119
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[2].m_KeyCode
+      value: 101
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[3].m_KeyCode
+      value: 114
+      objectReference: {fileID: 0}
+    - target: {fileID: 1504370056362082, guid: c615998201b0c9446abfe997af2386b0, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_mapTileSelectorLayer.m_Bits
+      value: 16384
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_mapTileSelectionCamera
+      value: 
+      objectReference: {fileID: 1506953657}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_lastToggledTileType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c615998201b0c9446abfe997af2386b0, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &611998784 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1504370056362082, guid: c615998201b0c9446abfe997af2386b0,
+    type: 2}
+  m_PrefabInternal: {fileID: 611998783}
+--- !u!65 &611998785
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 611998784}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 32, y: 1, z: 32}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!108 &666428522
 Light:
   m_ObjectHideFlags: 0

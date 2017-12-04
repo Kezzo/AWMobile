@@ -40,7 +40,6 @@ namespace AWM.MapTileGeneration
                 }
             }
         }
-
     }
 }
 #endif

@@ -8,6 +8,7 @@ namespace AWM.Controls
     /// <summary>
     /// Controls the camera movement.
     /// </summary>
+    [ExecuteInEditMode]
     public class CameraControls : MonoBehaviour
     {
         [SerializeField]
@@ -88,6 +89,7 @@ namespace AWM.Controls
         private void Awake()
         {
             ControllerContainer.MonoBehaviourRegistry.Register(this);
+            m_cameraMover.position = Vector3.zero;
         }
 
         /// <summary>
@@ -125,17 +127,31 @@ namespace AWM.Controls
         }
 
         /// <summary>
+        /// Scrolls the camera when dragging on the screen in the editor when the game is not running.
+        /// </summary>
+        private void OnGUI()
+        {
+            if (Application.isPlaying)
+            {
+                return;
+            }
+
+            MouseInputHelper.Update();
+            ScrollCamera();
+        }
+
+        /// <summary>
         /// Scrolls the camera when dragging on the screen.
         /// </summary>
         private void ScrollCamera()
         {
-            if (Application.platform != RuntimePlatform.WindowsEditor && 
-                Input.GetMouseButtonDown(0))
+            if (Application.platform != RuntimePlatform.WindowsEditor &&
+                MouseInputHelper.GetMouseButtonDown(0))
             {
                 m_fingerIdUsedToScroll = Input.GetTouch(0).fingerId;
             }
 
-            if (Input.GetMouseButton(0))
+            if (MouseInputHelper.GetMouseButton(0))
             {
                 Vector2 mousePosition = GetInputPosition();
                 Vector2 mouseDelta = m_lastMousePosition - mousePosition;
@@ -166,7 +182,7 @@ namespace AWM.Controls
                 m_lastMousePosition = mousePosition;
                 m_startedScrolling = true;
             }
-            else if (Input.GetMouseButtonUp(0))
+            else if (MouseInputHelper.GetMouseButtonUp(0))
             {
                 m_isManuallyScrolling = false;
                 m_startedScrolling = false;
@@ -206,14 +222,8 @@ namespace AWM.Controls
         /// <returns></returns>
         private Vector2 GetInputPosition()
         {
-            if (Application.platform == RuntimePlatform.WindowsEditor)
-            {
-                return Input.mousePosition;
-            }
-            else
-            {
-                return Input.GetTouch(0).position;
-            }
+            return Application.platform == RuntimePlatform.WindowsEditor ? 
+                MouseInputHelper.MousePosition : Input.GetTouch(0).position;
         }
 
         /// <summary>

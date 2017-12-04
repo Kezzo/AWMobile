@@ -194,6 +194,7 @@ namespace AWM.MapTileGeneration
             else
             {
                 m_mapTileGeneratorEditor = FindObjectOfType<MapTileGeneratorEditor>();
+                m_mapTileGeneratorEditor.AddInstantiatedBaseMapTile(this);
             }
 
             m_mapTileData = mapTileData;
@@ -350,7 +351,8 @@ namespace AWM.MapTileGeneration
 
             List<CardinalDirection> adjacentWaterDirections;
 
-            if (m_mapTileType != MapTileType.Water && m_mapGenService.IsMapTileNextToType(MapTileType.Water, m_SimplifiedMapPosition, m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
+            if (m_mapTileType != MapTileType.Water && m_mapGenService.IsMapTileNextToType(MapTileType.Water, 
+                m_SimplifiedMapPosition, m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
             {
                 InstantiateComplexBorderMapTile(adjacentWaterDirections);
                 InstantiateEnvironment();

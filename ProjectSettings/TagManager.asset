@@ -19,7 +19,7 @@ TagManager:
   - MoveDestinationField
   - UnitHealthbars
   - LevelSelector
-  - 
+  - MapTileGenerator
   - 
   - 
   - 
