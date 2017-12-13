@@ -131,7 +131,7 @@ namespace AWM.MapTileGeneration
             {
                 TryToUpdateToggledTileType(Event.current.keyCode);
             }
-            else if (Event.current.type == EventType.MouseDown && Event.current.button == 1)
+            else if (MouseInputHelper.GetMouseButton(1))
             {
                 RaycastHit raycastHit;
                 if (!TryToRaycastMapTileColliderAtMouse(Event.current.mousePosition, out raycastHit))
