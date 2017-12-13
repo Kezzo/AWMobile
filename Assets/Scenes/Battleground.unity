@@ -410,6 +410,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitRotationSwitcherHotKeys.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
       propertyPath: m_unitTypeAssignmentList.Array.data[3].m_ColorUvCoordinateAssignments.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -458,17 +468,17 @@ Prefab:
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
       propertyPath: m_levelToEdit
-      value: LevelSelection
+      value: Level7
       objectReference: {fileID: 0}
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
       propertyPath: m_levelSize.x
-      value: 16
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
       propertyPath: m_levelSize.y
-      value: 16
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
         type: 2}
@@ -573,6 +583,96 @@ Prefab:
         type: 2}
       propertyPath: m_lastToggledTileType
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[0].m_KeyCode
+      value: 97
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[1].m_KeyCode
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[1].m_UnitType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[2].m_KeyCode
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[2].m_UnitType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[3].m_KeyCode
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[3].m_UnitType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[4].m_KeyCode
+      value: 103
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitTypeSwitcherHotKeys.Array.data[4].m_UnitType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitRotationSwitcherHotKeys.Array.data[0].m_KeyCode
+      value: 274
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitRotationSwitcherHotKeys.Array.data[1].m_KeyCode
+      value: 273
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitRotationSwitcherHotKeys.Array.data[1].m_CardinalDirection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitRotationSwitcherHotKeys.Array.data[2].m_KeyCode
+      value: 276
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitRotationSwitcherHotKeys.Array.data[2].m_CardinalDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitRotationSwitcherHotKeys.Array.data[3].m_CardinalDirection
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickUnitRotationSwitcherHotKeys.Array.data[3].m_KeyCode
+      value: 275
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_LastToggledUnitType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_CurrentTypeToEdit
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c615998201b0c9446abfe997af2386b0, type: 2}

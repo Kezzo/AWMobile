@@ -98,13 +98,47 @@ namespace AWM.MapTileGeneration
         }
 
         [SerializeField]
+        private List<QuickUnitTypeSwitchHotKey> m_quickUnitTypeSwitcherHotKeys;
+
+        [Serializable]
+        public class QuickUnitTypeSwitchHotKey
+        {
+            public KeyCode m_KeyCode;
+            public UnitType m_UnitType;
+        }
+
+        [SerializeField]
+        private List<QuickUnitRotationSwitchHotKey> m_quickUnitRotationSwitcherHotKeys;
+
+        [Serializable]
+        public class QuickUnitRotationSwitchHotKey
+        {
+            public KeyCode m_KeyCode;
+            public CardinalDirection m_CardinalDirection;
+        }
+
+        [SerializeField]
         private LayerMask m_mapTileSelectorLayer;
 
         [SerializeField]
         private Camera m_mapTileSelectionCamera;
 
         public bool HotkeysActive { get; set; }
-        public MapTileType m_lastToggledTileType = MapTileType.Empty;
+        public MapTileType m_LastToggledTileType = MapTileType.Empty;
+        public UnitType m_LastToggledUnitType = UnitType.None;
+        public TypeToEdit m_CurrentTypeToEdit = TypeToEdit.None;
+
+        public TeamColor m_CurrentTeamColor = TeamColor.Blue;
+
+        public enum TypeToEdit
+        {
+            None = 0,
+            MapTileType = 1,
+            UnitType = 2
+        }
+
+        private BaseMapTile m_lastUpdateMapTile;
+
         private List<BaseMapTile> m_instantiatedBaseMapTiles;
 
         private MapGenerationData m_currentlyVisibleMap;
@@ -129,7 +163,12 @@ namespace AWM.MapTileGeneration
 
             if (Event.current.type == EventType.KeyDown)
             {
-                TryToUpdateToggledTileType(Event.current.keyCode);
+                KeyCode keyCode = Event.current.keyCode;
+
+                if (!TryToUpdateRotationOfLastUnit(keyCode))
+                {
+                    TryToUpdateToggledTypes(keyCode);
+                }
             }
             else if (MouseInputHelper.GetMouseButton(1))
             {
@@ -168,8 +207,20 @@ namespace AWM.MapTileGeneration
                 return;
             }
 
-            closestBaseMapTile.MapTileType = m_lastToggledTileType;
-            closestBaseMapTile.ValidateMapTile();
+            switch (m_CurrentTypeToEdit)
+            {
+                case TypeToEdit.MapTileType:
+                    closestBaseMapTile.MapTileType = m_LastToggledTileType;
+                    closestBaseMapTile.ValidateMapTile();
+                    break;
+                case TypeToEdit.UnitType:
+                    closestBaseMapTile.Unit.m_UnitType = m_LastToggledUnitType;
+                    closestBaseMapTile.Unit.m_TeamColor = m_CurrentTeamColor;
+                    closestBaseMapTile.ValidateUnitType();
+                    break;
+            }
+
+            m_lastUpdateMapTile = closestBaseMapTile;
         }
 
         /// <summary>
@@ -180,9 +231,7 @@ namespace AWM.MapTileGeneration
         /// <returns>Returns true when a collider was hit, false otherwise.</returns>
         private bool TryToRaycastMapTileColliderAtMouse(Vector2 mousePosition, out RaycastHit raycastHit)
         {
-            Ray selectionRay =
-                Camera.main.ScreenPointToRay(new Vector3(mousePosition.x,
-                    Screen.height - mousePosition.y, 0f));
+            Ray selectionRay = Camera.main.ScreenPointToRay(new Vector3(mousePosition.x, Screen.height - mousePosition.y, 0f));
 
             if (Camera.main.orthographic)
             {
@@ -195,15 +244,52 @@ namespace AWM.MapTileGeneration
         }
 
         /// <summary>
-        /// This method will try to update the currently toggled <see cref="MapTileType"/> that is used for quickly changing a <see cref="BaseMapTile"/>.
+        /// Updates the <see cref="CardinalDirection"/> of the last placed unit.
         /// </summary>
-        private void TryToUpdateToggledTileType(KeyCode pressedKeyCode)
+        /// <param name="pressedKeyCode">Has do be a keycode defined in the unit rotation key mapping.</param>
+        /// <returns>True when a keycode was pressed that is mapped to unit rotation changes; otherwise false.</returns>
+        private bool TryToUpdateRotationOfLastUnit(KeyCode pressedKeyCode)
+        {
+            foreach (var quickUnitRotationSwitchHotKey in m_quickUnitRotationSwitcherHotKeys)
+            {
+                if (pressedKeyCode == quickUnitRotationSwitchHotKey.m_KeyCode)
+                {
+                    if (m_lastUpdateMapTile != null)
+                    {
+                        m_lastUpdateMapTile.Unit.m_Orientation = quickUnitRotationSwitchHotKey.m_CardinalDirection;
+                        m_lastUpdateMapTile.ValidateUnitType();
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// This method will try to update the currently toggled <see cref="MapTileType"/> or <see cref="UnitType"/> 
+        /// that is used for quickly changing a <see cref="BaseMapTile"/>.
+        /// </summary>
+        private void TryToUpdateToggledTypes(KeyCode pressedKeyCode)
         {
             foreach (var quickTileTypeSwitcherHotKey in m_quickTileTypeSwitcherHotKeys)
             {
                 if (pressedKeyCode == quickTileTypeSwitcherHotKey.m_KeyCode)
                 {
-                    m_lastToggledTileType = quickTileTypeSwitcherHotKey.m_MapTileType;
+                    m_LastToggledTileType = quickTileTypeSwitcherHotKey.m_MapTileType;
+                    m_CurrentTypeToEdit = TypeToEdit.MapTileType;
+                    return;
+                }
+            }
+
+            foreach (var quickUnitTypeSwitchHotKey in m_quickUnitTypeSwitcherHotKeys)
+            {
+                if (pressedKeyCode == quickUnitTypeSwitchHotKey.m_KeyCode)
+                {
+                    m_LastToggledUnitType = quickUnitTypeSwitchHotKey.m_UnitType;
+                    m_CurrentTypeToEdit = TypeToEdit.UnitType;
+                    return;
                 }
             }
         }
@@ -218,7 +304,7 @@ namespace AWM.MapTileGeneration
             m_instantiatedBaseMapTiles.Add(baseMapTile);
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// Generates the map.
@@ -227,7 +313,7 @@ namespace AWM.MapTileGeneration
         {
             ClearMap();
 
-            m_instantiatedBaseMapTiles = new List<BaseMapTile>((int)(m_levelSize.x * m_levelSize.y));
+            m_instantiatedBaseMapTiles = new List<BaseMapTile>((int) (m_levelSize.x*m_levelSize.y));
 
             m_currentlyVisibleMap = ControllerContainer.MapTileGenerationService.GenerateMapGroups(m_levelSize, m_tileMargin, 2);
 
@@ -249,7 +335,7 @@ namespace AWM.MapTileGeneration
                 ClearMap();
                 m_currentlyVisibleMap = mapGenerationData;
 
-                m_instantiatedBaseMapTiles = new List<BaseMapTile>((int)(m_levelSize.x * m_levelSize.y));
+                m_instantiatedBaseMapTiles = new List<BaseMapTile>((int) (m_levelSize.x*m_levelSize.y));
 
                 ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
 
@@ -271,8 +357,7 @@ namespace AWM.MapTileGeneration
 
             string assetPath = string.Format("Levels/{0}", levelToLoad);
 
-            MapGenerationData mapGenerationData =
-                ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<MapGenerationData>(assetPath);
+            MapGenerationData mapGenerationData = ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<MapGenerationData>(assetPath);
 
             if (mapGenerationData == null)
             {
@@ -372,13 +457,11 @@ namespace AWM.MapTileGeneration
 
             if (mapTileTypeAssignment != null)
             {
-                MapTileBorderAssignment borderAssignment = mapTileTypeAssignment.m_MapTileBorders.Find(
-                    assignment => assignment.m_BorderType == mapTileBorderType);
+                MapTileBorderAssignment borderAssignment = mapTileTypeAssignment.m_MapTileBorders.Find(assignment => assignment.m_BorderType == mapTileBorderType);
 
                 if (borderAssignment == null)
                 {
-                    Debug.LogFormat("MapTileBorderPrefab couldn't be found! MapTileType: {0} MapTileBorderType: {1}",
-                        mapTileType, mapTileBorderType);
+                    Debug.LogFormat("MapTileBorderPrefab couldn't be found! MapTileType: {0} MapTileBorderType: {1}", mapTileType, mapTileBorderType);
                 }
                 else
                 {
@@ -414,8 +497,7 @@ namespace AWM.MapTileGeneration
 
             if (unitTypeAssignment != null)
             {
-                UnitTypeAssignment.TeamMaterialAssignment teamMaterialAssignment =
-                    unitTypeAssignment.m_ColorUvCoordinateAssignments.Find(material => material.m_TeamColor == teamColor);
+                UnitTypeAssignment.TeamMaterialAssignment teamMaterialAssignment = unitTypeAssignment.m_ColorUvCoordinateAssignments.Find(material => material.m_TeamColor == teamColor);
 
                 if (teamMaterialAssignment != null)
                 {

@@ -30,6 +30,12 @@ namespace AWM.MapTileGeneration
         [SerializeField]
         private MapGenerationData.Unit m_unitOnThisTile;
 
+        public MapGenerationData.Unit Unit
+        {
+            get { return m_unitOnThisTile; }
+            set { m_unitOnThisTile = value; }
+        }
+
         [SerializeField]
         private Transform m_unitRoot;
         public Transform UnitRoot { get { return m_unitRoot; } }
