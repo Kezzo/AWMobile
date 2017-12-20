@@ -89,7 +89,6 @@ namespace AWM.Controls
         private void Awake()
         {
             ControllerContainer.MonoBehaviourRegistry.Register(this);
-            m_cameraMover.position = Vector3.zero;
         }
 
         /// <summary>
