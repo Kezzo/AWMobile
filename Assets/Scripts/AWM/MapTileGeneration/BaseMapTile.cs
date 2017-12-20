@@ -106,26 +106,7 @@ namespace AWM.MapTileGeneration
 
         #endregion
 
-        private List<EnvironmentInstantiateHelper> m_environmentInstantiateHelper;
-        public List<EnvironmentInstantiateHelper> EnvironmentInstantiateHelper
-        {
-            get
-            {
-                if (m_environmentInstantiateHelper == null)
-                {
-                    m_environmentInstantiateHelper = new List<EnvironmentInstantiateHelper>(m_currentlyInstantiatedMapTiles.Count);
-
-                    foreach (var mapTile in m_currentlyInstantiatedMapTiles)
-                    {
-                        m_environmentInstantiateHelper.Add(mapTile.GetComponent<EnvironmentInstantiateHelper>());
-                    }
-                }
-
-                return m_environmentInstantiateHelper;
-            }
-        }
-
-    
+        public List<EnvironmentInstantiateHelper> EnvironmentInstantiateHelper { get; private set; }
 
         private List<GameObject> m_currentlyInstantiatedMapTiles = new List<GameObject>();
         private MapTileType m_currentInstantiatedMapTileType;
@@ -484,6 +465,13 @@ namespace AWM.MapTileGeneration
         /// </summary>
         private void InstantiateEnvironment()
         {
+            EnvironmentInstantiateHelper = new List<EnvironmentInstantiateHelper>(m_currentlyInstantiatedMapTiles.Count);
+
+            foreach (var mapTile in m_currentlyInstantiatedMapTiles)
+            {
+                EnvironmentInstantiateHelper.Add(mapTile.GetComponent<EnvironmentInstantiateHelper>());
+            }
+
             if (EnvironmentInstantiateHelper != null && EnvironmentInstantiateHelper.Count > 0)
             {
                 foreach (var environmentInstantiateHelper in EnvironmentInstantiateHelper)
