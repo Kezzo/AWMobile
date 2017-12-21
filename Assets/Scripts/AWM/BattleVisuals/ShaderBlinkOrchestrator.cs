@@ -123,7 +123,11 @@ namespace AWM.BattleVisuals
 
             if (m_rendererToBlink.Count == 0 && m_blinkingInProgress)
             {
-                StopCoroutine(m_runningBlinkOnceCoroutine);
+                if(m_runningBlinkOnceCoroutine != null)
+                {
+                    StopCoroutine(m_runningBlinkOnceCoroutine);
+                }
+                
                 StopCoroutine(m_runningBlinkingCoroutine);
                 m_blinkingInProgress = false;
             }
