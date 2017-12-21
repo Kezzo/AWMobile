@@ -183,7 +183,7 @@ namespace AWM.BattleMechanics
         /// Determines if the given teamcolor is the color of the players team.
         /// </summary>
         /// <param name="playerTeamColor">Color of the player team.</param>
-        private bool IsTeamWithColorPlayersTeam(TeamColor playerTeamColor)
+        public bool IsTeamWithColorPlayersTeam(TeamColor playerTeamColor)
         {
             foreach (var team in m_teamThisBattle)
             {

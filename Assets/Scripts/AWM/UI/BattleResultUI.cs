@@ -26,7 +26,10 @@ namespace AWM.UI
         public void Show(TeamColor teamThatWon)
         {
             m_gameEndVisuals.SetActive(true);
-            m_battleResultText.text = string.Format("Team {0} won the match!", teamThatWon);
+            m_battleResultText.text = ControllerContainer.BattleController.IsTeamWithColorPlayersTeam(teamThatWon) ?
+                "You won the match!" :
+                "The enemy team won the match!";
+
             m_animator.SetTrigger("Show");
         }
 
