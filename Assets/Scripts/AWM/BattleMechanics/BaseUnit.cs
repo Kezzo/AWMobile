@@ -434,7 +434,8 @@ namespace AWM.BattleMechanics
         public bool CanAttackUnit(BaseUnit unitToCheck)
         {
             return TeamColor != unitToCheck.TeamColor && 
-                   GetUnitBalancing().m_AttackableUnitMetaTypes.Contains(unitToCheck.GetUnitBalancing().m_UnitMetaType);
+                   GetUnitBalancing().m_AttackableUnitMetaTypes.Contains(unitToCheck.GetUnitBalancing().m_UnitMetaType) &&
+                   GetDamageOnUnit(unitToCheck) > 0;
         }
 
         /// <summary>
