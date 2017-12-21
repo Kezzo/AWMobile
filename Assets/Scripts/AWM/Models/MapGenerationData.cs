@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AWM.Enums;
+using AWM.MapTileGeneration;
 using UnityEngine;
 
 namespace AWM.Models
@@ -8,7 +9,7 @@ namespace AWM.Models
     /// <summary>
     /// Model to save needed data to generate a map and the units on it.
     /// </summary>
-    public class MapGenerationData : ScriptableObject
+    public class MapGenerationData : ScriptableObject, IMapTileProvider
     {
         public string m_LevelName;
         public bool m_IsLevelSelection;
@@ -127,10 +128,8 @@ namespace AWM.Models
         }
 
         /// <summary>
-        /// Returns the MapTile instance placed on the given position, ignoring the group it belongs to.
-        /// If no MapTile is on the given position null will be returned.
+        /// Returns the generation data of a map tile at the given position.
         /// </summary>
-        /// <param name="position">The position to get the MapTile for.</param>
         public MapTile GetMapTileAtPosition(Vector2 position)
         {
             foreach (var mapTileGroup in m_MapTileGroups)

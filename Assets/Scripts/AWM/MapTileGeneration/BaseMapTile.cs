@@ -116,7 +116,7 @@ namespace AWM.MapTileGeneration
         private GameObject m_currentInstantiateLevelSelector;
 
         private MapTileGeneratorEditor m_mapTileGeneratorEditor;
-        private MapGenerationData.MapTile m_mapTileData;
+        public MapGenerationData.MapTile MapTileData { get; private set; }
         private MapTileGenerationService m_mapGenService;
 
         public Vector2 m_SimplifiedMapPosition;
@@ -181,16 +181,15 @@ namespace AWM.MapTileGeneration
             else
             {
                 m_mapTileGeneratorEditor = FindObjectOfType<MapTileGeneratorEditor>();
-                m_mapTileGeneratorEditor.AddInstantiatedBaseMapTile(this);
             }
 
-            m_mapTileData = mapTileData;
-            m_mapTileType = m_mapTileData.m_MapTileType;
-            m_unitOnThisTile = m_mapTileData.m_Unit;
-            m_levelSelectionRouteType = m_mapTileData.m_LevelSelectionRouteType;
-            m_levelNameToStart = m_mapTileData.m_LevelNameToStart;
-            m_levelSelectionOrder = m_mapTileData.m_LevelSelectionOrder;
-            m_centeredCameraPosition = m_mapTileData.m_CenteredCameraPosition;
+            MapTileData = mapTileData;
+            m_mapTileType = MapTileData.m_MapTileType;
+            m_unitOnThisTile = MapTileData.m_Unit;
+            m_levelSelectionRouteType = MapTileData.m_LevelSelectionRouteType;
+            m_levelNameToStart = MapTileData.m_LevelNameToStart;
+            m_levelSelectionOrder = MapTileData.m_LevelSelectionOrder;
+            m_centeredCameraPosition = MapTileData.m_CenteredCameraPosition;
             m_mapGenService = ControllerContainer.MapTileGenerationService;
         }
 
@@ -198,9 +197,9 @@ namespace AWM.MapTileGeneration
         /// Validates the specified map tile type.
         /// If the MapTileType has changed or the child was not created, will create the correct MapTile.
         /// </summary>
-        public void ValidateMapTile()
+        public void ValidateMapTile(bool forceUpdate = false, IMapTileProvider mapTileProvider = null)
         {
-            if (m_currentInstantiatedMapTileType == m_mapTileType && m_currentlyInstantiatedMapTiles != null)
+            if (!forceUpdate && m_currentInstantiatedMapTileType == m_mapTileType && m_currentlyInstantiatedMapTiles != null)
             {
                 return;
             }
@@ -220,7 +219,12 @@ namespace AWM.MapTileGeneration
                 return;
             }
 
-            InstantiateMapTilePrefab();
+            if (mapTileProvider == null)
+            {
+                mapTileProvider = m_mapTileGeneratorEditor.CurrentlyVisibleMap;
+            }
+
+            InstantiateMapTilePrefab(mapTileProvider);
         }
 
         /// <summary>
@@ -238,7 +242,7 @@ namespace AWM.MapTileGeneration
             if (m_unitOnThisTile != null && m_unitOnThisTile.m_UnitType != UnitType.None)
             {
                 InstantiateUnitPrefab(simplifiedPosition, registerUnit);
-                m_mapTileData.m_Unit = m_unitOnThisTile;
+                MapTileData.m_Unit = m_unitOnThisTile;
 
                 UpdateVisibilityOfEnvironment(true);
             }
@@ -249,11 +253,11 @@ namespace AWM.MapTileGeneration
         /// </summary>
         public void ValidateLevelSelector(bool forceCreation = false)
         {
-            if (m_mapTileData == null || (!forceCreation && 
-                                          m_levelSelectionRouteType == m_mapTileData.m_LevelSelectionRouteType &&
-                                          string.Equals(m_levelNameToStart, m_mapTileData.m_LevelNameToStart) && 
-                                          m_levelSelectionOrder == m_mapTileData.m_LevelSelectionOrder && 
-                m_centeredCameraPosition == m_mapTileData.m_CenteredCameraPosition))
+            if (MapTileData == null || (!forceCreation && 
+                                          m_levelSelectionRouteType == MapTileData.m_LevelSelectionRouteType &&
+                                          string.Equals(m_levelNameToStart, MapTileData.m_LevelNameToStart) && 
+                                          m_levelSelectionOrder == MapTileData.m_LevelSelectionOrder && 
+                m_centeredCameraPosition == MapTileData.m_CenteredCameraPosition))
             {
                 return;
             }
@@ -263,10 +267,10 @@ namespace AWM.MapTileGeneration
                 DestroyImmediate(m_currentInstantiateLevelSelector);
             }
 
-            m_mapTileData.m_LevelSelectionRouteType = m_levelSelectionRouteType;
-            m_mapTileData.m_LevelNameToStart = m_levelNameToStart;
-            m_mapTileData.m_LevelSelectionOrder = m_levelSelectionOrder;
-            m_mapTileData.m_CenteredCameraPosition = m_centeredCameraPosition;
+            MapTileData.m_LevelSelectionRouteType = m_levelSelectionRouteType;
+            MapTileData.m_LevelNameToStart = m_levelNameToStart;
+            MapTileData.m_LevelSelectionOrder = m_levelSelectionOrder;
+            MapTileData.m_CenteredCameraPosition = m_centeredCameraPosition;
 
             if (m_levelSelectionRouteType == LevelSelectionRouteType.LevelSelector)
             {
@@ -276,7 +280,7 @@ namespace AWM.MapTileGeneration
                 m_currentInstantiateLevelSelector.transform.localScale = Vector3.one;
 
                 m_currentInstantiateLevelSelector.GetComponent<LevelSelector>().Initialize(
-                    m_mapTileData.m_LevelNameToStart, m_levelSelectionOrder, this, m_centeredCameraPosition);
+                    MapTileData.m_LevelNameToStart, m_levelSelectionOrder, this, m_centeredCameraPosition);
                 m_currentInstantiateLevelSelector.SetActive(false); // will be enabled when all levelselectors are initialized in this level selector is found to be unlocked.
             }           
         }
@@ -326,7 +330,7 @@ namespace AWM.MapTileGeneration
         /// Instantiates the map tile prefab.
         /// </summary>
         /// <returns></returns>
-        private void InstantiateMapTilePrefab()
+        private void InstantiateMapTilePrefab(IMapTileProvider mapTileProvider)
         {
             if (m_mapTileGeneratorEditor == null)
             {
@@ -334,12 +338,12 @@ namespace AWM.MapTileGeneration
             }
 
             m_currentInstantiatedMapTileType = m_mapTileType;
-            m_mapTileData.m_MapTileType = m_mapTileType;
+            MapTileData.m_MapTileType = m_mapTileType;
 
             List<CardinalDirection> adjacentWaterDirections;
 
             if (m_mapTileType != MapTileType.Water && m_mapGenService.IsMapTileNextToType(MapTileType.Water, 
-                m_SimplifiedMapPosition, m_mapTileGeneratorEditor.CurrentlyVisibleMap, out adjacentWaterDirections))
+                m_SimplifiedMapPosition, mapTileProvider, out adjacentWaterDirections))
             {
                 InstantiateComplexBorderMapTile(adjacentWaterDirections);
                 InstantiateEnvironment();

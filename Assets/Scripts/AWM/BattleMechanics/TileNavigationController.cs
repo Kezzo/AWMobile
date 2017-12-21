@@ -13,9 +13,9 @@ namespace AWM.BattleMechanics
     /// Class to provide tile navigation algorithms results for units.
     /// This controller also implements the A* pathfinding algorithm.
     /// </summary>
-    public class TileNavigationController
+    public class TileNavigationController : IMapTileProvider
     {
-        private Dictionary<Vector2, BaseMapTile> m_mapTilePositions;
+        public Dictionary<Vector2, BaseMapTile> MapTilePositions { get; private set; }
 
         /// <summary>
         /// Initializes the TileNavigationController.
@@ -23,7 +23,7 @@ namespace AWM.BattleMechanics
         /// <param name="mapSize">Size of the map.</param>
         public void Initialize(Vector2 mapSize)
         {
-            m_mapTilePositions = new Dictionary<Vector2, BaseMapTile>((int) (mapSize.x * mapSize.y));
+            MapTilePositions = new Dictionary<Vector2, BaseMapTile>((int) (mapSize.x * mapSize.y));
         }
 
         /// <summary>
@@ -33,14 +33,14 @@ namespace AWM.BattleMechanics
         /// <param name="baseMapTile">The base map tile.</param>
         public void RegisterMapTile(Vector2 mapTilePosition, BaseMapTile baseMapTile)
         {
-            if (m_mapTilePositions.ContainsKey(mapTilePosition))
+            if (MapTilePositions.ContainsKey(mapTilePosition))
             {
                 Debug.LogErrorFormat("Tried to register a maptile under an already registered coordinate: '{0}'. " +
                                      "Not registering the second MapTile!", mapTilePosition);
             }
             else
             {
-                m_mapTilePositions.Add(mapTilePosition, baseMapTile);
+                MapTilePositions.Add(mapTilePosition, baseMapTile);
             }
         }
 
@@ -53,7 +53,7 @@ namespace AWM.BattleMechanics
         {
             BaseMapTile baseMapTile;
 
-            m_mapTilePositions.TryGetValue(mapTilePosition, out baseMapTile);
+            MapTilePositions.TryGetValue(mapTilePosition, out baseMapTile);
 
             return baseMapTile;
         }
@@ -83,7 +83,8 @@ namespace AWM.BattleMechanics
                     {
                         BaseMapTile mapTileInRange = GetMapTile(adjacentNodes[i]);
 
-                        if (mapTileInRange != null && !mapTilesInRange.Contains(mapTileInRange))
+                        if (mapTileInRange != null && !mapTilesInRange.Contains(mapTileInRange) && 
+                            mapTileInRange.m_SimplifiedMapPosition != sourceNode)
                         {
                             mapTilesInRange.Add(mapTileInRange);
                             nodesToCheck.Enqueue(adjacentNodes[i]);
@@ -121,7 +122,7 @@ namespace AWM.BattleMechanics
                     Vector2 adjacentNode = adjacentNodes[nodeIndex];
                     BaseMapTile baseMapTile;
 
-                    if (!m_mapTilePositions.TryGetValue(adjacentNode, out baseMapTile))
+                    if (!MapTilePositions.TryGetValue(adjacentNode, out baseMapTile))
                     {
                         Debug.LogErrorFormat("BaseMapTile on position: '{0}' was not found!", adjacentNode);
                         continue;
@@ -163,7 +164,7 @@ namespace AWM.BattleMechanics
             {
                 BaseMapTile baseMapTile;
 
-                if (m_mapTilePositions.TryGetValue(walkableNode.Key, out baseMapTile))
+                if (MapTilePositions.TryGetValue(walkableNode.Key, out baseMapTile))
                 {
                     walkableMapTiles.Add(baseMapTile);
                 }
@@ -232,7 +233,7 @@ namespace AWM.BattleMechanics
                     Vector2 nodeToCheck = adjacentNodes[nodeIndex];
                     BaseMapTile baseMapTile;
 
-                    if (!m_mapTilePositions.TryGetValue(nodeToCheck, out baseMapTile))
+                    if (!MapTilePositions.TryGetValue(nodeToCheck, out baseMapTile))
                     {
                         Debug.LogErrorFormat("BaseMapTile on position: '{0}' was not found!", nodeToCheck);
                         continue;
@@ -343,7 +344,7 @@ namespace AWM.BattleMechanics
                 BaseMapTile adjacenBaseMapTile;
 
                 // Is tile position registered?
-                if (m_mapTilePositions.TryGetValue(adjacentTile, out adjacenBaseMapTile) &&
+                if (MapTilePositions.TryGetValue(adjacentTile, out adjacenBaseMapTile) &&
                     // Is MapTile walkable by unit?
                     movementCostResolver.CanUnitWalkOnMapTile(adjacenBaseMapTile) &&
                     // Is there a unit on the positon? (rendering it unwalkable)
@@ -599,6 +600,22 @@ namespace AWM.BattleMechanics
             }
 
             return routeMarkerType;
+        }
+
+        /// <summary>
+        /// Returns the generation data of a map tile at the given position.
+        /// </summary>
+        public MapGenerationData.MapTile GetMapTileAtPosition(Vector2 position)
+        {
+            MapGenerationData.MapTile mapTileData = null;
+
+            BaseMapTile baseMapTile;
+            if(MapTilePositions.TryGetValue(position, out baseMapTile))
+            {
+                mapTileData = baseMapTile.MapTileData;
+            }
+
+            return mapTileData;
         }
     }
 }

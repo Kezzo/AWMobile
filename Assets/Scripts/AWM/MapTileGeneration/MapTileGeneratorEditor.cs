@@ -139,8 +139,6 @@ namespace AWM.MapTileGeneration
 
         private BaseMapTile m_lastUpdateMapTile;
 
-        private List<BaseMapTile> m_instantiatedBaseMapTiles;
-
         private MapGenerationData m_currentlyVisibleMap;
         public MapGenerationData CurrentlyVisibleMap { get { return m_currentlyVisibleMap; } }
 
@@ -191,7 +189,7 @@ namespace AWM.MapTileGeneration
             BaseMapTile closestBaseMapTile = null;
             float closestDistanceToRaycastHit = float.MaxValue;
 
-            foreach (var instantiatedBaseMapTile in m_instantiatedBaseMapTiles)
+            foreach (var instantiatedBaseMapTile in ControllerContainer.TileNavigationController.MapTilePositions.Values)
             {
                 float distanceToRaycastHit = Vector3.Distance(instantiatedBaseMapTile.transform.position, worldPosition);
 
@@ -212,6 +210,21 @@ namespace AWM.MapTileGeneration
                 case TypeToEdit.MapTileType:
                     closestBaseMapTile.MapTileType = m_LastToggledTileType;
                     closestBaseMapTile.ValidateMapTile();
+
+                    List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(
+                        closestBaseMapTile.m_SimplifiedMapPosition, true);
+
+                    foreach (var adjacentNode in adjacentNodes)
+                    {
+                        BaseMapTile mapTile;
+
+                        if (ControllerContainer.TileNavigationController.MapTilePositions.TryGetValue(adjacentNode,
+                            out mapTile))
+                        {
+                            mapTile.ValidateMapTile(true, ControllerContainer.TileNavigationController);
+                        }
+                    }
+
                     break;
                 case TypeToEdit.UnitType:
                     closestBaseMapTile.Unit.m_UnitType = m_LastToggledUnitType;
@@ -294,16 +307,6 @@ namespace AWM.MapTileGeneration
             }
         }
 
-        /// <summary>
-        /// Adds a instantiated base map tile to a list.
-        /// This is needed to find the map tiles later and edit them.
-        /// </summary>
-        /// <param name="baseMapTile">The instance to add.</param>
-        public void AddInstantiatedBaseMapTile(BaseMapTile baseMapTile)
-        {
-            m_instantiatedBaseMapTiles.Add(baseMapTile);
-        }
-
         #endregion
 
         /// <summary>
@@ -312,11 +315,7 @@ namespace AWM.MapTileGeneration
         public void GenerateMap()
         {
             ClearMap();
-
-            m_instantiatedBaseMapTiles = new List<BaseMapTile>((int) (m_levelSize.x*m_levelSize.y));
-
             m_currentlyVisibleMap = ControllerContainer.MapTileGenerationService.GenerateMapGroups(m_levelSize, m_tileMargin, 2);
-
             ControllerContainer.MapTileGenerationService.LoadGeneratedMap(m_currentlyVisibleMap, m_tilePrefab, m_levelRoot);
         }
 
@@ -334,8 +333,6 @@ namespace AWM.MapTileGeneration
             {
                 ClearMap();
                 m_currentlyVisibleMap = mapGenerationData;
-
-                m_instantiatedBaseMapTiles = new List<BaseMapTile>((int) (m_levelSize.x*m_levelSize.y));
 
                 ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
 

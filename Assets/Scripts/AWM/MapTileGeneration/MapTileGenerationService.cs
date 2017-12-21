@@ -350,11 +350,11 @@ namespace AWM.MapTileGeneration
         /// </summary>
         /// <param name="mapTileType">The MapTileType to check for.</param>
         /// <param name="tilePosition">The tile position to get the adjacent tiles from.</param>
-        /// <param name="mapData">The map data that holds the type of each maptile at a specific position. 
+        /// <param name="mapTileProvider">Provides the data that holds the type of maptiles at a specific position. 
         /// This is used to find the maptiles on the adjacent positions and get their MapTileType.</param>
         /// <param name="adjacentWaterDirections">A list containing all cardinal directions the given MapTileType is adjacent to the given tile position.</param>
         /// <returns></returns>
-        public bool IsMapTileNextToType(MapTileType mapTileType, Vector2 tilePosition, MapGenerationData mapData, 
+        public bool IsMapTileNextToType(MapTileType mapTileType, Vector2 tilePosition, IMapTileProvider mapTileProvider, 
             out List<CardinalDirection> adjacentWaterDirections)
         {
             bool isNextToWater = false;
@@ -365,7 +365,7 @@ namespace AWM.MapTileGeneration
 
             for (int i = 0; i < adjacentNodes.Count; i++)
             {
-                MapGenerationData.MapTile mapTile = mapData.GetMapTileAtPosition(adjacentNodes[i]);
+                MapGenerationData.MapTile mapTile = mapTileProvider.GetMapTileAtPosition(adjacentNodes[i]);
 
                 if (mapTile != null && mapTile.m_MapTileType == mapTileType)
                 {
