@@ -28,6 +28,7 @@ namespace AWM.BattleVisuals
 
         private bool m_blinkingInProgress;
         private Coroutine m_runningBlinkingCoroutine;
+        private Coroutine m_runningBlinkOnceCoroutine;
 
         private MaterialPropertyBlock m_materialPropertyBlock;
 
@@ -46,7 +47,8 @@ namespace AWM.BattleVisuals
             {
                 yield return new WaitForSeconds(m_blinkCooldown);
 
-                yield return StartCoroutine(BlinkOnce());
+                m_runningBlinkOnceCoroutine = StartCoroutine(BlinkOnce());
+                yield return m_runningBlinkOnceCoroutine;
             }
         }
 
@@ -100,10 +102,10 @@ namespace AWM.BattleVisuals
             m_rendererToBlink[position] = rendererToBlink;
 
             rendererToBlink.GetPropertyBlock(m_materialPropertyBlock);
+            m_materialPropertyBlock.SetFloat("_Alpha", m_alphaMax);
 
             if (!m_blinkingInProgress)
             {
-                m_materialPropertyBlock.SetFloat("_Alpha", m_alphaMax);
                 m_blinkingInProgress = true;
                 m_runningBlinkingCoroutine = StartCoroutine(BlinkWithCooldown());
             }
@@ -121,6 +123,7 @@ namespace AWM.BattleVisuals
 
             if (m_rendererToBlink.Count == 0 && m_blinkingInProgress)
             {
+                StopCoroutine(m_runningBlinkOnceCoroutine);
                 StopCoroutine(m_runningBlinkingCoroutine);
                 m_blinkingInProgress = false;
             }
