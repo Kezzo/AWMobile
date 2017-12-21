@@ -59,7 +59,7 @@ namespace AWM.BattleMechanics
         }
 
         /// <summary>
-        /// Returns all map tiles in range, ignoring the MapTileType and excluding the sourceNode.
+        /// Returns all map tiles in range, ignoring the MapTileType.
         /// </summary>
         /// <param name="sourceNode">The source node.</param>
         /// <param name="range">The range.</param>
@@ -83,8 +83,7 @@ namespace AWM.BattleMechanics
                     {
                         BaseMapTile mapTileInRange = GetMapTile(adjacentNodes[i]);
 
-                        if (mapTileInRange != null && !mapTilesInRange.Contains(mapTileInRange) && 
-                            mapTileInRange.m_SimplifiedMapPosition != sourceNode)
+                        if (mapTileInRange != null && !mapTilesInRange.Contains(mapTileInRange))
                         {
                             mapTilesInRange.Add(mapTileInRange);
                             nodesToCheck.Enqueue(adjacentNodes[i]);
