@@ -29,10 +29,17 @@ namespace AWM.MapTileGeneration
 
         [SerializeField]
         private MapGenerationData.Unit m_unitOnThisTile;
-
         public MapGenerationData.Unit Unit
         {
-            get { return m_unitOnThisTile; }
+            get
+            {
+                if (m_unitOnThisTile == null)
+                {
+                    m_unitOnThisTile = new MapGenerationData.Unit();
+                }
+
+                return m_unitOnThisTile;  
+            }
             set { m_unitOnThisTile = value; }
         }
 
