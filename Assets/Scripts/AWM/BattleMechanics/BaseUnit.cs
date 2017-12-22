@@ -473,7 +473,8 @@ namespace AWM.BattleMechanics
                 ClearAttackableUnits(m_attackableUnits);
                 UnitHasMovedThisRound = true;
 
-                MoveAlongRoute(routeToDestination, null, () =>
+                MoveAlongRoute(routeToDestination, new UnitBalancingMovementCostResolver(
+                    GetUnitBalancing()), null, () =>
                 {
                     if (!UnitHasMovedThisRound)
                     {
@@ -574,10 +575,12 @@ namespace AWM.BattleMechanics
         /// Moves the along route.
         /// </summary>
         /// <param name="route">The route.</param>
+        /// <param name="movementCostResolver">The implementation that determines how a unit is affect by the terrain to change the movement speed accordingly.</param>
         /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
         /// <param name="onMoveFinished">The on move finished.</param>
         /// <returns></returns>
-        private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, Action<BaseMapTile> onReachedTile, Action onMoveFinished)
+        private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, IMovementCostResolver movementCostResolver, 
+            Action<BaseMapTile> onReachedTile, Action onMoveFinished)
         {
             // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
             for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)
@@ -585,7 +588,7 @@ namespace AWM.BattleMechanics
                 Vector2 nodeToMoveTo = route[nodeIndex];
                 Vector2 currentNode = route[nodeIndex - 1];
 
-                yield return MoveToNeighborNode(currentNode, nodeToMoveTo,
+                yield return MoveToNeighborNode(currentNode, nodeToMoveTo, movementCostResolver,
                     nodeIndex == 1, nodeIndex == route.Count - 1, onReachedTile);
 
                 if (nodeIndex == route.Count - 1)
@@ -602,14 +605,16 @@ namespace AWM.BattleMechanics
         /// Moves the along route. This method will also instantly set the unit position to the destination node to avoid units standing on the same position.
         /// </summary>
         /// <param name="route">The route.</param>
+        /// <param name="movementCostResolver">The implementation that determines how a unit is affect by the terrain to change the movement speed accordingly.</param>
         /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
         /// <param name="onMoveFinished">Invoked when the unit was successfully moved.</param>
-        public void MoveAlongRoute(List<Vector2> route, Action<BaseMapTile> onReachedTile, Action onMoveFinished)
+        public void MoveAlongRoute(List<Vector2> route, IMovementCostResolver movementCostResolver, 
+            Action<BaseMapTile> onReachedTile, Action onMoveFinished)
         {
             UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
             m_currentSimplifiedPosition = route[route.Count - 1];
 
-            StartCoroutine(MoveAlongRouteCoroutine(route, onReachedTile, () =>
+            StartCoroutine(MoveAlongRouteCoroutine(route, movementCostResolver, onReachedTile, () =>
             {
                 UpdateEnvironmentVisibility(route[route.Count - 1], true);
                 onMoveFinished();
@@ -621,6 +626,7 @@ namespace AWM.BattleMechanics
         /// </summary>
         /// <param name="startNode">The start node.</param>
         /// <param name="destinationNode">The destination node.</param>
+        /// <param name="movementCostResolver">The implementation that determines how a unit is affect by the terrain to change the movement speed accordingly.</param>
         /// <param name="isMovingFromFirstTile">
         /// Determines if this method is moving from the first tile.
         /// Needed to properly evaluate movement animation curve the same for all distances.
@@ -630,7 +636,7 @@ namespace AWM.BattleMechanics
         /// Needed to properly evaluate movement animation curve the same for all distances.
         /// </param>
         /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
-        public IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, 
+        public IEnumerator MoveToNeighborNode(Vector2 startNode, Vector2 destinationNode, IMovementCostResolver movementCostResolver,
             bool isMovingFromFirstTile, bool isMovingToLastTile, Action<BaseMapTile> onReachedTile)
         {
             Vector2 nodePositionDiff = destinationNode - startNode;
@@ -641,13 +647,15 @@ namespace AWM.BattleMechanics
 
             SetRotation(directionToRotateTo);
 
-            BaseMapTile mapTile = ControllerContainer.TileNavigationController.GetMapTile(destinationNode);
+            BaseMapTile startMapTile = ControllerContainer.TileNavigationController.GetMapTile(startNode);
+            BaseMapTile destinationMapTile = ControllerContainer.TileNavigationController.GetMapTile(destinationNode);
+
             Vector3 targetWorldPosition = Vector3.zero;
 
-            if (mapTile != null)
+            if (destinationMapTile != null)
             {
-                targetWorldPosition = mapTile.UnitRoot.position;
-                this.transform.SetParent(mapTile.UnitRoot, true);
+                targetWorldPosition = destinationMapTile.UnitRoot.position;
+                this.transform.SetParent(destinationMapTile.UnitRoot, true);
             }
             else
             {
@@ -674,7 +682,10 @@ namespace AWM.BattleMechanics
                     animationCurveValue = 1f - (distanceToNeighbourTile / startDistanceToNeighbourTile) / 2;
                 }
 
-                float movementStep = (m_worldMovementSpeed * m_movementAnimationCurve.Evaluate(animationCurveValue)) * Time.deltaTime;
+                float terrainSpeedModifier = movementCostResolver.GetMovementCostToWalkOnMapTileType(distanceToNeighbourTile <= 1f ? 
+                    destinationMapTile.MapTileType : startMapTile.MapTileType) > 1 ? 0.75f : 1f;
+
+                float movementStep = m_worldMovementSpeed * terrainSpeedModifier * m_movementAnimationCurve.Evaluate(animationCurveValue) * Time.deltaTime;
 
                 transform.position = Vector3.MoveTowards(transform.position, targetWorldPosition, movementStep);
 
@@ -686,7 +697,7 @@ namespace AWM.BattleMechanics
 
                     if (onReachedTile != null)
                     {
-                        onReachedTile(mapTile);
+                        onReachedTile(destinationMapTile);
                     }
                 }
 

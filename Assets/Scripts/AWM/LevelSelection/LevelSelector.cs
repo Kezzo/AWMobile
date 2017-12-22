@@ -83,16 +83,17 @@ namespace AWM.LevelSelection
 
             Debug.Log(string.Format("Moving to level selector of level: {0}", m_levelName));
 
+            IMovementCostResolver movementCostResolver = new LevelSelectionMovementCostResolver();
             Dictionary<Vector2, PathfindingNodeDebugData> dontCare;
 
             var routeToLevelSelector = ControllerContainer.TileNavigationController.GetBestWayToDestination(
                 levelSelectionUnit.CurrentSimplifiedPosition, m_rootMapTile.m_SimplifiedMapPosition,
-                new LevelSelectionMovementCostResolver(), out dontCare);
+                movementCostResolver, out dontCare);
 
             ControllerContainer.InputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
             //TODO: hide opened level info.
             //TODO: Inject additional action to get maptile type updates while moving to switch visual of unit.
-            levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, tile =>
+            levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, movementCostResolver, tile =>
             {
                 UpdateUnitVisuals(tile.MapTileType);
 

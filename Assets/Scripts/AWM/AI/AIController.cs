@@ -100,11 +100,14 @@ namespace AWM.AI
                     {
                         var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
 
-                        List<Vector2> routeToMove = ControllerContainer.TileNavigationController.GetBestWayToDestination(
-                            CurrentlyControlledUnit.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition, 
-                            new UnitBalancingMovementCostResolver(CurrentlyControlledUnit.GetUnitBalancing()), out dontCare);
+                        IMovementCostResolver movementCostResolver = new UnitBalancingMovementCostResolver(
+                            CurrentlyControlledUnit.GetUnitBalancing());
 
-                        CurrentlyControlledUnit.MoveAlongRoute(routeToMove, null, AttackIfPossible);
+                        List<Vector2> routeToMove = ControllerContainer.TileNavigationController.GetBestWayToDestination(
+                            CurrentlyControlledUnit.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition,
+                            movementCostResolver, out dontCare);
+
+                        CurrentlyControlledUnit.MoveAlongRoute(routeToMove, movementCostResolver, null, AttackIfPossible);
                     }
                     else
                     {
