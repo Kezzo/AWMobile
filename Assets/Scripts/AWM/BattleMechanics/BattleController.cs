@@ -32,6 +32,8 @@ namespace AWM.BattleMechanics
 
         private List<AIController> m_registeredAIs;
 
+        public bool IsBattlePaused { get; set; }
+
         /// <summary>
         /// Initializes a battle.
         /// </summary>

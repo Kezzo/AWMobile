@@ -706,6 +706,11 @@ namespace AWM.BattleMechanics
                     yield break;
                 }
 
+                while (ControllerContainer.BattleController.IsBattlePaused)
+                {
+                    yield return null;
+                }
+
                 yield return null;
             }
         }

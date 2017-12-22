@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using AWM.Models;
+using AWM.System;
 using UnityEngine;
 
 namespace AWM.BattleVisuals
@@ -62,6 +63,11 @@ namespace AWM.BattleVisuals
         {
             while (true)
             {
+                while (ControllerContainer.BattleController.IsBattlePaused)
+                {
+                    yield return null;
+                }
+
                 if (m_mapCloudShadowData.m_MinVisibleClouds > m_currentlyVisibleClouds &&
                     DelayBetweenClouds < Time.realtimeSinceStartup - m_lastCloudStartTime)
                 {

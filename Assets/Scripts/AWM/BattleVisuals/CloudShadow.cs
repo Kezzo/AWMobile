@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using AWM.System;
 using UnityEngine;
 
 namespace AWM.BattleVisuals
@@ -49,6 +50,11 @@ namespace AWM.BattleVisuals
         {
             while (true)
             {
+                while (ControllerContainer.BattleController.IsBattlePaused)
+                {
+                    yield return null;
+                }
+
                 this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, destinationPosition, speed);
 
                 if (this.transform.localPosition.z - destinationPosition.z < 0.1f)
