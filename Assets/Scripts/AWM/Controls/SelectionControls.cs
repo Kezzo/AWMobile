@@ -92,7 +92,7 @@ namespace AWM.Controls
 
         private void Start()
         {
-            ControllerContainer.BattleController.AddTurnStartEvent("DeselectUnit", teamPlayingNext => DeselectCurrentUnit()); 
+            ControllerContainer.BattleController.AddTurnStartListener("DeselectUnit", teamPlayingNext => DeselectCurrentUnit()); 
         }
 
         /// <summary>

@@ -36,8 +36,8 @@ namespace AWM.UI
             }
             else
             {
-                ControllerContainer.BattleController.AddBattleStartedEvent("BattleUI - Initialize", Initialize);
-                ControllerContainer.BattleController.AddBattleEndedEvent("BattleUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
+                ControllerContainer.BattleController.AddBattleStartedListener("BattleUI - Initialize", Initialize);
+                ControllerContainer.BattleController.AddBattleEndedListener("BattleUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
                 m_battlePauseUi.SetVisibilityCallback(ChangeVisibilityOfBattleUI);
             }
         }
@@ -49,7 +49,7 @@ namespace AWM.UI
         private void Initialize(Team[] teamsThisBattle)
         {
             //TODO: Display team stats and show battle introduction etc.
-            ControllerContainer.BattleController.AddTurnStartEvent("BattleUI - Initialize", teamToStartNext =>
+            ControllerContainer.BattleController.AddTurnStartListener("BattleUI - Initialize", teamToStartNext =>
                 m_endTurnButton.SetActive(teamToStartNext.m_IsPlayersTeam));
         }
 

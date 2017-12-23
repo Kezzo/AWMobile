@@ -545,11 +545,11 @@ namespace AWM.MapTileGeneration
             {
                 if (setVisibilityTo)
                 {
-                    shaderBlinkOrchestrator.AddRendererToBlink(m_SimplifiedMapPosition, m_movementField.GetComponent<MeshRenderer>());
+                    shaderBlinkOrchestrator.AddRendererToBlink(ShaderCategory.MapTile, m_SimplifiedMapPosition, m_movementField.GetComponent<MeshRenderer>());
                 }
                 else
                 {
-                    shaderBlinkOrchestrator.RemoveRenderer(m_SimplifiedMapPosition);
+                    shaderBlinkOrchestrator.RemoveRenderer(ShaderCategory.MapTile, m_SimplifiedMapPosition);
                 }
             }
         }

@@ -300,10 +300,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35faf7d1aa076548a6cf6271c45fc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_alphaMax: 1
-  m_alphaMin: 0
-  m_blinkTime: 2.5
-  m_blinkCooldown: 1.1
+  m_shaderCategoryBlinkSettings:
+  - m_ShaderCategory: 0
+    m_MaxValue: 1
+    m_MinValue: 0
+    m_ShaderPropertyName: _Alpha
+    m_BlinkTime: 2.5
+    m_BlinkCooldown: 1.1
+    m_DecreaseValue: 1
+  - m_ShaderCategory: 1
+    m_MaxValue: 1.5
+    m_MinValue: 1
+    m_ShaderPropertyName: _Brightness
+    m_BlinkTime: 0.9
+    m_BlinkCooldown: 1.25
+    m_DecreaseValue: 0
 --- !u!23 &397337086
 MeshRenderer:
   m_ObjectHideFlags: 0

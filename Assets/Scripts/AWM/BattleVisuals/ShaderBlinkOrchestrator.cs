@@ -1,136 +1,81 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using AWM.Enums;
 using AWM.System;
 using UnityEngine;
 
 namespace AWM.BattleVisuals
 {
     /// <summary>
-    /// Class to synchronize blinking shaders.
+    /// Class to synchronize blinking shader actors.
     /// </summary>
     public class ShaderBlinkOrchestrator : MonoBehaviour
     {
-        [SerializeField]
-        private float m_alphaMax;
+        /// <summary>
+        /// Used to setup the shader property to use and the blinking timing per <see cref="ShaderCategory"/>.
+        /// </summary>
+        [Serializable]
+        public class ShaderCategoryBlinkSetting
+        {
+            public ShaderCategory m_ShaderCategory;
+
+            public float m_MaxValue;
+            public float m_MinValue;
+
+            public string m_ShaderPropertyName;
+
+            public float m_BlinkTime;
+            public float m_BlinkCooldown;
+
+            public bool m_DecreaseValue;
+        }
 
         [SerializeField]
-        private float m_alphaMin;
+        private List<ShaderCategoryBlinkSetting> m_shaderCategoryBlinkSettings;
 
-        [Range(0f, 5f)]
-        [SerializeField]
-        private float m_blinkTime;
-
-        [Range(0f, 5f)]
-        [SerializeField]
-        private float m_blinkCooldown;
-
-        private readonly Dictionary<Vector2, Renderer> m_rendererToBlink = new Dictionary<Vector2, Renderer>();
-
-        private bool m_blinkingInProgress;
-        private Coroutine m_runningBlinkingCoroutine;
-        private Coroutine m_runningBlinkOnceCoroutine;
-
-        private MaterialPropertyBlock m_materialPropertyBlock;
+        private Dictionary<ShaderCategory, ShaderBlinkActor> m_shaderBlinkActors = new Dictionary<ShaderCategory, ShaderBlinkActor>();
 
         private void Start()
         {
             ControllerContainer.MonoBehaviourRegistry.Register(this);
-            m_materialPropertyBlock = new MaterialPropertyBlock();
         }
 
-        /// <summary>
-        /// Triggers the BlinkOnce coroutine and waits for the defined blink cooldown as long as the gameobject is enabled.
-        /// </summary>
-        private IEnumerator BlinkWithCooldown()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(m_blinkCooldown);
-
-                m_runningBlinkOnceCoroutine = StartCoroutine(BlinkOnce());
-                yield return m_runningBlinkOnceCoroutine;
-            }
-        }
 
         /// <summary>
-        /// Fades shader, this component is attached to, out once and fades it in again.
+        /// Adds a renderer to blink to the correct <see cref="ShaderBlinkActor"/> instance that controls the blinking.
         /// </summary>
-        private IEnumerator BlinkOnce()
-        {
-            float alphaClampValue = m_alphaMax;
-            bool decreasingValue = true;
-
-            while (true)
-            {
-                if (decreasingValue)
-                {
-                    alphaClampValue -= m_blinkTime * Time.deltaTime;
-
-                    if (alphaClampValue <= m_alphaMin)
-                    {
-                        decreasingValue = false;
-                    }
-                }
-                else
-                {
-                    alphaClampValue += m_blinkTime * Time.deltaTime;
-
-                    if (alphaClampValue >= m_alphaMax)
-                    {
-                        yield break;
-                    }
-                }
-
-                m_materialPropertyBlock.SetFloat("_Alpha", Mathf.Clamp(alphaClampValue, m_alphaMin, m_alphaMax));
-
-                foreach (var rendererToBlink in m_rendererToBlink.Values)
-                {
-                    rendererToBlink.SetPropertyBlock(m_materialPropertyBlock);
-                }
-
-                yield return null;
-            }
-        }
-
-        /// <summary>
-        /// Adds a renderer to blink.
-        /// </summary>
-        /// <param name="position">The position.</param>
+        /// <param name="shaderCategory">The shader category the given renderer belongs to. Defines shader property and blink timing to use.</param>
+        /// <param name="uniquePosition">The uniquePosition to uniquely identify a renderer.</param>
         /// <param name="rendererToBlink">The renderer to blink.</param>
-        public void AddRendererToBlink(Vector2 position, Renderer rendererToBlink)
+        public void AddRendererToBlink(ShaderCategory shaderCategory, Vector2 uniquePosition, Renderer rendererToBlink)
         {
-            m_rendererToBlink[position] = rendererToBlink;
-
-            rendererToBlink.GetPropertyBlock(m_materialPropertyBlock);
-            m_materialPropertyBlock.SetFloat("_Alpha", m_alphaMax);
-
-            if (!m_blinkingInProgress)
+            if (!m_shaderBlinkActors.ContainsKey(shaderCategory))
             {
-                m_blinkingInProgress = true;
-                m_runningBlinkingCoroutine = StartCoroutine(BlinkWithCooldown());
+                m_shaderBlinkActors.Add(shaderCategory, new ShaderBlinkActor(GetBlinkSetting(shaderCategory), this));
             }
 
-            rendererToBlink.SetPropertyBlock(m_materialPropertyBlock);
+            m_shaderBlinkActors[shaderCategory].AddRenderer(uniquePosition, rendererToBlink);
         }
 
         /// <summary>
-        /// Removes a renderer.
+        /// Removes a renderer from the correct <see cref="ShaderBlinkActor"/> instance that controlled the blinking.
         /// </summary>
-        /// <param name="position">The position.</param>
-        public void RemoveRenderer(Vector2 position)
+        /// <param name="shaderCategory">The shader category the given renderer belongs to. Defines shader property and blink timing to use.</param>
+        /// <param name="position">The uniquePosition to uniquely identify a renderer.</param>
+        public void RemoveRenderer(ShaderCategory shaderCategory, Vector2 position)
         {
-            m_rendererToBlink.Remove(position);
-
-            if (m_rendererToBlink.Count == 0 && m_blinkingInProgress)
+            if (m_shaderBlinkActors.ContainsKey(shaderCategory))
             {
-                if(m_runningBlinkOnceCoroutine != null)
-                {
-                    StopCoroutine(m_runningBlinkOnceCoroutine);
-                }
-                
-                StopCoroutine(m_runningBlinkingCoroutine);
-                m_blinkingInProgress = false;
+                m_shaderBlinkActors[shaderCategory].RemoveRenderer(position);
             }
+        }
+
+        /// <summary>
+        /// Returns a serialized <see cref="ShaderCategoryBlinkSetting"/> that belongs to a given <see cref="ShaderCategory"/>.
+        /// </summary>
+        private ShaderCategoryBlinkSetting GetBlinkSetting(ShaderCategory shaderCategory)
+        {
+            return m_shaderCategoryBlinkSettings.Find(setting => setting.m_ShaderCategory == shaderCategory);
         }
     }
 }

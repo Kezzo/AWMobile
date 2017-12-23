@@ -835,7 +835,7 @@ MonoBehaviour:
   m_meshRenderer: {fileID: 23075647398201128}
   m_statManagement: {fileID: 114839991524481696}
   m_unitParticleFxPlayer: {fileID: 114618257586196996}
-  m_disabledColor: {r: 0.654902, g: 0.654902, b: 0.654902, a: 0}
+  m_disabledBrightness: 0.4
   m_movementAnimationCurve:
     serializedVersion: 2
     m_Curve:

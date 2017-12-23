@@ -39,7 +39,7 @@ namespace AWM.BattleMechanics
         private UnitParticleFxPlayer m_unitParticleFxPlayer;
 
         [SerializeField]
-        private Color m_disabledColor;
+        private float m_disabledBrightness;
 
         [SerializeField]
         private AnimationCurve m_movementAnimationCurve;
@@ -66,7 +66,7 @@ namespace AWM.BattleMechanics
 
                 m_unitHasAttackedThisRound = value;
 
-                m_materialPropertyBlock.SetColor("_Color", value ? m_disabledColor : Color.white);
+                m_materialPropertyBlock.SetFloat("_Brightness", value ? m_disabledBrightness : 1f);
                 m_meshRenderer.SetPropertyBlock(m_materialPropertyBlock);
             }
         }
@@ -81,6 +81,8 @@ namespace AWM.BattleMechanics
 
         private List<BaseUnit> m_attackableUnits = new List<BaseUnit>();
 
+        private Vector2 m_initialSimplifiedPosition;
+
         /// <summary>
         /// Initializes the specified team.
         /// </summary>
@@ -93,14 +95,22 @@ namespace AWM.BattleMechanics
             TeamColor = unitData.m_TeamColor;
             UnitType = unitData.m_UnitType;
             UnitHasMovedThisRound = false;
+            UnitHasAttackedThisRound = false;
 
             m_meshFilter.mesh = unitMesh;
+            m_initialSimplifiedPosition = initialSimplifiedPosition;
             m_currentSimplifiedPosition = initialSimplifiedPosition;
 
             if (Application.isPlaying && registerUnit)
             {
                 UniqueIdent = ControllerContainer.BattleController.RegisterUnit(TeamColor, this);
                 m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
+
+                if (ControllerContainer.BattleController.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
+                {
+                    ControllerContainer.BattleController.AddTurnStartListener(UniqueIdent.ToString(), OnTurnStarted);
+                    ControllerContainer.BattleController.AddUnitSelectedListener(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
+                }
             }
         }
 
@@ -110,6 +120,8 @@ namespace AWM.BattleMechanics
         public void Die()
         {
             ControllerContainer.BattleController.RemoveRegisteredUnit(TeamColor, this);
+            ControllerContainer.BattleController.RemoveUnitSelectedListener(UniqueIdent);
+            ControllerContainer.BattleController.RemoveTurnStartListener(UniqueIdent.ToString());
 
             m_attackMarker.SetActive(false);
             m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Death);
@@ -289,6 +301,8 @@ namespace AWM.BattleMechanics
 
             HideAttackRange();
             DislayAttackRange(CurrentSimplifiedPosition);
+
+            ControllerContainer.BattleController.OnUnitChangedSelection(true);
         }
 
         /// <summary>
@@ -312,6 +326,54 @@ namespace AWM.BattleMechanics
             ClearAttackableUnits(m_attackableUnits);
 
             HideAttackRange();
+
+            ControllerContainer.BattleController.OnUnitChangedSelection(false);
+        }
+
+        /// <summary>
+        /// Called when a unit of the player's team was selected or deselected.
+        /// </summary>
+        /// <param name="wasSelected">if set to <c>true</c> a unit was selected; otherwise false.</param>
+        private void OnUnitOfPlayerTeamChangedSelection(bool wasSelected)
+        {
+            if (!CanUnitTakeAction())
+            {
+                return;
+            }
+
+            ChangeBlinkOrchestratorAffiliation(!wasSelected);
+        }
+
+        /// <summary>
+        /// Invoked when a turn started.
+        /// </summary>
+        /// <param name="teamThatIsPlayingTheTurn">The team that is playing the turn.</param>
+        private void OnTurnStarted(Team teamThatIsPlayingTheTurn)
+        {
+            ChangeBlinkOrchestratorAffiliation(ControllerContainer.BattleController.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor);
+        }
+
+        /// <summary>
+        /// Changes the blink orchestrator affiliation of this unit
+        /// </summary>
+        /// <param name="addToOrchestrator">if set to <c>true</c> the renderer of this unit will be added to the orchestrator; otherwise it'll be removed.</param>
+        private void ChangeBlinkOrchestratorAffiliation(bool addToOrchestrator)
+        {
+            ShaderBlinkOrchestrator shaderBlinkOrchestrator = null;
+
+            if (ControllerContainer.MonoBehaviourRegistry.TryGet(out shaderBlinkOrchestrator))
+            {
+                if (addToOrchestrator)
+                {
+                    shaderBlinkOrchestrator.AddRendererToBlink(ShaderCategory.Unit,
+                        m_initialSimplifiedPosition, m_meshRenderer);
+                }
+                else
+                {
+                    shaderBlinkOrchestrator.RemoveRenderer(ShaderCategory.Unit, m_initialSimplifiedPosition);
+                }
+
+            }
         }
 
         /// <summary>
