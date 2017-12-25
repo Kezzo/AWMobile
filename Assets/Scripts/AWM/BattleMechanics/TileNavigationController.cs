@@ -347,7 +347,7 @@ namespace AWM.BattleMechanics
                     // Is MapTile walkable by unit?
                     movementCostResolver.CanUnitWalkOnMapTile(adjacenBaseMapTile) &&
                     // Is there a unit on the positon? (rendering it unwalkable)
-                    !ControllerContainer.BattleController.IsUnitOnNode(adjacentTile) &&
+                    !ControllerContainer.BattleStateController.IsUnitOnNode(adjacentTile) &&
                     // Can unit walk on the node, base on the movement range of the unit.
                     movementCostResolver.HasUnitEnoughMovementRangeLeft(walkingCostToNode + movementCostResolver.GetMovementCostToWalkOnMapTileType(adjacenBaseMapTile.MapTileType)))
                 {

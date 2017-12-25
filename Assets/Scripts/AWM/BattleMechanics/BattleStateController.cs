@@ -8,7 +8,11 @@ using UnityEngine;
 
 namespace AWM.BattleMechanics
 {
-    public class BattleController
+    /// <summary>
+    /// Holds, controls and published data about the state of a running battle. 
+    /// A new instance of this class is created for each match.
+    /// </summary>
+    public class BattleStateController
     {
         private Team[] m_teamThisBattle;
         private string m_levelNameOfBattle;
@@ -21,10 +25,11 @@ namespace AWM.BattleMechanics
 
         private Action m_onConfirmMoveButtonPressed;
 
-        private readonly Dictionary<string, Action<Team[]>> m_onBattleStartListener = new Dictionary<string, Action<Team[]>>();
-        private readonly Dictionary<string, Action<Team>> m_onTurnStartListener = new Dictionary<string, Action<Team>>();
-        private readonly Dictionary<string, Action<TeamColor>> m_onTeamWonListener = new Dictionary<string, Action<TeamColor>>();
-        private readonly Dictionary<int, Action<bool>> m_onUnitSelectedListener = new Dictionary<int, Action<bool>>(); 
+        public Dictionary<string, Action<Team[]>> OnBattleStartListener { get; private set; }
+        public Dictionary<string, Action<Team>> OnTurnStartListener { get; private set; }
+        public Dictionary<string, Action<TeamColor>> OnTeamWonListener { get; private set; }
+        public Dictionary<int, Action<bool>> OnUnitSelectedListener { get; private set; }
+        public Dictionary<string, Action<TeamColor>> OnTeamDoneThisTurnListener { get; private set; }
 
         private Dictionary<TeamColor, List<BaseUnit>> m_registeredTeams;
         public Dictionary<TeamColor, List<BaseUnit>> RegisteredTeams { get { return m_registeredTeams; } }
@@ -34,6 +39,20 @@ namespace AWM.BattleMechanics
         private List<AIController> m_registeredAIs;
 
         public bool IsBattlePaused { get; set; }
+
+        public BattleStateController()
+        {
+            m_registeredTeams = new Dictionary<TeamColor, List<BaseUnit>>();
+            m_uniqueUnitIdents = new List<int>();
+
+            m_registeredAIs = new List<AIController>();
+
+            OnBattleStartListener = new Dictionary<string, Action<Team[]>>();
+            OnTurnStartListener = new Dictionary<string, Action<Team>>();
+            OnTeamWonListener = new Dictionary<string, Action<TeamColor>>();
+            OnUnitSelectedListener = new Dictionary<int, Action<bool>>();
+            OnTeamDoneThisTurnListener = new Dictionary<string, Action<TeamColor>>();
+        }
 
         /// <summary>
         /// Initializes a battle.
@@ -46,11 +65,6 @@ namespace AWM.BattleMechanics
             m_levelNameOfBattle = levelName;
             m_subTurnCount = 0;
             m_turnCount = 0;
-
-            m_registeredTeams = new Dictionary<TeamColor, List<BaseUnit>>();
-            m_uniqueUnitIdents = new List<int>();
-
-            m_registeredAIs = new List<AIController>();
 
             foreach (Team team in m_teamThisBattle)
             {
@@ -68,7 +82,7 @@ namespace AWM.BattleMechanics
         /// </summary>
         public void StartBattle()
         {
-            foreach (var battleStartEvent in m_onBattleStartListener)
+            foreach (var battleStartEvent in OnBattleStartListener)
             {
                 battleStartEvent.Value(m_teamThisBattle);
             }
@@ -100,7 +114,7 @@ namespace AWM.BattleMechanics
                     ControllerContainer.PlayerProgressionService.TrackLevelAsCompleted(m_levelNameOfBattle);
                 }
 
-                foreach (var onTeamWonEvent in m_onTeamWonListener)
+                foreach (var onTeamWonEvent in OnTeamWonListener)
                 {
                     onTeamWonEvent.Value(stillPlayingTeams[0]);
                 }
@@ -219,7 +233,7 @@ namespace AWM.BattleMechanics
 
             Debug.LogFormat("Starting turn for Team: '{0}'", teamToStartNext.m_TeamColor);
 
-            foreach (var turnStartEvent in m_onTurnStartListener)
+            foreach (var turnStartEvent in OnTurnStartListener)
             {
                 turnStartEvent.Value(teamToStartNext);
             }
@@ -260,111 +274,35 @@ namespace AWM.BattleMechanics
         }
 
         /// <summary>
-        /// Adds a turn start event.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="actionToAdd">The action that should be called when a turn starts.</param>
-        public void AddBattleStartedListener(string key, Action<Team[]> actionToAdd)
-        {
-            if (m_onBattleStartListener.ContainsKey(key))
-            {
-                Debug.LogError("Trying to add turn end event with already existing key!");
-            }
-            else
-            {
-                m_onBattleStartListener.Add(key, actionToAdd);
-            }
-        }
-
-        /// <summary>
-        /// Removes a turn start event.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        public void RemoveBattleStartedListener(string key)
-        {
-            m_onBattleStartListener.Remove(key);
-        }
-
-        /// <summary>
-        /// Adds a turn end event.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="actionToAdd">The action that should be called when a turn ends.</param>
-        public void AddBattleEndedListener(string key, Action<TeamColor> actionToAdd)
-        {
-            if (m_onTeamWonListener.ContainsKey(key))
-            {
-                Debug.LogError("Trying to add turn end event with already existing key!");
-            }
-            else
-            {
-                m_onTeamWonListener.Add(key, actionToAdd);
-            }
-        }
-
-        /// <summary>
-        /// Removes a turn end event.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        public void RemoveBattleEndedListener(string key)
-        {
-            m_onTeamWonListener.Remove(key);
-        }
-
-        /// <summary>
-        /// Adds a turn start event.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="actionToAdd">The action that should be called when a turn starts.</param>
-        public void AddTurnStartListener(string key, Action<Team> actionToAdd)
-        {
-            if (m_onTurnStartListener.ContainsKey(key))
-            {
-                Debug.LogError("Trying to add turn end event with already existing key!");
-            }
-            else
-            {
-                m_onTurnStartListener.Add(key, actionToAdd);
-            }
-        }
-
-        /// <summary>
-        /// Removes a turn start event.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        public void RemoveTurnStartListener(string key)
-        {
-            m_onTurnStartListener.Remove(key);
-        }
-
-        /// <summary>
-        /// Adds a listener that is invoked when a unit is selected.
-        /// </summary>
-        /// <param name="unitUniqueIdentifier">The unique identifier of the listener instance.</param>
-        /// <param name="listenerAction">The listener action to invoke.</param>
-        public void AddUnitSelectedListener(int unitUniqueIdentifier, Action<bool> listenerAction)
-        {
-            m_onUnitSelectedListener.Add(unitUniqueIdentifier, listenerAction);
-        }
-
-        /// <summary>
-        /// Removes a listener that was invoked when a unit is selected.
-        /// </summary>
-        /// <param name="unitUniqueIdentifier">The unique identifier of the listener instance.</param>
-        public void RemoveUnitSelectedListener(int unitUniqueIdentifier)
-        {
-            m_onUnitSelectedListener.Remove(unitUniqueIdentifier);
-        }
-
-        /// <summary>
         /// Called when a unit changed it's selection.
         /// </summary>
         /// <param name="wasSelected">if set to <c>true</c> the unit was selected.</param>
         public void OnUnitChangedSelection(bool wasSelected)
         {
-            foreach (var action in m_onUnitSelectedListener.Values)
+            foreach (var action in OnUnitSelectedListener.Values)
             {
                 action(wasSelected);
+            }
+        }
+
+        /// <summary>
+        /// Should be invoked by each that finished it's turn.
+        /// </summary>
+        /// <param name="unitIdent">The ident of the unit</param>
+        /// <param name="teamColorOfUnit">The color of the team the units belongs to.</param>
+        public void OnUnitIsDoneThisTurn(int unitIdent, TeamColor teamColorOfUnit)
+        {
+            foreach (var baseUnit in m_registeredTeams[teamColorOfUnit])
+            {
+                if (!baseUnit.UnitHasAttackedThisRound)
+                {
+                    return;
+                }
+            }
+
+            foreach (Action<TeamColor> action in OnTeamDoneThisTurnListener.Values)
+            {
+                action(teamColorOfUnit);
             }
         }
 

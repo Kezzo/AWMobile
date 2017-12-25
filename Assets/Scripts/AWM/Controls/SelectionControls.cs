@@ -92,7 +92,7 @@ namespace AWM.Controls
 
         private void Start()
         {
-            ControllerContainer.BattleController.AddTurnStartListener("DeselectUnit", teamPlayingNext => DeselectCurrentUnit()); 
+            ControllerContainer.BattleStateController.OnTurnStartListener.Add("DeselectUnit", teamPlayingNext => DeselectCurrentUnit()); 
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace AWM.Controls
                 return;
             }
 
-            if (ControllerContainer.BattleController.IsPlayersTurn() && !m_abortNextSelectionTry)
+            if (ControllerContainer.BattleStateController.IsPlayersTurn() && !m_abortNextSelectionTry)
             {
                 RaycastHit raycastHit;
 
@@ -159,7 +159,7 @@ namespace AWM.Controls
                         Debug.Log("Selected destination movement field");
 
                         // confirm move
-                        ControllerContainer.BattleController.OnConfirmMove();
+                        ControllerContainer.BattleStateController.OnConfirmMove();
                     }
                     else if (m_currentlySelectedUnit != null && !IsPointerOverUIObject())
                     {

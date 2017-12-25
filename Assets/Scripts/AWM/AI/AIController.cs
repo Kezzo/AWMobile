@@ -65,7 +65,7 @@ namespace AWM.AI
         /// </summary>
         public void StartTurn()
         {
-            Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleController.RegisteredTeams;
+            Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleStateController.RegisteredTeams;
             m_aiUnits = units[this.MyTeamColor];
             m_enemyUnits = new List<BaseUnit>();
 
@@ -118,7 +118,7 @@ namespace AWM.AI
             else
             {
                 m_unitCounter = 0;
-                ControllerContainer.BattleController.EndCurrentTurn();
+                ControllerContainer.BattleStateController.EndCurrentTurn();
             }
         }
 
@@ -128,7 +128,7 @@ namespace AWM.AI
         private void AttackIfPossible()
         {
             BaseUnit attackingUnit = CurrentlyControlledUnit;
-            List<BaseUnit> unitsInRange = ControllerContainer.BattleController.GetUnitsInRange(
+            List<BaseUnit> unitsInRange = ControllerContainer.BattleStateController.GetUnitsInRange(
                 attackingUnit.CurrentSimplifiedPosition, attackingUnit.GetUnitBalancing().m_AttackRange);
 
             SortListByEffectivityAgainstUnit(attackingUnit, ref unitsInRange);
@@ -143,7 +143,7 @@ namespace AWM.AI
                     attackingUnit.AttackUnit(unitToAttack, () =>
                     {
                         // Check if unit died
-                        if (!ControllerContainer.BattleController.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
+                        if (!ControllerContainer.BattleStateController.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
                         {
                             this.m_enemyUnits.Remove(unitToAttack);
                         }

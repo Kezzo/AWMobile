@@ -109,10 +109,10 @@ namespace AWM.System
                     }
 
                     MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData(levelName);
-                    ControllerContainer.BattleController.IntializeBattle(mapGenerationData.m_Teams, levelName);
+                    ControllerContainer.BattleStateController.IntializeBattle(mapGenerationData.m_Teams, levelName);
 
                     mapTileGeneratorEditor.LoadExistingMap(mapGenerationData);
-                    ControllerContainer.BattleController.StartBattle();
+                    ControllerContainer.BattleStateController.StartBattle();
 
                     if (onLoadedToLevel != null)
                     {

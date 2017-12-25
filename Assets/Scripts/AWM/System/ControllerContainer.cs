@@ -20,8 +20,8 @@ namespace AWM.System
         private static MonoBehaviourRegistry m_monoBehaviourRegistry;
         public static MonoBehaviourRegistry MonoBehaviourRegistry { get { return m_monoBehaviourRegistry ?? (m_monoBehaviourRegistry = new MonoBehaviourRegistry()); } }
 
-        private static BattleController m_battleController;
-        public static BattleController BattleController { get { return m_battleController ?? (m_battleController = new BattleController()); } }
+        private static BattleStateController m_battleStateController;
+        public static BattleStateController BattleStateController { get { return m_battleStateController ?? (m_battleStateController = new BattleStateController()); } }
 
         private static TileNavigationController m_tileNavigationController;
         public static TileNavigationController TileNavigationController { get { return m_tileNavigationController ?? (m_tileNavigationController = new TileNavigationController()); } }
@@ -55,7 +55,7 @@ namespace AWM.System
         public static void Reset()
         {
             m_monoBehaviourRegistry = new MonoBehaviourRegistry();
-            m_battleController = new BattleController();
+            m_battleStateController = new BattleStateController();
             m_tileNavigationController = new TileNavigationController();
         }
 

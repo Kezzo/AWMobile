@@ -63,7 +63,7 @@ namespace AWM.BattleVisuals
         {
             while (true)
             {
-                while (ControllerContainer.BattleController.IsBattlePaused)
+                while (ControllerContainer.BattleStateController.IsBattlePaused)
                 {
                     yield return null;
                 }

@@ -42,7 +42,7 @@ namespace AWM.UI
         public void Show()
         {
             ControllerContainer.InputBlocker.ChangeBattleControlInput(true);
-            ControllerContainer.BattleController.IsBattlePaused = true;
+            ControllerContainer.BattleStateController.IsBattlePaused = true;
 
             if (m_onVisibilityChange != null)
             {
@@ -59,7 +59,7 @@ namespace AWM.UI
         {
             m_animator.SetBool("Visible", false);
             ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
-            ControllerContainer.BattleController.IsBattlePaused = false;
+            ControllerContainer.BattleStateController.IsBattlePaused = false;
 
             if (m_onVisibilityChange != null)
             {

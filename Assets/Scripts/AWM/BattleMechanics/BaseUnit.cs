@@ -68,6 +68,11 @@ namespace AWM.BattleMechanics
 
                 m_materialPropertyBlock.SetFloat("_Brightness", value ? m_disabledBrightness : 1f);
                 m_meshRenderer.SetPropertyBlock(m_materialPropertyBlock);
+
+                if (m_unitHasAttackedThisRound)
+                {
+                    ControllerContainer.BattleStateController.OnUnitIsDoneThisTurn(UniqueIdent, TeamColor);
+                }
             }
         }
 
@@ -103,13 +108,13 @@ namespace AWM.BattleMechanics
 
             if (Application.isPlaying && registerUnit)
             {
-                UniqueIdent = ControllerContainer.BattleController.RegisterUnit(TeamColor, this);
+                UniqueIdent = ControllerContainer.BattleStateController.RegisterUnit(TeamColor, this);
                 m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
 
-                if (ControllerContainer.BattleController.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
+                if (ControllerContainer.BattleStateController.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
                 {
-                    ControllerContainer.BattleController.AddTurnStartListener(UniqueIdent.ToString(), OnTurnStarted);
-                    ControllerContainer.BattleController.AddUnitSelectedListener(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
+                    ControllerContainer.BattleStateController.OnTurnStartListener.Add(UniqueIdent.ToString(), OnTurnStarted);
+                    ControllerContainer.BattleStateController.OnUnitSelectedListener.Add(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
                 }
             }
         }
@@ -119,9 +124,9 @@ namespace AWM.BattleMechanics
         /// </summary>
         public void Die()
         {
-            ControllerContainer.BattleController.RemoveRegisteredUnit(TeamColor, this);
-            ControllerContainer.BattleController.RemoveUnitSelectedListener(UniqueIdent);
-            ControllerContainer.BattleController.RemoveTurnStartListener(UniqueIdent.ToString());
+            ControllerContainer.BattleStateController.RemoveRegisteredUnit(TeamColor, this);
+            ControllerContainer.BattleStateController.OnUnitSelectedListener.Remove(UniqueIdent);
+            ControllerContainer.BattleStateController.OnTurnStartListener.Remove(UniqueIdent.ToString());
 
             m_attackMarker.SetActive(false);
             m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Death);
@@ -163,7 +168,7 @@ namespace AWM.BattleMechanics
                 onBattleSequenceFinished();
             }
 
-            ControllerContainer.BattleController.OnBattleDone();
+            ControllerContainer.BattleStateController.OnBattleDone();
         }
 
         /// <summary>
@@ -302,7 +307,7 @@ namespace AWM.BattleMechanics
             HideAttackRange();
             DislayAttackRange(CurrentSimplifiedPosition);
 
-            ControllerContainer.BattleController.OnUnitChangedSelection(true);
+            ControllerContainer.BattleStateController.OnUnitChangedSelection(true);
         }
 
         /// <summary>
@@ -327,7 +332,7 @@ namespace AWM.BattleMechanics
 
             HideAttackRange();
 
-            ControllerContainer.BattleController.OnUnitChangedSelection(false);
+            ControllerContainer.BattleStateController.OnUnitChangedSelection(false);
         }
 
         /// <summary>
@@ -350,7 +355,7 @@ namespace AWM.BattleMechanics
         /// <param name="teamThatIsPlayingTheTurn">The team that is playing the turn.</param>
         private void OnTurnStarted(Team teamThatIsPlayingTheTurn)
         {
-            ChangeBlinkOrchestratorAffiliation(ControllerContainer.BattleController.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor);
+            ChangeBlinkOrchestratorAffiliation(ControllerContainer.BattleStateController.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor);
         }
 
         /// <summary>
@@ -477,7 +482,7 @@ namespace AWM.BattleMechanics
         /// </returns>
         public bool CanUnitTakeAction()
         {
-            return (!UnitHasMovedThisRound || !UnitHasAttackedThisRound) && ControllerContainer.BattleController.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor;
+            return (!UnitHasMovedThisRound || !UnitHasAttackedThisRound) && ControllerContainer.BattleStateController.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor;
         }
 
         /// <summary>
@@ -527,9 +532,9 @@ namespace AWM.BattleMechanics
                 }
             }
 
-            ControllerContainer.BattleController.AddConfirmMoveButtonPressedListener(() =>
+            ControllerContainer.BattleStateController.AddConfirmMoveButtonPressedListener(() =>
             {
-                ControllerContainer.BattleController.RemoveCurrentConfirmMoveButtonPressedListener();
+                ControllerContainer.BattleStateController.RemoveCurrentConfirmMoveButtonPressedListener();
 
                 SetWalkableTileFieldVisibilityTo(false);
                 ClearAttackableUnits(m_attackableUnits);
@@ -598,7 +603,7 @@ namespace AWM.BattleMechanics
         /// <returns></returns>
         private bool TryToDisplayActionOnUnitsInRange(out List<BaseUnit> attackableUnits)
         {
-            List<BaseUnit> unitsInRange = ControllerContainer.BattleController.GetUnitsInRange(
+            List<BaseUnit> unitsInRange = ControllerContainer.BattleStateController.GetUnitsInRange(
                 this.CurrentSimplifiedPosition, GetUnitBalancing().m_AttackRange);
 
             attackableUnits = new List<BaseUnit>();
@@ -768,7 +773,7 @@ namespace AWM.BattleMechanics
                     yield break;
                 }
 
-                while (ControllerContainer.BattleController.IsBattlePaused)
+                while (ControllerContainer.BattleStateController.IsBattlePaused)
                 {
                     yield return null;
                 }

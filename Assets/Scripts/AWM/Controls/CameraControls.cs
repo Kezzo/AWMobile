@@ -99,7 +99,7 @@ namespace AWM.Controls
             m_cameraStartPosZ = m_cameraToControl.transform.localPosition.z;
             m_secondayCameraToControl.transform.localPosition = m_cameraToControl.transform.localPosition;
 
-            //ControllerContainer.BattleController.AddTurnStartListener("CameraAutoZoom", ZoomCameraBasedOnTheCurrentTeam);
+            //ControllerContainer.BattleStateController.AddTurnStartListener("CameraAutoZoom", ZoomCameraBasedOnTheCurrentTeam);
 
             m_zoomLevel = CameraToControl.orthographic ? CameraToControl.orthographicSize : 0f;
         }

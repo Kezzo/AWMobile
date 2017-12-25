@@ -15,6 +15,9 @@ namespace AWM.UI
         private GameObject m_endTurnButton;
 
         [SerializeField]
+        private Animator m_endTurnButtonAnimator;
+
+        [SerializeField]
         private GameObject m_pauseButton;
 
         [SerializeField]
@@ -36,8 +39,26 @@ namespace AWM.UI
             }
             else
             {
-                ControllerContainer.BattleController.AddBattleStartedListener("BattleUI - Initialize", Initialize);
-                ControllerContainer.BattleController.AddBattleEndedListener("BattleUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
+                ControllerContainer.BattleStateController.OnBattleStartListener.Add("BattleUI - Initialize", Initialize);
+                ControllerContainer.BattleStateController.OnTeamWonListener.Add("BattleUI - ShowBattleEndVisuals", ShowBattleEndVisuals);
+
+                ControllerContainer.BattleStateController.OnTeamDoneThisTurnListener.Add("BattleUI - ChangeEndTurnButtonHighlightState",
+                    teamColor =>
+                    {
+                        if (ControllerContainer.BattleStateController.IsTeamWithColorPlayersTeam(teamColor))
+                        {
+                            ChangeEndTurnButtonHighlightState(true);
+                        }
+                    });
+
+                ControllerContainer.BattleStateController.OnTurnStartListener.Add("BattleUI - ChangeEndTurnButtonHighlightState",
+                    team =>
+                    {
+                        if (!ControllerContainer.BattleStateController.IsTeamWithColorPlayersTeam(team.m_TeamColor))
+                        {
+                            ChangeEndTurnButtonHighlightState(false);
+                        }
+                    });
                 m_battlePauseUi.SetVisibilityCallback(ChangeVisibilityOfBattleUI);
             }
         }
@@ -49,7 +70,7 @@ namespace AWM.UI
         private void Initialize(Team[] teamsThisBattle)
         {
             //TODO: Display team stats and show battle introduction etc.
-            ControllerContainer.BattleController.AddTurnStartListener("BattleUI - Initialize", teamToStartNext =>
+            ControllerContainer.BattleStateController.OnTurnStartListener.Add("BattleUI - Initialize", teamToStartNext =>
                 m_endTurnButton.SetActive(teamToStartNext.m_IsPlayersTeam));
         }
 
@@ -108,11 +129,20 @@ namespace AWM.UI
         }
 
         /// <summary>
+        /// Changes the EndTurnButton highlight state
+        /// </summary>
+        /// <param name="enableHighlight">if set to <c>true</c> the button highlight will be enabled; otherwise it'll be disabled.</param>
+        private void ChangeEndTurnButtonHighlightState(bool enableHighlight)
+        {
+            m_endTurnButtonAnimator.SetBool("Highlighted", enableHighlight);
+        }
+
+        /// <summary>
         /// Called when the end turn button was pressed.
         /// </summary>
         public void OnEndTurnButtonPressed()
         {
-            ControllerContainer.BattleController.EndCurrentTurn();
+            ControllerContainer.BattleStateController.EndCurrentTurn();
         }
 
         /// <summary>

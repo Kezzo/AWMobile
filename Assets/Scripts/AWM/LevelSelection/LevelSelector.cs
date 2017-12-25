@@ -34,7 +34,7 @@ namespace AWM.LevelSelection
             {
                 // Lazily get and store level selection unit.
                 return m_levelSelectionUnit ?? 
-                       (m_levelSelectionUnit = ControllerContainer.BattleController.RegisteredTeams[TeamColor.Blue][0]);
+                       (m_levelSelectionUnit = ControllerContainer.BattleStateController.RegisteredTeams[TeamColor.Blue][0]);
             }
         }
 
