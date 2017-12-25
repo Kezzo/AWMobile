@@ -106,16 +106,18 @@ namespace AWM.BattleMechanics
             m_initialSimplifiedPosition = initialSimplifiedPosition;
             m_currentSimplifiedPosition = initialSimplifiedPosition;
 
-            if (Application.isPlaying && registerUnit)
+            if (!Application.isPlaying || !registerUnit)
             {
-                UniqueIdent = ControllerContainer.BattleStateController.RegisterUnit(TeamColor, this);
-                m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
+                return;
+            }
 
-                if (ControllerContainer.BattleStateController.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
-                {
-                    ControllerContainer.BattleStateController.OnTurnStartListener.Add(UniqueIdent.ToString(), OnTurnStarted);
-                    ControllerContainer.BattleStateController.OnUnitSelectedListener.Add(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
-                }
+            UniqueIdent = ControllerContainer.BattleStateController.RegisterUnit(TeamColor, this);
+            m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
+
+            if (!Root.Instance.SceneLoading.IsInLevelSelection && ControllerContainer.BattleStateController.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
+            {
+                ControllerContainer.BattleStateController.OnTurnStartListener.Add(UniqueIdent.ToString(), OnTurnStarted);
+                ControllerContainer.BattleStateController.OnUnitSelectedListener.Add(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
             }
         }
 
