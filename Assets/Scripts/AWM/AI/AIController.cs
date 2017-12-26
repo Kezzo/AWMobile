@@ -93,6 +93,7 @@ namespace AWM.AI
                 {
                     ProcessTurnOfUnit(m_aiUnits[m_unitCounter], () =>
                     {
+                        m_aiUnits[m_unitCounter].UnitHasAttackedThisRound = true;
                         m_unitCounter++;
                         MoveNextUnit();
                     });

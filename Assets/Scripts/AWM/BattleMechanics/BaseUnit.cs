@@ -57,7 +57,7 @@ namespace AWM.BattleMechanics
             {
                 return m_unitHasAttackedThisRound;
             }
-            private set
+            set
             {
                 if (m_materialPropertyBlock == null)
                 {
