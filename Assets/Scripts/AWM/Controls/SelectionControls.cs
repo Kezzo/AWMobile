@@ -87,6 +87,10 @@ namespace AWM.Controls
 
         private void Awake()
         {
+#if UNITY_EDITOR
+            m_pathfindingNodeDebug = new Dictionary<Vector2, PathfindingNodeDebugData>();
+#endif
+
             ControllerContainer.MonoBehaviourRegistry.Register(this);
         }
 
@@ -228,9 +232,11 @@ namespace AWM.Controls
 
             if (baseMapTile != null)
             {
+                m_pathfindingNodeDebug.Clear();
+
                 m_routeToDestinationField = ControllerContainer.TileNavigationController.
                     GetBestWayToDestination(m_currentlySelectedUnit.CurrentSimplifiedPosition, baseMapTile.m_SimplifiedMapPosition, 
-                        new UnitBalancingMovementCostResolver(m_currentlySelectedUnit.GetUnitBalancing()) , out m_pathfindingNodeDebug);
+                        new UnitBalancingMovementCostResolver(m_currentlySelectedUnit.GetUnitBalancing()), m_pathfindingNodeDebug);
                 m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);
             }
         }

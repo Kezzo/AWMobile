@@ -193,17 +193,10 @@ namespace AWM.BattleMechanics
         /// <param name="startNode">The node to start from.</param>
         /// <param name="destinationNode">The destination node to move to.</param>
         /// <param name="movementCostResolver">Used to determine how cost of movement and movement allowance is calculated.</param>
-        /// <param name="pathfindingNodeDebugData">The pathfinding node debug data.</param>
-        /// <returns></returns>
-        public List<Vector2> GetBestWayToDestination(Vector2 startNode, Vector2 destinationNode, IMovementCostResolver movementCostResolver, 
-            out Dictionary<Vector2, PathfindingNodeDebugData> pathfindingNodeDebugData)
+        /// <param name="pathfindingNodeDebugData">The dictionary the pathfinding node debug data should added to.</param>
+        public List<Vector2> GetBestWayToDestination(Vector2 startNode, Vector2 destinationNode, 
+            IMovementCostResolver movementCostResolver, Dictionary<Vector2, PathfindingNodeDebugData> pathfindingNodeDebugData = null)
         {
-#if UNITY_EDITOR
-            pathfindingNodeDebugData = new Dictionary<Vector2, PathfindingNodeDebugData>();
-#else
-        pathfindingNodeDebugData = null;
-#endif
-
             PriorityQueue<Vector2> queueOfNodesToCheck = new PriorityQueue<Vector2>();
             queueOfNodesToCheck.Enqueue(startNode, 0);
 
@@ -256,13 +249,16 @@ namespace AWM.BattleMechanics
                         queueOfNodesToCheck.Enqueue(nodeToCheck, nodePriority);
 
 #if UNITY_EDITOR
-                        pathfindingNodeDebugData.Add(nodeToCheck, new PathfindingNodeDebugData
+                        if (pathfindingNodeDebugData != null)
                         {
-                            CostToMoveToNode = costToMoveToNode,
-                            NodePriority = nodePriority,
+                            pathfindingNodeDebugData.Add(nodeToCheck, new PathfindingNodeDebugData
+                            {
+                                CostToMoveToNode = costToMoveToNode,
+                                NodePriority = nodePriority,
 
-                            PreviousNode = nodeToGetNeighboursFrom
-                        });
+                                PreviousNode = nodeToGetNeighboursFrom
+                            });
+                        }
 #endif
                     }
                     else if(costToMoveToNodes.TryGetValue(nodeToCheck, out existingCostToMoveToNode) &&
@@ -274,13 +270,16 @@ namespace AWM.BattleMechanics
                         queueOfNodesToCheck.Enqueue(nodeToCheck, nodePriority);
 
 #if UNITY_EDITOR
-                        pathfindingNodeDebugData[nodeToCheck] = new PathfindingNodeDebugData
+                        if (pathfindingNodeDebugData != null)
                         {
-                            CostToMoveToNode = costToMoveToNode,
-                            NodePriority = nodePriority,
+                            pathfindingNodeDebugData[nodeToCheck] = new PathfindingNodeDebugData
+                            {
+                                CostToMoveToNode = costToMoveToNode,
+                                NodePriority = nodePriority,
 
-                            PreviousNode = nodeToGetNeighboursFrom
-                        };
+                                PreviousNode = nodeToGetNeighboursFrom
+                            };
+                        }
 #endif
                     }
                 }

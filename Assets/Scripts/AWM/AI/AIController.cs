@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AWM.BattleMechanics;
 using AWM.EditorAndDebugOnly;
 using AWM.Enums;
@@ -6,6 +7,7 @@ using AWM.MapTileGeneration;
 using AWM.Models;
 using AWM.System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace AWM.AI
 {
@@ -55,11 +57,6 @@ namespace AWM.AI
             get { return this.m_myTeam.m_TeamColor; }
         }
 
-        private BaseUnit CurrentlyControlledUnit
-        {
-            get { return this.m_aiUnits[this.m_unitCounter]; }
-        }
-
         /// <summary>
         /// Starts the turn.
         /// </summary>
@@ -92,27 +89,13 @@ namespace AWM.AI
             if (m_unitCounter < m_aiUnits.Count)
             {
                 // To pause between each unit that was moved
-                Root.Instance.CoroutineHelper.CallDelayed(CurrentlyControlledUnit, 0.2f, () =>
+                Root.Instance.CoroutineHelper.CallDelayed(m_aiUnits[m_unitCounter], 0.2f, () =>
                 {
-                    BaseMapTile tileToWalkTo = null;
-
-                    if (TryGetWalkableTileClosestToNextAttackableEnemy(CurrentlyControlledUnit, out tileToWalkTo))
+                    ProcessTurnOfUnit(m_aiUnits[m_unitCounter], () =>
                     {
-                        var dontCare = new Dictionary<Vector2, PathfindingNodeDebugData>();
-
-                        IMovementCostResolver movementCostResolver = new UnitBalancingMovementCostResolver(
-                            CurrentlyControlledUnit.GetUnitBalancing());
-
-                        List<Vector2> routeToMove = ControllerContainer.TileNavigationController.GetBestWayToDestination(
-                            CurrentlyControlledUnit.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition,
-                            movementCostResolver, out dontCare);
-
-                        CurrentlyControlledUnit.MoveAlongRoute(routeToMove, movementCostResolver, null, AttackIfPossible);
-                    }
-                    else
-                    {
-                        AttackIfPossible();
-                    }
+                        m_unitCounter++;
+                        MoveNextUnit();
+                    });
                 });
             }
             else
@@ -123,66 +106,116 @@ namespace AWM.AI
         }
 
         /// <summary>
-        /// Attacks if possible.
+        /// Will process a turn for a given unit. That includes finding the best enemy unit to attack, 
+        /// moving to it or as close as possbile and attacking it.
         /// </summary>
-        private void AttackIfPossible()
+        /// <param name="unitToProcessTurnFor">The unit for which a turn should be processed.</param>
+        /// <param name="unitTurnProcessingDoneCallback">Will be invoked when the turn process is done.</param>
+        private void ProcessTurnOfUnit(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback)
         {
-            BaseUnit attackingUnit = CurrentlyControlledUnit;
-            List<BaseUnit> unitsInRange = ControllerContainer.BattleStateController.GetUnitsInRange(
-                attackingUnit.CurrentSimplifiedPosition, attackingUnit.GetUnitBalancing().m_AttackRange);
-
-            SortListByEffectivityAgainstUnit(attackingUnit, ref unitsInRange);
-
-            for (int i = 0; i < unitsInRange.Count; i++)
+            BaseUnit unitToAttack;
+            if (!TryToGetUnitToAttack(unitToProcessTurnFor, out unitToAttack))
             {
-                if (attackingUnit.CanAttackUnit(unitsInRange[i]))
-                {
-                    BaseUnit unitToAttack = unitsInRange[i];
-                    Debug.LogFormat("{0} {1} attacks {2} {3}", attackingUnit.TeamColor, attackingUnit.UnitType, unitToAttack.TeamColor, unitToAttack.UnitType);
-
-                    attackingUnit.AttackUnit(unitToAttack, () =>
-                    {
-                        // Check if unit died
-                        if (!ControllerContainer.BattleStateController.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
-                        {
-                            this.m_enemyUnits.Remove(unitToAttack);
-                        }
-
-                        m_unitCounter++;
-                        MoveNextUnit();
-                    });
-
-                    return;
-                }
+                return;
             }
 
-            m_unitCounter++;
-            MoveNextUnit();
+            BaseMapTile tileToWalkTo;
+            if (TryBestPositionToAttackGivenUnitFrom(unitToProcessTurnFor, unitToAttack, out tileToWalkTo))
+            {
+                if (tileToWalkTo.m_SimplifiedMapPosition == unitToProcessTurnFor.CurrentSimplifiedPosition)
+                {
+                    AttackUnitIfInRange(unitToProcessTurnFor, unitToAttack, unitTurnProcessingDoneCallback);
+                }
+                else
+                {
+                    IMovementCostResolver movementCostResolver = new UnitBalancingMovementCostResolver(
+                        unitToProcessTurnFor.GetUnitBalancing());
+
+                    List<Vector2> routeToMove = ControllerContainer.TileNavigationController.GetBestWayToDestination(
+                        unitToProcessTurnFor.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition,
+                        movementCostResolver);
+
+                    unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver,
+                        null, () => AttackUnitIfInRange(unitToProcessTurnFor, unitToAttack, unitTurnProcessingDoneCallback));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tries to find the closest unit a given unit can attack.
+        /// </summary>
+        /// <param name="attackingUnit">The unit to find a unit to attack for.</param>
+        /// <param name="unitToAttack">The closest unit that can be attacked.</param>
+        /// <returns>True when a unit to attack was found; otherwise false.</returns>
+        private bool TryToGetUnitToAttack(BaseUnit attackingUnit, out BaseUnit unitToAttack)
+        {
+            List<BaseUnit> enemiesToCheck = new List<BaseUnit>(m_enemyUnits);
+            enemiesToCheck.RemoveAll(enemyUnit => !attackingUnit.CanAttackUnit(enemyUnit));
+
+            if (enemiesToCheck.Count == 0)
+            {
+                unitToAttack = null;
+                return false;
+            }
+
+            SortListByEffectivityAgainstUnit(attackingUnit, ref enemiesToCheck);
+
+            unitToAttack = enemiesToCheck[0];
+            return true;
+        }
+
+        /// <summary>
+        /// Will process the attack of a given unit on another given unit unit.
+        /// </summary>
+        private void AttackUnitIfInRange(BaseUnit attackingUnit, BaseUnit unitToAttack, Action onAttackDoneCallback)
+        {
+            if (!ControllerContainer.BattleStateController.IsUnitInAttackRange(attackingUnit, unitToAttack))
+            {
+                onAttackDoneCallback();
+                return;
+            }
+
+            attackingUnit.AttackUnit(unitToAttack, () =>
+            {
+                // Check if unit died. Can't check unit itself, since it will be removed immediately when dying.
+                if (!ControllerContainer.BattleStateController.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
+                {
+                    m_enemyUnits.Remove(unitToAttack);
+                }
+
+                onAttackDoneCallback();
+            });
         }
 
         /// <summary>
         /// Sorts the list by how effective the attacking unit is against the unit in the list.
-        /// The sorting goes from most effective [0] -> least effective [Count]
-        /// If the attacking unit does equal damage to two compared units, they will be sorted based on the range to the attacking unit.
-        /// So the closer unit is sorted higher than the unit more far away.
+        /// Will sort units first by how close they're to the attacking unit. If there 
         /// </summary>
         /// <param name="attackingUnit"></param>
         /// <param name="listToSort">The list to sort.</param>
         private void SortListByEffectivityAgainstUnit(BaseUnit attackingUnit, ref List<BaseUnit> listToSort)
         {
-            TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
             Vector2 positionOfAttackingUnit = attackingUnit.CurrentSimplifiedPosition;
 
             listToSort.Sort((unit1, unit2) =>
             {
-                int unitComparisonValue = attackingUnit.GetDamageOnUnit(unit2).CompareTo(attackingUnit.GetDamageOnUnit(unit1));
+                int unitComparisonValue = 0;
+
+                // ignore distance comparison for all units in range.
+                if (!ControllerContainer.BattleStateController.IsUnitInAttackRange(attackingUnit, unit1) ||
+                    !ControllerContainer.BattleStateController.IsUnitInAttackRange(attackingUnit, unit2))
+                {
+                    unitComparisonValue = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                        positionOfAttackingUnit, unit1.CurrentSimplifiedPosition)
+                    .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                        positionOfAttackingUnit, unit2.CurrentSimplifiedPosition));
+                }
 
                 // The attack unit does equal damage the compared units.
                 if (unitComparisonValue == 0)
                 {
                     // Compare the range to the unit to attack
-                    unitComparisonValue = tileNavigationController.GetDistanceToCoordinate(positionOfAttackingUnit, unit1.CurrentSimplifiedPosition)
-                        .CompareTo(tileNavigationController.GetDistanceToCoordinate(positionOfAttackingUnit, unit2.CurrentSimplifiedPosition));
+                    unitComparisonValue = attackingUnit.GetDamageOnUnit(unit2).CompareTo(attackingUnit.GetDamageOnUnit(unit1));
                 }
 
                 return unitComparisonValue;
@@ -190,61 +223,34 @@ namespace AWM.AI
         }
 
         /// <summary>
-        /// Tries to get a walkable tile nearest to an attackable enemy unit.
+        /// Will try to find the best route or closest maptile to the given <see cref="BaseUnit"/> to attack.
         /// </summary>
         /// <param name="unit">The unit the maptile should be found for.</param>
-        /// <param name="maptTile">The walkable tile closest to the next attackable enemy if available; otherwise null.</param>
-        /// <returns>Returns true, when a maptile was found; otherwise false..</returns>
-        private bool TryGetWalkableTileClosestToNextAttackableEnemy(BaseUnit unit, out BaseMapTile maptTile)
+        /// <param name="enemyToAttack">The unit that should be attacked.</param>
+        /// <param name="maptTileToMoveTo">The walkable tile closest to the next attackable enemy if available; otherwise null.</param>
+        /// <returns>Returns true, when a maptile to move to was found; otherwise false.</returns>
+        private bool TryBestPositionToAttackGivenUnitFrom(BaseUnit unit, BaseUnit enemyToAttack, out BaseMapTile maptTileToMoveTo)
         {
-            maptTile = null;
-            if (m_enemyUnits.Count <= 0)
-            {
-                return false;
-            }
-
-            TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
-
-            List<BaseMapTile> walkableTiles = tileNavigationController.GetWalkableMapTiles(
+            List<BaseMapTile> walkableTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(
                 unit.CurrentSimplifiedPosition, new UnitBalancingMovementCostResolver(unit.GetUnitBalancing()));
+            
+            // to also test the current unit position.
+            walkableTiles.Add(ControllerContainer.TileNavigationController.GetMapTile(unit.CurrentSimplifiedPosition));
 
             if (walkableTiles.Count == 0)
             {
+                maptTileToMoveTo = null;
                 return false;
             }
-
-            List<BaseUnit> enemiesToCheck = new List<BaseUnit>(m_enemyUnits);
-            enemiesToCheck.RemoveAll(enemyUnit => !unit.CanAttackUnit(enemyUnit));
-
-            if (enemiesToCheck.Count == 0)
-            {
-                return false;
-            }
-
-            Vector2 positionOfCurrentUnit = unit.CurrentSimplifiedPosition;
-
-            // Find closest attackable unit
-            enemiesToCheck.Sort((unit1, unit2) =>
-            {
-                int unitRangeComparisonValue = tileNavigationController.GetDistanceToCoordinate(positionOfCurrentUnit, unit1.CurrentSimplifiedPosition)
-                    .CompareTo(tileNavigationController.GetDistanceToCoordinate(positionOfCurrentUnit, unit2.CurrentSimplifiedPosition));
-
-                if (unitRangeComparisonValue == 0)
-                {
-                    unitRangeComparisonValue = Random.Range(-1, 2);
-                }
-
-                return unitRangeComparisonValue;
-            });
-
-            Vector2 closesEnemyPosition = enemiesToCheck[0].CurrentSimplifiedPosition;
+            
+            Vector2 closesEnemyPosition = enemyToAttack.CurrentSimplifiedPosition;
 
             List<BaseMapTile> mapTilesToAttackFrom = new List<BaseMapTile>();
 
             // get list of maptiles where closest enemy is attackable from
             foreach (var walkableTile in walkableTiles)
             {
-                if (tileNavigationController.GetDistanceToCoordinate(walkableTile.m_SimplifiedMapPosition, 
+                if (ControllerContainer.TileNavigationController.GetDistanceToCoordinate(walkableTile.m_SimplifiedMapPosition, 
                     closesEnemyPosition) <= unit.GetUnitBalancing().m_AttackRange)
                 {
                     mapTilesToAttackFrom.Add(walkableTile);
@@ -256,21 +262,25 @@ namespace AWM.AI
                 // find maptile with max range where the unit can still attack
                 mapTilesToAttackFrom.Sort((mapTile1, mapTile2) =>
                 {
-                    int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile2.m_SimplifiedMapPosition, closesEnemyPosition)
-                        .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile1.m_SimplifiedMapPosition, closesEnemyPosition));
+                    int mapTileDistanceComparison = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                        mapTile2.m_SimplifiedMapPosition, closesEnemyPosition)
+                        .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                            mapTile1.m_SimplifiedMapPosition, closesEnemyPosition));
 
                     return mapTileDistanceComparison;
                 });
 
-                maptTile = mapTilesToAttackFrom[0];
+                maptTileToMoveTo = mapTilesToAttackFrom[0];
             }
             else
             {
                 // Find closest walkable (also no unit on it) maptile to attackable unit
                 walkableTiles.Sort((mapTile1, mapTile2) =>
                 {
-                    int mapTileDistanceComparison = tileNavigationController.GetDistanceToCoordinate(mapTile1.m_SimplifiedMapPosition, closesEnemyPosition)
-                        .CompareTo(tileNavigationController.GetDistanceToCoordinate(mapTile2.m_SimplifiedMapPosition, closesEnemyPosition));
+                    int mapTileDistanceComparison = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                        mapTile1.m_SimplifiedMapPosition, closesEnemyPosition)
+                        .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                            mapTile2.m_SimplifiedMapPosition, closesEnemyPosition));
 
                     if (mapTileDistanceComparison == 0)
                     {
@@ -280,7 +290,7 @@ namespace AWM.AI
                     return mapTileDistanceComparison;
                 });
 
-                maptTile = walkableTiles[0];
+                maptTileToMoveTo = walkableTiles[0];
             }
             
             return true;

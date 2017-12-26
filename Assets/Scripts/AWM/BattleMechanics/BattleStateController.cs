@@ -389,5 +389,17 @@ namespace AWM.BattleMechanics
 
             return unitsInRange;
         }
+
+        /// <summary>
+        /// Determines whether a unit can attack a given unit.
+        /// </summary>
+        /// <param name="attackingUnit">The attacking unit.</param>
+        /// <param name="unitToAttack">The unit to attack.</param>
+        public bool IsUnitInAttackRange(BaseUnit attackingUnit, BaseUnit unitToAttack)
+        {
+            return ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                attackingUnit.CurrentSimplifiedPosition, unitToAttack.CurrentSimplifiedPosition) <=
+                   attackingUnit.GetUnitBalancing().m_AttackRange;
+        }
     }
 }
