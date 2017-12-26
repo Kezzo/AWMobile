@@ -21,9 +21,6 @@ namespace AWM.UI
         private GameObject m_pauseButton;
 
         [SerializeField]
-        private BattleSequenceUIElement m_battleSequenceUiElement;
-
-        [SerializeField]
         private BattleResultUI m_battleResultUi;
 
         [SerializeField]
@@ -73,37 +70,6 @@ namespace AWM.UI
             //TODO: Display team stats and show battle introduction etc.
             ControllerContainer.BattleStateController.OnTurnStartListener.Add("BattleUI - Initialize", teamToStartNext =>
                 m_endTurnButton.SetActive(teamToStartNext.m_IsPlayersTeam));
-        }
-
-        /// <summary>
-        /// Shows a battle sequence.
-        /// </summary>
-        /// <param name="leftMapTileData">The left map tile data.</param>
-        /// <param name="healthOfLeftUnit">The health of left unit.</param>
-        /// <param name="rightMapTileData">The right map tile data.</param>
-        /// <param name="healthOfRightUnit">The health of right unit.</param>
-        /// <param name="damageToRightUnit">The damage to right unit.</param>
-        /// <param name="onBattleSequenceFinished">The on battle sequence finished.</param>
-        public void ShowBattleSequence(MapGenerationData.MapTile leftMapTileData, int healthOfLeftUnit, 
-            MapGenerationData.MapTile rightMapTileData, int healthOfRightUnit, int damageToRightUnit, Action onBattleSequenceFinished)
-        {
-            bool activateEndTurnButton = m_endTurnButton.activeSelf;
-
-            ChangeVisibilityOfBattleUI(false);
-
-            m_battleSequenceUiElement.InitializeAndStartSequence(leftMapTileData, healthOfLeftUnit, 
-                rightMapTileData, healthOfRightUnit, damageToRightUnit, () =>
-                {
-                    if (onBattleSequenceFinished != null)
-                    {
-                        onBattleSequenceFinished();
-                    }
-
-                    if (activateEndTurnButton)
-                    {
-                        ChangeVisibilityOfBattleUI(true);
-                    }
-                });
         }
 
         /// <summary>

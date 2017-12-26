@@ -199,48 +199,6 @@ namespace AWM.BattleMechanics
         }
 
         /// <summary>
-        /// Prepares and shows the battle sequence against a given unit.
-        /// </summary>
-        /// <param name="attackedUnit">The base unit.</param>
-        /// <param name="damageToAttackedUnit">The damage to attacked unit.</param>
-        /// <param name="onBattleSequenceFinished">The on battle sequence finished.</param>
-        private void PrepareAndShowBattleSequence(BaseUnit attackedUnit, int damageToAttackedUnit, Action onBattleSequenceFinished)
-        {
-            BattleUI battleUi;
-
-            if (ControllerContainer.MonoBehaviourRegistry.TryGet(out battleUi))
-            {
-                MapGenerationData.MapTile attackingUnitData = GetMapTileDataFromUnit(this);
-                MapGenerationData.MapTile attackedUnitData = GetMapTileDataFromUnit(attackedUnit);
-
-                battleUi.ShowBattleSequence(attackingUnitData, this.StatManagement.CurrentHealth,
-                    attackedUnitData, attackedUnit.StatManagement.CurrentHealth, damageToAttackedUnit, onBattleSequenceFinished);
-            }
-        }
-
-        /// <summary>
-        /// Gets the map tile data from unit.
-        /// </summary>
-        /// <param name="baseUnit">The base unit.</param>
-        /// <returns></returns>
-        private MapGenerationData.MapTile GetMapTileDataFromUnit(BaseUnit baseUnit)
-        {
-            return new MapGenerationData.MapTile
-            {
-                m_PositionVector = CurrentSimplifiedPosition,
-
-                m_MapTileType = ControllerContainer.TileNavigationController.GetMapTile(
-                    baseUnit.CurrentSimplifiedPosition).MapTileType,
-
-                m_Unit = new MapGenerationData.Unit
-                {
-                    m_TeamColor = baseUnit.TeamColor,
-                    m_UnitType = baseUnit.UnitType
-                }
-            };
-        }
-
-        /// <summary>
         /// Sets the team color material.
         /// </summary>
         /// <param name="material">The material.</param>
