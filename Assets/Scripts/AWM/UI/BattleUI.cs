@@ -59,6 +59,7 @@ namespace AWM.UI
                             ChangeEndTurnButtonHighlightState(false);
                         }
                     });
+
                 m_battlePauseUi.SetVisibilityCallback(ChangeVisibilityOfBattleUI);
             }
         }
@@ -111,8 +112,16 @@ namespace AWM.UI
         /// <param name="setVisible">if set to <c>true</c> [set visible].</param>
         public void ChangeVisibilityOfBattleUI(bool setVisible)
         {
-            m_endTurnButton.SetActive(setVisible);
             m_pauseButton.SetActive(setVisible);
+
+            // to ensure the end turn button is not displayed in an enemy turn.
+            if (setVisible && !ControllerContainer.BattleStateController.IsPlayersTurn())
+            {
+                return;
+            }
+
+            m_endTurnButton.SetActive(setVisible);
+            
         }
 
         /// <summary>
