@@ -14,6 +14,8 @@ namespace AWM.Models
         public int m_MovementRangePerRound;
         public List<WalkableMapTiles> m_WalkableMapTileTypes;
 
+        public List<UnitMetaType> m_PassableUnitMetaTypes;
+
         [Serializable]
         public class WalkableMapTiles
         {

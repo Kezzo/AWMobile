@@ -163,7 +163,8 @@ namespace AWM.BattleMechanics
             {
                 BaseMapTile baseMapTile;
 
-                if (MapTilePositions.TryGetValue(walkableNode.Key, out baseMapTile))
+                if (MapTilePositions.TryGetValue(walkableNode.Key, out baseMapTile) && 
+                    movementCostResolver.CanUnitWalkOnMapTile(baseMapTile))
                 {
                     walkableMapTiles.Add(baseMapTile);
                 }
@@ -344,9 +345,7 @@ namespace AWM.BattleMechanics
                 // Is tile position registered?
                 if (MapTilePositions.TryGetValue(adjacentTile, out adjacenBaseMapTile) &&
                     // Is MapTile walkable by unit?
-                    movementCostResolver.CanUnitWalkOnMapTile(adjacenBaseMapTile) &&
-                    // Is there a unit on the positon? (rendering it unwalkable)
-                    !ControllerContainer.BattleStateController.IsUnitOnNode(adjacentTile) &&
+                    movementCostResolver.CanUnitWalkOnMapTile(adjacenBaseMapTile, true) &&
                     // Can unit walk on the node, base on the movement range of the unit.
                     movementCostResolver.HasUnitEnoughMovementRangeLeft(walkingCostToNode + movementCostResolver.GetMovementCostToWalkOnMapTileType(adjacenBaseMapTile.MapTileType)))
                 {

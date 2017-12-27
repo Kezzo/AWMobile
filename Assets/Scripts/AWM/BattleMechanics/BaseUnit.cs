@@ -81,6 +81,7 @@ namespace AWM.BattleMechanics
         private Vector2 m_currentSimplifiedPosition;
         public Vector2 CurrentSimplifiedPosition { get { return m_currentSimplifiedPosition; } }
 
+        private List<KeyValuePair<Vector2, RouteMarkerDefinition>> m_currentlyDisplayedRouteMarker;
         private List<BaseMapTile> m_currentWalkableMapTiles;
         private List<BaseMapTile> m_currentAttackableMapTiles;
 
@@ -404,16 +405,18 @@ namespace AWM.BattleMechanics
         /// </summary>
         private void HideAllRouteMarker()
         {
-            if (m_currentWalkableMapTiles == null)
+            if (m_currentlyDisplayedRouteMarker == null || m_currentlyDisplayedRouteMarker.Count == 0)
             {
                 //Debug.LogError("Redundant call of HideAllRouteMarker.");
                 return;
             }
 
-            for (int tileIndex = 0; tileIndex < m_currentWalkableMapTiles.Count; tileIndex++)
+            foreach (var routeMarkerData in m_currentlyDisplayedRouteMarker)
             {
-                m_currentWalkableMapTiles[tileIndex].HideAllRouteMarker();
+                ControllerContainer.TileNavigationController.GetMapTile(routeMarkerData.Key).HideAllRouteMarker();
             }
+
+            m_currentlyDisplayedRouteMarker.Clear();
         }
 
         /// <summary>
@@ -478,11 +481,11 @@ namespace AWM.BattleMechanics
             HideAttackRange();
             DislayAttackRange(routeToDestination[routeToDestination.Count - 1]);
 
-            var routeMarkerDefinitions = ControllerContainer.TileNavigationController.GetRouteMarkerDefinitions(routeToDestination);
+            m_currentlyDisplayedRouteMarker = ControllerContainer.TileNavigationController.GetRouteMarkerDefinitions(routeToDestination);
 
-            for (int routeMarkerIndex = 0; routeMarkerIndex < routeMarkerDefinitions.Count; routeMarkerIndex++)
+            for (int routeMarkerIndex = 0; routeMarkerIndex < m_currentlyDisplayedRouteMarker.Count; routeMarkerIndex++)
             {
-                var routeMarkerDefinition = routeMarkerDefinitions[routeMarkerIndex];
+                var routeMarkerDefinition = m_currentlyDisplayedRouteMarker[routeMarkerIndex];
 
                 BaseMapTile mapTile = ControllerContainer.TileNavigationController.GetMapTile(routeMarkerDefinition.Key);
 

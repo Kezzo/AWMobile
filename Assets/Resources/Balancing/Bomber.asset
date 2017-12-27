@@ -23,6 +23,7 @@ MonoBehaviour:
     m_MovementCost: 1
   - m_MapTileType: 4
     m_MovementCost: 1
+  m_PassableUnitMetaTypes: 0000000002000000
   m_Health: 4
   m_AttackRange: 1
   m_AttackableUnitMetaTypes: 0000000002000000

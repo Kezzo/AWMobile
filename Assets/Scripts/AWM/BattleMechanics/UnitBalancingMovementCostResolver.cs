@@ -1,6 +1,7 @@
 ﻿using AWM.Enums;
 using AWM.MapTileGeneration;
 using AWM.Models;
+using AWM.System;
 
 namespace AWM.BattleMechanics
 {
@@ -41,9 +42,27 @@ namespace AWM.BattleMechanics
         /// Determines whether a unit can walk on a map tile.
         /// </summary>
         /// <param name="mapTile">The map tile instance to test against.</param>
-        public bool CanUnitWalkOnMapTile(BaseMapTile mapTile)
+        /// <param name="allowPassability">If set to true, this method will return true for a given maptile if the unit of this class only pass over it.</param>
+        public bool CanUnitWalkOnMapTile(BaseMapTile mapTile, bool allowPassability = false)
         {
-            return m_unitBalancingData.m_WalkableMapTileTypes.Exists(walkableMapTile => walkableMapTile.m_MapTileType == mapTile.MapTileType);
+            bool canUnitWalkOnMapTileType = m_unitBalancingData.m_WalkableMapTileTypes.Exists(
+                walkableMapTile => walkableMapTile.m_MapTileType == mapTile.MapTileType);
+
+            bool canPassUnitMetaTypeOnTile;
+
+            if (allowPassability)
+            {
+                BaseUnit unitOnTile = ControllerContainer.BattleStateController.GetUnitOnNode(mapTile.m_SimplifiedMapPosition);
+
+                canPassUnitMetaTypeOnTile = unitOnTile == null ||
+                    m_unitBalancingData.m_PassableUnitMetaTypes.Contains(unitOnTile.GetUnitBalancing().m_UnitMetaType);
+            }
+            else
+            {
+                canPassUnitMetaTypeOnTile = !ControllerContainer.BattleStateController.IsUnitOnNode(mapTile.m_SimplifiedMapPosition);
+            }
+
+            return canUnitWalkOnMapTileType && canPassUnitMetaTypeOnTile;
         }
     }
 }

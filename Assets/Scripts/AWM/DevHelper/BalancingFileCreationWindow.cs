@@ -16,6 +16,8 @@ namespace AWM.DevHelper
             "m_MovementRangePerRound",
             "m_WalkableMapTileTypes",
 
+            "m_PassableUnitMetaTypes",
+
             "m_Health",
 
             "m_AttackRange",
