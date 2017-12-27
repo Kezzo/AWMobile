@@ -244,7 +244,7 @@ namespace AWM.AI
                 return false;
             }
             
-            Vector2 closesEnemyPosition = enemyToAttack.CurrentSimplifiedPosition;
+            Vector2 closestEnemyPosition = enemyToAttack.CurrentSimplifiedPosition;
 
             List<BaseMapTile> mapTilesToAttackFrom = new List<BaseMapTile>();
 
@@ -252,7 +252,7 @@ namespace AWM.AI
             foreach (var walkableTile in walkableTiles)
             {
                 if (ControllerContainer.TileNavigationController.GetDistanceToCoordinate(walkableTile.m_SimplifiedMapPosition, 
-                    closesEnemyPosition) <= unit.GetUnitBalancing().m_AttackRange)
+                    closestEnemyPosition) <= unit.GetUnitBalancing().m_AttackRange)
                 {
                     mapTilesToAttackFrom.Add(walkableTile);
                 }
@@ -264,9 +264,18 @@ namespace AWM.AI
                 mapTilesToAttackFrom.Sort((mapTile1, mapTile2) =>
                 {
                     int mapTileDistanceComparison = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                        mapTile2.m_SimplifiedMapPosition, closesEnemyPosition)
+                        mapTile2.m_SimplifiedMapPosition, closestEnemyPosition)
                         .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                            mapTile1.m_SimplifiedMapPosition, closesEnemyPosition));
+                            mapTile1.m_SimplifiedMapPosition, closestEnemyPosition));
+
+                    // if the distance to the enemy position is equal, find the one closest to the attack unit to make it more realistic.
+                    if (mapTileDistanceComparison == 0)
+                    {
+                        mapTileDistanceComparison = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                            mapTile1.m_SimplifiedMapPosition, unit.CurrentSimplifiedPosition)
+                            .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                                mapTile2.m_SimplifiedMapPosition, unit.CurrentSimplifiedPosition));
+                    }
 
                     return mapTileDistanceComparison;
                 });
@@ -279,9 +288,9 @@ namespace AWM.AI
                 walkableTiles.Sort((mapTile1, mapTile2) =>
                 {
                     int mapTileDistanceComparison = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                        mapTile1.m_SimplifiedMapPosition, closesEnemyPosition)
+                        mapTile1.m_SimplifiedMapPosition, closestEnemyPosition)
                         .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
-                            mapTile2.m_SimplifiedMapPosition, closesEnemyPosition));
+                            mapTile2.m_SimplifiedMapPosition, closestEnemyPosition));
 
                     if (mapTileDistanceComparison == 0)
                     {
