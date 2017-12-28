@@ -198,6 +198,11 @@ namespace AWM.BattleMechanics
         public List<Vector2> GetBestWayToDestination(Vector2 startNode, Vector2 destinationNode, 
             IMovementCostResolver movementCostResolver, Dictionary<Vector2, PathfindingNodeDebugData> pathfindingNodeDebugData = null)
         {
+            if (startNode.Equals(destinationNode))
+            {
+                return new List<Vector2>();
+            }
+
             PriorityQueue<Vector2> queueOfNodesToCheck = new PriorityQueue<Vector2>();
             queueOfNodesToCheck.Enqueue(startNode, 0);
 
@@ -206,6 +211,8 @@ namespace AWM.BattleMechanics
             // Also stores which nodes were already checked, entries are updated when a better way to a node was found.
             Dictionary<Vector2, int> costToMoveToNodes = new Dictionary<Vector2, int>();
 
+            bool destinationWasFound = false;
+
             while (!queueOfNodesToCheck.IsEmpty)
             {
                 Vector2 nodeToGetNeighboursFrom = queueOfNodesToCheck.Dequeue();
@@ -213,6 +220,7 @@ namespace AWM.BattleMechanics
                 if (nodeToGetNeighboursFrom == destinationNode)
                 {
                     // Destination found!
+                    destinationWasFound = true;
                     break;
                 }
 
@@ -286,6 +294,11 @@ namespace AWM.BattleMechanics
                 }
             }
 
+            if (!destinationWasFound)
+            {
+                return null;
+            }
+
             return GetRouteListFromRouteMapping(startNode, destinationNode, routeMapping);
         }
 
@@ -313,6 +326,11 @@ namespace AWM.BattleMechanics
                 if (routeMapping.TryGetValue(nodeToCheckNext, out nodeToCheckNext))
                 {
                     bestWayToDestination.Add(nodeToCheckNext);
+                }
+                else
+                {
+                    Debug.LogError("Unable to GetRouteListFromRouteMapping");
+                    break;
                 }
             }
 
@@ -396,7 +414,12 @@ namespace AWM.BattleMechanics
         /// <returns></returns>
         public List<KeyValuePair<Vector2, RouteMarkerDefinition>> GetRouteMarkerDefinitions(List<Vector2> route)
         {
-            var routeMarkerDefinitions = new List<KeyValuePair<Vector2, RouteMarkerDefinition>>(route.Count);
+            var routeMarkerDefinitions = new List<KeyValuePair<Vector2, RouteMarkerDefinition>>(route != null ? route.Count : 0);
+
+            if (route == null)
+            {
+                return routeMarkerDefinitions;
+            }
 
             // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
             for (int nodeIndex = 1; nodeIndex < route.Count; nodeIndex++)

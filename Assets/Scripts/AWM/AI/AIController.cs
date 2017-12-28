@@ -117,6 +117,7 @@ namespace AWM.AI
             BaseUnit unitToAttack;
             if (!TryToGetUnitToAttack(unitToProcessTurnFor, out unitToAttack))
             {
+                unitTurnProcessingDoneCallback();
                 return;
             }
 
@@ -139,6 +140,10 @@ namespace AWM.AI
                     unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver,
                         null, () => AttackUnitIfInRange(unitToProcessTurnFor, unitToAttack, unitTurnProcessingDoneCallback));
                 }
+            }
+            else
+            {
+                unitTurnProcessingDoneCallback();
             }
         }
 
