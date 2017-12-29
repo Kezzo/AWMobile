@@ -163,8 +163,7 @@ namespace AWM.BattleMechanics
             {
                 BaseMapTile baseMapTile;
 
-                if (MapTilePositions.TryGetValue(walkableNode.Key, out baseMapTile) && 
-                    movementCostResolver.CanUnitWalkOnMapTile(baseMapTile))
+                if (MapTilePositions.TryGetValue(walkableNode.Key, out baseMapTile))
                 {
                     walkableMapTiles.Add(baseMapTile);
                 }
@@ -303,6 +302,45 @@ namespace AWM.BattleMechanics
         }
 
         /// <summary>
+        /// Returns the walkable route from a given route.
+        /// </summary>
+        /// <param name="unitToProcessTurnFor">The unit to process turn for.</param>
+        /// <param name="movementCostResolver">The movement cost resolver to use to calculate how much moving to a node costs.</param>
+        /// <param name="routeToExtractWalkableRangeFrom">The route to extract walkable range from.</param>
+        public List<Vector2> ExtractWalkableRangeFromRoute(BaseUnit unitToProcessTurnFor, IMovementCostResolver movementCostResolver,
+            List<Vector2> routeToExtractWalkableRangeFrom)
+        {
+            List<Vector2> routeToMove = new List<Vector2>();
+
+            int usedUpMovementCost = 0;
+            foreach (var routeNode in routeToExtractWalkableRangeFrom)
+            {
+                if (usedUpMovementCost > unitToProcessTurnFor.GetUnitBalancing().m_MovementRangePerRound)
+                {
+                    break;
+                }
+
+                routeToMove.Add(routeNode);
+
+                usedUpMovementCost += movementCostResolver.GetMovementCostToWalkOnMapTileType(
+                    ControllerContainer.TileNavigationController.GetMapTile(routeNode).MapTileType);
+            }
+
+            // Needed to not stop on a unit when the route would move over it.
+            for (int i = routeToMove.Count - 1; i >= 0; i--)
+            {
+                if(!ControllerContainer.BattleStateController.IsUnitOnNode(routeToMove[i]))
+                {
+                    break;
+                }
+
+                routeToMove.RemoveAt(i);
+            }
+
+            return routeToMove;
+        }
+
+        /// <summary>
         /// Gets a route list from a route mapping dictionary.
         /// </summary>
         /// <param name="start">The start.</param>
@@ -340,32 +378,38 @@ namespace AWM.BattleMechanics
         }
 
         /// <summary>
-        /// Gets the adjacent tiles of a sourceToGetNeighboursFrom tile position.
+        /// Gets the adjacent tiles of a sourceToGetNeighborsFrom tile position.
         /// This method considers only the previously registered maptiles.
         /// </summary>
-        /// <param name="sourceToGetNeighboursFrom">The sourceToGetNeighboursFrom.</param>
+        /// <param name="sourceToGetNeighborsFrom">The sourceToGetNeighborsFrom.</param>
         /// <param name="movementCostResolver">Used to determine how cost of movement and movement allowance is calculated.</param>
-        /// <param name="walkingCostToNode">The already walked map tiles.</param>
+        /// <param name="currentWalkingCost">The already walked map tiles.</param>
         /// <returns></returns>
-        private List<Vector2> GetWalkableAdjacentNodes(Vector2 sourceToGetNeighboursFrom, IMovementCostResolver movementCostResolver, 
-            int walkingCostToNode)
+        private List<Vector2> GetWalkableAdjacentNodes(Vector2 sourceToGetNeighborsFrom, IMovementCostResolver movementCostResolver, 
+            int currentWalkingCost)
         {
             List<Vector2> walkableAdjacentNodes = new List<Vector2>();
 
-            List<Vector2> adjacentNodes = GetAdjacentNodes(sourceToGetNeighboursFrom);
+            List<Vector2> adjacentNodes = GetAdjacentNodes(sourceToGetNeighborsFrom);
 
             for (int nodeIndex = 0; nodeIndex < adjacentNodes.Count; nodeIndex++)
             {
                 Vector2 adjacentTile = adjacentNodes[nodeIndex];
 
-                BaseMapTile adjacenBaseMapTile;
+                BaseMapTile adjacentBaseMapTile;
 
                 // Is tile position registered?
-                if (MapTilePositions.TryGetValue(adjacentTile, out adjacenBaseMapTile) &&
-                    // Is MapTile walkable by unit?
-                    movementCostResolver.CanUnitWalkOnMapTile(adjacenBaseMapTile, true) &&
+                if (!MapTilePositions.TryGetValue(adjacentTile, out adjacentBaseMapTile))
+                {
+                    continue;
+                }
+
+                int walkingCostToNode = currentWalkingCost + movementCostResolver.GetMovementCostToWalkOnMapTileType(adjacentBaseMapTile.MapTileType);
+
+                // Is MapTile walkable by unit?
+                if (movementCostResolver.CanUnitWalkOnMapTile(adjacentBaseMapTile, walkingCostToNode, true) &&
                     // Can unit walk on the node, base on the movement range of the unit.
-                    movementCostResolver.HasUnitEnoughMovementRangeLeft(walkingCostToNode + movementCostResolver.GetMovementCostToWalkOnMapTileType(adjacenBaseMapTile.MapTileType)))
+                    movementCostResolver.HasUnitEnoughMovementRangeLeft(walkingCostToNode))
                 {
                     walkableAdjacentNodes.Add(adjacentTile);
                 }

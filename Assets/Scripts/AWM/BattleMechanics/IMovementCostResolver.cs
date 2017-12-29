@@ -24,7 +24,11 @@ namespace AWM.BattleMechanics
         /// Determines whether a unit can walk on the given map tile.
         /// </summary>
         /// <param name="mapTile">The map tile instance to test against.</param>
+        /// <param name="movementCostToMapTile">
+        /// The movement cost required to walk to the given maptile. 
+        /// Used by implementations that want to change the return result based on the movement cost reachability.
+        /// </param>
         /// <param name="allowPassability">If set to true, this method will return true for a given maptile if the unit of this class only pass over it.</param>
-        bool CanUnitWalkOnMapTile(BaseMapTile mapTile, bool allowPassability = false);
+        bool CanUnitWalkOnMapTile(BaseMapTile mapTile, int movementCostToMapTile, bool allowPassability = false);
     }
 }

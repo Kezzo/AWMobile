@@ -10,7 +10,8 @@ namespace AWM.BattleMechanics
     /// </summary>
     public class UnitBalancingMovementCostResolver : IMovementCostResolver
     {
-        private UnitBalancingData m_unitBalancingData;
+        private readonly UnitBalancingData m_unitBalancingData;
+        protected UnitBalancingData UnitBalancingData { get { return m_unitBalancingData; } }
 
         public UnitBalancingMovementCostResolver(UnitBalancingData unitBalancing)
         {
@@ -33,7 +34,7 @@ namespace AWM.BattleMechanics
         /// Determines whether a unit has enough movement range left based on the given current movement cost.
         /// </summary>
         /// <param name="currentMovementCost">The current movement cost.</param>
-        public bool HasUnitEnoughMovementRangeLeft(int currentMovementCost)
+        public virtual bool HasUnitEnoughMovementRangeLeft(int currentMovementCost)
         {
             return currentMovementCost <= m_unitBalancingData.m_MovementRangePerRound;
         }
@@ -42,8 +43,12 @@ namespace AWM.BattleMechanics
         /// Determines whether a unit can walk on a map tile.
         /// </summary>
         /// <param name="mapTile">The map tile instance to test against.</param>
+        /// <param name="movementCostToMapTile">
+        /// The movement cost required to walk to the given maptile. 
+        /// Used by implementations that want to change the return result based on the movement cost reachability.
+        /// </param>
         /// <param name="allowPassability">If set to true, this method will return true for a given maptile if the unit of this class only pass over it.</param>
-        public bool CanUnitWalkOnMapTile(BaseMapTile mapTile, bool allowPassability = false)
+        public virtual bool CanUnitWalkOnMapTile(BaseMapTile mapTile, int movementCostToMapTile, bool allowPassability = false)
         {
             bool canUnitWalkOnMapTileType = m_unitBalancingData.m_WalkableMapTileTypes.Exists(
                 walkableMapTile => walkableMapTile.m_MapTileType == mapTile.MapTileType);

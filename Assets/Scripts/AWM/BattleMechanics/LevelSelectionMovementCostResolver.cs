@@ -31,8 +31,12 @@ namespace AWM.BattleMechanics
         /// Determines whether a unit in the level selection can walk on the given MapTile.
         /// </summary>
         /// <param name="mapTile">The map tile.</param>
+        /// /// <param name="movementCostToMapTile">
+        /// The movement cost required to walk to the given maptile. 
+        /// Used by implementations that want to change the return result based on the movement cost reachability.
+        /// </param>
         /// <param name="allowPassability">Ignored in this implementation.</param>
-        public bool CanUnitWalkOnMapTile(BaseMapTile mapTile, bool allowPassability = false)
+        public bool CanUnitWalkOnMapTile(BaseMapTile mapTile, int movementCostToMapTile, bool allowPassability = false)
         {
             return mapTile.LevelSelectionRouteType == LevelSelectionRouteType.LevelSelectionRoute ||
                    mapTile.LevelSelectionRouteType == LevelSelectionRouteType.LevelSelector;
