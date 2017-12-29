@@ -115,24 +115,63 @@ namespace AWM.AI
         /// <param name="unitTurnProcessingDoneCallback">Will be invoked when the turn process is done.</param>
         private void ProcessTurnOfUnit(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback)
         {
+            IMovementCostResolver movementCostResolver = new UnitBalancingMovementCostResolver(
+                        unitToProcessTurnFor.GetUnitBalancing());
+
             BaseUnit unitToAttack;
             if (!TryToGetUnitToAttack(unitToProcessTurnFor, out unitToAttack))
             {
-                unitTurnProcessingDoneCallback();
+                IdleUnitAround(unitToProcessTurnFor, unitTurnProcessingDoneCallback, movementCostResolver);
                 return;
             }
-
-            IMovementCostResolver movementCostResolver = new UnitBalancingMovementCostResolver(
-                        unitToProcessTurnFor.GetUnitBalancing());
 
             BaseMapTile tileToWalkTo;
             if (TryBestPositionToAttackGivenUnitFrom(unitToProcessTurnFor, unitToAttack, movementCostResolver, out tileToWalkTo))
             {
-                ProcessUnitInRangeMovement(unitToProcessTurnFor, unitTurnProcessingDoneCallback, unitToAttack, movementCostResolver, tileToWalkTo);
+                MoveToUnitAndAttack(unitToProcessTurnFor, unitTurnProcessingDoneCallback, 
+                    unitToAttack, movementCostResolver, tileToWalkTo);
             }
             else
             {
-                ProcessUnitOutOfRangeMovement(unitToProcessTurnFor, unitTurnProcessingDoneCallback, unitToAttack, movementCostResolver);
+                MoveTowardsPosition(unitToProcessTurnFor, unitTurnProcessingDoneCallback, 
+                    unitToAttack.CurrentSimplifiedPosition, movementCostResolver);
+            }
+        }
+
+        /// <summary>
+        /// Will move the unit around to let it idle and potentially unblock a path.
+        /// </summary>
+        /// <param name="unitToProcessTurnFor">The unit to process turn for.</param>
+        /// <param name="unitTurnProcessingDoneCallback">The unit turn processing done callback.</param>
+        /// <param name="movementCostResolver">The movement cost resolver.</param>
+        private void IdleUnitAround(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, IMovementCostResolver movementCostResolver)
+        {
+            List<BaseMapTile> walkableMapTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(
+                                unitToProcessTurnFor.CurrentSimplifiedPosition, movementCostResolver);
+
+            if (walkableMapTiles != null && walkableMapTiles.Count > 0)
+            {
+                walkableMapTiles.Sort((mapTile1, mapTile2) =>
+                {
+                    int comparisonValue = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                        mapTile2.m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition).CompareTo(
+                            ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                                mapTile1.m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition));
+
+                    if (comparisonValue == 0)
+                    {
+                        comparisonValue = Random.Range(-1, 2);
+                    }
+
+                    return comparisonValue;
+                });
+
+                MoveTowardsPosition(unitToProcessTurnFor, unitTurnProcessingDoneCallback,
+                    walkableMapTiles[0].m_SimplifiedMapPosition, movementCostResolver);
+            }
+            else
+            {
+                unitTurnProcessingDoneCallback();
             }
         }
 
@@ -144,7 +183,7 @@ namespace AWM.AI
         /// <param name="unitToAttack">The unit to attack.</param>
         /// <param name="movementCostResolver">The movement cost resolver.</param>
         /// <param name="tileToWalkTo">The tile to walk to.</param>
-        private void ProcessUnitInRangeMovement(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
+        private void MoveToUnitAndAttack(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
             BaseUnit unitToAttack, IMovementCostResolver movementCostResolver, BaseMapTile tileToWalkTo)
         {
             if (tileToWalkTo.m_SimplifiedMapPosition == unitToProcessTurnFor.CurrentSimplifiedPosition)
@@ -174,15 +213,15 @@ namespace AWM.AI
         /// </summary>
         /// <param name="unitToProcessTurnFor">The unit to process turn for.</param>
         /// <param name="unitTurnProcessingDoneCallback">The unit turn processing done callback.</param>
-        /// <param name="unitToAttack">The unit to attack.</param>
+        /// <param name="positionToMoveTowards">The position to move towards.</param>
         /// <param name="movementCostResolver">The movement cost resolver.</param>
-        private void ProcessUnitOutOfRangeMovement(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
-            BaseUnit unitToAttack, IMovementCostResolver movementCostResolver)
+        private void MoveTowardsPosition(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
+            Vector2 positionToMoveTowards, IMovementCostResolver movementCostResolver)
         {
             List<Vector2> longTermRouteToEnemy = ControllerContainer.TileNavigationController.GetBestWayToDestination(
-                                   unitToProcessTurnFor.CurrentSimplifiedPosition, unitToAttack.CurrentSimplifiedPosition,
+                                   unitToProcessTurnFor.CurrentSimplifiedPosition, positionToMoveTowards,
                                    new EndlessRangeUnitBalancingMovementCostResolver(unitToProcessTurnFor.GetUnitBalancing(),
-                                   unitToAttack.CurrentSimplifiedPosition));
+                                   positionToMoveTowards));
 
             if (longTermRouteToEnemy != null)
             {
