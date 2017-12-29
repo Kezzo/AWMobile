@@ -111,7 +111,7 @@ namespace AWM.BattleMechanics
             {
                 if (IsTeamWithColorPlayersTeam(stillPlayingTeams[0]))
                 {
-                    ControllerContainer.PlayerProgressionService.TrackLevelAsCompleted(m_levelNameOfBattle);
+                    CC.PPS.TrackLevelAsCompleted(m_levelNameOfBattle);
                 }
 
                 foreach (var onTeamWonEvent in OnTeamWonListener)
@@ -344,7 +344,7 @@ namespace AWM.BattleMechanics
         {
             List<BaseUnit> unitsInRange = new List<BaseUnit>();
 
-            TileNavigationController tileNavigationController = ControllerContainer.TileNavigationController;
+            TileNavigationController tileNavigationController = CC.TNC;
             HashSet<Vector2> checkedNodes = new HashSet<Vector2> { sourceNode };
 
             Queue<Vector2> nodesToCheck = new Queue<Vector2>();
@@ -397,7 +397,7 @@ namespace AWM.BattleMechanics
         /// <param name="unitToAttack">The unit to attack.</param>
         public bool IsUnitInAttackRange(BaseUnit attackingUnit, BaseUnit unitToAttack)
         {
-            return ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+            return CC.TNC.GetDistanceToCoordinate(
                 attackingUnit.CurrentSimplifiedPosition, unitToAttack.CurrentSimplifiedPosition) <=
                    attackingUnit.GetUnitBalancing().m_AttackRange;
         }

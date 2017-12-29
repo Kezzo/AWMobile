@@ -16,7 +16,7 @@ namespace AWM.BattleMechanics
 
         public EndlessRangeUnitBalancingMovementCostResolver(UnitBalancingData unitBalancing, Vector2 targetNode) : base(unitBalancing)
         {
-            m_targetBaseMapTile = ControllerContainer.TileNavigationController.GetMapTile(targetNode);
+            m_targetBaseMapTile = CC.TNC.GetMapTile(targetNode);
         }
 
         /// <summary>
@@ -56,14 +56,14 @@ namespace AWM.BattleMechanics
             {
                 if (allowPassability)
                 {
-                    BaseUnit unitOnTile = ControllerContainer.BattleStateController.GetUnitOnNode(mapTile.m_SimplifiedMapPosition);
+                    BaseUnit unitOnTile = CC.BSC.GetUnitOnNode(mapTile.m_SimplifiedMapPosition);
 
                     canPassUnitMetaTypeOnTile = unitOnTile == null ||
                         UnitBalancingData.m_PassableUnitMetaTypes.Contains(unitOnTile.GetUnitBalancing().m_UnitMetaType);
                 }
                 else
                 {
-                    canPassUnitMetaTypeOnTile = !ControllerContainer.BattleStateController.IsUnitOnNode(mapTile.m_SimplifiedMapPosition);
+                    canPassUnitMetaTypeOnTile = !CC.BSC.IsUnitOnNode(mapTile.m_SimplifiedMapPosition);
                 }
             }
 

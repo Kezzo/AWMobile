@@ -63,7 +63,7 @@ namespace AWM.AI
         /// </summary>
         public void StartTurn()
         {
-            Dictionary<TeamColor, List<BaseUnit>> units = ControllerContainer.BattleStateController.RegisteredTeams;
+            Dictionary<TeamColor, List<BaseUnit>> units = CC.BSC.RegisteredTeams;
             m_aiUnits = units[this.MyTeamColor];
             m_enemyUnits = new List<BaseUnit>();
 
@@ -103,7 +103,7 @@ namespace AWM.AI
             else
             {
                 m_unitCounter = 0;
-                ControllerContainer.BattleStateController.EndCurrentTurn();
+                CC.BSC.EndCurrentTurn();
             }
         }
 
@@ -146,16 +146,16 @@ namespace AWM.AI
         /// <param name="movementCostResolver">The movement cost resolver.</param>
         private void IdleUnitAround(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, IMovementCostResolver movementCostResolver)
         {
-            List<BaseMapTile> walkableMapTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(
+            List<BaseMapTile> walkableMapTiles = CC.TNC.GetWalkableMapTiles(
                                 unitToProcessTurnFor.CurrentSimplifiedPosition, movementCostResolver);
 
             if (walkableMapTiles != null && walkableMapTiles.Count > 0)
             {
                 walkableMapTiles.Sort((mapTile1, mapTile2) =>
                 {
-                    int comparisonValue = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                    int comparisonValue = CC.TNC.GetDistanceToCoordinate(
                         mapTile2.m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition).CompareTo(
-                            ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                            CC.TNC.GetDistanceToCoordinate(
                                 mapTile1.m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition));
 
                     if (comparisonValue == 0)
@@ -192,7 +192,7 @@ namespace AWM.AI
             }
             else
             {
-                List<Vector2> routeToMove = ControllerContainer.TileNavigationController.GetBestWayToDestination(
+                List<Vector2> routeToMove = CC.TNC.GetBestWayToDestination(
                     unitToProcessTurnFor.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition,
                     movementCostResolver);
 
@@ -218,14 +218,14 @@ namespace AWM.AI
         private void MoveTowardsPosition(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
             Vector2 positionToMoveTowards, IMovementCostResolver movementCostResolver)
         {
-            List<Vector2> longTermRouteToEnemy = ControllerContainer.TileNavigationController.GetBestWayToDestination(
+            List<Vector2> longTermRouteToEnemy = CC.TNC.GetBestWayToDestination(
                                    unitToProcessTurnFor.CurrentSimplifiedPosition, positionToMoveTowards,
                                    new EndlessRangeUnitBalancingMovementCostResolver(unitToProcessTurnFor.GetUnitBalancing(),
                                    positionToMoveTowards));
 
             if (longTermRouteToEnemy != null)
             {
-                List<Vector2> routeToMove = ControllerContainer.TileNavigationController.ExtractWalkableRangeFromRoute(
+                List<Vector2> routeToMove = CC.TNC.ExtractWalkableRangeFromRoute(
                     unitToProcessTurnFor, movementCostResolver, longTermRouteToEnemy);
 
                 if (routeToMove.Count > 0)
@@ -272,7 +272,7 @@ namespace AWM.AI
         /// </summary>
         private void AttackUnitIfInRange(BaseUnit attackingUnit, BaseUnit unitToAttack, Action onAttackDoneCallback)
         {
-            if (!ControllerContainer.BattleStateController.IsUnitInAttackRange(attackingUnit, unitToAttack))
+            if (!CC.BSC.IsUnitInAttackRange(attackingUnit, unitToAttack))
             {
                 onAttackDoneCallback();
                 return;
@@ -281,7 +281,7 @@ namespace AWM.AI
             attackingUnit.AttackUnit(unitToAttack, () =>
             {
                 // Check if unit died. Can't check unit itself, since it will be removed immediately when dying.
-                if (!ControllerContainer.BattleStateController.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
+                if (!CC.BSC.IsUnitOnNode(unitToAttack.CurrentSimplifiedPosition))
                 {
                     m_enemyUnits.Remove(unitToAttack);
                 }
@@ -305,12 +305,12 @@ namespace AWM.AI
                 int unitComparisonValue = 0;
 
                 // ignore distance comparison for all units in range.
-                if (!ControllerContainer.BattleStateController.IsUnitInAttackRange(attackingUnit, unit1) ||
-                    !ControllerContainer.BattleStateController.IsUnitInAttackRange(attackingUnit, unit2))
+                if (!CC.BSC.IsUnitInAttackRange(attackingUnit, unit1) ||
+                    !CC.BSC.IsUnitInAttackRange(attackingUnit, unit2))
                 {
-                    unitComparisonValue = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                    unitComparisonValue = CC.TNC.GetDistanceToCoordinate(
                         positionOfAttackingUnit, unit1.CurrentSimplifiedPosition)
-                    .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                    .CompareTo(CC.TNC.GetDistanceToCoordinate(
                         positionOfAttackingUnit, unit2.CurrentSimplifiedPosition));
                 }
 
@@ -336,11 +336,11 @@ namespace AWM.AI
         private bool TryBestPositionToAttackGivenUnitFrom(BaseUnit unit, BaseUnit enemyToAttack, 
             IMovementCostResolver movementCostResolver, out BaseMapTile maptTileToMoveTo)
         {
-            List<BaseMapTile> walkableTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(
+            List<BaseMapTile> walkableTiles = CC.TNC.GetWalkableMapTiles(
                 unit.CurrentSimplifiedPosition, movementCostResolver);
             
             // to also test the current unit position.
-            walkableTiles.Add(ControllerContainer.TileNavigationController.GetMapTile(unit.CurrentSimplifiedPosition));
+            walkableTiles.Add(CC.TNC.GetMapTile(unit.CurrentSimplifiedPosition));
 
             if (walkableTiles.Count == 0)
             {
@@ -355,7 +355,7 @@ namespace AWM.AI
             // get list of maptiles where closest enemy is attackable from
             foreach (var walkableTile in walkableTiles)
             {
-                if (ControllerContainer.TileNavigationController.GetDistanceToCoordinate(walkableTile.m_SimplifiedMapPosition, 
+                if (CC.TNC.GetDistanceToCoordinate(walkableTile.m_SimplifiedMapPosition, 
                     closestEnemyPosition) <= unit.GetUnitBalancing().m_AttackRange)
                 {
                     mapTilesToAttackFrom.Add(walkableTile);
@@ -371,17 +371,17 @@ namespace AWM.AI
             // find maptile with max range where the unit can still attack
             mapTilesToAttackFrom.Sort((mapTile1, mapTile2) =>
             {
-                int mapTileDistanceComparison = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                int mapTileDistanceComparison = CC.TNC.GetDistanceToCoordinate(
                     mapTile2.m_SimplifiedMapPosition, closestEnemyPosition)
-                    .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                    .CompareTo(CC.TNC.GetDistanceToCoordinate(
                         mapTile1.m_SimplifiedMapPosition, closestEnemyPosition));
 
                 // if the distance to the enemy position is equal, find the one closest to the attack unit to make it more realistic.
                 if (mapTileDistanceComparison == 0)
                 {
-                    mapTileDistanceComparison = ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                    mapTileDistanceComparison = CC.TNC.GetDistanceToCoordinate(
                         mapTile1.m_SimplifiedMapPosition, unit.CurrentSimplifiedPosition)
-                        .CompareTo(ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                        .CompareTo(CC.TNC.GetDistanceToCoordinate(
                             mapTile2.m_SimplifiedMapPosition, unit.CurrentSimplifiedPosition));
                 }
 

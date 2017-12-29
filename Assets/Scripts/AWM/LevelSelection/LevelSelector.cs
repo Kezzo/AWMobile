@@ -34,7 +34,7 @@ namespace AWM.LevelSelection
             {
                 // Lazily get and store level selection unit.
                 return m_levelSelectionUnit ?? 
-                       (m_levelSelectionUnit = ControllerContainer.BattleStateController.RegisteredTeams[TeamColor.Blue][0]);
+                       (m_levelSelectionUnit = CC.BSC.RegisteredTeams[TeamColor.Blue][0]);
             }
         }
 
@@ -54,10 +54,10 @@ namespace AWM.LevelSelection
             m_centeredCameraPosition = centeredCameraPosition;
 
             // Color flag blue when level was completed; red otherwise
-            m_levelFlagMeshRenderer.material = ControllerContainer.PlayerProgressionService.IsLevelCompleted(levelName)
+            m_levelFlagMeshRenderer.material = CC.PPS.IsLevelCompleted(levelName)
                 ? m_levelCompleteMaterial : m_levelNotCompleteMaterial;
 
-            ControllerContainer.LevelSelectionInitializationController.RegisterLevelSelector(orderNumber, this);
+            CC.LSIC.RegisterLevelSelector(orderNumber, this);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace AWM.LevelSelection
             {
                 //TODO: Enter level.
                 Debug.Log(string.Format("Entering level: {0}", m_levelName));
-                ControllerContainer.InputBlocker.ChangeBattleControlInput(true);
+                CC.InputBlocker.ChangeBattleControlInput(true);
 
                 SwitchToLevel();
 
@@ -85,11 +85,11 @@ namespace AWM.LevelSelection
 
             IMovementCostResolver movementCostResolver = new LevelSelectionMovementCostResolver();
 
-            var routeToLevelSelector = ControllerContainer.TileNavigationController.GetBestWayToDestination(
+            var routeToLevelSelector = CC.TNC.GetBestWayToDestination(
                 levelSelectionUnit.CurrentSimplifiedPosition, m_rootMapTile.m_SimplifiedMapPosition,
                 movementCostResolver);
 
-            ControllerContainer.InputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
+            CC.InputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
 
             levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, movementCostResolver, tile =>
             {
@@ -97,7 +97,7 @@ namespace AWM.LevelSelection
 
             }, () =>
             {
-                ControllerContainer.InputBlocker.ChangeBattleControlInput(false, InputBlockMode.SelectionOnly);
+                CC.InputBlocker.ChangeBattleControlInput(false, InputBlockMode.SelectionOnly);
                 //TODO: display level info.
             });
         }
@@ -131,7 +131,7 @@ namespace AWM.LevelSelection
         /// <param name="isLastRoute">Determines if this drawn route is the last unlocked route leading to the newest level.</param>
         public void DrawRouteToLevelSelector(LevelSelector levelSelector, bool isLastRoute)
         {
-            var navigationController = ControllerContainer.TileNavigationController;
+            var navigationController = CC.TNC;
 
             var routeToLevelSelector = navigationController.GetBestWayToDestination(
                 RootMapTile.m_SimplifiedMapPosition, levelSelector.RootMapTile.m_SimplifiedMapPosition,
@@ -150,10 +150,10 @@ namespace AWM.LevelSelection
                 }
             }
 
-            if (isLastRoute && !ControllerContainer.PlayerProgressionService.LastUnlockedLevel.Equals(levelSelector.LevelName))
+            if (isLastRoute && !CC.PPS.LastUnlockedLevel.Equals(levelSelector.LevelName))
             {
                 StartCoroutine(ShowLevelSelectionRoute(routeGameObjects, levelSelector, 0.3f));
-                ControllerContainer.PlayerProgressionService.LastUnlockedLevel = levelSelector.LevelName;
+                CC.PPS.LastUnlockedLevel = levelSelector.LevelName;
             }
             else
             {
@@ -190,12 +190,12 @@ namespace AWM.LevelSelection
         /// </summary>
         public void ValidateLevelSelectionUnitsPosition()
         {
-            if (m_levelName.Equals(ControllerContainer.PlayerProgressionService.LastPlayedLevel))
+            if (m_levelName.Equals(CC.PPS.LastPlayedLevel))
             {
                 LevelSelectionUnit.SetPositionTo(m_rootMapTile);
                 UpdateUnitVisuals(m_rootMapTile.MapTileType);
 
-                ControllerContainer.MonoBehaviourRegistry.Get<CameraControls>().SetCameraPositionTo(m_centeredCameraPosition);
+                CC.MBR.Get<CameraControls>().SetCameraPositionTo(m_centeredCameraPosition);
             }
         }
 
@@ -212,8 +212,8 @@ namespace AWM.LevelSelection
                 {
                     Root.Instance.SceneLoading.LoadToLevel(m_levelName, () =>
                     {
-                        ControllerContainer.PlayerProgressionService.LastPlayedLevel = m_levelName;
-                        ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
+                        CC.PPS.LastPlayedLevel = m_levelName;
+                        CC.InputBlocker.ChangeBattleControlInput(false);
                         Root.Instance.LoadingUi.Hide();
                     });
                 });

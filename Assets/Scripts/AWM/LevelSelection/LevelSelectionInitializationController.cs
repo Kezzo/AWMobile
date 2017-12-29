@@ -79,10 +79,10 @@ namespace AWM.LevelSelection
                     break;
                 }
 
-                if (ControllerContainer.PlayerProgressionService.IsLevelCompleted(levelSelectorToInitialize.LevelName))
+                if (CC.PPS.IsLevelCompleted(levelSelectorToInitialize.LevelName))
                 {
                     levelSelectorToInitialize.DrawRouteToLevelSelector(nextLevelSelector, 
-                        !ControllerContainer.PlayerProgressionService.IsLevelCompleted(nextLevelSelector.LevelName));
+                        !CC.PPS.IsLevelCompleted(nextLevelSelector.LevelName));
                 }
 
                 levelSelectionCounter++;

@@ -88,7 +88,7 @@ namespace AWM.Controls
 
         private void Awake()
         {
-            ControllerContainer.MonoBehaviourRegistry.Register(this);
+            CC.MBR.Register(this);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace AWM.Controls
             m_cameraStartPosZ = m_cameraToControl.transform.localPosition.z;
             m_secondayCameraToControl.transform.localPosition = m_cameraToControl.transform.localPosition;
 
-            //ControllerContainer.BattleStateController.AddTurnStartListener("CameraAutoZoom", ZoomCameraBasedOnTheCurrentTeam);
+            //CC.BSC.AddTurnStartListener("CameraAutoZoom", ZoomCameraBasedOnTheCurrentTeam);
 
             m_zoomLevel = CameraToControl.orthographic ? CameraToControl.orthographicSize : 0f;
         }

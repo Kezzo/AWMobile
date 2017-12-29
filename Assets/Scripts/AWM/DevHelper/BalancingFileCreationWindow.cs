@@ -82,7 +82,7 @@ namespace AWM.DevHelper
 
             if (GUILayout.Button("Update Balancing"))
             {
-                ControllerContainer.AssetDatabaseService.UpdateExistingAssetFile(m_unitBalancingData);
+                CC.ADS.UpdateExistingAssetFile(m_unitBalancingData);
             }
         }
 
@@ -92,7 +92,7 @@ namespace AWM.DevHelper
         /// <returns></returns>
         private UnitBalancingData GetUnitBalancingDataFromFile()
         {
-            return ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<UnitBalancingData>(string.Format("Balancing/{0}", m_unitTypeToEdit));
+            return CC.ADS.GetAssetDataAtPath<UnitBalancingData>(string.Format("Balancing/{0}", m_unitTypeToEdit));
         }
     }
 }

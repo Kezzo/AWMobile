@@ -21,11 +21,11 @@ namespace AWM.UI
 
         private void Start()
         {
-            ControllerContainer.BattleStateController.OnBattleStartListener.Add("TurnTransitionUI", teams =>
+            CC.BSC.OnBattleStartListener.Add("TurnTransitionUI", teams =>
             {
                 if (teams.Length > 1)
                 {
-                    ControllerContainer.BattleStateController.OnTurnStartListener.Add("TurnTransitionUI", 
+                    CC.BSC.OnTurnStartListener.Add("TurnTransitionUI", 
                         team => StartCoroutine(OnTurnTransition(team)));
                 }
             });

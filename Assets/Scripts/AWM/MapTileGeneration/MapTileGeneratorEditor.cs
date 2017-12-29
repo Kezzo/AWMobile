@@ -146,7 +146,7 @@ namespace AWM.MapTileGeneration
         {
             if (Application.isPlaying)
             {
-                ControllerContainer.MonoBehaviourRegistry.Register(this);
+                CC.MBR.Register(this);
             }
         }
 
@@ -189,7 +189,7 @@ namespace AWM.MapTileGeneration
             BaseMapTile closestBaseMapTile = null;
             float closestDistanceToRaycastHit = float.MaxValue;
 
-            foreach (var instantiatedBaseMapTile in ControllerContainer.TileNavigationController.MapTilePositions.Values)
+            foreach (var instantiatedBaseMapTile in CC.TNC.MapTilePositions.Values)
             {
                 float distanceToRaycastHit = Vector3.Distance(instantiatedBaseMapTile.transform.position, worldPosition);
 
@@ -211,17 +211,17 @@ namespace AWM.MapTileGeneration
                     closestBaseMapTile.MapTileType = m_LastToggledTileType;
                     closestBaseMapTile.ValidateMapTile();
 
-                    List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(
+                    List<Vector2> adjacentNodes = CC.TNC.GetAdjacentNodes(
                         closestBaseMapTile.m_SimplifiedMapPosition, true);
 
                     foreach (var adjacentNode in adjacentNodes)
                     {
                         BaseMapTile mapTile;
 
-                        if (ControllerContainer.TileNavigationController.MapTilePositions.TryGetValue(adjacentNode,
+                        if (CC.TNC.MapTilePositions.TryGetValue(adjacentNode,
                             out mapTile))
                         {
-                            mapTile.ValidateMapTile(true, ControllerContainer.TileNavigationController);
+                            mapTile.ValidateMapTile(true, CC.TNC);
                         }
                     }
 
@@ -315,8 +315,8 @@ namespace AWM.MapTileGeneration
         public void GenerateMap()
         {
             ClearMap();
-            m_currentlyVisibleMap = ControllerContainer.MapTileGenerationService.GenerateMapGroups(m_levelSize, m_tileMargin, 2);
-            ControllerContainer.MapTileGenerationService.LoadGeneratedMap(m_currentlyVisibleMap, m_tilePrefab, m_levelRoot);
+            m_currentlyVisibleMap = CC.MGS.GenerateMapGroups(m_levelSize, m_tileMargin, 2);
+            CC.MGS.LoadGeneratedMap(m_currentlyVisibleMap, m_tilePrefab, m_levelRoot);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace AWM.MapTileGeneration
                 ClearMap();
                 m_currentlyVisibleMap = mapGenerationData;
 
-                ControllerContainer.MapTileGenerationService.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
+                CC.MGS.LoadGeneratedMap(mapGenerationData, m_tilePrefab, m_levelRoot);
 
                 if (Application.isPlaying)
                 {
@@ -354,7 +354,7 @@ namespace AWM.MapTileGeneration
 
             string assetPath = string.Format("Levels/{0}", levelToLoad);
 
-            MapGenerationData mapGenerationData = ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<MapGenerationData>(assetPath);
+            MapGenerationData mapGenerationData = CC.ADS.GetAssetDataAtPath<MapGenerationData>(assetPath);
 
             if (mapGenerationData == null)
             {

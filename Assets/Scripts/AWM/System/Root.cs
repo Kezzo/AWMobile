@@ -76,7 +76,7 @@ namespace AWM.System
         /// <param name="initializationDone">Callback when the initialization is done.</param>
         private void Initialize(Action initializationDone)
         {
-            ControllerContainer.UnitBalancingProvider.InitializeBalancingData();
+            CC.UBP.InitializeBalancingData();
             m_sceneLoadingService.LoadToLevelSelection(initializationDone);
         }
 

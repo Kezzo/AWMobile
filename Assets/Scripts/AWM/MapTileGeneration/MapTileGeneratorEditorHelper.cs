@@ -43,7 +43,7 @@ namespace AWM.MapTileGeneration
 
             if (GUILayout.Button("Update Map File"))
             {
-                ControllerContainer.AssetDatabaseService.UpdateExistingAssetFile(m_mapTileGeneratorEditor.CurrentlyVisibleMap);
+                CC.ADS.UpdateExistingAssetFile(m_mapTileGeneratorEditor.CurrentlyVisibleMap);
             }
 
             if (GUILayout.Button("Save New Map File"))

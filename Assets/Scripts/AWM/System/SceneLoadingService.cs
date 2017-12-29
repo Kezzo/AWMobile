@@ -102,17 +102,17 @@ namespace AWM.System
                 {
                     MapTileGeneratorEditor mapTileGeneratorEditor;
 
-                    if (!ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
+                    if (!CC.MBR.TryGet(out mapTileGeneratorEditor))
                     {
                         Debug.Log("MapTileGeneratorEditor can't be retrieved.");
                         return;
                     }
 
                     MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData(levelName);
-                    ControllerContainer.BattleStateController.IntializeBattle(mapGenerationData.m_Teams, levelName);
+                    CC.BSC.IntializeBattle(mapGenerationData.m_Teams, levelName);
 
                     mapTileGeneratorEditor.LoadExistingMap(mapGenerationData);
-                    ControllerContainer.BattleStateController.StartBattle();
+                    CC.BSC.StartBattle();
 
                     if (onLoadedToLevel != null)
                     {
@@ -132,7 +132,7 @@ namespace AWM.System
             {
                 UnloadSceneAsync("Battleground", null, () =>
                 {
-                    ControllerContainer.Reset();
+                    CC.Reset();
 
                     if (onScenesUnloaded != null)
                     {

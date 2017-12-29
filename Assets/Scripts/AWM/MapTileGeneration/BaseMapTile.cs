@@ -183,7 +183,7 @@ namespace AWM.MapTileGeneration
         {
             if (Application.isPlaying)
             {
-                ControllerContainer.MonoBehaviourRegistry.TryGet(out m_mapTileGeneratorEditor);
+                CC.MBR.TryGet(out m_mapTileGeneratorEditor);
             }
             else
             {
@@ -197,7 +197,7 @@ namespace AWM.MapTileGeneration
             m_levelNameToStart = MapTileData.m_LevelNameToStart;
             m_levelSelectionOrder = MapTileData.m_LevelSelectionOrder;
             m_centeredCameraPosition = MapTileData.m_CenteredCameraPosition;
-            m_mapGenService = ControllerContainer.MapTileGenerationService;
+            m_mapGenService = CC.MGS;
         }
 
         /// <summary>
@@ -541,7 +541,7 @@ namespace AWM.MapTileGeneration
 
             ShaderBlinkOrchestrator shaderBlinkOrchestrator = null;
 
-            if (ControllerContainer.MonoBehaviourRegistry.TryGet(out shaderBlinkOrchestrator))
+            if (CC.MBR.TryGet(out shaderBlinkOrchestrator))
             {
                 if (setVisibilityTo)
                 {
@@ -571,7 +571,7 @@ namespace AWM.MapTileGeneration
         {
             m_attackRangeMeshFilter.gameObject.SetActive(true);
 
-            List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(m_SimplifiedMapPosition);
+            List<Vector2> adjacentNodes = CC.TNC.GetAdjacentNodes(m_SimplifiedMapPosition);
             List<BaseMapTile> adjacentAttackableTiles = new List<BaseMapTile>();
 
             for (int i = 0; i < adjacentNodes.Count; i++)
@@ -595,7 +595,7 @@ namespace AWM.MapTileGeneration
                     areaTileType = AreaTileType.ThreeBorders;
                     break;
                 case 2:
-                    areaTileType = ControllerContainer.MapTileGenerationService.GetTwoBorderAreaTileType(m_SimplifiedMapPosition, adjacentAttackableTiles);
+                    areaTileType = CC.MGS.GetTwoBorderAreaTileType(m_SimplifiedMapPosition, adjacentAttackableTiles);
 
                     break;
                 case 3:
@@ -608,7 +608,7 @@ namespace AWM.MapTileGeneration
                     return;
             }
 
-            float yRotation = ControllerContainer.MapTileGenerationService.GetAttackMarkerBorderRotation(m_SimplifiedMapPosition, areaTileType, adjacentNodes, adjacentAttackableTiles, attackRangeCenterPosition);
+            float yRotation = CC.MGS.GetAttackMarkerBorderRotation(m_SimplifiedMapPosition, areaTileType, adjacentNodes, adjacentAttackableTiles, attackRangeCenterPosition);
 
             m_attackRangeMeshFilter.transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
 

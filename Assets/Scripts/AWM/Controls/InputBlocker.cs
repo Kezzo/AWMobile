@@ -19,7 +19,7 @@ namespace AWM.Controls
             if (inputBlockMode == InputBlockMode.All || inputBlockMode == InputBlockMode.CameraOnly)
             {
                 CameraControls cameraControls;
-                if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraControls))
+                if (CC.MBR.TryGet(out cameraControls))
                 {
                     cameraControls.IsBlocked = block;
                 }
@@ -28,7 +28,7 @@ namespace AWM.Controls
             if (inputBlockMode == InputBlockMode.All || inputBlockMode == InputBlockMode.SelectionOnly)
             {
                 SelectionControls selectionControls;
-                if (ControllerContainer.MonoBehaviourRegistry.TryGet(out selectionControls))
+                if (CC.MBR.TryGet(out selectionControls))
                 {
                     selectionControls.IsBlocked = block;
                 }

@@ -27,7 +27,7 @@ namespace AWM.BattleMechanics
                     continue;
                 }
 
-                UnitBalancingData unitBalancingData = ControllerContainer.AssetDatabaseService.GetAssetDataAtPath<UnitBalancingData>(string.Format(
+                UnitBalancingData unitBalancingData = CC.ADS.GetAssetDataAtPath<UnitBalancingData>(string.Format(
                     "Balancing/{0}", unitType));
 
                 if (unitBalancingData != null)

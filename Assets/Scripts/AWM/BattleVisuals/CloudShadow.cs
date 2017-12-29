@@ -50,7 +50,7 @@ namespace AWM.BattleVisuals
         {
             while (true)
             {
-                while (ControllerContainer.BattleStateController.IsBattlePaused)
+                while (CC.BSC.IsBattlePaused)
                 {
                     yield return null;
                 }

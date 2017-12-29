@@ -323,13 +323,13 @@ namespace AWM.BattleMechanics
                 routeToMove.Add(routeNode);
 
                 usedUpMovementCost += movementCostResolver.GetMovementCostToWalkOnMapTileType(
-                    ControllerContainer.TileNavigationController.GetMapTile(routeNode).MapTileType);
+                    CC.TNC.GetMapTile(routeNode).MapTileType);
             }
 
             // Needed to not stop on a unit when the route would move over it.
             for (int i = routeToMove.Count - 1; i >= 0; i--)
             {
-                if(!ControllerContainer.BattleStateController.IsUnitOnNode(routeToMove[i]))
+                if(!CC.BSC.IsUnitOnNode(routeToMove[i]))
                 {
                     break;
                 }

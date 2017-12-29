@@ -15,7 +15,7 @@ namespace AWM.UI
             {
                 CameraControls cameraControls;
 
-                if (ControllerContainer.MonoBehaviourRegistry.TryGet(out cameraControls))
+                if (CC.MBR.TryGet(out cameraControls))
                 {
                     m_cameraToOrientTo = cameraControls.SecondaryCameraToControl;
                 }

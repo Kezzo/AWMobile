@@ -62,7 +62,7 @@ namespace AWM.Controls
                 {
                     //Debug.Log(node);
 
-                    BaseMapTile baseMapTileOnPath = ControllerContainer.TileNavigationController.GetMapTile(node.Key);
+                    BaseMapTile baseMapTileOnPath = CC.TNC.GetMapTile(node.Key);
 
                     if (baseMapTileOnPath != null)
                     {
@@ -91,12 +91,12 @@ namespace AWM.Controls
             m_pathfindingNodeDebug = new Dictionary<Vector2, PathfindingNodeDebugData>();
 #endif
 
-            ControllerContainer.MonoBehaviourRegistry.Register(this);
+            CC.MBR.Register(this);
         }
 
         private void Start()
         {
-            ControllerContainer.BattleStateController.OnTurnStartListener.Add("DeselectUnit", teamPlayingNext => DeselectCurrentUnit()); 
+            CC.BSC.OnTurnStartListener.Add("DeselectUnit", teamPlayingNext => DeselectCurrentUnit()); 
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace AWM.Controls
                 return;
             }
 
-            if (ControllerContainer.BattleStateController.IsPlayersTurn() && !m_abortNextSelectionTry)
+            if (CC.BSC.IsPlayersTurn() && !m_abortNextSelectionTry)
             {
                 RaycastHit raycastHit;
 
@@ -163,7 +163,7 @@ namespace AWM.Controls
                         Debug.Log("Selected destination movement field");
 
                         // confirm move
-                        ControllerContainer.BattleStateController.OnConfirmMove();
+                        CC.BSC.OnConfirmMove();
                     }
                     else if (m_currentlySelectedUnit != null && !IsPointerOverUIObject())
                     {
@@ -234,7 +234,7 @@ namespace AWM.Controls
             {
                 m_pathfindingNodeDebug.Clear();
 
-                m_routeToDestinationField = ControllerContainer.TileNavigationController.
+                m_routeToDestinationField = CC.TNC.
                     GetBestWayToDestination(m_currentlySelectedUnit.CurrentSimplifiedPosition, baseMapTile.m_SimplifiedMapPosition, 
                         new UnitBalancingMovementCostResolver(m_currentlySelectedUnit.GetUnitBalancing()), m_pathfindingNodeDebug);
                 m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);

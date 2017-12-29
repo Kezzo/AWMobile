@@ -57,14 +57,14 @@ namespace AWM.BattleMechanics
 
             if (allowPassability)
             {
-                BaseUnit unitOnTile = ControllerContainer.BattleStateController.GetUnitOnNode(mapTile.m_SimplifiedMapPosition);
+                BaseUnit unitOnTile = CC.BSC.GetUnitOnNode(mapTile.m_SimplifiedMapPosition);
 
                 canPassUnitMetaTypeOnTile = unitOnTile == null ||
                     m_unitBalancingData.m_PassableUnitMetaTypes.Contains(unitOnTile.GetUnitBalancing().m_UnitMetaType);
             }
             else
             {
-                canPassUnitMetaTypeOnTile = !ControllerContainer.BattleStateController.IsUnitOnNode(mapTile.m_SimplifiedMapPosition);
+                canPassUnitMetaTypeOnTile = !CC.BSC.IsUnitOnNode(mapTile.m_SimplifiedMapPosition);
             }
 
             return canUnitWalkOnMapTileType && canPassUnitMetaTypeOnTile;

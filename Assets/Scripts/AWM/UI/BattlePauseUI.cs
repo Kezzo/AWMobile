@@ -41,8 +41,8 @@ namespace AWM.UI
         /// </summary>
         public void Show()
         {
-            ControllerContainer.InputBlocker.ChangeBattleControlInput(true);
-            ControllerContainer.BattleStateController.IsBattlePaused = true;
+            CC.InputBlocker.ChangeBattleControlInput(true);
+            CC.BSC.IsBattlePaused = true;
 
             if (m_onVisibilityChange != null)
             {
@@ -58,8 +58,8 @@ namespace AWM.UI
         public void Hide()
         {
             m_animator.SetBool("Visible", false);
-            ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
-            ControllerContainer.BattleStateController.IsBattlePaused = false;
+            CC.InputBlocker.ChangeBattleControlInput(false);
+            CC.BSC.IsBattlePaused = false;
 
             if (m_onVisibilityChange != null)
             {
@@ -80,7 +80,7 @@ namespace AWM.UI
                 {
                     Root.Instance.SceneLoading.LoadToLevelSelection(() =>
                     {
-                        ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
+                        CC.InputBlocker.ChangeBattleControlInput(false);
                         Root.Instance.LoadingUi.Hide();
                     });
                 });

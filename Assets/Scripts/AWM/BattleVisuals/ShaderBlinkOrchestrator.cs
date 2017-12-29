@@ -37,7 +37,7 @@ namespace AWM.BattleVisuals
 
         private void Start()
         {
-            ControllerContainer.MonoBehaviourRegistry.Register(this);
+            CC.MBR.Register(this);
         }
 
 

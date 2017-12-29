@@ -22,7 +22,7 @@ namespace AWM.MapTileGeneration
         /// <param name="root">The root.</param>
         public void LoadGeneratedMap(MapGenerationData mapGenerationData, GameObject prefab, Transform root)
         {
-            ControllerContainer.TileNavigationController.Initialize(mapGenerationData.m_LevelSize);
+            CC.TNC.Initialize(mapGenerationData.m_LevelSize);
             Vector2 groupsToGenerate = new Vector2(mapGenerationData.m_LevelSize.x / mapGenerationData.m_MapTileGroupSize,
                 mapGenerationData.m_LevelSize.y / mapGenerationData.m_MapTileGroupSize);
 
@@ -69,7 +69,7 @@ namespace AWM.MapTileGeneration
                             {
                                 Vector2 simplifiedMapTilePosition = mapGenerationData.GetSimplifiedMapTilePosition(mapTile);
 
-                                ControllerContainer.TileNavigationController.RegisterMapTile(simplifiedMapTilePosition, baseMapTile);
+                                CC.TNC.RegisterMapTile(simplifiedMapTilePosition, baseMapTile);
                                 baseMapTile.Initialize(ref mapTile, simplifiedMapTilePosition);
 
                                 generatedMapTiles.Add(baseMapTile);
@@ -84,7 +84,7 @@ namespace AWM.MapTileGeneration
 
             if (mapGenerationData.m_IsLevelSelection)
             {
-                ControllerContainer.LevelSelectionInitializationController.InitializeLevelSelectionVisuals();
+                CC.LSIC.InitializeLevelSelectionVisuals();
             }
 
             if (Application.isPlaying)
@@ -310,8 +310,8 @@ namespace AWM.MapTileGeneration
                     break;
             }
 
-            return ControllerContainer.TileNavigationController.GetRotationFromCardinalDirection(
-                ControllerContainer.TileNavigationController.GetCardinalDirectionFromNodePositionDiff(nodePositionDiff));
+            return CC.TNC.GetRotationFromCardinalDirection(
+                CC.TNC.GetCardinalDirectionFromNodePositionDiff(nodePositionDiff));
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace AWM.MapTileGeneration
             out List<CardinalDirection> adjacentWaterDirections)
         {
             bool isNextToWater = false;
-            List<Vector2> adjacentNodes = ControllerContainer.TileNavigationController.GetAdjacentNodes(
+            List<Vector2> adjacentNodes = CC.TNC.GetAdjacentNodes(
                 tilePosition, includeAdjacentCorners: true);
 
             adjacentWaterDirections = new List<CardinalDirection>();
@@ -373,7 +373,7 @@ namespace AWM.MapTileGeneration
 
                     Vector2 positionDiff = tilePosition - adjacentNodes[i];
 
-                    adjacentWaterDirections.Add(ControllerContainer.TileNavigationController.
+                    adjacentWaterDirections.Add(CC.TNC.
                         GetCardinalDirectionFromNodePositionDiff(positionDiff));
                 }
             }

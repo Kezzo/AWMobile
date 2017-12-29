@@ -71,7 +71,7 @@ namespace AWM.BattleMechanics
 
                 if (m_unitHasAttackedThisRound)
                 {
-                    ControllerContainer.BattleStateController.OnUnitIsDoneThisTurn(UniqueIdent, TeamColor);
+                    CC.BSC.OnUnitIsDoneThisTurn(UniqueIdent, TeamColor);
                 }
             }
         }
@@ -112,13 +112,13 @@ namespace AWM.BattleMechanics
                 return;
             }
 
-            UniqueIdent = ControllerContainer.BattleStateController.RegisterUnit(TeamColor, this);
+            UniqueIdent = CC.BSC.RegisterUnit(TeamColor, this);
             m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
 
-            if (!Root.Instance.SceneLoading.IsInLevelSelection && ControllerContainer.BattleStateController.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
+            if (!Root.Instance.SceneLoading.IsInLevelSelection && CC.BSC.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
             {
-                ControllerContainer.BattleStateController.OnTurnStartListener.Add(UniqueIdent.ToString(), OnTurnStarted);
-                ControllerContainer.BattleStateController.OnUnitSelectedListener.Add(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
+                CC.BSC.OnTurnStartListener.Add(UniqueIdent.ToString(), OnTurnStarted);
+                CC.BSC.OnUnitSelectedListener.Add(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
             }
         }
 
@@ -127,9 +127,9 @@ namespace AWM.BattleMechanics
         /// </summary>
         public void Die()
         {
-            ControllerContainer.BattleStateController.RemoveRegisteredUnit(TeamColor, this);
-            ControllerContainer.BattleStateController.OnUnitSelectedListener.Remove(UniqueIdent);
-            ControllerContainer.BattleStateController.OnTurnStartListener.Remove(UniqueIdent.ToString());
+            CC.BSC.RemoveRegisteredUnit(TeamColor, this);
+            CC.BSC.OnUnitSelectedListener.Remove(UniqueIdent);
+            CC.BSC.OnTurnStartListener.Remove(UniqueIdent.ToString());
 
             m_attackMarker.SetActive(false);
             m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Death);
@@ -151,7 +151,7 @@ namespace AWM.BattleMechanics
         {
             Vector2 unitPositionDiff = baseUnit.CurrentSimplifiedPosition - CurrentSimplifiedPosition;
 
-            CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.
+            CardinalDirection directionToRotateTo = CC.TNC.
                 GetCardinalDirectionFromNodePositionDiff(unitPositionDiff);
 
             SetRotation(directionToRotateTo);
@@ -171,7 +171,7 @@ namespace AWM.BattleMechanics
                 onBattleSequenceFinished();
             }
 
-            ControllerContainer.BattleStateController.OnBattleDone();
+            CC.BSC.OnBattleDone();
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace AWM.BattleMechanics
         {
             return !StatManagement.IsDead && 
                    CanAttackUnit(unitToCounterAttack) && 
-                   ControllerContainer.TileNavigationController.GetDistanceToCoordinate(
+                   CC.TNC.GetDistanceToCoordinate(
                        this.CurrentSimplifiedPosition, unitToCounterAttack.CurrentSimplifiedPosition) == 1;
         }
 
@@ -221,7 +221,7 @@ namespace AWM.BattleMechanics
             }
 
             MapTileGeneratorEditor mapTileGeneratorEditor;
-            if (!ControllerContainer.MonoBehaviourRegistry.TryGet(out mapTileGeneratorEditor))
+            if (!CC.MBR.TryGet(out mapTileGeneratorEditor))
             {
                 return;
             }
@@ -255,7 +255,7 @@ namespace AWM.BattleMechanics
 
             if (!UnitHasMovedThisRound)
             {
-                m_currentWalkableMapTiles = ControllerContainer.TileNavigationController.GetWalkableMapTiles(
+                m_currentWalkableMapTiles = CC.TNC.GetWalkableMapTiles(
                     this.CurrentSimplifiedPosition, new UnitBalancingMovementCostResolver(GetUnitBalancing()));
                 SetWalkableTileFieldVisibilityTo(true);
             }
@@ -268,7 +268,7 @@ namespace AWM.BattleMechanics
             HideAttackRange();
             DislayAttackRange(CurrentSimplifiedPosition);
 
-            ControllerContainer.BattleStateController.OnUnitChangedSelection(true);
+            CC.BSC.OnUnitChangedSelection(true);
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace AWM.BattleMechanics
 
             HideAttackRange();
 
-            ControllerContainer.BattleStateController.OnUnitChangedSelection(false);
+            CC.BSC.OnUnitChangedSelection(false);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace AWM.BattleMechanics
         /// <param name="teamThatIsPlayingTheTurn">The team that is playing the turn.</param>
         private void OnTurnStarted(Team teamThatIsPlayingTheTurn)
         {
-            ChangeBlinkOrchestratorAffiliation(ControllerContainer.BattleStateController.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor);
+            ChangeBlinkOrchestratorAffiliation(CC.BSC.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace AWM.BattleMechanics
         {
             ShaderBlinkOrchestrator shaderBlinkOrchestrator = null;
 
-            if (ControllerContainer.MonoBehaviourRegistry.TryGet(out shaderBlinkOrchestrator))
+            if (CC.MBR.TryGet(out shaderBlinkOrchestrator))
             {
                 if (addToOrchestrator)
                 {
@@ -358,7 +358,7 @@ namespace AWM.BattleMechanics
         /// <param name="unitIsOnTile">if set to <c>true</c> a unit is on the tile.</param>
         private void UpdateEnvironmentVisibility(Vector2 positionOfTileToUpdate, bool unitIsOnTile)
         {
-            BaseMapTile destinationMapTile = ControllerContainer.TileNavigationController
+            BaseMapTile destinationMapTile = CC.TNC
                 .GetMapTile(positionOfTileToUpdate);
 
             if (destinationMapTile != null)
@@ -373,7 +373,7 @@ namespace AWM.BattleMechanics
         /// <param name="sourceNode">The source node to check the attack range from.</param>
         public void DislayAttackRange(Vector2 sourceNode)
         {
-            List<BaseMapTile> mapTileInAttackRange = ControllerContainer.TileNavigationController.
+            List<BaseMapTile> mapTileInAttackRange = CC.TNC.
                 GetMapTilesInRange(sourceNode, GetUnitBalancing().m_AttackRange);
 
             for (int i = 0; i < mapTileInAttackRange.Count; i++)
@@ -413,7 +413,7 @@ namespace AWM.BattleMechanics
 
             foreach (var routeMarkerData in m_currentlyDisplayedRouteMarker)
             {
-                ControllerContainer.TileNavigationController.GetMapTile(routeMarkerData.Key).HideAllRouteMarker();
+                CC.TNC.GetMapTile(routeMarkerData.Key).HideAllRouteMarker();
             }
 
             m_currentlyDisplayedRouteMarker.Clear();
@@ -445,7 +445,7 @@ namespace AWM.BattleMechanics
         /// </returns>
         public bool CanUnitTakeAction()
         {
-            return (!UnitHasMovedThisRound || !UnitHasAttackedThisRound) && ControllerContainer.BattleStateController.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor;
+            return (!UnitHasMovedThisRound || !UnitHasAttackedThisRound) && CC.BSC.GetCurrentlyPlayingTeam().m_TeamColor == TeamColor;
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace AWM.BattleMechanics
         /// <returns></returns>
         public UnitBalancingData GetUnitBalancing()
         {
-            return ControllerContainer.UnitBalancingProvider.GetUnitBalancing(UnitType);
+            return CC.UBP.GetUnitBalancing(UnitType);
         }
 
         /// <summary>
@@ -481,13 +481,13 @@ namespace AWM.BattleMechanics
             HideAttackRange();
             DislayAttackRange(routeToDestination[routeToDestination.Count - 1]);
 
-            m_currentlyDisplayedRouteMarker = ControllerContainer.TileNavigationController.GetRouteMarkerDefinitions(routeToDestination);
+            m_currentlyDisplayedRouteMarker = CC.TNC.GetRouteMarkerDefinitions(routeToDestination);
 
             for (int routeMarkerIndex = 0; routeMarkerIndex < m_currentlyDisplayedRouteMarker.Count; routeMarkerIndex++)
             {
                 var routeMarkerDefinition = m_currentlyDisplayedRouteMarker[routeMarkerIndex];
 
-                BaseMapTile mapTile = ControllerContainer.TileNavigationController.GetMapTile(routeMarkerDefinition.Key);
+                BaseMapTile mapTile = CC.TNC.GetMapTile(routeMarkerDefinition.Key);
 
                 if (mapTile != null)
                 {
@@ -495,9 +495,9 @@ namespace AWM.BattleMechanics
                 }
             }
 
-            ControllerContainer.BattleStateController.AddConfirmMoveButtonPressedListener(() =>
+            CC.BSC.AddConfirmMoveButtonPressedListener(() =>
             {
-                ControllerContainer.BattleStateController.RemoveCurrentConfirmMoveButtonPressedListener();
+                CC.BSC.RemoveCurrentConfirmMoveButtonPressedListener();
 
                 SetWalkableTileFieldVisibilityTo(false);
                 ClearAttackableUnits(m_attackableUnits);
@@ -566,7 +566,7 @@ namespace AWM.BattleMechanics
         /// <returns></returns>
         private bool TryToDisplayActionOnUnitsInRange(out List<BaseUnit> attackableUnits)
         {
-            List<BaseUnit> unitsInRange = ControllerContainer.BattleStateController.GetUnitsInRange(
+            List<BaseUnit> unitsInRange = CC.BSC.GetUnitsInRange(
                 this.CurrentSimplifiedPosition, GetUnitBalancing().m_AttackRange);
 
             attackableUnits = new List<BaseUnit>();
@@ -672,13 +672,13 @@ namespace AWM.BattleMechanics
             Vector2 nodePositionDiff = destinationNode - startNode;
 
             // Rotate unit to destination node
-            CardinalDirection directionToRotateTo = ControllerContainer.TileNavigationController.
+            CardinalDirection directionToRotateTo = CC.TNC.
                 GetCardinalDirectionFromNodePositionDiff(nodePositionDiff);
 
             SetRotation(directionToRotateTo);
 
-            BaseMapTile startMapTile = ControllerContainer.TileNavigationController.GetMapTile(startNode);
-            BaseMapTile destinationMapTile = ControllerContainer.TileNavigationController.GetMapTile(destinationNode);
+            BaseMapTile startMapTile = CC.TNC.GetMapTile(startNode);
+            BaseMapTile destinationMapTile = CC.TNC.GetMapTile(destinationNode);
 
             Vector3 targetWorldPosition = Vector3.zero;
 
@@ -736,7 +736,7 @@ namespace AWM.BattleMechanics
                     yield break;
                 }
 
-                while (ControllerContainer.BattleStateController.IsBattlePaused)
+                while (CC.BSC.IsBattlePaused)
                 {
                     yield return null;
                 }

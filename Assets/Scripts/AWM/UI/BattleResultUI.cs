@@ -26,7 +26,7 @@ namespace AWM.UI
         public void Show(TeamColor teamThatWon)
         {
             m_gameEndVisuals.SetActive(true);
-            m_battleResultText.text = ControllerContainer.BattleStateController.IsTeamWithColorPlayersTeam(teamThatWon) ?
+            m_battleResultText.text = CC.BSC.IsTeamWithColorPlayersTeam(teamThatWon) ?
                 "You won the match!" :
                 "The enemy team won the match!";
 
@@ -38,7 +38,7 @@ namespace AWM.UI
         /// </summary>
         public void OnOkButtonPressed()
         {
-            ControllerContainer.InputBlocker.ChangeBattleControlInput(true);
+            CC.InputBlocker.ChangeBattleControlInput(true);
 
             Root.Instance.LoadingUi.Show();
 
@@ -48,7 +48,7 @@ namespace AWM.UI
                 {
                     Root.Instance.SceneLoading.LoadToLevelSelection(() =>
                     {
-                        ControllerContainer.InputBlocker.ChangeBattleControlInput(false);
+                        CC.InputBlocker.ChangeBattleControlInput(false);
                         Root.Instance.LoadingUi.Hide();
                     });
                 });
