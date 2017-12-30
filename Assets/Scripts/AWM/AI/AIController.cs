@@ -120,28 +120,63 @@ namespace AWM.AI
         {
             IMovementCostResolver movementCostResolver = new UnitBalancingMovementCostResolver(unitToProcessTurnFor.GetUnitBalancing());
 
+            ProcessMovementPhase(unitToProcessTurnFor, movementCostResolver, unitToAttack =>
+            {
+                if (unitToAttack == null)
+                {
+                    List<BaseUnit> unitsInRange = CC.BSC.GetUnitsInRange(unitToProcessTurnFor.CurrentSimplifiedPosition,
+                        unitToProcessTurnFor.GetUnitBalancing().m_AttackRange);
+
+                    // Filter out non attackable units.
+                    unitsInRange.RemoveAll(unit => !unitToProcessTurnFor.CanAttackUnit(unit));
+
+                    if (unitsInRange.Count > 0)
+                    {
+                        SortListByEffectivityAgainstUnit(unitToProcessTurnFor, ref unitsInRange);
+                        unitToAttack = unitsInRange[0];
+                    } 
+                }
+
+                AttackUnitIfInRange(unitToProcessTurnFor, unitToAttack, unitTurnProcessingDoneCallback);
+            });
+        }
+
+        /// <summary>
+        /// Processes the first part of a units turn which is finding the target to attack/move to and do the movement.
+        /// </summary>
+        /// <param name="unitToProcessTurnFor">The unit to process turn for.</param>
+        /// <param name="movementCostResolver">The movement cost resolver to use.</param>
+        /// <param name="movementPhaseDoneCallback">
+        /// Invoked when the movement phase is done. 
+        /// A callback is needed here, because movement is delayed by it's visual representation.
+        /// Will get the unit to attack passed in, if the unit was moved into attack range; otherwise null.
+        /// </param>
+        private void ProcessMovementPhase(BaseUnit unitToProcessTurnFor, IMovementCostResolver movementCostResolver, Action<BaseUnit> movementPhaseDoneCallback)
+        {
+            Action noUnitCallback = () => movementPhaseDoneCallback(null);
+
             BaseUnit unitToAttack;
             if (!TryToGetUnitToAttack(unitToProcessTurnFor, out unitToAttack))
             {
-                IdleUnitAround(unitToProcessTurnFor, unitTurnProcessingDoneCallback, movementCostResolver);
+                IdleUnitAround(unitToProcessTurnFor, noUnitCallback, movementCostResolver);
                 return;
             }
 
             List<BaseMapTile> mapTilesToAttackFrom;
             if (!TryToGetPositionsSortedByPreferenceToAttackGivenUnitFrom(unitToProcessTurnFor, unitToAttack, movementCostResolver, out mapTilesToAttackFrom))
             {
-                IdleUnitAround(unitToProcessTurnFor, unitTurnProcessingDoneCallback, movementCostResolver);
+                IdleUnitAround(unitToProcessTurnFor, noUnitCallback, movementCostResolver);
                 return;
             }
 
-            if (TryToMoveToUnitAndAttack(unitToProcessTurnFor, unitTurnProcessingDoneCallback, unitToAttack, movementCostResolver, mapTilesToAttackFrom))
+            if (TryToMoveToAttackPosition(unitToProcessTurnFor, movementCostResolver, mapTilesToAttackFrom, () => movementPhaseDoneCallback(unitToAttack)))
             {
                 return;
             }
 
-            if (!TryToMoveTowardsPosition(unitToProcessTurnFor, unitTurnProcessingDoneCallback, mapTilesToAttackFrom, movementCostResolver))
+            if (!TryToMoveTowardsPosition(unitToProcessTurnFor, noUnitCallback, mapTilesToAttackFrom, movementCostResolver))
             {
-                IdleUnitAround(unitToProcessTurnFor, unitTurnProcessingDoneCallback, movementCostResolver);
+                IdleUnitAround(unitToProcessTurnFor, noUnitCallback, movementCostResolver);
             }
         }
 
@@ -149,9 +184,9 @@ namespace AWM.AI
         /// Will move the unit around to let it idle and potentially unblock a path.
         /// </summary>
         /// <param name="unitToProcessTurnFor">The unit to process turn for.</param>
-        /// <param name="unitTurnProcessingDoneCallback">The unit turn processing done callback.</param>
+        /// <param name="unitMovementDoneCallback">Invoked when the movement of the unit is done. Needed to react to the delay the movement creates.</param>
         /// <param name="movementCostResolver">The movement cost resolver.</param>
-        private void IdleUnitAround(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, IMovementCostResolver movementCostResolver)
+        private void IdleUnitAround(BaseUnit unitToProcessTurnFor, Action unitMovementDoneCallback, IMovementCostResolver movementCostResolver)
         {
             List<BaseMapTile> walkableMapTiles = CC.TNC.GetWalkableMapTiles(unitToProcessTurnFor.CurrentSimplifiedPosition, movementCostResolver);
 
@@ -170,14 +205,14 @@ namespace AWM.AI
                     return comparisonValue;
                 });
 
-                if(!TryToMoveTowardsPosition(unitToProcessTurnFor, unitTurnProcessingDoneCallback, walkableMapTiles, movementCostResolver))
+                if(!TryToMoveTowardsPosition(unitToProcessTurnFor, unitMovementDoneCallback, walkableMapTiles, movementCostResolver))
                 {
-                    unitTurnProcessingDoneCallback();
+                    unitMovementDoneCallback();
                 }
             }
             else
             {
-                unitTurnProcessingDoneCallback();
+                unitMovementDoneCallback();
             }
         }
 
@@ -185,19 +220,18 @@ namespace AWM.AI
         /// Processes the unit movement when the target is in range.
         /// </summary>
         /// <param name="unitToProcessTurnFor">The unit to process turn for.</param>
-        /// <param name="unitTurnProcessingDoneCallback">The unit turn processing done callback.</param>
-        /// <param name="unitToAttack">The unit to attack.</param>
         /// <param name="movementCostResolver">The movement cost resolver.</param>
         /// <param name="tilesToAttackFrom">The tiles the unit can be attack from, sorted by how they're prefered (to keep distance & closest to attacking unit)</param>
+        /// <param name="unitMovementDoneCallback">Invoked when the movement of the unit is done. Needed to react to the delay the movement creates.</param>
         /// <returns>Returns true when the unit was able to move to the enemy and attack; otherwise false.</returns>
-        private bool TryToMoveToUnitAndAttack(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
-            BaseUnit unitToAttack, IMovementCostResolver movementCostResolver, List<BaseMapTile> tilesToAttackFrom)
+        private bool TryToMoveToAttackPosition(BaseUnit unitToProcessTurnFor, IMovementCostResolver movementCostResolver, 
+            List<BaseMapTile> tilesToAttackFrom, Action unitMovementDoneCallback)
         {
             // Attack immediately if prefered maptile to attack from (index 0) is current attacking unit position; 
             // otherwise a more prefered position should be taken.
             if (tilesToAttackFrom[0].m_SimplifiedMapPosition == unitToProcessTurnFor.CurrentSimplifiedPosition)
             {
-                AttackUnitIfInRange(unitToProcessTurnFor, unitToAttack, unitTurnProcessingDoneCallback);
+                unitMovementDoneCallback();
                 return true;
             }
 
@@ -226,9 +260,7 @@ namespace AWM.AI
 
                 if (routeToMove != null)
                 {
-                    unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver, null,
-                        () => AttackUnitIfInRange(unitToProcessTurnFor, unitToAttack, unitTurnProcessingDoneCallback));
-
+                    unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver, null, unitMovementDoneCallback);
                     return true;
                 }
             }
@@ -240,10 +272,10 @@ namespace AWM.AI
         /// Processes the unit movement when the target is out of range.
         /// </summary>
         /// <param name="unitToProcessTurnFor">The unit to process turn for.</param>
-        /// <param name="unitTurnProcessingDoneCallback">The unit turn processing done callback.</param>
+        /// <param name="unitMovementDoneCallback">Invoked when the movement of the unit is done. Needed to react to the delay the movement creates.</param>
         /// <param name="mapTilesToMoveTowards">The tiles the unit can be attack from, sorted by how they're prefered (to keep distance & closest to attacking unit)</param>
         /// <param name="movementCostResolver">The movement cost resolver.</param>
-        private bool TryToMoveTowardsPosition(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
+        private bool TryToMoveTowardsPosition(BaseUnit unitToProcessTurnFor, Action unitMovementDoneCallback, 
             List<BaseMapTile> mapTilesToMoveTowards, IMovementCostResolver movementCostResolver)
         {
             foreach (var mapTileToMoveToward in mapTilesToMoveTowards)
@@ -260,11 +292,11 @@ namespace AWM.AI
                     if (routeToMove.Count > 0)
                     {
                         unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver, null,
-                            unitTurnProcessingDoneCallback);
+                            unitMovementDoneCallback);
                     }
                     else
                     {
-                        unitTurnProcessingDoneCallback();
+                        unitMovementDoneCallback();
                     }
 
                     return true;
@@ -302,7 +334,7 @@ namespace AWM.AI
         /// </summary>
         private void AttackUnitIfInRange(BaseUnit attackingUnit, BaseUnit unitToAttack, Action onAttackDoneCallback)
         {
-            if (!CC.BSC.IsUnitInAttackRange(attackingUnit, unitToAttack))
+            if (unitToAttack == null || !CC.BSC.IsUnitInAttackRange(attackingUnit, unitToAttack))
             {
                 onAttackDoneCallback();
                 return;
