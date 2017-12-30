@@ -92,6 +92,11 @@ namespace AWM.AI
                 // To pause between each unit that was moved
                 Root.Instance.CoroutineHelper.CallDelayed(m_aiUnits[m_unitCounter], 0.2f, () =>
                 {
+                    if (CC.BSC.HasBattleEnded)
+                    {
+                        return;
+                    }
+
                     ProcessTurnOfUnit(m_aiUnits[m_unitCounter], () =>
                     {
                         m_aiUnits[m_unitCounter].UnitHasAttackedThisRound = true;

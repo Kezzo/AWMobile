@@ -39,6 +39,7 @@ namespace AWM.BattleMechanics
         private List<AIController> m_registeredAIs;
 
         public bool IsBattlePaused { get; set; }
+        public bool HasBattleEnded { get; private set; }
 
         public BattleStateController()
         {
@@ -109,6 +110,8 @@ namespace AWM.BattleMechanics
             // all units of a team is dead
             if (stillPlayingTeams.Count == 1)
             {
+                HasBattleEnded = true;
+
                 if (IsTeamWithColorPlayersTeam(stillPlayingTeams[0]))
                 {
                     CC.PPS.TrackLevelAsCompleted(m_levelNameOfBattle);
