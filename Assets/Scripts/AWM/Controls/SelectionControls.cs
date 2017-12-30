@@ -232,11 +232,14 @@ namespace AWM.Controls
 
             if (baseMapTile != null)
             {
-                m_pathfindingNodeDebug.Clear();
+                if (m_pathfindingNodeDebug != null)
+                {
+                    m_pathfindingNodeDebug.Clear();
+                }
 
-                m_routeToDestinationField = CC.TNC.
-                    GetBestWayToDestination(m_currentlySelectedUnit.CurrentSimplifiedPosition, baseMapTile.m_SimplifiedMapPosition, 
-                        new UnitBalancingMovementCostResolver(m_currentlySelectedUnit.GetUnitBalancing()), m_pathfindingNodeDebug);
+                m_routeToDestinationField = CC.TNC.GetBestWayToDestination(m_currentlySelectedUnit.CurrentSimplifiedPosition, 
+                    baseMapTile.m_SimplifiedMapPosition, new UnitBalancingMovementCostResolver(m_currentlySelectedUnit.GetUnitBalancing()), m_pathfindingNodeDebug);
+
                 m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);
             }
         }
