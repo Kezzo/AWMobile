@@ -118,8 +118,7 @@ namespace AWM.AI
         /// <param name="unitTurnProcessingDoneCallback">Will be invoked when the turn process is done.</param>
         private void ProcessTurnOfUnit(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback)
         {
-            IMovementCostResolver movementCostResolver = new UnitBalancingMovementCostResolver(
-                        unitToProcessTurnFor.GetUnitBalancing());
+            IMovementCostResolver movementCostResolver = new UnitBalancingMovementCostResolver(unitToProcessTurnFor.GetUnitBalancing());
 
             BaseUnit unitToAttack;
             if (!TryToGetUnitToAttack(unitToProcessTurnFor, out unitToAttack))
@@ -128,16 +127,21 @@ namespace AWM.AI
                 return;
             }
 
-            BaseMapTile tileToWalkTo;
-            if (TryBestPositionToAttackGivenUnitFrom(unitToProcessTurnFor, unitToAttack, movementCostResolver, out tileToWalkTo))
+            List<BaseMapTile> mapTilesToAttackFrom;
+            if (!TryToGetPositionsSortedByPreferenceToAttackGivenUnitFrom(unitToProcessTurnFor, unitToAttack, movementCostResolver, out mapTilesToAttackFrom))
             {
-                MoveToUnitAndAttack(unitToProcessTurnFor, unitTurnProcessingDoneCallback, 
-                    unitToAttack, movementCostResolver, tileToWalkTo);
+                IdleUnitAround(unitToProcessTurnFor, unitTurnProcessingDoneCallback, movementCostResolver);
+                return;
             }
-            else
+
+            if (TryToMoveToUnitAndAttack(unitToProcessTurnFor, unitTurnProcessingDoneCallback, unitToAttack, movementCostResolver, mapTilesToAttackFrom))
             {
-                MoveTowardsPosition(unitToProcessTurnFor, unitTurnProcessingDoneCallback, 
-                    unitToAttack.CurrentSimplifiedPosition, movementCostResolver);
+                return;
+            }
+
+            if (!TryToMoveTowardsPosition(unitToProcessTurnFor, unitTurnProcessingDoneCallback, mapTilesToAttackFrom, movementCostResolver))
+            {
+                IdleUnitAround(unitToProcessTurnFor, unitTurnProcessingDoneCallback, movementCostResolver);
             }
         }
 
@@ -149,17 +153,14 @@ namespace AWM.AI
         /// <param name="movementCostResolver">The movement cost resolver.</param>
         private void IdleUnitAround(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, IMovementCostResolver movementCostResolver)
         {
-            List<BaseMapTile> walkableMapTiles = CC.TNC.GetWalkableMapTiles(
-                                unitToProcessTurnFor.CurrentSimplifiedPosition, movementCostResolver);
+            List<BaseMapTile> walkableMapTiles = CC.TNC.GetWalkableMapTiles(unitToProcessTurnFor.CurrentSimplifiedPosition, movementCostResolver);
 
             if (walkableMapTiles != null && walkableMapTiles.Count > 0)
             {
                 walkableMapTiles.Sort((mapTile1, mapTile2) =>
                 {
-                    int comparisonValue = CC.TNC.GetDistanceToCoordinate(
-                        mapTile2.m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition).CompareTo(
-                            CC.TNC.GetDistanceToCoordinate(
-                                mapTile1.m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition));
+                    int comparisonValue = CC.TNC.GetDistanceToCoordinate(mapTile2.m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition)
+                        .CompareTo(CC.TNC.GetDistanceToCoordinate(mapTile1.m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition));
 
                     if (comparisonValue == 0)
                     {
@@ -169,8 +170,10 @@ namespace AWM.AI
                     return comparisonValue;
                 });
 
-                MoveTowardsPosition(unitToProcessTurnFor, unitTurnProcessingDoneCallback,
-                    walkableMapTiles[0].m_SimplifiedMapPosition, movementCostResolver);
+                if(!TryToMoveTowardsPosition(unitToProcessTurnFor, unitTurnProcessingDoneCallback, walkableMapTiles, movementCostResolver))
+                {
+                    unitTurnProcessingDoneCallback();
+                }
             }
             else
             {
@@ -185,30 +188,52 @@ namespace AWM.AI
         /// <param name="unitTurnProcessingDoneCallback">The unit turn processing done callback.</param>
         /// <param name="unitToAttack">The unit to attack.</param>
         /// <param name="movementCostResolver">The movement cost resolver.</param>
-        /// <param name="tileToWalkTo">The tile to walk to.</param>
-        private void MoveToUnitAndAttack(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
-            BaseUnit unitToAttack, IMovementCostResolver movementCostResolver, BaseMapTile tileToWalkTo)
+        /// <param name="tilesToAttackFrom">The tiles the unit can be attack from, sorted by how they're prefered (to keep distance & closest to attacking unit)</param>
+        /// <returns>Returns true when the unit was able to move to the enemy and attack; otherwise false.</returns>
+        private bool TryToMoveToUnitAndAttack(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
+            BaseUnit unitToAttack, IMovementCostResolver movementCostResolver, List<BaseMapTile> tilesToAttackFrom)
         {
-            if (tileToWalkTo.m_SimplifiedMapPosition == unitToProcessTurnFor.CurrentSimplifiedPosition)
+            // Attack immediately if prefered maptile to attack from (index 0) is current attacking unit position; 
+            // otherwise a more prefered position should be taken.
+            if (tilesToAttackFrom[0].m_SimplifiedMapPosition == unitToProcessTurnFor.CurrentSimplifiedPosition)
             {
                 AttackUnitIfInRange(unitToProcessTurnFor, unitToAttack, unitTurnProcessingDoneCallback);
+                return true;
             }
-            else
+
+            List<BaseMapTile> tilesInRange = new List<BaseMapTile>(tilesToAttackFrom);
+
+            // Filter unreachable tiles and potentially exit early.
+            for (int i = tilesInRange.Count - 1; i >= 0; i--)
             {
-                List<Vector2> routeToMove = CC.TNC.GetBestWayToDestination(
-                    unitToProcessTurnFor.CurrentSimplifiedPosition, tileToWalkTo.m_SimplifiedMapPosition,
-                    movementCostResolver);
+                if (CC.TNC.GetDistanceToCoordinate(tilesInRange[i].m_SimplifiedMapPosition, unitToProcessTurnFor.CurrentSimplifiedPosition)
+                    > unitToProcessTurnFor.GetUnitBalancing().m_MovementRangePerRound)
+                {
+                    tilesInRange.RemoveAt(i);
+                }
+            }
+
+            if (tilesInRange.Count == 0)
+            {
+                return false;
+            }
+
+            // Iterate through reachable maptiles until a route was found.
+            foreach (var tileToAttackFrom in tilesInRange)
+            {
+                List<Vector2> routeToMove = CC.TNC.GetBestWayToDestination(unitToProcessTurnFor.CurrentSimplifiedPosition, 
+                    tileToAttackFrom.m_SimplifiedMapPosition, movementCostResolver);
 
                 if (routeToMove != null)
                 {
                     unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver, null,
                         () => AttackUnitIfInRange(unitToProcessTurnFor, unitToAttack, unitTurnProcessingDoneCallback));
-                }
-                else
-                {
-                    unitTurnProcessingDoneCallback();
+
+                    return true;
                 }
             }
+
+            return false;
         }
 
         /// <summary>
@@ -216,35 +241,37 @@ namespace AWM.AI
         /// </summary>
         /// <param name="unitToProcessTurnFor">The unit to process turn for.</param>
         /// <param name="unitTurnProcessingDoneCallback">The unit turn processing done callback.</param>
-        /// <param name="positionToMoveTowards">The position to move towards.</param>
+        /// <param name="mapTilesToMoveTowards">The tiles the unit can be attack from, sorted by how they're prefered (to keep distance & closest to attacking unit)</param>
         /// <param name="movementCostResolver">The movement cost resolver.</param>
-        private void MoveTowardsPosition(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
-            Vector2 positionToMoveTowards, IMovementCostResolver movementCostResolver)
+        private bool TryToMoveTowardsPosition(BaseUnit unitToProcessTurnFor, Action unitTurnProcessingDoneCallback, 
+            List<BaseMapTile> mapTilesToMoveTowards, IMovementCostResolver movementCostResolver)
         {
-            List<Vector2> longTermRouteToEnemy = CC.TNC.GetBestWayToDestination(
-                                   unitToProcessTurnFor.CurrentSimplifiedPosition, positionToMoveTowards,
-                                   new EndlessRangeUnitBalancingMovementCostResolver(unitToProcessTurnFor.GetUnitBalancing(),
-                                   positionToMoveTowards));
-
-            if (longTermRouteToEnemy != null)
+            foreach (var mapTileToMoveToward in mapTilesToMoveTowards)
             {
-                List<Vector2> routeToMove = CC.TNC.ExtractWalkableRangeFromRoute(
-                    unitToProcessTurnFor, movementCostResolver, longTermRouteToEnemy);
+                List<Vector2> longTermRouteToEnemy = CC.TNC.GetBestWayToDestination(unitToProcessTurnFor.CurrentSimplifiedPosition, 
+                    mapTileToMoveToward.m_SimplifiedMapPosition, new EndlessRangeUnitBalancingMovementCostResolver(
+                        unitToProcessTurnFor.GetUnitBalancing(), mapTileToMoveToward.m_SimplifiedMapPosition));
 
-                if (routeToMove.Count > 0)
+                if (longTermRouteToEnemy != null)
                 {
-                    unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver, null,
-                        unitTurnProcessingDoneCallback);
-                }
-                else
-                {
-                    unitTurnProcessingDoneCallback();
+                    List<Vector2> routeToMove = CC.TNC.ExtractWalkableRangeFromRoute(
+                        unitToProcessTurnFor, movementCostResolver, longTermRouteToEnemy);
+
+                    if (routeToMove.Count > 0)
+                    {
+                        unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver, null,
+                            unitTurnProcessingDoneCallback);
+                    }
+                    else
+                    {
+                        unitTurnProcessingDoneCallback();
+                    }
+
+                    return true;
                 }
             }
-            else
-            {
-                unitTurnProcessingDoneCallback();
-            }
+
+            return false;
         }
 
         /// <summary>
@@ -311,16 +338,17 @@ namespace AWM.AI
                 if (!CC.BSC.IsUnitInAttackRange(attackingUnit, unit1) ||
                     !CC.BSC.IsUnitInAttackRange(attackingUnit, unit2))
                 {
+                    // Compare the range to the unit to attack
                     unitComparisonValue = CC.TNC.GetDistanceToCoordinate(
                         positionOfAttackingUnit, unit1.CurrentSimplifiedPosition)
                     .CompareTo(CC.TNC.GetDistanceToCoordinate(
                         positionOfAttackingUnit, unit2.CurrentSimplifiedPosition));
                 }
 
-                // The attack unit does equal damage the compared units.
+                // The range to the unit to the attack is equal
                 if (unitComparisonValue == 0)
                 {
-                    // Compare the range to the unit to attack
+                    // Test against how much damage can be done
                     unitComparisonValue = attackingUnit.GetDamageOnUnit(unit2).CompareTo(attackingUnit.GetDamageOnUnit(unit1));
                 }
 
@@ -334,32 +362,27 @@ namespace AWM.AI
         /// <param name="unit">The unit the maptile should be found for.</param>
         /// <param name="enemyToAttack">The unit that should be attacked.</param>
         /// <param name="movementCostResolver">The movement cost resolver to use.</param>
-        /// <param name="maptTileToMoveTo">The walkable tile closest to the next attackable enemy if available; otherwise null.</param>
+        /// <param name="mapTilesToAttackFrom">The walkable tiles closest to the next attackable enemy if available; otherwise null.</param>
         /// <returns>Returns true, when a maptile to move to was found; otherwise false.</returns>
-        private bool TryBestPositionToAttackGivenUnitFrom(BaseUnit unit, BaseUnit enemyToAttack, 
-            IMovementCostResolver movementCostResolver, out BaseMapTile maptTileToMoveTo)
+        private bool TryToGetPositionsSortedByPreferenceToAttackGivenUnitFrom(BaseUnit unit, BaseUnit enemyToAttack, 
+            IMovementCostResolver movementCostResolver, out List<BaseMapTile> mapTilesToAttackFrom)
         {
-            List<BaseMapTile> walkableTiles = CC.TNC.GetWalkableMapTiles(
-                unit.CurrentSimplifiedPosition, movementCostResolver);
-            
-            // to also test the current unit position.
-            walkableTiles.Add(CC.TNC.GetMapTile(unit.CurrentSimplifiedPosition));
-
-            if (walkableTiles.Count == 0)
-            {
-                maptTileToMoveTo = null;
-                return false;
-            }
-            
+            mapTilesToAttackFrom = new List<BaseMapTile>();
             Vector2 closestEnemyPosition = enemyToAttack.CurrentSimplifiedPosition;
 
-            List<BaseMapTile> mapTilesToAttackFrom = new List<BaseMapTile>();
+            List<BaseMapTile> mapTilesInAttackRange = CC.TNC.GetMapTilesInRange(closestEnemyPosition,
+                unit.GetUnitBalancing().m_AttackRange);
+
+            if (mapTilesInAttackRange.Count == 0)
+            {
+                return false;
+            }
 
             // get list of maptiles where closest enemy is attackable from
-            foreach (var walkableTile in walkableTiles)
+            foreach (var walkableTile in mapTilesInAttackRange)
             {
-                if (CC.TNC.GetDistanceToCoordinate(walkableTile.m_SimplifiedMapPosition, 
-                    closestEnemyPosition) <= unit.GetUnitBalancing().m_AttackRange)
+                if (movementCostResolver.CanUnitWalkOnMapTile(walkableTile, 0, false) || 
+                    walkableTile.m_SimplifiedMapPosition == unit.CurrentSimplifiedPosition)
                 {
                     mapTilesToAttackFrom.Add(walkableTile);
                 }
@@ -367,7 +390,6 @@ namespace AWM.AI
 
             if (mapTilesToAttackFrom.Count == 0)
             {
-                maptTileToMoveTo = null;
                 return false;
             }
 
@@ -391,7 +413,6 @@ namespace AWM.AI
                 return mapTileDistanceComparison;
             });
 
-            maptTileToMoveTo = mapTilesToAttackFrom[0];
             return true;
         }
     }

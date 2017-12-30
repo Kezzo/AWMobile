@@ -373,8 +373,7 @@ namespace AWM.BattleMechanics
         /// <param name="sourceNode">The source node to check the attack range from.</param>
         public void DislayAttackRange(Vector2 sourceNode)
         {
-            List<BaseMapTile> mapTileInAttackRange = CC.TNC.
-                GetMapTilesInRange(sourceNode, GetUnitBalancing().m_AttackRange);
+            List<BaseMapTile> mapTileInAttackRange = CC.TNC.GetMapTilesInRange(sourceNode, GetUnitBalancing().m_AttackRange, true);
 
             for (int i = 0; i < mapTileInAttackRange.Count; i++)
             {

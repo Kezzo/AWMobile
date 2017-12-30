@@ -62,9 +62,9 @@ namespace AWM.BattleMechanics
         /// Returns all map tiles in range, ignoring the MapTileType.
         /// </summary>
         /// <param name="sourceNode">The source node.</param>
-        /// <param name="range">The range.</param>
-        /// <returns></returns>
-        public List<BaseMapTile> GetMapTilesInRange(Vector2 sourceNode, int range)
+        /// <param name="range">The distance to include maptile from the source node.</param>
+        /// <param name="includeSourceNode">If set to true; the returned list will include the map tile at the given source node position.</param>
+        public List<BaseMapTile> GetMapTilesInRange(Vector2 sourceNode, int range, bool includeSourceNode = false)
         {
             List<BaseMapTile> mapTilesInRange = new List<BaseMapTile>();
 
@@ -79,7 +79,7 @@ namespace AWM.BattleMechanics
 
                 for (int i = 0; i < adjacentNodes.Count; i++)
                 {
-                    if (GetDistanceToCoordinate(sourceNode, adjacentNodes[i]) <= range)
+                    if (GetDistanceToCoordinate(sourceNode, adjacentNodes[i]) <= range && (includeSourceNode || adjacentNodes[i] != sourceNode))
                     {
                         BaseMapTile mapTileInRange = GetMapTile(adjacentNodes[i]);
 
