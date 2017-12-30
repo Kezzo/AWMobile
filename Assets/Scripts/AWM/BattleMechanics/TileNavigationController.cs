@@ -163,7 +163,8 @@ namespace AWM.BattleMechanics
             {
                 BaseMapTile baseMapTile;
 
-                if (MapTilePositions.TryGetValue(walkableNode.Key, out baseMapTile))
+                if (MapTilePositions.TryGetValue(walkableNode.Key, out baseMapTile) &&
+                    movementCostResolver.CanUnitWalkOnMapTile(baseMapTile, 0, false)) // filter tiles the unit can't stand on
                 {
                     walkableMapTiles.Add(baseMapTile);
                 }

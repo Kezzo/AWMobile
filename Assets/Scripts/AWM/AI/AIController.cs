@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using AWM.BattleMechanics;
 using AWM.Enums;
 using AWM.MapTileGeneration;
 using AWM.Models;
 using AWM.System;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 namespace AWM.AI
