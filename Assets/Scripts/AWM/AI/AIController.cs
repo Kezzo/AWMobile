@@ -51,7 +51,7 @@ namespace AWM.AI
         /// <value>
         /// The color of my team.
         /// </value>
-        public TeamColor MyTeamColor
+        public TeamColor TeamColorOfControlledUnits
         {
             get { return this.m_myTeam.m_TeamColor; }
         }
@@ -62,7 +62,7 @@ namespace AWM.AI
         public void StartTurn()
         {
             Dictionary<TeamColor, List<BaseUnit>> units = CC.BSC.RegisteredTeams;
-            m_aiUnits = units[this.MyTeamColor];
+            m_aiUnits = units[this.TeamColorOfControlledUnits];
             m_enemyUnits = new List<BaseUnit>();
 
             foreach (var item in units)
@@ -74,7 +74,7 @@ namespace AWM.AI
             }
 
             // to avoid same move sequence
-            ListHelper.ShuffleList(ref m_aiUnits);
+            SortUnitsBasedOnEnemyProximity(ref m_aiUnits);
 
             m_unitCounter = 0;
             MoveNextUnit();
@@ -108,6 +108,37 @@ namespace AWM.AI
                 m_unitCounter = 0;
                 CC.BSC.EndCurrentTurn();
             }
+        }
+
+        /// <summary>
+        /// Sorts the given unit list by the proximity of each unit to it's closest enemy.
+        /// </summary>
+        /// <param name="unitListToSort">The unit list to sort.</param>
+        private void SortUnitsBasedOnEnemyProximity(ref List<BaseUnit> unitListToSort)
+        {
+            Dictionary<Vector2, int> proximityUnitMapping = new Dictionary<Vector2, int>(unitListToSort.Count);
+
+            List<BaseUnit> enemyUnits = CC.BSC.GetEnemyUnits(TeamColorOfControlledUnits);
+
+            foreach (var unit in unitListToSort)
+            {
+                int maxDistanceCalculated = int.MaxValue;
+                foreach (var enemyUnit in enemyUnits)
+                {
+                    int distance = CC.TNC.GetDistanceToCoordinate(unit.CurrentSimplifiedPosition, enemyUnit.CurrentSimplifiedPosition);
+
+                    if (maxDistanceCalculated > distance)
+                    {
+                        maxDistanceCalculated = distance;
+                    }
+                }
+
+                proximityUnitMapping.Add(unit.CurrentSimplifiedPosition, maxDistanceCalculated);
+            }
+
+            unitListToSort.Sort((unit1, unit2) => 
+                proximityUnitMapping[unit1.CurrentSimplifiedPosition].CompareTo(
+                proximityUnitMapping[unit2.CurrentSimplifiedPosition]));
         }
 
         /// <summary>

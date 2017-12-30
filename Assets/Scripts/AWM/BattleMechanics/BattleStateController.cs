@@ -200,6 +200,25 @@ namespace AWM.BattleMechanics
         }
 
         /// <summary>
+        /// Gets the enemy units of a given team color.
+        /// </summary>
+        /// <param name="teamColorToFindEnemyUnitsFor">The team color to find enemy units for.</param>
+        public List<BaseUnit> GetEnemyUnits(TeamColor teamColorToFindEnemyUnitsFor)
+        {
+            List<BaseUnit> enemyUnits = new List<BaseUnit>();
+
+            foreach (var registeredTeam in m_registeredTeams)
+            {
+                if (registeredTeam.Key != teamColorToFindEnemyUnitsFor)
+                {
+                    enemyUnits.AddRange(registeredTeam.Value);
+                }
+            }
+
+            return enemyUnits;
+        }
+
+        /// <summary>
         /// Determines if the given teamcolor is the color of the players team.
         /// </summary>
         /// <param name="playerTeamColor">Color of the player team.</param>
@@ -245,7 +264,7 @@ namespace AWM.BattleMechanics
             {
                 foreach (AIController ai in m_registeredAIs)
                 {
-                    if (teamToStartNext.m_TeamColor == ai.MyTeamColor)
+                    if (teamToStartNext.m_TeamColor == ai.TeamColorOfControlledUnits)
                     {
                         ai.StartTurn();
                     }
