@@ -20,7 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4542102564054624}
   - component: {fileID: 114038318126339458}
-  m_Layer: 0
+  - component: {fileID: 65792905807423544}
+  m_Layer: 14
   m_Name: MapTileGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,6 +41,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65792905807423544
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1504370056362082}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 32, y: 1, z: 32}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114038318126339458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,8 +64,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281fa316525d8b941a130d805848e3c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_levelToEdit: Level2
-  m_levelSize: {x: 16, y: 16}
+  m_levelToEdit: Level7
+  m_levelSize: {x: 14, y: 14}
   m_tileMargin: 2
   m_tilePrefab: {fileID: 1368251129349816, guid: 781d8d62775bf4b4d8a9020d0f9c0b9e,
     type: 2}
@@ -122,6 +135,12 @@ MonoBehaviour:
     - m_BorderType: 4
       m_BorderPrefab: {fileID: 1218350058905050, guid: d4297a1d715290545b9bcbdc9feb10d1,
         type: 2}
+  - m_MapTileType: 5
+    m_MapTilePrefab: {fileID: 100000, guid: 2919a20fe2e523f48afc4e7d6e38922c, type: 3}
+    m_MapTileBorders: []
+  - m_MapTileType: 6
+    m_MapTilePrefab: {fileID: 100000, guid: 34d88b18c37c2004986b50f50a2cb252, type: 3}
+    m_MapTileBorders: []
   m_unitTypeAssignmentList:
   - m_UnitType: 1
     m_UnitMesh: {fileID: 4300006, guid: 9cbf0446cab288e4b89b3a4ecf922dd9, type: 3}
@@ -156,3 +175,55 @@ MonoBehaviour:
       m_Material: {fileID: 2100000, guid: 92d463475e9b58c40a1a69235981422f, type: 2}
     - m_TeamColor: 3
       m_Material: {fileID: 2100000, guid: ee53b686c8b6e124e84a344d1f8c90f7, type: 2}
+  - m_UnitType: 4
+    m_UnitMesh: {fileID: 4300000, guid: cc112b2b6781e27408c44a3861f3e77c, type: 3}
+    m_ColorUvCoordinateAssignments:
+    - m_TeamColor: 0
+      m_Material: {fileID: 2100000, guid: b1107c384276a5c43b581053dbc10082, type: 2}
+    - m_TeamColor: 2
+      m_Material: {fileID: 2100000, guid: d1c2b2c80c983274f80d14e38452dd86, type: 2}
+    - m_TeamColor: 1
+      m_Material: {fileID: 2100000, guid: 845bd83a3b01bd54c840c79b23602230, type: 2}
+    - m_TeamColor: 3
+      m_Material: {fileID: 2100000, guid: ad30afbc231f4c94f9a638cb38e62837, type: 2}
+  m_quickTileTypeSwitcherHotKeys:
+  - m_KeyCode: 113
+    m_MapTileType: 1
+  - m_KeyCode: 119
+    m_MapTileType: 2
+  - m_KeyCode: 101
+    m_MapTileType: 3
+  - m_KeyCode: 114
+    m_MapTileType: 4
+  - m_KeyCode: 116
+    m_MapTileType: 5
+  - m_KeyCode: 121
+    m_MapTileType: 6
+  m_quickUnitTypeSwitcherHotKeys:
+  - m_KeyCode: 97
+    m_UnitType: 0
+  - m_KeyCode: 115
+    m_UnitType: 1
+  - m_KeyCode: 100
+    m_UnitType: 2
+  - m_KeyCode: 102
+    m_UnitType: 3
+  - m_KeyCode: 103
+    m_UnitType: 4
+  m_quickUnitRotationSwitcherHotKeys:
+  - m_KeyCode: 274
+    m_CardinalDirection: 0
+  - m_KeyCode: 273
+    m_CardinalDirection: 2
+  - m_KeyCode: 276
+    m_CardinalDirection: 1
+  - m_KeyCode: 275
+    m_CardinalDirection: 3
+  m_mapTileSelectorLayer:
+    serializedVersion: 2
+    m_Bits: 16384
+  m_mapTileSelectionCamera: {fileID: 0}
+  m_LastToggledTileType: 0
+  m_LastToggledUnitType: 1
+  m_CurrentTypeToEdit: 2
+  m_CurrentTeamColor: 0
