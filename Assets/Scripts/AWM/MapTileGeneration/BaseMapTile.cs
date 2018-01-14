@@ -349,7 +349,8 @@ namespace AWM.MapTileGeneration
 
             List<CardinalDirection> adjacentWaterDirections;
 
-            if (m_mapTileType != MapTileType.Water && m_mapGenService.IsMapTileNextToType(MapTileType.Water, 
+            if (m_mapTileType != MapTileType.Water && m_mapTileType != MapTileType.Bridge && 
+                m_mapGenService.IsMapTileNextToTypes(new HashSet<MapTileType> { MapTileType.Water, MapTileType.Bridge }, 
                 m_SimplifiedMapPosition, mapTileProvider, out adjacentWaterDirections))
             {
                 InstantiateComplexBorderMapTile(adjacentWaterDirections);
