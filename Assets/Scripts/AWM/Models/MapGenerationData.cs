@@ -64,6 +64,8 @@ namespace AWM.Models
             public Vector3 m_LocalPositionInGroup;
 
             public MapTileType m_MapTileType;
+            public bool m_HasStreet;
+
             public Unit m_Unit;
 
             public LevelSelectionRouteType m_LevelSelectionRouteType;

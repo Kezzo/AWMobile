@@ -409,6 +409,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_mapTileTypeAssignmentList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4542102564054624, guid: c615998201b0c9446abfe997af2386b0, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -456,6 +466,51 @@ Prefab:
       propertyPath: m_mapTileSelectionCamera
       value: 
       objectReference: {fileID: 1506953657}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[5].m_KeyCode
+      value: 121
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[5].m_MapTileType
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_mapTileTypeAssignmentList.Array.data[4].m_MapTileType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_mapTileTypeAssignmentList.Array.data[4].m_MapTilePrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 2919a20fe2e523f48afc4e7d6e38922c, type: 3}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_mapTileTypeAssignmentList.Array.data[5].m_MapTileType
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_mapTileTypeAssignmentList.Array.data[5].m_MapTilePrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 34d88b18c37c2004986b50f50a2cb252, type: 3}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[4].m_KeyCode
+      value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_quickTileTypeSwitcherHotKeys.Array.data[4].m_MapTileType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114038318126339458, guid: c615998201b0c9446abfe997af2386b0,
+        type: 2}
+      propertyPath: m_switchToStreetKeyCode
+      value: 116
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c615998201b0c9446abfe997af2386b0, type: 2}
   m_IsPrefabParent: 0

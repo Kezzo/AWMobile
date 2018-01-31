@@ -505,7 +505,7 @@ namespace AWM.BattleMechanics
         /// <param name="diffToNextNode">The difference to next node.</param>
         /// <param name="routeMarkerType">Type of the route marker.</param>
         /// <returns></returns>
-        private Vector3 GetRouteMarkerRotation(Vector2 diffToPreviousNode, Vector2 diffToNextNode, RouteMarkerType routeMarkerType)
+        public Vector3 GetRouteMarkerRotation(Vector2 diffToPreviousNode, Vector2 diffToNextNode, RouteMarkerType routeMarkerType)
         {
             Vector3 rotation = Vector3.zero;
 
@@ -645,7 +645,7 @@ namespace AWM.BattleMechanics
         /// <param name="diffToPreviousNode">The difference to previous node.</param>
         /// <param name="diffToNextNode">The difference to next node.</param>
         /// <returns></returns>
-        private RouteMarkerType GetRouteMarkerType(Vector2 diffToPreviousNode, Vector2 diffToNextNode)
+        public RouteMarkerType GetRouteMarkerType(Vector2 diffToPreviousNode, Vector2 diffToNextNode)
         {
             RouteMarkerType routeMarkerType;
 

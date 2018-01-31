@@ -28,6 +28,14 @@ namespace AWM.MapTileGeneration
         }
 
         [SerializeField]
+        private bool m_hasStreet;
+        public bool HasStreet
+        {
+            get { return m_hasStreet; }
+            set { m_hasStreet = value; }
+        }
+
+        [SerializeField]
         private MapGenerationData.Unit m_unitOnThisTile;
         public MapGenerationData.Unit Unit
         {
@@ -78,6 +86,26 @@ namespace AWM.MapTileGeneration
 
         #endregion
 
+        #region Street Tile Additions
+
+        [Serializable]
+        public class StreetTileAddition
+        {
+            public List<MapTileType> m_UsedOnMapTileType;
+            public List<RouteMarkerType> m_RouteMarkerType;
+            public GameObject m_Prefab;
+            public GameObject m_ShortenedPrefab;
+        }
+
+        [Header("StreetTileAdditions")]
+        [SerializeField]
+        private List<StreetTileAddition> m_streetTileAdditions;
+
+        [SerializeField]
+        private Transform m_streetTileAdditionRoot;
+
+        #endregion
+
         #region RouteMarker
 
         [Serializable]
@@ -117,6 +145,8 @@ namespace AWM.MapTileGeneration
 
         private List<GameObject> m_currentlyInstantiatedMapTiles = new List<GameObject>();
         private MapTileType m_currentInstantiatedMapTileType;
+
+        private GameObject m_currentlyInstantiatedStreetTileAddition;
 
         private GameObject m_currentInstantiatedUnitGameObject;
         private MapGenerationData.Unit m_currentInstantiatedUnit;
@@ -158,6 +188,7 @@ namespace AWM.MapTileGeneration
             m_SimplifiedMapPosition = simplifiedPosition;
 
             ValidateMapTile();
+            ValidateStreetTileAddition();
             ValidateLevelSelector(true);
             ValidateUnitType(true, simplifiedPosition);
         }
@@ -171,6 +202,7 @@ namespace AWM.MapTileGeneration
             InitializeBaseValues(mapTileData);
 
             ValidateMapTile();
+            ValidateStreetTileAddition();
             ValidateLevelSelector(true);
             ValidateUnitType();
         }
@@ -192,6 +224,7 @@ namespace AWM.MapTileGeneration
 
             MapTileData = mapTileData;
             m_mapTileType = MapTileData.m_MapTileType;
+            m_hasStreet = MapTileData.m_HasStreet;
             m_unitOnThisTile = MapTileData.m_Unit;
             m_levelSelectionRouteType = MapTileData.m_LevelSelectionRouteType;
             m_levelNameToStart = MapTileData.m_LevelNameToStart;
@@ -206,7 +239,8 @@ namespace AWM.MapTileGeneration
         /// </summary>
         public void ValidateMapTile(bool forceUpdate = false, IMapTileProvider mapTileProvider = null)
         {
-            if (!forceUpdate && m_currentInstantiatedMapTileType == m_mapTileType && m_currentlyInstantiatedMapTiles != null)
+            if (!forceUpdate && m_currentInstantiatedMapTileType == m_mapTileType && 
+                m_currentlyInstantiatedMapTiles != null)
             {
                 return;
             }
@@ -232,6 +266,21 @@ namespace AWM.MapTileGeneration
             }
 
             InstantiateMapTilePrefab(mapTileProvider);
+        }
+
+        /// <summary>
+        /// Validates the state of the instantiated street tile addition.
+        /// </summary>
+        /// <param name="forceUpdate">If set to true; an update the status will happen regardless of local caching fields.</param>
+        public void ValidateStreetTileAddition(bool forceUpdate = false)
+        {
+            if (forceUpdate == false && m_hasStreet == MapTileData.m_HasStreet)
+            {
+                return;
+            }
+
+            MapTileData.m_HasStreet = m_hasStreet;
+            InstantiateStreetMapTileAddition();
         }
 
         /// <summary>
@@ -349,8 +398,7 @@ namespace AWM.MapTileGeneration
 
             List<CardinalDirection> adjacentWaterDirections;
 
-            if (m_mapTileType != MapTileType.Water && m_mapTileType != MapTileType.Bridge && 
-                m_mapGenService.IsMapTileNextToTypes(new HashSet<MapTileType> { MapTileType.Water, MapTileType.Bridge }, 
+            if (m_mapTileType != MapTileType.Water && m_mapGenService.IsMapTileNextToTypes(new HashSet<MapTileType> { MapTileType.Water }, 
                 m_SimplifiedMapPosition, mapTileProvider, out adjacentWaterDirections))
             {
                 InstantiateComplexBorderMapTile(adjacentWaterDirections);
@@ -647,6 +695,57 @@ namespace AWM.MapTileGeneration
                 routeMarkerMappingToUse.m_RouteMarkerPrefab.SetActive(true);
                 routeMarkerMappingToUse.m_RouteMarkerPrefab.transform.rotation = Quaternion.Euler(routeMarkerDefinition.Rotation);
             }
+        }
+
+        /// <summary>
+        /// Will instantiate the street maptile fitting for the <see cref="MapTileType"/> of this instance 
+        /// depending on the placement of other streets (to form a corner and rotate properly)
+        /// </summary>
+        private void InstantiateStreetMapTileAddition()
+        {
+            if (m_currentlyInstantiatedStreetTileAddition != null)
+            {
+                DestroyImmediate(m_currentlyInstantiatedStreetTileAddition);
+            }
+
+            if (!m_hasStreet)
+            {
+                return;
+            }
+
+            List<BaseMapTile> adjacentMapTiles = CC.TNC.GetMapTilesInRange(m_SimplifiedMapPosition, 1);
+
+            Vector2[] diffToNeighborNodes = { Vector2.zero, Vector2.zero };
+
+            for (int i = 0; i < adjacentMapTiles.Count; i++)
+            {
+                if (!adjacentMapTiles[i].MapTileData.m_HasStreet)
+                {
+                    continue;
+                }
+
+                int indexToUse = diffToNeighborNodes[0] == Vector2.zero ? 0 : 1;
+                diffToNeighborNodes[indexToUse] = m_SimplifiedMapPosition - adjacentMapTiles[i].m_SimplifiedMapPosition;
+
+                if (indexToUse == 1)
+                {
+                    // currently only a simple corner is handled.
+                    break;
+                }
+            }
+
+            RouteMarkerType routeMarkerType = CC.TNC.GetRouteMarkerType(diffToNeighborNodes[0], diffToNeighborNodes[1]);
+            Vector3 rotation = CC.TNC.GetRouteMarkerRotation(diffToNeighborNodes[0], diffToNeighborNodes[1], routeMarkerType);
+
+            StreetTileAddition streetTileAdditionToUse = m_streetTileAdditions.Find(addition => 
+                                                            addition.m_UsedOnMapTileType.Contains(MapTileType) &&
+                                                            addition.m_RouteMarkerType.Contains(routeMarkerType));
+
+            //TODO: handle short tile additions
+            m_currentlyInstantiatedStreetTileAddition = Instantiate(streetTileAdditionToUse.m_Prefab);
+            m_currentlyInstantiatedStreetTileAddition.transform.SetParent(m_streetTileAdditionRoot);
+            m_currentlyInstantiatedStreetTileAddition.transform.localPosition = Vector3.zero;
+            m_currentlyInstantiatedStreetTileAddition.transform.localRotation = Quaternion.Euler(rotation);
         }
 
         /// <summary>

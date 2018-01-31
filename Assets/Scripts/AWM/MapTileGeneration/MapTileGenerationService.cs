@@ -82,6 +82,14 @@ namespace AWM.MapTileGeneration
                 }
             }
 
+            for (int i = 0; i < generatedMapTiles.Count; i++)
+            {
+                if (generatedMapTiles[i].MapTileData.m_HasStreet)
+                {
+                    generatedMapTiles[i].ValidateStreetTileAddition(true);
+                }
+            }
+
             if (mapGenerationData.m_IsLevelSelection)
             {
                 CC.LSIC.InitializeLevelSelectionVisuals();

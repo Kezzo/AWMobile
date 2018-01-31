@@ -98,6 +98,9 @@ namespace AWM.MapTileGeneration
         }
 
         [SerializeField]
+        private KeyCode m_switchToStreetKeyCode;
+
+        [SerializeField]
         private List<QuickUnitTypeSwitchHotKey> m_quickUnitTypeSwitcherHotKeys;
 
         [Serializable]
@@ -126,6 +129,7 @@ namespace AWM.MapTileGeneration
         public bool HotkeysActive { get; set; }
         public MapTileType m_LastToggledTileType = MapTileType.Empty;
         public UnitType m_LastToggledUnitType = UnitType.None;
+        public bool m_PlaceStreet = false;
         public TypeToEdit m_CurrentTypeToEdit = TypeToEdit.None;
 
         public TeamColor m_CurrentTeamColor = TeamColor.Blue;
@@ -134,7 +138,8 @@ namespace AWM.MapTileGeneration
         {
             None = 0,
             MapTileType = 1,
-            UnitType = 2
+            UnitType = 2,
+            StreetTileAddition = 3,
         }
 
         private BaseMapTile m_lastUpdateMapTile;
@@ -211,10 +216,8 @@ namespace AWM.MapTileGeneration
                     closestBaseMapTile.MapTileType = m_LastToggledTileType;
                     closestBaseMapTile.ValidateMapTile();
 
-                    List<Vector2> adjacentNodes = CC.TNC.GetAdjacentNodes(
-                        closestBaseMapTile.m_SimplifiedMapPosition, true);
-
-                    foreach (var adjacentNode in adjacentNodes)
+                    foreach (Vector2 adjacentNode in CC.TNC.GetAdjacentNodes(
+                        closestBaseMapTile.m_SimplifiedMapPosition, true))
                     {
                         BaseMapTile mapTile;
 
@@ -226,10 +229,29 @@ namespace AWM.MapTileGeneration
                     }
 
                     break;
+
                 case TypeToEdit.UnitType:
                     closestBaseMapTile.Unit.m_UnitType = m_LastToggledUnitType;
                     closestBaseMapTile.Unit.m_TeamColor = m_CurrentTeamColor;
                     closestBaseMapTile.ValidateUnitType();
+                    break;
+
+                case TypeToEdit.StreetTileAddition:
+                    closestBaseMapTile.HasStreet = m_PlaceStreet;
+                    closestBaseMapTile.ValidateStreetTileAddition();
+
+                    foreach (Vector2 adjacentNode in CC.TNC.GetAdjacentNodes(
+                         closestBaseMapTile.m_SimplifiedMapPosition))
+                    {
+                        BaseMapTile mapTile;
+
+                        if (CC.TNC.MapTilePositions.TryGetValue(adjacentNode,
+                            out mapTile))
+                        {
+                            mapTile.ValidateStreetTileAddition(true);
+                        }
+                    }
+
                     break;
             }
 
@@ -304,6 +326,12 @@ namespace AWM.MapTileGeneration
                     m_CurrentTypeToEdit = TypeToEdit.UnitType;
                     return;
                 }
+            }
+
+            if (pressedKeyCode == m_switchToStreetKeyCode)
+            {
+                m_CurrentTypeToEdit = TypeToEdit.StreetTileAddition;
+                m_PlaceStreet = !m_PlaceStreet;
             }
         }
 

@@ -35,6 +35,7 @@ namespace AWM.MapTileGeneration
                 if (baseMapTile != null)
                 {
                     baseMapTile.ValidateMapTile();
+                    baseMapTile.ValidateStreetTileAddition();
                     baseMapTile.ValidateLevelSelector();
                     baseMapTile.ValidateUnitType();
                 }

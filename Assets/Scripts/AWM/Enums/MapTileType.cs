@@ -9,8 +9,6 @@
         Grass = 1,
         Water = 2,
         Mountain = 3,
-        Forest = 4,
-        Street = 5,
-        Bridge = 6
+        Forest = 4
     }
 }
