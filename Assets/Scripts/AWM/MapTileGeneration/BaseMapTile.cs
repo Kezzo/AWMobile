@@ -741,8 +741,22 @@ namespace AWM.MapTileGeneration
                                                             addition.m_UsedOnMapTileType.Contains(MapTileType) &&
                                                             addition.m_RouteMarkerType.Contains(routeMarkerType));
 
-            //TODO: handle short tile additions
-            m_currentlyInstantiatedStreetTileAddition = Instantiate(streetTileAdditionToUse.m_Prefab);
+            GameObject prefabToInstantiate = streetTileAdditionToUse.m_Prefab;
+
+            // if true this is a straight street end at a coast
+            if (routeMarkerType == RouteMarkerType.Destination && this.MapTileType != MapTileType.Water)
+            {
+                Vector2 oppositeMapTilePosition = this.m_SimplifiedMapPosition + diffToNeighborNodes[0];
+
+                BaseMapTile mapTileOnOtherSide = adjacentMapTiles.Find(tile => tile.m_SimplifiedMapPosition == oppositeMapTilePosition);
+
+                if (mapTileOnOtherSide != null && mapTileOnOtherSide.MapTileType == MapTileType.Water)
+                {
+                    prefabToInstantiate = streetTileAdditionToUse.m_ShortenedPrefab;
+                }
+            }
+
+            m_currentlyInstantiatedStreetTileAddition = Instantiate(prefabToInstantiate);
             m_currentlyInstantiatedStreetTileAddition.transform.SetParent(m_streetTileAdditionRoot);
             m_currentlyInstantiatedStreetTileAddition.transform.localPosition = Vector3.zero;
             m_currentlyInstantiatedStreetTileAddition.transform.localRotation = Quaternion.Euler(rotation);
