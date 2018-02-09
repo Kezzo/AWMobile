@@ -50,8 +50,7 @@ namespace AWM.BattleMechanics
         /// <param name="allowPassability">If set to true, this method will return true for a given maptile if the unit of this class only pass over it.</param>
         public virtual bool CanUnitWalkOnMapTile(BaseMapTile mapTile, int movementCostToMapTile, bool allowPassability = false)
         {
-            bool canUnitWalkOnMapTileType = m_unitBalancingData.m_WalkableMapTileTypes.Exists(
-                walkableMapTile => walkableMapTile.m_MapTileType == mapTile.MapTileType);
+            bool canUnitWalkOnMapTileType = CanUnitWalkOnMapTile(mapTile);
 
             bool canPassUnitMetaTypeOnTile;
 
@@ -68,6 +67,25 @@ namespace AWM.BattleMechanics
             }
 
             return canUnitWalkOnMapTileType && canPassUnitMetaTypeOnTile;
+        }
+
+        /// <summary>
+        /// Determines whether a unit can unit walk on a map tile depending on the <see cref="MapTileType"/> and if it has a street.
+        /// </summary>
+        /// <param name="mapTile">The map tile to check.</param>
+        protected bool CanUnitWalkOnMapTile(BaseMapTile mapTile)
+        {
+            bool canUnitWalkOnMapTileType = false;
+
+            UnitBalancingData.WalkableMapTiles walkableMapTileToCheck = m_unitBalancingData.m_WalkableMapTileTypes.Find(
+                walkableMapTile => walkableMapTile.m_MapTileType == mapTile.MapTileType);
+
+            if (walkableMapTileToCheck != null)
+            {
+                canUnitWalkOnMapTileType = mapTile.HasStreet ? walkableMapTileToCheck.m_CanWalkOnStreet : walkableMapTileToCheck.m_CanWalkOnTile;
+            }
+
+            return canUnitWalkOnMapTileType;
         }
     }
 }

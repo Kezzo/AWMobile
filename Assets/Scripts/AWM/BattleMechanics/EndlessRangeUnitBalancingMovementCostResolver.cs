@@ -45,12 +45,11 @@ namespace AWM.BattleMechanics
                 return true;
             }
 
-            bool canUnitWalkOnMapTileType = UnitBalancingData.m_WalkableMapTileTypes.Exists(
-                walkableMapTile => walkableMapTile.m_MapTileType == mapTile.MapTileType);
+            bool canUnitWalkOnMapTileType = CanUnitWalkOnMapTile(mapTile);
 
             bool canPassUnitMetaTypeOnTile = true;
 
-            // Ignoring the unit collision here to allow finding a route which could be unblocked in future turns.
+            // Only checking unit collision for tiles in movement range here to allow finding a route which could be unblocked in future turns.
             // If this wouldn't be done, unit movement can be completely blocked when a choke point, far away from the moving unit, is blocked.
             if (movementCostToMapTile <= UnitBalancingData.m_MovementRangePerRound)
             {

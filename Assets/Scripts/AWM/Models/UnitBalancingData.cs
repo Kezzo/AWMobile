@@ -20,7 +20,12 @@ namespace AWM.Models
         public class WalkableMapTiles
         {
             public MapTileType m_MapTileType;
+
+            public bool m_CanWalkOnTile;
             public int m_MovementCost;
+
+            public bool m_CanWalkOnStreet;
+            public int m_StreetMovementCost;
         }
 
         public int m_Health;

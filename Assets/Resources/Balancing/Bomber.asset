@@ -16,13 +16,25 @@ MonoBehaviour:
   m_MovementRangePerRound: 4
   m_WalkableMapTileTypes:
   - m_MapTileType: 1
+    m_CanWalkOnTile: 1
     m_MovementCost: 1
+    m_CanWalkOnStreet: 1
+    m_StreetMovementCost: 1
   - m_MapTileType: 2
+    m_CanWalkOnTile: 1
     m_MovementCost: 1
+    m_CanWalkOnStreet: 1
+    m_StreetMovementCost: 1
   - m_MapTileType: 3
+    m_CanWalkOnTile: 1
     m_MovementCost: 1
+    m_CanWalkOnStreet: 1
+    m_StreetMovementCost: 1
   - m_MapTileType: 4
+    m_CanWalkOnTile: 1
     m_MovementCost: 1
+    m_CanWalkOnStreet: 1
+    m_StreetMovementCost: 1
   m_PassableUnitMetaTypes: 0000000002000000
   m_Health: 4
   m_AttackRange: 1
