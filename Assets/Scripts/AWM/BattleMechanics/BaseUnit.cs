@@ -643,7 +643,7 @@ namespace AWM.BattleMechanics
         }
 
         /// <summary>
-        /// Checks if a bridge is on the given node. If it is, the bridge will be opened or closed depending on the given parameter.
+        /// Checks if a bridge is on the given node.
         /// </summary>
         /// <param name="node">The node to check.</param>
         /// <param name="openBridge">if set to true, will open the bridge; will close the bridge otherwise.</param>
