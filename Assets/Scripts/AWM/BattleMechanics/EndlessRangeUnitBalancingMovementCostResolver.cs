@@ -45,7 +45,7 @@ namespace AWM.BattleMechanics
                 return true;
             }
 
-            bool canUnitWalkOnMapTileType = CanUnitWalkOnMapTile(mapTile);
+            bool canUnitWalkOnMapTileType = CanUnitWalkOnMapTile(mapTile, allowPassability);
 
             bool canPassUnitMetaTypeOnTile = true;
 

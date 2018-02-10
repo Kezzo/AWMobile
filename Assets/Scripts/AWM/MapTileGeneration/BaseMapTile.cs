@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AWM.BattleMechanics;
@@ -781,6 +782,32 @@ namespace AWM.MapTileGeneration
             instatiatedRoute.SetActive(false);
 
             return instatiatedRoute;
+        }
+
+        /// <summary>
+        /// Will trigger the animator of this maptile to visually open/close the bridge.
+        /// If this maptile isn't a bridge or doesn't have an animator, the coroutine will end immediately.
+        /// </summary>
+        public IEnumerator ChangeBridgeOpeningState(bool openBridge)
+        {
+            if (this.MapTileType != MapTileType.Water || !this.HasStreet || this.m_currentlyInstantiatedStreetTileAddition == null)
+            {
+                yield break;
+            }
+
+            Animator bridgeAnimator = this.m_currentlyInstantiatedStreetTileAddition.GetComponent<Animator>();
+
+            if (bridgeAnimator == null)
+            {
+                yield break;
+            }
+            
+            bridgeAnimator.SetBool("Open", openBridge);
+
+            while (!bridgeAnimator.GetCurrentAnimatorStateInfo(0).IsName(openBridge ? "Open" : "Closed"))
+            {
+                yield return null;
+            }
         }
     }
 }

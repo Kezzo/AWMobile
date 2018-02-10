@@ -47,10 +47,10 @@ namespace AWM.BattleMechanics
         /// The movement cost required to walk to the given maptile. 
         /// Used by implementations that want to change the return result based on the movement cost reachability.
         /// </param>
-        /// <param name="allowPassability">If set to true, this method will return true for a given maptile if the unit of this class only pass over it.</param>
+        /// <param name="allowPassability">If set to true, this method will return true for a given maptile if the unit of this class can only pass over it.</param>
         public virtual bool CanUnitWalkOnMapTile(BaseMapTile mapTile, int movementCostToMapTile, bool allowPassability = false)
         {
-            bool canUnitWalkOnMapTileType = CanUnitWalkOnMapTile(mapTile);
+            bool canUnitWalkOnMapTileType = CanUnitWalkOnMapTile(mapTile, allowPassability);
 
             bool canPassUnitMetaTypeOnTile;
 
@@ -73,9 +73,11 @@ namespace AWM.BattleMechanics
         /// Determines whether a unit can unit walk on a map tile depending on the <see cref="MapTileType"/> and if it has a street.
         /// </summary>
         /// <param name="mapTile">The map tile to check.</param>
-        protected bool CanUnitWalkOnMapTile(BaseMapTile mapTile)
+        /// <param name="allowPassability">If set to true, this method will return true for a given maptile if the unit of this class can only pass over it.</param>
+        protected bool CanUnitWalkOnMapTile(BaseMapTile mapTile, bool allowPassability = false)
         {
             bool canUnitWalkOnMapTileType = false;
+            bool canPassMapTile = false;
 
             UnitBalancingData.WalkableMapTiles walkableMapTileToCheck = m_unitBalancingData.m_WalkableMapTileTypes.Find(
                 walkableMapTile => walkableMapTile.m_MapTileType == mapTile.MapTileType);
@@ -83,9 +85,16 @@ namespace AWM.BattleMechanics
             if (walkableMapTileToCheck != null)
             {
                 canUnitWalkOnMapTileType = mapTile.HasStreet ? walkableMapTileToCheck.m_CanWalkOnStreet : walkableMapTileToCheck.m_CanWalkOnTile;
+
+                if (allowPassability)
+                {
+                    canPassMapTile = mapTile.HasStreet
+                        ? walkableMapTileToCheck.m_CanPassOverStreet
+                        : walkableMapTileToCheck.m_CanPassOverTile;
+                }
             }
 
-            return canUnitWalkOnMapTileType;
+            return canUnitWalkOnMapTileType || canPassMapTile;
         }
     }
 }

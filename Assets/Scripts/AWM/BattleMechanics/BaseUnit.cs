@@ -363,7 +363,7 @@ namespace AWM.BattleMechanics
 
             if (destinationMapTile != null)
             {
-                destinationMapTile.UpdateVisibilityOfEnvironment(unitIsOnTile);
+                destinationMapTile.UpdateVisibilityOfEnvironment(unitIsOnTile || destinationMapTile.HasStreet);
             }
         }
 
@@ -617,8 +617,20 @@ namespace AWM.BattleMechanics
                 Vector2 nodeToMoveTo = route[nodeIndex];
                 Vector2 currentNode = route[nodeIndex - 1];
 
+                IEnumerator bridgeOpeningCoroutine = null;
+
+                if (IsBridgeOnNode(nodeToMoveTo, true, out bridgeOpeningCoroutine))
+                {
+                    yield return bridgeOpeningCoroutine;
+                }
+
                 yield return MoveToNeighborNode(currentNode, nodeToMoveTo, movementCostResolver,
                     nodeIndex == 1, nodeIndex == route.Count - 1, onReachedTile);
+
+                if (IsBridgeOnNode(currentNode, false, out bridgeOpeningCoroutine))
+                {
+                    yield return bridgeOpeningCoroutine;
+                }
 
                 if (nodeIndex == route.Count - 1)
                 {
@@ -628,6 +640,32 @@ namespace AWM.BattleMechanics
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if a bridge is on the given node. If it is, the bridge will be opened or closed depending on the given parameter.
+        /// </summary>
+        /// <param name="node">The node to check.</param>
+        /// <param name="openBridge">if set to true, will open the bridge; will close the bridge otherwise.</param>
+        /// <param name="bridgeOpeningCoroutine">
+        /// The coroutine that will run as long as the bridge is opening or closing. 
+        /// Can be waited for to do something when the bridge is fully closed/open.
+        /// </param>
+        private bool IsBridgeOnNode(Vector2 node, bool openBridge, out IEnumerator bridgeOpeningCoroutine)
+        {
+            if (this.GetUnitBalancing().m_UnitMetaType == UnitMetaType.Water)
+            {
+                BaseMapTile mapTileToMoveTo = CC.TNC.GetMapTile(node);
+
+                if (mapTileToMoveTo.MapTileType == MapTileType.Water && mapTileToMoveTo.HasStreet)
+                {
+                    bridgeOpeningCoroutine = mapTileToMoveTo.ChangeBridgeOpeningState(openBridge);
+                    return true;
+                }
+            }
+
+            bridgeOpeningCoroutine = null;
+            return false;
         }
 
         /// <summary>

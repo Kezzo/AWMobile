@@ -17,9 +17,11 @@ MonoBehaviour:
   m_WalkableMapTileTypes:
   - m_MapTileType: 2
     m_CanWalkOnTile: 1
+    m_CanPassOverTile: 0
     m_MovementCost: 1
     m_CanWalkOnStreet: 0
-    m_StreetMovementCost: 0
+    m_CanPassOverStreet: 1
+    m_StreetMovementCost: 1
   m_PassableUnitMetaTypes: 
   m_Health: 8
   m_AttackRange: 2

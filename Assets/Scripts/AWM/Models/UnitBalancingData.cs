@@ -22,9 +22,11 @@ namespace AWM.Models
             public MapTileType m_MapTileType;
 
             public bool m_CanWalkOnTile;
+            public bool m_CanPassOverTile;
             public int m_MovementCost;
 
             public bool m_CanWalkOnStreet;
+            public bool m_CanPassOverStreet;
             public int m_StreetMovementCost;
         }
 
