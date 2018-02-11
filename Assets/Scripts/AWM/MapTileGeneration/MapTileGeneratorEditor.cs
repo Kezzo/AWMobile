@@ -239,6 +239,7 @@ namespace AWM.MapTileGeneration
                 case TypeToEdit.StreetTileAddition:
                     closestBaseMapTile.HasStreet = m_PlaceStreet;
                     closestBaseMapTile.ValidateStreetTileAddition();
+                    closestBaseMapTile.ValidateMapTile(true, CC.TNC);
 
                     foreach (Vector2 adjacentNode in CC.TNC.GetAdjacentNodes(
                          closestBaseMapTile.m_SimplifiedMapPosition))
@@ -249,6 +250,7 @@ namespace AWM.MapTileGeneration
                             out mapTile))
                         {
                             mapTile.ValidateStreetTileAddition(true);
+                            mapTile.ValidateMapTile(true, CC.TNC);
                         }
                     }
 

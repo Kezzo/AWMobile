@@ -383,7 +383,7 @@ namespace AWM.MapTileGeneration
                     if (mapTileType == MapTileType.Water && mapTile.m_HasStreet)
                     {
                         MapGenerationData.MapTile originMapTile = mapTileProvider.GetMapTileAtPosition(tilePosition);
-                        MapGenerationData.MapTile mapTileBehindAdjacentTile = mapTileProvider.GetMapTileAtPosition(tilePosition + positionDiff*2);
+                        MapGenerationData.MapTile mapTileBehindAdjacentTile = mapTileProvider.GetMapTileAtPosition(tilePosition + positionDiff * -1 * 2);
 
                         if ((originMapTile != null && originMapTile.m_HasStreet) ||
                             (mapTileBehindAdjacentTile != null && mapTileBehindAdjacentTile.m_HasStreet))
