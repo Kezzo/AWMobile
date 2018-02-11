@@ -356,16 +356,16 @@ namespace AWM.MapTileGeneration
         /// <summary>
         /// Checks the adjacent and corner-adjacent tiles of the given tileposition and checks if those tiles have the given MapTileType.
         /// </summary>
-        /// <param name="mapTileTypes">The MapTileType to check for.</param>
+        /// <param name="mapTileType">The MapTileType to check for.</param>
         /// <param name="tilePosition">The tile position to get the adjacent tiles from.</param>
         /// <param name="mapTileProvider">Provides the data that holds the type of maptiles at a specific position. 
         /// This is used to find the maptiles on the adjacent positions and get their MapTileType.</param>
         /// <param name="adjacentWaterDirections">A list containing all cardinal directions the given MapTileType is adjacent to the given tile position.</param>
         /// <returns></returns>
-        public bool IsMapTileNextToTypes(HashSet<MapTileType> mapTileTypes, Vector2 tilePosition, IMapTileProvider mapTileProvider, 
+        public bool IsMapTileNextToTypes(MapTileType mapTileType, Vector2 tilePosition, IMapTileProvider mapTileProvider, 
             out List<CardinalDirection> adjacentWaterDirections)
         {
-            bool isNextToWater = false;
+            bool isNextToMapTileType = false;
             List<Vector2> adjacentNodes = CC.TNC.GetAdjacentNodes(
                 tilePosition, includeAdjacentCorners: true);
 
@@ -375,18 +375,31 @@ namespace AWM.MapTileGeneration
             {
                 MapGenerationData.MapTile mapTile = mapTileProvider.GetMapTileAtPosition(adjacentNodes[i]);
 
-                if (mapTile != null && mapTileTypes.Contains(mapTile.m_MapTileType))
+                if (mapTile != null && mapTile.m_MapTileType == mapTileType)
                 {
-                    isNextToWater = true;
-
                     Vector2 positionDiff = tilePosition - adjacentNodes[i];
+
+                    // to consider a bridge as adjacent land or water depending on it's rotation.
+                    if (mapTileType == MapTileType.Water && mapTile.m_HasStreet)
+                    {
+                        MapGenerationData.MapTile originMapTile = mapTileProvider.GetMapTileAtPosition(tilePosition);
+                        MapGenerationData.MapTile mapTileBehindAdjacentTile = mapTileProvider.GetMapTileAtPosition(tilePosition + positionDiff*2);
+
+                        if ((originMapTile != null && originMapTile.m_HasStreet) ||
+                            (mapTileBehindAdjacentTile != null && mapTileBehindAdjacentTile.m_HasStreet))
+                        {
+                            continue;
+                        }
+                    }
+
+                    isNextToMapTileType = true;
 
                     adjacentWaterDirections.Add(CC.TNC.
                         GetCardinalDirectionFromNodePositionDiff(positionDiff));
                 }
             }
 
-            return isNextToWater;
+            return isNextToMapTileType;
         }
 
         /// <summary>

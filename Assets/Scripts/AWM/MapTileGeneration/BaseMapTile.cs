@@ -399,7 +399,7 @@ namespace AWM.MapTileGeneration
 
             List<CardinalDirection> adjacentWaterDirections;
 
-            if (m_mapTileType != MapTileType.Water && m_mapGenService.IsMapTileNextToTypes(new HashSet<MapTileType> { MapTileType.Water }, 
+            if (m_mapTileType != MapTileType.Water && m_mapGenService.IsMapTileNextToTypes(MapTileType.Water, 
                 m_SimplifiedMapPosition, mapTileProvider, out adjacentWaterDirections))
             {
                 InstantiateComplexBorderMapTile(adjacentWaterDirections);
@@ -431,7 +431,8 @@ namespace AWM.MapTileGeneration
         {
             foreach (var borderDirection in m_mapGenService.GetBorderDirections(adjacentWaterDirections))
             {
-                MapTileBorderPrefabData positionAndRotationForBorder = new MapTileBorderPrefabData(m_mapTileGeneratorEditor.GetMapTileBorderPrefab(m_mapTileType, borderDirection.Value));
+                MapTileBorderPrefabData positionAndRotationForBorder = new MapTileBorderPrefabData(
+                    m_mapTileGeneratorEditor.GetMapTileBorderPrefab(m_mapTileType, borderDirection.Value));
 
                 ApplyPositionAndRotationToBorderData(ref positionAndRotationForBorder, borderDirection.Key, borderDirection.Value);
 
