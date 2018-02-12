@@ -879,7 +879,7 @@ MonoBehaviour:
       m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
-      m_MapTileType: 2
+      m_MapTileType: 1
       m_HasStreet: 1
       m_Unit:
         m_UnitType: 0
