@@ -330,7 +330,7 @@ namespace AWM.BattleMechanics
             // Needed to not stop on a unit when the route would move over it.
             for (int i = routeToMove.Count - 1; i >= 0; i--)
             {
-                if(!CC.BSC.IsUnitOnNode(routeToMove[i]))
+                if(movementCostResolver.CanUnitWalkOnMapTile(CC.TNC.GetMapTile(routeToMove[i]), 0))
                 {
                     break;
                 }
