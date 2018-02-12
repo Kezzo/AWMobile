@@ -717,7 +717,7 @@ namespace AWM.MapTileGeneration
 
             List<BaseMapTile> adjacentMapTiles = CC.TNC.GetMapTilesInRange(m_SimplifiedMapPosition, 1);
 
-            Vector2[] diffToNeighborNodes = { Vector2.zero, Vector2.zero };
+            List<Vector2> diffToNeighborNodes = new List<Vector2>();
 
             for (int i = 0; i < adjacentMapTiles.Count; i++)
             {
@@ -726,29 +726,29 @@ namespace AWM.MapTileGeneration
                     continue;
                 }
 
-                int indexToUse = diffToNeighborNodes[0] == Vector2.zero ? 0 : 1;
-                diffToNeighborNodes[indexToUse] = m_SimplifiedMapPosition - adjacentMapTiles[i].m_SimplifiedMapPosition;
-
-                if (indexToUse == 1)
-                {
-                    // currently only a simple corner is handled.
-                    break;
-                }
+                diffToNeighborNodes.Add(m_SimplifiedMapPosition - adjacentMapTiles[i].m_SimplifiedMapPosition);
             }
 
-            RouteMarkerType routeMarkerType = CC.TNC.GetRouteMarkerType(diffToNeighborNodes[0], diffToNeighborNodes[1]);
-            Vector3 rotation = CC.TNC.GetRouteMarkerRotation(diffToNeighborNodes[0], diffToNeighborNodes[1], routeMarkerType);
+            RouteMarkerType routeMarkerType = CC.TNC.GetRouteMarkerType(diffToNeighborNodes);
+            Vector3 rotation = CC.TNC.GetRouteMarkerRotation(diffToNeighborNodes, routeMarkerType);
 
             StreetTileAddition streetTileAdditionToUse = m_streetTileAdditions.Find(addition => 
                                                             addition.m_UsedOnMapTileType.Contains(MapTileType) &&
                                                             addition.m_RouteMarkerType.Contains(routeMarkerType));
+
+            if (streetTileAdditionToUse == null)
+            {
+                Debug.LogError("No fitting StreetTileAddition was found! Check it you tried to build an illegal street.");
+                return;
+            }
 
             GameObject prefabToInstantiate = streetTileAdditionToUse.m_Prefab;
 
             // if true this is a straight street end at a coast
             if (routeMarkerType == RouteMarkerType.Destination && this.MapTileType != MapTileType.Water)
             {
-                Vector2 oppositeMapTilePosition = this.m_SimplifiedMapPosition + diffToNeighborNodes[0];
+                Vector2 oppositeMapTilePosition = this.m_SimplifiedMapPosition + 
+                    (diffToNeighborNodes.Count > 0 ? diffToNeighborNodes[0] : Vector2.zero);
 
                 BaseMapTile mapTileOnOtherSide = adjacentMapTiles.Find(tile => tile.m_SimplifiedMapPosition == oppositeMapTilePosition);
 

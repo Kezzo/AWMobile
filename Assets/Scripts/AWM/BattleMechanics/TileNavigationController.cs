@@ -485,10 +485,18 @@ namespace AWM.BattleMechanics
                     isDestinationNode = true;
                 }
 
-                Vector2 diffToPreviousNode = previousNode - nodeToGetRouteMarkerFor;
-                Vector2 diffToNextNode = !isDestinationNode ? nextNode - nodeToGetRouteMarkerFor : Vector2.zero;
-                routeMarkerDefinition.RouteMarkerType = GetRouteMarkerType(diffToPreviousNode, diffToNextNode);
-                routeMarkerDefinition.Rotation = GetRouteMarkerRotation(diffToPreviousNode, diffToNextNode, routeMarkerDefinition.RouteMarkerType);
+                List<Vector2> diffToNeighborNodes = new List<Vector2>
+                {
+                    previousNode - nodeToGetRouteMarkerFor
+                };
+
+                if (!isDestinationNode)
+                {
+                    diffToNeighborNodes.Add(nextNode - nodeToGetRouteMarkerFor);
+                }
+
+                routeMarkerDefinition.RouteMarkerType = GetRouteMarkerType(diffToNeighborNodes);
+                routeMarkerDefinition.Rotation = GetRouteMarkerRotation(diffToNeighborNodes, routeMarkerDefinition.RouteMarkerType);
 
                 // Calculate route marker definitions here.
                 routeMarkerDefinitions.Add(new KeyValuePair<Vector2, RouteMarkerDefinition>(
@@ -501,57 +509,72 @@ namespace AWM.BattleMechanics
         /// <summary>
         /// Gets the route marker rotation.
         /// </summary>
-        /// <param name="diffToPreviousNode">The difference to previous node.</param>
-        /// <param name="diffToNextNode">The difference to next node.</param>
+        /// <param name="diffToNeighborNodes">Contains the position diffs of neighbor nodes used to define the rotation.</param>
         /// <param name="routeMarkerType">Type of the route marker.</param>
         /// <returns></returns>
-        public Vector3 GetRouteMarkerRotation(Vector2 diffToPreviousNode, Vector2 diffToNextNode, RouteMarkerType routeMarkerType)
+        public Vector3 GetRouteMarkerRotation(List<Vector2> diffToNeighborNodes, RouteMarkerType routeMarkerType)
         {
             Vector3 rotation = Vector3.zero;
 
-            CardinalDirection comingFromDirection = GetCardinalDirectionFromNodePositionDiff(diffToPreviousNode);
-            CardinalDirection goingToDirection = GetCardinalDirectionFromNodePositionDiff(diffToNextNode);
+            CardinalDirection comingFromDirection = GetCardinalDirectionFromNodePositionDiff(diffToNeighborNodes.Count > 0 ? diffToNeighborNodes[0] : Vector2.zero);
+            CardinalDirection goingToDirection = GetCardinalDirectionFromNodePositionDiff(diffToNeighborNodes.Count > 1 ? diffToNeighborNodes[1] : Vector2.zero);
 
-            if (routeMarkerType == RouteMarkerType.Destination)
+            switch (routeMarkerType)
             {
-                rotation.y = GetRotationFromCardinalDirection(comingFromDirection);
-            }
-            else if (routeMarkerType == RouteMarkerType.Straight)
-            {
-                if ((comingFromDirection == CardinalDirection.East || comingFromDirection == CardinalDirection.West) &&
-                    (goingToDirection == CardinalDirection.East || goingToDirection == CardinalDirection.West))
-                {
-                    rotation.y = 0f;
-                }
-                else
-                {
-                    rotation.y = 90f;
-                }
-            }
-            else if(routeMarkerType == RouteMarkerType.Turn)
-            {
-                //Debug.LogFormat("Coming from: '{0}' Going to: '{1}'", comingFromDirection, goingToDirection);
+                case RouteMarkerType.Destination:
+                    rotation.y = GetRotationFromCardinalDirection(comingFromDirection);
+                    break;
+                case RouteMarkerType.Straight:
+                    if ((comingFromDirection == CardinalDirection.East || comingFromDirection == CardinalDirection.West) &&
+                        (goingToDirection == CardinalDirection.East || goingToDirection == CardinalDirection.West))
+                    {
+                        rotation.y = 0f;
+                    }
+                    else
+                    {
+                        rotation.y = 90f;
+                    }
+                    break;
+                case RouteMarkerType.Turn:
+                    //Debug.LogFormat("Coming from: '{0}' Going to: '{1}'", comingFromDirection, goingToDirection);
 
-                if ((comingFromDirection == CardinalDirection.East && goingToDirection == CardinalDirection.North) ||
-                    (comingFromDirection == CardinalDirection.North && goingToDirection == CardinalDirection.East))
-                {
-                    rotation.y = 180f;
-                }
-                else if ((comingFromDirection == CardinalDirection.East && goingToDirection == CardinalDirection.South) ||
-                         (comingFromDirection == CardinalDirection.South && goingToDirection == CardinalDirection.East))
-                {
-                    rotation.y = 270f;
-                }
-                else if ((comingFromDirection == CardinalDirection.South && goingToDirection == CardinalDirection.West) ||
-                         (comingFromDirection == CardinalDirection.West && goingToDirection == CardinalDirection.South))
-                {
-                    rotation.y = 0f;
-                }
-                else if ((comingFromDirection == CardinalDirection.North && goingToDirection == CardinalDirection.West) || 
-                         (comingFromDirection == CardinalDirection.West && goingToDirection == CardinalDirection.North))
-                {
-                    rotation.y = 90f;
-                }
+                    if ((comingFromDirection == CardinalDirection.East && goingToDirection == CardinalDirection.North) ||
+                        (comingFromDirection == CardinalDirection.North && goingToDirection == CardinalDirection.East))
+                    {
+                        rotation.y = 180f;
+                    }
+                    else if ((comingFromDirection == CardinalDirection.East && goingToDirection == CardinalDirection.South) ||
+                             (comingFromDirection == CardinalDirection.South && goingToDirection == CardinalDirection.East))
+                    {
+                        rotation.y = 270f;
+                    }
+                    else if ((comingFromDirection == CardinalDirection.South && goingToDirection == CardinalDirection.West) ||
+                             (comingFromDirection == CardinalDirection.West && goingToDirection == CardinalDirection.South))
+                    {
+                        rotation.y = 0f;
+                    }
+                    else if ((comingFromDirection == CardinalDirection.North && goingToDirection == CardinalDirection.West) || 
+                             (comingFromDirection == CardinalDirection.West && goingToDirection == CardinalDirection.North))
+                    {
+                        rotation.y = 90f;
+                    }
+                    break;
+                case RouteMarkerType.TriCorner:
+
+                    Vector2 summarizedDiffs = new Vector2();
+
+                    for (int i = 0; i < diffToNeighborNodes.Count; i++)
+                    {
+                        summarizedDiffs += new Vector2(Mathf.Abs(diffToNeighborNodes[i].x), Mathf.Abs(diffToNeighborNodes[i].y));
+                    }
+                    
+                    Vector2 singularDiff = summarizedDiffs.x > 1 ? 
+                        diffToNeighborNodes.Find(diff => Mathf.Abs(diff.y) > 0) : diffToNeighborNodes.Find(diff => Mathf.Abs(diff.x) > 0);
+
+                    rotation.y = GetRotationFromCardinalDirection(GetCardinalDirectionFromNodePositionDiff(singularDiff));
+
+                    break;
+                // No case for Crossroads needed since it's rotation doesn't matter.
             }
 
             return rotation;
@@ -642,26 +665,38 @@ namespace AWM.BattleMechanics
         /// <summary>
         /// Gets the type of the route marker.
         /// </summary>
-        /// <param name="diffToPreviousNode">The difference to previous node.</param>
-        /// <param name="diffToNextNode">The difference to next node.</param>
-        /// <returns></returns>
-        public RouteMarkerType GetRouteMarkerType(Vector2 diffToPreviousNode, Vector2 diffToNextNode)
+        /// <param name="diffToNeighborNodes">Contains the position diffs of neighbor nodes used to define the route marker type.</param>
+        public RouteMarkerType GetRouteMarkerType(List<Vector2> diffToNeighborNodes)
         {
-            RouteMarkerType routeMarkerType;
+            RouteMarkerType routeMarkerType = RouteMarkerType.Destination;
 
-            Vector2 diffOfSorroundingNodes = new Vector2(Mathf.Abs(diffToPreviousNode.x) + Mathf.Abs(diffToNextNode.x), Mathf.Abs(diffToPreviousNode.y) + Mathf.Abs(diffToNextNode.y));
+            if (diffToNeighborNodes != null && diffToNeighborNodes.Count > 0)
+            {
+                switch (diffToNeighborNodes.Count)
+                {
+                    case 1:
+                        routeMarkerType = RouteMarkerType.Destination;
+                        break;
+                    case 2:
+                        Vector2 diffOfSurroundingNodes = new Vector2(Mathf.Abs(diffToNeighborNodes[0].x) + Mathf.Abs(diffToNeighborNodes[1].x), 
+                            Mathf.Abs(diffToNeighborNodes[0].y) + Mathf.Abs(diffToNeighborNodes[1].y));
 
-            if (diffToNextNode == Vector2.zero)
-            {
-                routeMarkerType = RouteMarkerType.Destination;
-            }
-            else if (Mathf.RoundToInt(diffOfSorroundingNodes.x) == 2 || Mathf.RoundToInt(diffOfSorroundingNodes.y) == 2)
-            {
-                routeMarkerType = RouteMarkerType.Straight;
-            }
-            else
-            {
-                routeMarkerType = RouteMarkerType.Turn;
+                        if (Mathf.RoundToInt(diffOfSurroundingNodes.x) == 2 || Mathf.RoundToInt(diffOfSurroundingNodes.y) == 2)
+                        {
+                            routeMarkerType = RouteMarkerType.Straight;
+                        }
+                        else
+                        {
+                            routeMarkerType = RouteMarkerType.Turn;
+                        }
+                        break;
+                    case 3:
+                        routeMarkerType = RouteMarkerType.TriCorner;
+                        break;
+                    case 4:
+                        routeMarkerType = RouteMarkerType.Crossroads;
+                        break;
+                }
             }
 
             return routeMarkerType;

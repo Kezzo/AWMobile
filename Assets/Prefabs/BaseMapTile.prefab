@@ -615,6 +615,14 @@ MonoBehaviour:
     m_RouteMarkerType: 0000000002000000
     m_Prefab: {fileID: 1452815886191194, guid: e504f43d73bf90a4a8e151907f2927a6, type: 2}
     m_ShortenedPrefab: {fileID: 0}
+  - m_UsedOnMapTileType: 010000000300000004000000
+    m_RouteMarkerType: 03000000
+    m_Prefab: {fileID: 1942406755790568, guid: 52ba1701ab71d164a8181e885682359a, type: 2}
+    m_ShortenedPrefab: {fileID: 0}
+  - m_UsedOnMapTileType: 010000000300000004000000
+    m_RouteMarkerType: 04000000
+    m_Prefab: {fileID: 1942406755790568, guid: 3fa204b974bbd604aa4b08b4dd4deafb, type: 2}
+    m_ShortenedPrefab: {fileID: 0}
   m_streetTileAdditionRoot: {fileID: 4924686311395524}
   m_routeMarkerMappings:
   - m_RouteMarkerType: 0
