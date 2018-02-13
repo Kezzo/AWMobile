@@ -367,8 +367,15 @@ namespace AWM.MapTileGeneration
         /// </summary>
         public List<MeshFilter> GetMeshFilters()
         {
-            return m_currentlyInstantiatedMapTiles.Select(
+            List<MeshFilter> mapTilesMeshFilter = m_currentlyInstantiatedMapTiles.Select(
                 currentlyInstantiatedMapTile => currentlyInstantiatedMapTile.GetComponent<MeshFilter>()).ToList();
+
+            if (this.HasStreet && m_currentlyInstantiatedStreetTileAddition != null)
+            {
+                mapTilesMeshFilter.Add(m_currentlyInstantiatedStreetTileAddition.GetComponent<MeshFilter>());
+            }
+
+            return mapTilesMeshFilter;
         }
 
         /// <summary>
@@ -380,6 +387,12 @@ namespace AWM.MapTileGeneration
             {
                 Destroy(currentlyInstantiatedMapTile.GetComponent<MeshRenderer>());
                 Destroy(currentlyInstantiatedMapTile.GetComponent<MeshFilter>());
+            }
+
+            if (this.HasStreet)
+            {
+                Destroy(m_currentlyInstantiatedStreetTileAddition.GetComponent<MeshRenderer>());
+                Destroy(m_currentlyInstantiatedStreetTileAddition.GetComponent<MeshFilter>());
             }
         }
 
