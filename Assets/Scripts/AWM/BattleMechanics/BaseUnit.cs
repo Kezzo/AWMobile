@@ -597,6 +597,15 @@ namespace AWM.BattleMechanics
         {
             this.transform.SetParent(mapTile.UnitRoot);
             this.transform.localPosition = Vector3.zero;
+            mapTile.UpdateVisibilityOfEnvironment(true);
+
+            BaseMapTile previousMapTile = CC.TNC.GetMapTile(m_currentSimplifiedPosition);
+
+            if (previousMapTile != null)
+            {
+                previousMapTile.UpdateVisibilityOfEnvironment(false);
+            }
+
             m_currentSimplifiedPosition = mapTile.m_SimplifiedMapPosition;
         }
 

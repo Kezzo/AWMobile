@@ -376,8 +376,8 @@ namespace AWM.MapTileGeneration
         /// <summary>
         /// Updates the visibility of all environment props of all EnvironmentInstantiateHelper of this maptile.
         /// </summary>
-        /// <param name="visible">if set to <c>true</c> sets all props visible; otherwise invisible.</param>
-        public void UpdateVisibilityOfEnvironment(bool visible)
+        /// <param name="isUnitOnTile">if set to <c>true</c> hides all props that should be hidden when a unit is on the tile; otherwise shows them.</param>
+        public void UpdateVisibilityOfEnvironment(bool isUnitOnTile)
         {
             if (EnvironmentInstantiateHelper == null || EnvironmentInstantiateHelper.Count <= 0)
             {
@@ -388,7 +388,7 @@ namespace AWM.MapTileGeneration
             {
                 if (environmentInstantiateHelper != null)
                 {
-                    environmentInstantiateHelper.UpdateVisibilityOfEnvironment(visible);
+                    environmentInstantiateHelper.UpdateVisibilityOfEnvironment(isUnitOnTile);
                 }
             }
         }
