@@ -363,7 +363,7 @@ namespace AWM.BattleMechanics
 
             if (destinationMapTile != null)
             {
-                destinationMapTile.UpdateVisibilityOfEnvironment(unitIsOnTile || destinationMapTile.HasStreet);
+                destinationMapTile.UpdateVisibilityOfEnvironment(unitIsOnTile);
             }
         }
 

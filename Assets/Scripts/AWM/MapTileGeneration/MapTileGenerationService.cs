@@ -88,6 +88,8 @@ namespace AWM.MapTileGeneration
                 {
                     generatedMapTiles[i].ValidateStreetTileAddition(true);
                 }
+
+                generatedMapTiles[i].InstantiateEnvironment();
             }
 
             if (mapGenerationData.m_IsLevelSelection)

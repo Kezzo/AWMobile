@@ -215,6 +215,7 @@ namespace AWM.MapTileGeneration
                 case TypeToEdit.MapTileType:
                     closestBaseMapTile.MapTileType = m_LastToggledTileType;
                     closestBaseMapTile.ValidateMapTile();
+                    closestBaseMapTile.InstantiateEnvironment();
 
                     foreach (Vector2 adjacentNode in CC.TNC.GetAdjacentNodes(
                         closestBaseMapTile.m_SimplifiedMapPosition, true))
@@ -225,6 +226,7 @@ namespace AWM.MapTileGeneration
                             out mapTile))
                         {
                             mapTile.ValidateMapTile(true, CC.TNC);
+                            mapTile.InstantiateEnvironment();
                         }
                     }
 
@@ -234,12 +236,14 @@ namespace AWM.MapTileGeneration
                     closestBaseMapTile.Unit.m_UnitType = m_LastToggledUnitType;
                     closestBaseMapTile.Unit.m_TeamColor = m_CurrentTeamColor;
                     closestBaseMapTile.ValidateUnitType();
+                    closestBaseMapTile.InstantiateEnvironment();
                     break;
 
                 case TypeToEdit.StreetTileAddition:
                     closestBaseMapTile.HasStreet = m_PlaceStreet;
                     closestBaseMapTile.ValidateStreetTileAddition();
                     closestBaseMapTile.ValidateMapTile(true, CC.TNC);
+                    closestBaseMapTile.InstantiateEnvironment();
 
                     foreach (Vector2 adjacentNode in CC.TNC.GetAdjacentNodes(
                          closestBaseMapTile.m_SimplifiedMapPosition))
@@ -251,6 +255,7 @@ namespace AWM.MapTileGeneration
                         {
                             mapTile.ValidateStreetTileAddition(true);
                             mapTile.ValidateMapTile(true, CC.TNC);
+                            mapTile.InstantiateEnvironment();
                         }
                     }
 

@@ -17,7 +17,6 @@ namespace AWM.MapTileGeneration
 
             if (GUILayout.Button("Instantiate"))
             {
-                environmentInstantiateHelper.ClearInstantiatedEnvironment();
                 environmentInstantiateHelper.InstantiateEnvironment();
             }
 

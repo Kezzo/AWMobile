@@ -61,8 +61,12 @@ namespace AWM.MapTileGeneration
         /// Instantiates the serialized environment prefabs under the defines transform roots,
         /// with random positioning and Y-rotation.
         /// </summary>
-        public void InstantiateEnvironment()
+        /// <param name="boundsToAvoid">The bounds to avoid to generate environment props in.</param>
+        /// <param name="spawnIncreaseModifier">Can be set to increase the chance of props on valid tiles.</param>
+        public void InstantiateEnvironment(List<Bounds> boundsToAvoid = null, int spawnIncreaseModifier = 1)
         {
+            ClearInstantiatedEnvironment();
+
             if (m_prefabsToInstantiate.Count == 0)
             {
                 return;
@@ -72,7 +76,24 @@ namespace AWM.MapTileGeneration
 
             for (int i = 0; i < m_possiblePlacementPosition.Count; i++)
             {
-                if (Random.Range(0, m_maxRandomRange) < 1)
+                bool isInBoundsToAvoid = false;
+
+                if (boundsToAvoid != null && boundsToAvoid.Count > 0)
+                {
+                    for (int j = 0; j < boundsToAvoid.Count; j++)
+                    {
+                        Vector3 positionToCheck = new Vector3(m_possiblePlacementPosition[i].m_PlacementRoot.position.x,
+                            boundsToAvoid[j].center.y, m_possiblePlacementPosition[i].m_PlacementRoot.position.z);
+
+                        if (boundsToAvoid[j].Contains(positionToCheck))
+                        {
+                            isInBoundsToAvoid = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (isInBoundsToAvoid || Random.Range(0, m_maxRandomRange) * spawnIncreaseModifier < 1)
                 {
                     continue;
                 }
@@ -132,7 +153,7 @@ namespace AWM.MapTileGeneration
         /// <summary>
         /// Destroys the instantiated environment props.
         /// </summary>
-        public void ClearInstantiatedEnvironment()
+        private void ClearInstantiatedEnvironment()
         {
             if (m_currentlyInstantiatedPrefabs == null || m_currentlyInstantiatedPrefabs.Count == 0)
             {

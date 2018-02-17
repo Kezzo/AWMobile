@@ -28,6 +28,7 @@ namespace AWM.MapTileGeneration
                 baseMapTile.MapTileType = m_mapTileType;
                 baseMapTile.ValidateMapTile();
                 baseMapTile.ValidateStreetTileAddition();
+                baseMapTile.InstantiateEnvironment();
                 baseMapTile.ValidateLevelSelector();
             }
         }

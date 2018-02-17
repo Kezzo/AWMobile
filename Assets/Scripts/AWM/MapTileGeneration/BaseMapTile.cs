@@ -148,6 +148,7 @@ namespace AWM.MapTileGeneration
         private MapTileType m_currentInstantiatedMapTileType;
 
         private GameObject m_currentlyInstantiatedStreetTileAddition;
+        private RouteMarkerType m_currentlyInstantiatedRouteType;
 
         private GameObject m_currentInstantiatedUnitGameObject;
         private MapGenerationData.Unit m_currentInstantiatedUnit;
@@ -160,6 +161,10 @@ namespace AWM.MapTileGeneration
         public Vector2 m_SimplifiedMapPosition;
 
 #if UNITY_EDITOR
+
+        private List<Bounds> m_boundsToDraw;
+        private List<Vector3> m_boundsOriginPositions;
+
         private void OnDrawGizmos()
         {
             if (Application.isPlaying && Root.Instance.DebugValues.m_ShowCoordinatesOnNodes)
@@ -173,6 +178,21 @@ namespace AWM.MapTileGeneration
                             textColor = Color.black
                         }
                     });
+
+                if (m_boundsToDraw != null && m_boundsToDraw.Count > 0)
+                {
+                    Gizmos.color = Color.magenta;
+                    for (int i = 0; i < m_boundsToDraw.Count; i++)
+                    {
+                        Gizmos.DrawCube(m_boundsToDraw[i].center + Vector3.up * 2, m_boundsToDraw[i].size);
+                    }
+
+                    Gizmos.color = Color.yellow;
+                    for (int i = 0; i < m_boundsOriginPositions.Count; i++)
+                    {
+                        Gizmos.DrawSphere(m_boundsOriginPositions[i] + Vector3.up * 2, 0.25f);
+                    }
+                }
             }
         }
 #endif
@@ -189,7 +209,6 @@ namespace AWM.MapTileGeneration
             m_SimplifiedMapPosition = simplifiedPosition;
 
             ValidateMapTile();
-            ValidateStreetTileAddition();
             ValidateLevelSelector(true);
             ValidateUnitType(true, simplifiedPosition);
         }
@@ -203,7 +222,6 @@ namespace AWM.MapTileGeneration
             InitializeBaseValues(mapTileData);
 
             ValidateMapTile();
-            ValidateStreetTileAddition();
             ValidateLevelSelector(true);
             ValidateUnitType();
         }
@@ -267,6 +285,19 @@ namespace AWM.MapTileGeneration
             }
 
             InstantiateMapTilePrefab(mapTileProvider);
+
+            if (m_currentlyInstantiatedMapTiles == null)
+            {
+                return;
+            }
+
+            EnvironmentInstantiateHelper = new List<EnvironmentInstantiateHelper>(m_currentlyInstantiatedMapTiles.Count);
+
+            foreach (var mapTile in m_currentlyInstantiatedMapTiles)
+            {
+                EnvironmentInstantiateHelper.Add(mapTile.GetComponent<EnvironmentInstantiateHelper>());
+            }
+
         }
 
         /// <summary>
@@ -275,7 +306,7 @@ namespace AWM.MapTileGeneration
         /// <param name="forceUpdate">If set to true; an update the status will happen regardless of local caching fields.</param>
         public void ValidateStreetTileAddition(bool forceUpdate = false)
         {
-            if (forceUpdate == false && m_hasStreet == MapTileData.m_HasStreet)
+            if (MapTileData == null || (forceUpdate == false && m_hasStreet == MapTileData.m_HasStreet))
             {
                 return;
             }
@@ -416,7 +447,6 @@ namespace AWM.MapTileGeneration
                 m_SimplifiedMapPosition, mapTileProvider, out adjacentWaterDirections))
             {
                 InstantiateComplexBorderMapTile(adjacentWaterDirections);
-                InstantiateEnvironment();
             }
             else
             {
@@ -426,7 +456,6 @@ namespace AWM.MapTileGeneration
                 if (mapTilePrefabToInstantiate != null)
                 {
                     InstantiateMapTile(mapTilePrefabToInstantiate);
-                    InstantiateEnvironment();
                 }
                 else
                 {
@@ -538,13 +567,58 @@ namespace AWM.MapTileGeneration
         /// <summary>
         /// Instantiates the environment on all currently instantiated maptile prefabs.
         /// </summary>
-        private void InstantiateEnvironment()
+        public void InstantiateEnvironment()
         {
-            EnvironmentInstantiateHelper = new List<EnvironmentInstantiateHelper>(m_currentlyInstantiatedMapTiles.Count);
+            List<Bounds> boundsToAvoid = new List<Bounds>();
+            int spawnChanceModifier = 1;
 
-            foreach (var mapTile in m_currentlyInstantiatedMapTiles)
+            if ((this.MapTileType == MapTileType.Forest || this.MapTileType == MapTileType.Mountain) && 
+                this.HasStreet && this.m_currentlyInstantiatedStreetTileAddition != null)
             {
-                EnvironmentInstantiateHelper.Add(mapTile.GetComponent<EnvironmentInstantiateHelper>());
+                MeshFilter meshFilter = m_currentlyInstantiatedStreetTileAddition.GetComponent<MeshFilter>();
+
+                if (meshFilter != null)
+                {
+                    List<Vector3> vertices = meshFilter.sharedMesh.vertices.ToList();
+
+#if UNITY_EDITOR
+                    m_boundsToDraw = new List<Bounds>();
+                    m_boundsOriginPositions = new List<Vector3>();
+#endif
+                    Bounds xAxisAlignedBounds = GetRectangleBounds(vertices, m_currentlyInstantiatedStreetTileAddition);
+                    boundsToAvoid.Add(xAxisAlignedBounds);
+
+#if UNITY_EDITOR
+                    m_boundsToDraw.Add(xAxisAlignedBounds);
+#endif
+
+                    if (m_currentlyInstantiatedRouteType == RouteMarkerType.Crossroads ||
+                        m_currentlyInstantiatedRouteType == RouteMarkerType.TriCorner ||
+                        m_currentlyInstantiatedRouteType == RouteMarkerType.Turn)
+                    {
+                        Bounds yAxisAlignedBounds = GetRectangleBounds(vertices, m_currentlyInstantiatedStreetTileAddition, true);
+                        boundsToAvoid.Add(yAxisAlignedBounds);
+
+#if UNITY_EDITOR
+                        m_boundsToDraw.Add(yAxisAlignedBounds);
+#endif                  
+                    }
+                }
+
+                switch (m_currentlyInstantiatedRouteType)
+                {
+                    case RouteMarkerType.Straight:
+                    case RouteMarkerType.Turn:
+                    case RouteMarkerType.Destination:
+                        spawnChanceModifier = 4;
+                        break;
+                    case RouteMarkerType.TriCorner:
+                        spawnChanceModifier = 6;
+                        break;
+                    case RouteMarkerType.Crossroads:
+                        spawnChanceModifier = 8;
+                        break;
+                }
             }
 
             if (EnvironmentInstantiateHelper != null && EnvironmentInstantiateHelper.Count > 0)
@@ -553,10 +627,76 @@ namespace AWM.MapTileGeneration
                 {
                     if (environmentInstantiateHelper != null)
                     {
-                        environmentInstantiateHelper.InstantiateEnvironment();
+                        environmentInstantiateHelper.InstantiateEnvironment(boundsToAvoid, spawnChanceModifier);
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Will find the biggest closed rectangle vertices bounds object in the given vertices.
+        /// </summary>
+        /// <param name="vertices">The vertices in which a rectangle should be found.</param>
+        /// <param name="verticesOwnerGameObject">
+        /// The owner gameobject of the vertices. Needed to transform local vertex postions into world postion.
+        /// </param>
+        /// <param name="zAxisAligned">
+        /// If set to true, the rectangle will be created starting from the vertex with the biggest Z postion; 
+        /// otherwise the biggest X position is used.
+        /// </param>
+        /// <returns></returns>
+        private Bounds GetRectangleBounds(List<Vector3> vertices, GameObject verticesOwnerGameObject, bool zAxisAligned = false)
+        {
+            Vector3 startVertex = Vector3.zero;
+            int startVertexIndex = 0;
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                if ((!zAxisAligned && Mathf.Abs(vertices[i].x) > Mathf.Abs(startVertex.x)) || 
+                    (zAxisAligned && Mathf.Abs(vertices[i].z) > Mathf.Abs(startVertex.z)))
+                {
+                    startVertex = vertices[i];
+                    startVertexIndex = i;
+                }
+            }
+
+            Vector3 rectangleCreatingVertexX = new Vector3();
+            Vector3 rectangleCreatingVertexZ = new Vector3();
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                if (startVertexIndex == i)
+                {
+                    continue;
+                }
+
+                if (Math.Abs(vertices[i].x - startVertex.x) < 0.01f && 
+                    Mathf.Abs(vertices[i].z) > Mathf.Abs(rectangleCreatingVertexX.z))
+                {
+                    rectangleCreatingVertexX = vertices[i];
+                }
+                else if (Math.Abs(vertices[i].z - startVertex.z) < 0.01f &&
+                    Mathf.Abs(vertices[i].x) > Mathf.Abs(rectangleCreatingVertexZ.x))
+                {
+                    rectangleCreatingVertexZ = vertices[i];
+                }
+            }
+
+            Vector3 rectangleCreatingVertex = new Vector3(rectangleCreatingVertexZ.x, startVertex.y, rectangleCreatingVertexX.z);
+
+            startVertex = verticesOwnerGameObject.transform.TransformPoint(startVertex);
+
+#if UNITY_EDITOR
+            m_boundsOriginPositions.Add(startVertex);
+#endif
+
+            rectangleCreatingVertex = verticesOwnerGameObject.transform.TransformPoint(rectangleCreatingVertex);
+
+            Vector3 vertexPositionDiff = (startVertex - rectangleCreatingVertex);
+            Vector3 vertexPositionDiffAbsolute = new Vector3(Mathf.Abs(vertexPositionDiff.x),
+                Mathf.Abs(vertexPositionDiff.y), Mathf.Abs(vertexPositionDiff.z));
+
+            return new Bounds(startVertex - (vertexPositionDiff / 2), vertexPositionDiffAbsolute);
         }
 
         /// <summary>
@@ -745,9 +885,7 @@ namespace AWM.MapTileGeneration
             RouteMarkerType routeMarkerType = CC.TNC.GetRouteMarkerType(diffToNeighborNodes);
             Vector3 rotation = CC.TNC.GetRouteMarkerRotation(diffToNeighborNodes, routeMarkerType);
 
-            StreetTileAddition streetTileAdditionToUse = m_streetTileAdditions.Find(addition => 
-                                                            addition.m_UsedOnMapTileType.Contains(MapTileType) &&
-                                                            addition.m_RouteMarkerType.Contains(routeMarkerType));
+            StreetTileAddition streetTileAdditionToUse = m_streetTileAdditions.Find(addition => addition.m_UsedOnMapTileType.Contains(MapTileType) && addition.m_RouteMarkerType.Contains(routeMarkerType));
 
             if (streetTileAdditionToUse == null)
             {
@@ -760,8 +898,7 @@ namespace AWM.MapTileGeneration
             // if true this is a straight street end at a coast
             if (routeMarkerType == RouteMarkerType.Destination && this.MapTileType != MapTileType.Water)
             {
-                Vector2 oppositeMapTilePosition = this.m_SimplifiedMapPosition + 
-                    (diffToNeighborNodes.Count > 0 ? diffToNeighborNodes[0] : Vector2.zero);
+                Vector2 oppositeMapTilePosition = this.m_SimplifiedMapPosition + (diffToNeighborNodes.Count > 0 ? diffToNeighborNodes[0] : Vector2.zero);
 
                 BaseMapTile mapTileOnOtherSide = adjacentMapTiles.Find(tile => tile.m_SimplifiedMapPosition == oppositeMapTilePosition);
 
@@ -775,6 +912,8 @@ namespace AWM.MapTileGeneration
             m_currentlyInstantiatedStreetTileAddition.transform.SetParent(m_streetTileAdditionRoot);
             m_currentlyInstantiatedStreetTileAddition.transform.localPosition = Vector3.zero;
             m_currentlyInstantiatedStreetTileAddition.transform.localRotation = Quaternion.Euler(rotation);
+
+            m_currentlyInstantiatedRouteType = routeMarkerType;
         }
 
         /// <summary>
@@ -787,8 +926,7 @@ namespace AWM.MapTileGeneration
                 return null;
             }
 
-            RouteMarkerMapping routeMarkerMappingToUse = m_levelSelectionRouteMarkerMappings.Find(
-                routeMarkerMapping => routeMarkerMapping.m_RouteMarkerType == routeMarkerDefinition.RouteMarkerType);
+            RouteMarkerMapping routeMarkerMappingToUse = m_levelSelectionRouteMarkerMappings.Find(routeMarkerMapping => routeMarkerMapping.m_RouteMarkerType == routeMarkerDefinition.RouteMarkerType);
 
             GameObject instatiatedRoute = Instantiate(routeMarkerMappingToUse.m_RouteMarkerPrefab, m_levelSelectionRoot);
             instatiatedRoute.transform.localPosition = Vector3.zero;
@@ -815,7 +953,7 @@ namespace AWM.MapTileGeneration
             {
                 yield break;
             }
-            
+
             bridgeAnimator.SetBool("Open", openBridge);
 
             while (!bridgeAnimator.GetCurrentAnimatorStateInfo(0).IsName(openBridge ? "Open" : "Closed"))
