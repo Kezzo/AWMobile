@@ -22,17 +22,17 @@ namespace AWM.EditorAndDebugOnly
 
             if (GUILayout.Button("Play Attack"))
             {
-                m_targetInstance.PlayPfx(UnitParticleFx.Attack);
+                m_targetInstance.PlayPfxAt(UnitParticleFx.Attack, Vector3.zero);
             }
 
             if (GUILayout.Button("Play Got Hit"))
             {
-                m_targetInstance.PlayPfx(UnitParticleFx.GotHit);
+                m_targetInstance.PlayPfxAt(UnitParticleFx.GotHit, Vector3.zero);
             }
 
             if (GUILayout.Button("Play Death"))
             {
-                m_targetInstance.PlayPfx(UnitParticleFx.Death);
+                m_targetInstance.PlayPfxAt(UnitParticleFx.Death, Vector3.zero);
             }
         }
 	

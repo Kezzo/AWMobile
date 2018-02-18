@@ -35,8 +35,7 @@ namespace AWM.BattleMechanics
         private UnitStatManagement m_statManagement;
         public UnitStatManagement StatManagement { get { return m_statManagement; } }
 
-        [SerializeField]
-        private UnitParticleFxPlayer m_unitParticleFxPlayer;
+        public UnitParticleFxPlayer UnitParticleFxPlayer { get; private set; }
 
         [SerializeField]
         private float m_disabledBrightness;
@@ -115,10 +114,15 @@ namespace AWM.BattleMechanics
             UniqueIdent = CC.BSC.RegisterUnit(TeamColor, this);
             m_statManagement.Initialize(this, GetUnitBalancing().m_Health);
 
-            if (!Root.Instance.SceneLoading.IsInLevelSelection && CC.BSC.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
+            if (!Root.Instance.SceneLoading.IsInLevelSelection)
             {
-                CC.BSC.OnTurnStartListener.Add(UniqueIdent.ToString(), OnTurnStarted);
-                CC.BSC.OnUnitSelectedListener.Add(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
+                if (CC.BSC.IsTeamWithColorPlayersTeam(unitData.m_TeamColor))
+                {
+                    CC.BSC.OnTurnStartListener.Add(UniqueIdent.ToString(), OnTurnStarted);
+                    CC.BSC.OnUnitSelectedListener.Add(UniqueIdent, OnUnitOfPlayerTeamChangedSelection);
+                }
+                
+                UnitParticleFxPlayer = CC.MBR.Get<UnitParticleFxPlayer>();
             }
         }
 
@@ -132,14 +136,11 @@ namespace AWM.BattleMechanics
             CC.BSC.OnTurnStartListener.Remove(UniqueIdent.ToString());
 
             m_attackMarker.SetActive(false);
-            m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Death);
+            UnitParticleFxPlayer.PlayPfxAt(UnitParticleFx.Death, this.gameObject.transform.position);
             m_meshRenderer.enabled = false;
 
-            Root.Instance.CoroutineHelper.CallDelayed(this, 0.6f, () =>
-            {
-                UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
-                Destroy(this.gameObject);
-            });
+            UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
+            Destroy(this.gameObject);
         }
 
         /// <summary>
@@ -160,7 +161,7 @@ namespace AWM.BattleMechanics
             baseUnit.StatManagement.HidePotentialDamage();
 
             baseUnit.StatManagement.TakeDamage(GetDamageOnUnit(baseUnit));
-            m_unitParticleFxPlayer.PlayPfx(UnitParticleFx.Attack);
+            //UnitParticleFxPlayer.PlayPfxAt(UnitParticleFx.Attack, this.gameObject.transform.position);
 
             UnitHasAttackedThisRound = true;
             // An attack will always keep the unit from moving in this round.
@@ -687,6 +688,12 @@ namespace AWM.BattleMechanics
         public void MoveAlongRoute(List<Vector2> route, IMovementCostResolver movementCostResolver, 
             Action<BaseMapTile> onReachedTile, Action onMoveFinished)
         {
+            if (route == null || route.Count == 0)
+            {
+                onMoveFinished();
+                return;
+            }
+
             UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
             m_currentSimplifiedPosition = route[route.Count - 1];
 

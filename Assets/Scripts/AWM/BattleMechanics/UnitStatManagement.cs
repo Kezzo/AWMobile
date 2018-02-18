@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using AWM.Enums;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -96,6 +97,10 @@ namespace AWM.BattleMechanics
             {
                 m_healthBarCanvas.enabled = false;
                 m_baseUnit.Die();
+            }
+            else
+            {
+                m_baseUnit.UnitParticleFxPlayer.PlayPfxAt(UnitParticleFx.GotHit, this.gameObject.transform.position);
             }
         }
 
