@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using AWM.BattleVisuals;
 using AWM.Enums;
 using AWM.MapTileGeneration;
@@ -46,6 +47,8 @@ namespace AWM.BattleMechanics
         public TeamColor TeamColor { get; private set; }
         public UnitType UnitType { get; private set; }
         public bool UnitHasMovedThisRound { get; private set; }
+        private bool m_isUnitMoving;
+        private bool m_isUnitSelected;
 
         public int UniqueIdent { get; private set; }
 
@@ -84,7 +87,7 @@ namespace AWM.BattleMechanics
         private List<BaseMapTile> m_currentWalkableMapTiles;
         private List<BaseMapTile> m_currentAttackableMapTiles;
 
-        private List<BaseUnit> m_attackableUnits = new List<BaseUnit>();
+        private List<BaseUnit> m_unitsMarkedForAttack = new List<BaseUnit>();
 
         private Vector2 m_initialSimplifiedPosition;
 
@@ -252,6 +255,7 @@ namespace AWM.BattleMechanics
         {
             Debug.LogFormat("Unit: '{0}' from Team: '{1}' was selected.", UnitType, TeamColor);
 
+            m_isUnitSelected = true;
             m_selectionMarker.SetActive(true);
 
             if (!UnitHasMovedThisRound)
@@ -263,7 +267,12 @@ namespace AWM.BattleMechanics
 
             if (!UnitHasAttackedThisRound)
             {
-                TryToDisplayActionOnUnitsInRange(out m_attackableUnits);
+                List<BaseUnit> attackableUnitsInRange = CC.BSC.GetUnitsInRange(
+                    this.CurrentSimplifiedPosition, GetUnitBalancing().m_AttackRange);
+
+                attackableUnitsInRange.RemoveAll(unit => !CanAttackUnit(unit));
+
+                DisplayActionOnUnitsInRange(attackableUnitsInRange);
             }
 
             HideAttackRange();
@@ -277,10 +286,12 @@ namespace AWM.BattleMechanics
         /// </summary>
         public void OnUnitWasDeselected()
         {
+            m_isUnitSelected = false;
+
             m_selectionMarker.SetActive(false);
             ChangeVisibilityOfAttackMarker(false);
 
-            foreach (var attackableUnit in m_attackableUnits)
+            foreach (var attackableUnit in m_unitsMarkedForAttack)
             {
                 attackableUnit.StatManagement.HidePotentialDamage();
             }
@@ -290,7 +301,7 @@ namespace AWM.BattleMechanics
 
             m_currentWalkableMapTiles = null;
 
-            ClearAttackableUnits(m_attackableUnits);
+            ClearAttackableUnits(m_unitsMarkedForAttack);
 
             HideAttackRange();
 
@@ -303,7 +314,7 @@ namespace AWM.BattleMechanics
         /// <param name="wasSelected">if set to <c>true</c> a unit was selected; otherwise false.</param>
         private void OnUnitOfPlayerTeamChangedSelection(bool wasSelected)
         {
-            if (!CanUnitTakeAction())
+            if (!CanUnitTakeAction() || m_isUnitMoving)
             {
                 return;
             }
@@ -500,7 +511,7 @@ namespace AWM.BattleMechanics
                 CC.BSC.RemoveCurrentConfirmMoveButtonPressedListener();
 
                 SetWalkableTileFieldVisibilityTo(false);
-                ClearAttackableUnits(m_attackableUnits);
+                ClearAttackableUnits(m_unitsMarkedForAttack);
                 UnitHasMovedThisRound = true;
 
                 MoveAlongRoute(routeToDestination, new UnitBalancingMovementCostResolver(
@@ -518,9 +529,17 @@ namespace AWM.BattleMechanics
                         return;
                     }
 
-                    if (TryToDisplayActionOnUnitsInRange(out m_attackableUnits))
+                    List<BaseUnit> attackableUnitsInRange = CC.BSC.GetUnitsInRange(
+                       this.CurrentSimplifiedPosition, GetUnitBalancing().m_AttackRange);
+                    attackableUnitsInRange.RemoveAll(unit => !CanAttackUnit(unit));
+
+                    if (attackableUnitsInRange.Count > 0)
                     {
-                        Debug.Log("Attackable units: "+m_attackableUnits.Count);
+                        Debug.Log("Attackable units: " + attackableUnitsInRange.Count);
+                        if (m_isUnitSelected)
+                        {
+                            DisplayActionOnUnitsInRange(attackableUnitsInRange);
+                        }
 
                         HideAllRouteMarker();
                     }
@@ -533,7 +552,12 @@ namespace AWM.BattleMechanics
                             onUnitMovedToDestinationCallback(UniqueIdent);
                         }
                     }
-                
+
+                    if (!m_isUnitSelected)
+                    {
+                        // retrigger event here, because it was blocked while the unit was moving.
+                        OnUnitOfPlayerTeamChangedSelection(false);
+                    }
                 });
             });
         }
@@ -559,35 +583,19 @@ namespace AWM.BattleMechanics
         }
 
         /// <summary>
-        /// Tries to display action on units in range.
-        /// For units that can take action on friendly units, it will display the field to do the friendly action on the unit.
+        /// Displays action on units in range.
         /// For enemy units the attack field will be displayed, if the unit can attack.
         /// </summary>
-        /// <returns></returns>
-        private bool TryToDisplayActionOnUnitsInRange(out List<BaseUnit> attackableUnits)
+        private void DisplayActionOnUnitsInRange(List<BaseUnit> attackableUnits)
         {
-            List<BaseUnit> unitsInRange = CC.BSC.GetUnitsInRange(
-                this.CurrentSimplifiedPosition, GetUnitBalancing().m_AttackRange);
-
-            attackableUnits = new List<BaseUnit>();
-
-            for (int unitIndex = 0; unitIndex < unitsInRange.Count; unitIndex++)
+            for (int unitIndex = 0; unitIndex < attackableUnits.Count; unitIndex++)
             {
-                BaseUnit unit = unitsInRange[unitIndex];
+                BaseUnit unit = attackableUnits[unitIndex];
 
-                if (CanAttackUnit(unit))
-                {
-                    unit.ChangeVisibilityOfAttackMarker(true);
-                    unit.StatManagement.DisplayPotentialDamage(this);
-                    attackableUnits.Add(unit);
-                }
-                else
-                {
-                    //TODO: Handle interaction with friendly units.
-                }
+                unit.ChangeVisibilityOfAttackMarker(true);
+                unit.StatManagement.DisplayPotentialDamage(this);
+                m_unitsMarkedForAttack.Add(unit);
             }
-
-            return attackableUnits.Count > 0;
         }
 
         /// <summary>
@@ -694,11 +702,13 @@ namespace AWM.BattleMechanics
                 return;
             }
 
+            m_isUnitMoving = true;
             UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
             m_currentSimplifiedPosition = route[route.Count - 1];
 
             StartCoroutine(MoveAlongRouteCoroutine(route, movementCostResolver, onReachedTile, () =>
             {
+                m_isUnitMoving = false;
                 UpdateEnvironmentVisibility(route[route.Count - 1], true);
                 onMoveFinished();
             }));
