@@ -77,7 +77,15 @@ namespace AWM.System
         private void Initialize(Action initializationDone)
         {
             CC.UBP.InitializeBalancingData();
-            m_sceneLoadingService.LoadToLevelSelection(initializationDone);
+
+            if (!CC.PPS.HasBeatenFirstLevel)
+            {
+                m_sceneLoadingService.LoadToLevel("Level1", initializationDone);
+            }
+            else
+            {
+                m_sceneLoadingService.LoadToLevelSelection(initializationDone);
+            }
         }
 
         /// <summary>

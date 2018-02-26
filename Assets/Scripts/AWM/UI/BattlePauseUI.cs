@@ -1,6 +1,6 @@
 ﻿using System;
-using AWM.Controls;
 using AWM.System;
+using TMPro;
 using UnityEngine;
 
 namespace AWM.UI
@@ -10,7 +10,15 @@ namespace AWM.UI
         [SerializeField]
         private Animator m_animator;
 
+        [SerializeField]
+        private TextMeshProUGUI m_endMatchText;
+
         private Action<bool> m_onVisibilityChange;
+
+        private void Awake()
+        {
+            m_endMatchText.text = !CC.PPS.HasBeatenFirstLevel ? "RESTART" : "END MATCH";
+        }
 
         /// <summary>
         /// Sets a visibility callback that is invokes when the pause ui is shown or hidden.
@@ -78,11 +86,24 @@ namespace AWM.UI
             {
                 Root.Instance.SceneLoading.UnloadExistingScenes(() =>
                 {
-                    Root.Instance.SceneLoading.LoadToLevelSelection(() =>
+                    if (!CC.PPS.HasBeatenFirstLevel)
                     {
-                        CC.InputBlocker.ChangeBattleControlInput(false);
-                        Root.Instance.LoadingUi.Hide();
-                    });
+                        Root.Instance.SceneLoading.LoadToLevel("Level1", () =>
+                        {
+                            CC.InputBlocker.ChangeBattleControlInput(false);
+                            Root.Instance.LoadingUi.Hide();
+                        });
+                    }
+                    else
+                    {
+                        Root.Instance.SceneLoading.LoadToLevelSelection(() =>
+                        {
+                            CC.InputBlocker.ChangeBattleControlInput(false);
+                            Root.Instance.LoadingUi.Hide();
+                        });
+                    }
+
+                    
                 });
             });
         }

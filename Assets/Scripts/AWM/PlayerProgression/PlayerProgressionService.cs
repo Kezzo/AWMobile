@@ -44,6 +44,14 @@ namespace AWM.PlayerProgression
         }
 
         /// <summary>
+        /// Determines if the player has beaten the very first level.
+        /// </summary>
+        public bool HasBeatenFirstLevel
+        {
+            get { return CC.PPS.LastUnlockedLevel != "Level1"; }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PlayerProgressionService"/> class.
         /// </summary>
         /// <param name="serializer">The serializer used to serialize/deserialize the stored payload.</param>
