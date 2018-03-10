@@ -32,6 +32,11 @@ namespace AWM.LevelSelection
         {
             get
             {
+                if (CC.BSC.RegisteredTeams.Count == 0)
+                {
+                    return null;
+                }
+
                 // Lazily get and store level selection unit.
                 return m_levelSelectionUnit ?? 
                        (m_levelSelectionUnit = CC.BSC.RegisteredTeams[TeamColor.Blue][0]);
@@ -108,6 +113,11 @@ namespace AWM.LevelSelection
         /// <param name="mapTileType">Type of the map tile.</param>
         private void UpdateUnitVisuals(MapTileType mapTileType)
         {
+            if (LevelSelectionUnit == null)
+            {
+                return;
+            }
+
             switch (mapTileType)
             {
                 case MapTileType.Grass:
@@ -150,7 +160,7 @@ namespace AWM.LevelSelection
                 }
             }
 
-            if (isLastRoute && !CC.PPS.LastUnlockedLevel.Equals(levelSelector.LevelName))
+            if (isLastRoute && !CC.PPS.LastUnlockedLevel.Equals(levelSelector.LevelName) && Application.isPlaying)
             {
                 StartCoroutine(ShowLevelSelectionRoute(routeGameObjects, levelSelector, 0.3f));
                 CC.PPS.LastUnlockedLevel = levelSelector.LevelName;
@@ -192,7 +202,11 @@ namespace AWM.LevelSelection
         {
             if (m_levelName.Equals(CC.PPS.LastPlayedLevel))
             {
-                LevelSelectionUnit.SetPositionTo(m_rootMapTile);
+                if (LevelSelectionUnit != null)
+                {
+                    LevelSelectionUnit.SetPositionTo(m_rootMapTile);
+                }
+
                 UpdateUnitVisuals(m_rootMapTile.MapTileType);
 
                 CC.MBR.Get<CameraControls>().SetCameraPositionTo(m_centeredCameraPosition);

@@ -34,16 +34,9 @@ namespace AWM.LevelSelection
 
         /// <summary>
         /// Initializes the level selection visuals, depending on the players progress.
-        /// TODO: Inject player progress here.
         /// </summary>
         public void InitializeLevelSelectionVisuals()
         {
-            if (!Application.isPlaying)
-            {
-                // to not break the level generation editor.
-                return;
-            }
-
             int levelSelectionCounter = 0;
 
             while (true)
@@ -72,14 +65,17 @@ namespace AWM.LevelSelection
                     levelSelectorToInitialize.gameObject.SetActive(true);
                 }
 
-                levelSelectorToInitialize.ValidateLevelSelectionUnitsPosition();
+                if (Application.isPlaying)
+                {
+                    levelSelectorToInitialize.ValidateLevelSelectionUnitsPosition();
+                }
 
                 if (lastLevelSelectorReached)
                 {
                     break;
                 }
 
-                if (CC.PPS.IsLevelCompleted(levelSelectorToInitialize.LevelName))
+                if (CC.PPS.IsLevelCompleted(levelSelectorToInitialize.LevelName) || !Application.isPlaying)
                 {
                     levelSelectorToInitialize.DrawRouteToLevelSelector(nextLevelSelector, 
                         !CC.PPS.IsLevelCompleted(nextLevelSelector.LevelName));
