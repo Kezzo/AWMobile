@@ -13,12 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UnitType: 4
   m_UnitMetaType: 2
-  m_MovementRangePerRound: 3
+  m_MovementRangePerRound: 9
   m_WalkableMapTileTypes:
   - m_MapTileType: 2
     m_CanWalkOnTile: 1
     m_CanPassOverTile: 0
-    m_MovementCost: 1
+    m_MovementCost: 3
     m_CanWalkOnStreet: 0
     m_CanPassOverStreet: 1
     m_StreetMovementCost: 1

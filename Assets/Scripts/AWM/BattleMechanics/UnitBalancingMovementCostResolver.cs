@@ -21,11 +21,16 @@ namespace AWM.BattleMechanics
         /// <summary>
         /// Gets the movement cost to walk on a map tile with a certain type.
         /// </summary>
-        /// <param name="mapTileType">Type of the map tile.</param>
+        /// <param name="mapTile">The maptile to get the movement cost from.</param>
         /// <returns></returns>
-        public int GetMovementCostToWalkOnMapTileType(MapTileType mapTileType)
+        public int GetMovementCostToWalkOnMapTile(BaseMapTile mapTile)
         {
-            var walkMapToCheck = m_unitBalancingData.m_WalkableMapTileTypes.Find(walkableMapTile => walkableMapTile.m_MapTileType == mapTileType);
+            if (mapTile.HasStreet && m_unitBalancingData.m_UnitMetaType == UnitMetaType.Ground)
+            {
+                return 2;
+            }
+
+            UnitBalancingData.WalkableMapTiles walkMapToCheck = m_unitBalancingData.m_WalkableMapTileTypes.Find(walkableMapTile => walkableMapTile.m_MapTileType == mapTile.MapTileType);
 
             return walkMapToCheck == null ? 0 : walkMapToCheck.m_MovementCost;
         }

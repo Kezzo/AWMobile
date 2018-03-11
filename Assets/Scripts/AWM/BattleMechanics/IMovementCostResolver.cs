@@ -11,8 +11,8 @@ namespace AWM.BattleMechanics
         /// <summary>
         /// Gets the type of the movement cost to walk on map tile.
         /// </summary>
-        /// <param name="mapTileType">Type of the map tile.</param>
-        int GetMovementCostToWalkOnMapTileType(MapTileType mapTileType);
+        /// <param name="mapTile">The maptile to get the movement cost from.</param>
+        int GetMovementCostToWalkOnMapTile(BaseMapTile mapTile);
 
         /// <summary>
         /// Determines whether a unit enough movement range left to with the given current movement cost.

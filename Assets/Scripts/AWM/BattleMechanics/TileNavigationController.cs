@@ -128,7 +128,7 @@ namespace AWM.BattleMechanics
                     }
 
                     int costToMoveToNode = walkingCostToNode +
-                                           movementCostResolver.GetMovementCostToWalkOnMapTileType(baseMapTile.MapTileType);
+                                           movementCostResolver.GetMovementCostToWalkOnMapTile(baseMapTile);
 
                     // Only add node, if it wasn't added before or if a shorter path to the node was found.
                     if (!costToMoveToNodes.ContainsKey(adjacentNode))
@@ -241,7 +241,7 @@ namespace AWM.BattleMechanics
                     }
 
                     int costToMoveToNode = costToGetToPreviousMapTile +
-                                           movementCostResolver.GetMovementCostToWalkOnMapTileType(baseMapTile.MapTileType);
+                                           movementCostResolver.GetMovementCostToWalkOnMapTile(baseMapTile);
 
                     int existingCostToMoveToNode = 0;
 
@@ -323,8 +323,8 @@ namespace AWM.BattleMechanics
 
                 routeToMove.Add(routeNode);
 
-                usedUpMovementCost += movementCostResolver.GetMovementCostToWalkOnMapTileType(
-                    CC.TNC.GetMapTile(routeNode).MapTileType);
+                usedUpMovementCost += movementCostResolver.GetMovementCostToWalkOnMapTile(
+                    CC.TNC.GetMapTile(routeNode));
             }
 
             // Needed to not stop on a unit when the route would move over it.
@@ -405,7 +405,7 @@ namespace AWM.BattleMechanics
                     continue;
                 }
 
-                int walkingCostToNode = currentWalkingCost + movementCostResolver.GetMovementCostToWalkOnMapTileType(adjacentBaseMapTile.MapTileType);
+                int walkingCostToNode = currentWalkingCost + movementCostResolver.GetMovementCostToWalkOnMapTile(adjacentBaseMapTile);
 
                 // Is MapTile walkable by unit?
                 if (movementCostResolver.CanUnitWalkOnMapTile(adjacentBaseMapTile, walkingCostToNode, true) &&

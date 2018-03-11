@@ -775,8 +775,8 @@ namespace AWM.BattleMechanics
                     animationCurveValue = 1f - (distanceToNeighbourTile / startDistanceToNeighbourTile) / 2;
                 }
 
-                float terrainSpeedModifier = movementCostResolver.GetMovementCostToWalkOnMapTileType(distanceToNeighbourTile <= 1f ? 
-                    destinationMapTile.MapTileType : startMapTile.MapTileType) > 1 ? 0.75f : 1f;
+                float terrainSpeedModifier = movementCostResolver.GetMovementCostToWalkOnMapTile(distanceToNeighbourTile <= 1f ? 
+                    destinationMapTile : startMapTile) > 3 ? 0.75f : 1f;
 
                 float movementStep = m_worldMovementSpeed * terrainSpeedModifier * m_movementAnimationCurve.Evaluate(animationCurveValue) * Time.deltaTime;
 

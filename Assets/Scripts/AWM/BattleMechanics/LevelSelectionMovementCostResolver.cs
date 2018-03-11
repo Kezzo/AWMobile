@@ -12,8 +12,8 @@ namespace AWM.BattleMechanics
         /// <summary>
         /// Always returning 0 here, because there is no movement cost in the level selection.
         /// </summary>
-        /// <param name="mapTileType">Type of the map tile.</param>
-        public int GetMovementCostToWalkOnMapTileType(MapTileType mapTileType)
+        /// <param name="mapTile">The maptile to get the movement cost from.</param>
+        public int GetMovementCostToWalkOnMapTile(BaseMapTile mapTile)
         {
             return 0;
         }
