@@ -88,7 +88,7 @@ namespace AWM.AI
             if (m_unitCounter < m_aiUnits.Count)
             {
                 // To pause between each unit that was moved
-                Root.Instance.CoroutineHelper.CallDelayed(m_aiUnits[m_unitCounter], 0.2f, () =>
+                Root.Instance.CoroutineHelper.CallDelayed(m_aiUnits[m_unitCounter], 0.4f, () =>
                 {
                     if (CC.BSC.HasBattleEnded)
                     {
