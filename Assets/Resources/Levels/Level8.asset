@@ -3291,8 +3291,8 @@ MonoBehaviour:
       m_LevelSelectionOrder: 0
       m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
   m_MapCloudShadowData:
-    m_PoolSize: 0
-    m_MinVisibleClouds: 0
-    m_MaxLeftSpawnPosition: 0
-    m_MaxRightSpawnPosition: 0
-    m_FlyingDistance: 0
+    m_PoolSize: 40
+    m_MinVisibleClouds: 30
+    m_MaxLeftSpawnPosition: -15
+    m_MaxRightSpawnPosition: 30
+    m_FlyingDistance: 60
