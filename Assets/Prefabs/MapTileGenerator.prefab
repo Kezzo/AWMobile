@@ -51,7 +51,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 32, y: 1, z: 32}
+  m_Size: {x: 50, y: 1, z: 50}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114038318126339458
 MonoBehaviour:
@@ -199,6 +199,7 @@ MonoBehaviour:
     m_MapTileType: 5
   - m_KeyCode: 121
     m_MapTileType: 6
+  m_switchToStreetKeyCode: 0
   m_quickUnitTypeSwitcherHotKeys:
   - m_KeyCode: 97
     m_UnitType: 0
@@ -225,5 +226,6 @@ MonoBehaviour:
   m_mapTileSelectionCamera: {fileID: 0}
   m_LastToggledTileType: 0
   m_LastToggledUnitType: 1
+  m_PlaceStreet: 0
   m_CurrentTypeToEdit: 2
   m_CurrentTeamColor: 0
