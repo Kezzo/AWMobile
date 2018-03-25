@@ -228,6 +228,9 @@ namespace AWM.BattleMechanics
                 costToMoveToNodes.TryGetValue(nodeToGetNeighboursFrom, out costToGetToPreviousMapTile);
 
                 List<Vector2> adjacentNodes = GetWalkableAdjacentNodes(nodeToGetNeighboursFrom, movementCostResolver, costToGetToPreviousMapTile);
+                
+                // Needed to prevent loopback pathfinding that makes assumes that the startnode is a valid node to move to.
+                adjacentNodes.Remove(startNode);
 
                 for (int nodeIndex = 0; nodeIndex < adjacentNodes.Count; nodeIndex++)
                 {
