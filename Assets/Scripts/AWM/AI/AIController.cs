@@ -280,7 +280,8 @@ namespace AWM.AI
 
             if (tilesInRange.Count == 0)
             {
-                return false;
+                unitMovementDoneCallback();
+                return true;
             }
 
             // Iterate through reachable maptiles until a route was found.
