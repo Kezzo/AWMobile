@@ -1,0 +1,3298 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b00a0bc7cdf2dd4e86a201510b15533, type: 3}
+  m_Name: Level12
+  m_EditorClassIdentifier: 
+  m_LevelName: Level12
+  m_IsLevelSelection: 0
+  m_Teams:
+  - m_TeamColor: 0
+    m_IsPlayersTeam: 1
+  - m_TeamColor: 1
+    m_IsPlayersTeam: 0
+  - m_TeamColor: 2
+    m_IsPlayersTeam: 0
+  - m_TeamColor: 3
+    m_IsPlayersTeam: 0
+  m_LevelSize: {x: 16, y: 16}
+  m_MapTileMargin: 2
+  m_MapTileGroupSize: 2
+  m_MapTileGroups:
+  - m_GroupPositionVector: {x: 0, y: 0}
+    m_GroupPosition: {x: -15, y: 0, z: -15}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 1
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 0, y: 1}
+    m_GroupPosition: {x: -15, y: 0, z: -11}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 1
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 1
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 1
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 0, y: 2}
+    m_GroupPosition: {x: -15, y: 0, z: -7}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 0, y: 3}
+    m_GroupPosition: {x: -15, y: 0, z: -3}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 0, y: 4}
+    m_GroupPosition: {x: -15, y: 0, z: 1}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 0, y: 5}
+    m_GroupPosition: {x: -15, y: 0, z: 5}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 0, y: 6}
+    m_GroupPosition: {x: -15, y: 0, z: 9}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 0
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 0
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 0, y: 7}
+    m_GroupPosition: {x: -15, y: 0, z: 13}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 0
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 0
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 0
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 1, y: 0}
+    m_GroupPosition: {x: -11, y: 0, z: -15}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 1, y: 1}
+    m_GroupPosition: {x: -11, y: 0, z: -11}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 1
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 1, y: 2}
+    m_GroupPosition: {x: -11, y: 0, z: -7}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 1, y: 3}
+    m_GroupPosition: {x: -11, y: 0, z: -3}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 1, y: 4}
+    m_GroupPosition: {x: -11, y: 0, z: 1}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 1, y: 5}
+    m_GroupPosition: {x: -11, y: 0, z: 5}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 1, y: 6}
+    m_GroupPosition: {x: -11, y: 0, z: 9}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 0
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 1, y: 7}
+    m_GroupPosition: {x: -11, y: 0, z: 13}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 0
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 0
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 0
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 2, y: 0}
+    m_GroupPosition: {x: -7, y: 0, z: -15}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 1
+        m_Orientation: 1
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 2, y: 1}
+    m_GroupPosition: {x: -7, y: 0, z: -11}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 2, y: 2}
+    m_GroupPosition: {x: -7, y: 0, z: -7}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 2, y: 3}
+    m_GroupPosition: {x: -7, y: 0, z: -3}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 2, y: 4}
+    m_GroupPosition: {x: -7, y: 0, z: 1}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 2, y: 5}
+    m_GroupPosition: {x: -7, y: 0, z: 5}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 2, y: 6}
+    m_GroupPosition: {x: -7, y: 0, z: 9}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 2, y: 7}
+    m_GroupPosition: {x: -7, y: 0, z: 13}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 3, y: 0}
+    m_GroupPosition: {x: -3, y: 0, z: -15}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 3, y: 1}
+    m_GroupPosition: {x: -3, y: 0, z: -11}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 3, y: 2}
+    m_GroupPosition: {x: -3, y: 0, z: -7}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 3, y: 3}
+    m_GroupPosition: {x: -3, y: 0, z: -3}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 3, y: 4}
+    m_GroupPosition: {x: -3, y: 0, z: 1}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 3, y: 5}
+    m_GroupPosition: {x: -3, y: 0, z: 5}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 3, y: 6}
+    m_GroupPosition: {x: -3, y: 0, z: 9}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 3, y: 7}
+    m_GroupPosition: {x: -3, y: 0, z: 13}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 4, y: 0}
+    m_GroupPosition: {x: 1, y: 0, z: -15}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 4, y: 1}
+    m_GroupPosition: {x: 1, y: 0, z: -11}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 4, y: 2}
+    m_GroupPosition: {x: 1, y: 0, z: -7}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 4, y: 3}
+    m_GroupPosition: {x: 1, y: 0, z: -3}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 4, y: 4}
+    m_GroupPosition: {x: 1, y: 0, z: 1}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 4, y: 5}
+    m_GroupPosition: {x: 1, y: 0, z: 5}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 4, y: 6}
+    m_GroupPosition: {x: 1, y: 0, z: 9}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 4, y: 7}
+    m_GroupPosition: {x: 1, y: 0, z: 13}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 5, y: 0}
+    m_GroupPosition: {x: 5, y: 0, z: -15}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 5, y: 1}
+    m_GroupPosition: {x: 5, y: 0, z: -11}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 5, y: 2}
+    m_GroupPosition: {x: 5, y: 0, z: -7}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 5, y: 3}
+    m_GroupPosition: {x: 5, y: 0, z: -3}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 5, y: 4}
+    m_GroupPosition: {x: 5, y: 0, z: 1}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 5, y: 5}
+    m_GroupPosition: {x: 5, y: 0, z: 5}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 5, y: 6}
+    m_GroupPosition: {x: 5, y: 0, z: 9}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 1
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 5, y: 7}
+    m_GroupPosition: {x: 5, y: 0, z: 13}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 2
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 6, y: 0}
+    m_GroupPosition: {x: 9, y: 0, z: -15}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 3
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 3
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 6, y: 1}
+    m_GroupPosition: {x: 9, y: 0, z: -11}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 3
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 3
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 6, y: 2}
+    m_GroupPosition: {x: 9, y: 0, z: -7}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 3
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 3
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 6, y: 3}
+    m_GroupPosition: {x: 9, y: 0, z: -3}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 6, y: 4}
+    m_GroupPosition: {x: 9, y: 0, z: 1}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 6, y: 5}
+    m_GroupPosition: {x: 9, y: 0, z: 5}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 6, y: 6}
+    m_GroupPosition: {x: 9, y: 0, z: 9}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 2
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 2
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 2
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 2
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 6, y: 7}
+    m_GroupPosition: {x: 9, y: 0, z: 13}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 2
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 2
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 2
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 7, y: 0}
+    m_GroupPosition: {x: 13, y: 0, z: -15}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 3
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 3
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 3
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 7, y: 1}
+    m_GroupPosition: {x: 13, y: 0, z: -11}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 3
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 3
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 7, y: 2}
+    m_GroupPosition: {x: 13, y: 0, z: -7}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 3
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 3
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 7, y: 3}
+    m_GroupPosition: {x: 13, y: 0, z: -3}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 7, y: 4}
+    m_GroupPosition: {x: 13, y: 0, z: 1}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 7, y: 5}
+    m_GroupPosition: {x: 13, y: 0, z: 5}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 2
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 2
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 7, y: 6}
+    m_GroupPosition: {x: 13, y: 0, z: 9}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 1
+        m_TeamColor: 2
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 2
+        m_Orientation: 3
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 2
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 2
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  - m_GroupPositionVector: {x: 7, y: 7}
+    m_GroupPosition: {x: 13, y: 0, z: 13}
+    m_MapTiles:
+    - m_PositionVector: {x: 0, y: 0}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 0}
+      m_MapTileType: 4
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 3
+        m_TeamColor: 2
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 0, y: 1}
+      m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 2
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 0}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
+      m_MapTileType: 3
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 2
+        m_TeamColor: 2
+        m_Orientation: 2
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+    - m_PositionVector: {x: 1, y: 1}
+      m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
+      m_MapTileType: 1
+      m_HasStreet: 0
+      m_Unit:
+        m_UnitType: 0
+        m_TeamColor: 0
+        m_Orientation: 0
+      m_LevelSelectionRouteType: 0
+      m_LevelNameToStart: 
+      m_LevelSelectionOrder: 0
+      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+  m_MapCloudShadowData:
+    m_PoolSize: 40
+    m_MinVisibleClouds: 30
+    m_MaxLeftSpawnPosition: -15
+    m_MaxRightSpawnPosition: 30
+    m_FlyingDistance: 60
