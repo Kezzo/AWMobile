@@ -27,7 +27,7 @@ Shader "Custom/Mobile-Unlit-Shadowed-Unit" {
             #include "AutoLight.cginc"
             #include "Lighting.cginc"
             #pragma multi_compile_fwdbase_fullshadows
-            #pragma only_renderers d3d9 d3d11 glcore gles gles3 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal 
             #pragma target 2.0
             uniform sampler2D _Texture; uniform float4 _Texture_ST;
             uniform fixed _Brightness;

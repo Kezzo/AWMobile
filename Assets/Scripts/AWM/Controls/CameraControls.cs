@@ -144,7 +144,8 @@ namespace AWM.Controls
         /// </summary>
         private void ScrollCamera()
         {
-            if (Application.platform != RuntimePlatform.WindowsEditor &&
+            if (Application.platform != RuntimePlatform.WindowsEditor && 
+                Application.platform != RuntimePlatform.OSXEditor &&
                 MouseInputHelper.GetMouseButtonDown(0))
             {
                 m_fingerIdUsedToScroll = Input.GetTouch(0).fingerId;
@@ -155,7 +156,8 @@ namespace AWM.Controls
                 Vector2 mousePosition = GetInputPosition();
                 Vector2 mouseDelta = m_lastMousePosition - mousePosition;
 
-                if (Application.platform != RuntimePlatform.WindowsEditor && 
+                if (Application.platform != RuntimePlatform.WindowsEditor &&
+                    Application.platform != RuntimePlatform.OSXEditor &&
                     Input.GetTouch(0).fingerId != m_fingerIdUsedToScroll)
                 {
                     CheckUsedScrollFinger(ref mousePosition, ref mouseDelta);
@@ -221,7 +223,7 @@ namespace AWM.Controls
         /// <returns></returns>
         private Vector2 GetInputPosition()
         {
-            return Application.platform == RuntimePlatform.WindowsEditor ? 
+            return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor ? 
                 MouseInputHelper.MousePosition : Input.GetTouch(0).position;
         }
 
@@ -232,7 +234,7 @@ namespace AWM.Controls
         {
             float deltaMagnitudeDifference = 0f;
 
-            if (Application.platform == RuntimePlatform.WindowsEditor)
+            if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
             {
                 deltaMagnitudeDifference = -(Input.mouseScrollDelta.y * 20f);
             }

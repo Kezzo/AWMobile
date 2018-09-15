@@ -28,7 +28,7 @@ Shader "Custom/Mobile-Transparent-HUD" {
             #define UNITY_PASS_FORWARDBASE
             #include "UnityCG.cginc"
             #pragma multi_compile_fwdbase
-            #pragma only_renderers d3d9 d3d11 glcore gles gles3 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal 
             #pragma target 2.0
             uniform sampler2D _Texture; uniform float4 _Texture_ST;
             struct VertexInput {
