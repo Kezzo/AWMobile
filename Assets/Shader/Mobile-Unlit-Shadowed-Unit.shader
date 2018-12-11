@@ -22,7 +22,6 @@ Shader "Custom/Mobile-Unlit-Shadowed-Unit" {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #define UNITY_PASS_FORWARDBASE
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
             #include "Lighting.cginc"

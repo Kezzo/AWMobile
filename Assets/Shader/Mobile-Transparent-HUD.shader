@@ -25,7 +25,6 @@ Shader "Custom/Mobile-Transparent-HUD" {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #define UNITY_PASS_FORWARDBASE
             #include "UnityCG.cginc"
             #pragma multi_compile_fwdbase
             #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal 
