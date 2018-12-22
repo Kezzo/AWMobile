@@ -23,6 +23,10 @@ namespace AWM.System
         [SerializeField]
         private GameObject m_blackScreen;
 
+        public bool HasShownTitleUI { get; set; }
+
+        public bool IsInputBlocked { get; set; }
+
 #if UNITY_EDITOR
         [SerializeField]
         private DebugValues m_debugValues;
@@ -78,14 +82,7 @@ namespace AWM.System
         {
             CC.UBP.InitializeBalancingData();
 
-            if (!CC.PPS.HasBeatenFirstLevel)
-            {
-                m_sceneLoadingService.LoadToLevel("Level1", initializationDone);
-            }
-            else
-            {
-                m_sceneLoadingService.LoadToLevelSelection(initializationDone);
-            }
+            m_sceneLoadingService.LoadToLevelSelection(initializationDone);
         }
 
         /// <summary>

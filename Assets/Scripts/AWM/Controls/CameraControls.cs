@@ -112,7 +112,7 @@ namespace AWM.Controls
         /// </summary>
         private void LateUpdate()
         {
-            if (IsBlocked)
+            if (IsBlocked || Root.Instance.IsInputBlocked)
             {
                 m_isManuallyScrolling = false;
                 m_startedScrolling = false;

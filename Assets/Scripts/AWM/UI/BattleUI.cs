@@ -26,6 +26,9 @@ namespace AWM.UI
         [SerializeField]
         private BattlePauseUI m_battlePauseUi;
 
+        [SerializeField]
+        private TitleUI m_titleUi;
+
         private void Awake()
         {
             CC.MBR.Register(this);
@@ -58,6 +61,15 @@ namespace AWM.UI
                     });
 
                 m_battlePauseUi.SetVisibilityCallback(ChangeVisibilityOfBattleUI);
+            }
+        }
+
+        private void Start()
+        {
+            if (Root.Instance.SceneLoading.IsInLevelSelection && !Root.Instance.HasShownTitleUI)
+            {
+                m_titleUi.Show();
+                Root.Instance.HasShownTitleUI = true;
             }
         }
 

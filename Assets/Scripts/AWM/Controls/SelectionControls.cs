@@ -104,7 +104,7 @@ namespace AWM.Controls
         /// </summary>
         private void Update ()
         {
-            if (IsBlocked)
+            if (IsBlocked || Root.Instance.IsInputBlocked)
             {
                 return;
             }
