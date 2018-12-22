@@ -172,7 +172,10 @@ namespace AWM.LevelSelection
                     routeGameObject.SetActive(true);
                 }
 
-                levelSelector.gameObject.SetActive(true);
+                if(levelSelector.gameObject != null)
+                {
+                    levelSelector.gameObject.SetActive(true);
+                }
             }
         }
 
