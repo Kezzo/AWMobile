@@ -86,6 +86,9 @@ namespace AWM.Controls
 
         private int m_fingerIdUsedToScroll = -1;
 
+        private Vector3 m_maxCameraPositions;
+        private Vector3 m_minCameraPositions;
+
         private void Awake()
         {
             CC.MBR.Register(this);
@@ -139,6 +142,12 @@ namespace AWM.Controls
             ScrollCamera();
         }
 
+        public void SetMinMaxCameraPositions(Vector3 maxPositions, Vector3 minPositions)
+        {
+            m_maxCameraPositions = maxPositions;
+            m_minCameraPositions = minPositions;
+        }
+
         /// <summary>
         /// Scrolls the camera when dragging on the screen.
         /// </summary>
@@ -177,6 +186,13 @@ namespace AWM.Controls
                         CameraToControl.orthographic ? m_maxZoomLevelOrthographic : m_maxZoomLevel, m_zoomLevel), 0.3f, 1f);
 
                     m_cameraMover.localPosition += new Vector3(mouseDelta.x * scrollSpeed, mouseDelta.y * scrollSpeed, 0f);
+
+                    // so player can always see the level
+                    m_cameraMover.localPosition = new Vector3(
+                        Mathf.Max(m_minCameraPositions.x, Mathf.Min(m_maxCameraPositions.x, m_cameraMover.localPosition.x)),
+                        Mathf.Max(m_minCameraPositions.y, Mathf.Min(m_maxCameraPositions.y, m_cameraMover.localPosition.y)),
+                        Mathf.Max(m_minCameraPositions.z, Mathf.Min(m_maxCameraPositions.z, m_cameraMover.localPosition.z)));
+                        
                     m_cameraMover.position = new Vector3(m_cameraMover.position.x, yPosition, m_cameraMover.position.z);
                 }
 

@@ -19,6 +19,9 @@ namespace AWM.Models
         public Vector2 m_LevelSize;
         public float m_MapTileMargin;
 
+        public Vector3 m_MaxCameraPosition;
+        public Vector3 m_MinCameraPosition;
+
         public int m_MapTileGroupSize;
         public List<MapTileGroup> m_MapTileGroups;
 

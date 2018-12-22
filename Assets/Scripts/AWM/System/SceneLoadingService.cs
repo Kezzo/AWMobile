@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using AWM.Controls;
 using AWM.MapTileGeneration;
 using AWM.Models;
 using UnityEngine;
@@ -110,6 +111,15 @@ namespace AWM.System
 
                     MapGenerationData mapGenerationData = mapTileGeneratorEditor.LoadMapGenerationData(levelName);
                     CC.BSC.IntializeBattle(mapGenerationData.m_Teams, levelName);
+
+                    CameraControls cameraControls;
+                    if (!CC.MBR.TryGet(out cameraControls))
+                    {
+                        Debug.Log("CameraControls can't be retrieved.");
+                        return;
+                    }
+
+                    cameraControls.SetMinMaxCameraPositions(mapGenerationData.m_MaxCameraPosition, mapGenerationData.m_MinCameraPosition);
 
                     mapTileGeneratorEditor.LoadExistingMap(mapGenerationData);
                     CC.BSC.StartBattle();

@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -20,6 +20,8 @@ MonoBehaviour:
     m_IsPlayersTeam: 0
   m_LevelSize: {x: 14, y: 14}
   m_MapTileMargin: 2
+  m_MaxCameraPosition: {x: 18, y: 12.3, z: 5.1}
+  m_MinCameraPosition: {x: -18, y: -12.3, z: -5.1}
   m_MapTileGroupSize: 2
   m_MapTileGroups:
   - m_GroupPositionVector: {x: 0, y: 0}
