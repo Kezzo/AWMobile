@@ -221,8 +221,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 30 FPS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
   m_inputSource: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -337,7 +337,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 50}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &648914538
 GameObject:

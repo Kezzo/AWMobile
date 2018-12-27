@@ -406,8 +406,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Team Green Won!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 11
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -478,7 +478,7 @@ MonoBehaviour:
     spaceCount: 2
     wordCount: 3
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -539,7 +539,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 100}
+  m_SizeDelta: {x: 750, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &433152801
 MonoBehaviour:
@@ -562,8 +562,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Team Green's Turn!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1037,8 +1037,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: RESUME
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1229,8 +1229,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: END TURN
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1385,8 +1385,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: OK
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1864,7 +1864,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 200}
+  m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 1500, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1308048238
@@ -1886,10 +1886,14 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: CUBES AND TANKS
+  m_text: 'CUBES
+
+    AND
+
+    TANKS'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1932,7 +1936,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 6
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -1960,7 +1964,7 @@ MonoBehaviour:
     spaceCount: 2
     wordCount: 3
     linkCount: 0
-    lineCount: 1
+    lineCount: 3
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -3053,8 +3057,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Tap to start game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3226,8 +3230,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: PAUSED
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3342,7 +3346,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 500, y: 100}
+  m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2004765739
 GameObject:
@@ -3573,8 +3577,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: END MATCH
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7164d988b5cda04fbb0142c5d1b7f1c, type: 2}
-  m_sharedMaterial: {fileID: 21363403297558940, guid: a7164d988b5cda04fbb0142c5d1b7f1c,
+  m_fontAsset: {fileID: 11400000, guid: faa38ba70fed64853b5c4d05df6d9d7c, type: 2}
+  m_sharedMaterial: {fileID: 21882582307537430, guid: faa38ba70fed64853b5c4d05df6d9d7c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3645,7 +3649,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -3706,7 +3710,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 620, y: 100}
+  m_SizeDelta: {x: 750, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2047417146
 MonoBehaviour:

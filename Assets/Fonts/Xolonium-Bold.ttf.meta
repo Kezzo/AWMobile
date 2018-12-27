@@ -1,7 +1,5 @@
 fileFormatVersion: 2
-guid: 7c10859ab7d3cdd4c9506abe79c55291
-timeCreated: 1511724991
-licenseType: Free
+guid: 65dc5f294cb38490896c0bf27a2c6380
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -10,13 +8,15 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Kimberley
+  fontName: Xolonium
   fontNames:
-  - Kimberley
+  - Xolonium
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
