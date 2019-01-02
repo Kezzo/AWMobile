@@ -25,6 +25,17 @@ namespace AWM.BattleMechanics
 
         [SerializeField]
         private float m_worldMovementSpeed;
+        public float WorldMovementSpeed
+        {
+            set
+            {
+                m_worldMovementSpeed = value;
+            }
+            get
+            {
+                return m_worldMovementSpeed;
+            }
+        }
 
         [SerializeField]
         private MeshFilter m_meshFilter;

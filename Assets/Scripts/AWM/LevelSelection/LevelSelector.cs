@@ -72,9 +72,6 @@ namespace AWM.LevelSelection
         {
             Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
 
-            // There is always only one unit in the level selection.
-            BaseUnit levelSelectionUnit = LevelSelectionUnit;
-
             if (LevelSelectionUnit.CurrentSimplifiedPosition == m_rootMapTile.m_SimplifiedMapPosition)
             {
                 //TODO: Enter level.
@@ -86,12 +83,26 @@ namespace AWM.LevelSelection
                 return;
             }
 
+            MoveToLevelSelector(this, false);
+        }
+
+        public void MoveToLevelSelector(LevelSelector levelSelector, bool slowMovement)
+        {
             Debug.Log(string.Format("Moving to level selector of level: {0}", m_levelName));
+
+            // There is always only one unit in the level selection.
+            BaseUnit levelSelectionUnit = LevelSelectionUnit;
+            float worldMovementSpeed = levelSelectionUnit.WorldMovementSpeed;
+
+            if (slowMovement)
+            {
+                levelSelectionUnit.WorldMovementSpeed = 5;
+            }
 
             IMovementCostResolver movementCostResolver = new LevelSelectionMovementCostResolver();
 
             var routeToLevelSelector = CC.TNC.GetBestWayToDestination(
-                levelSelectionUnit.CurrentSimplifiedPosition, m_rootMapTile.m_SimplifiedMapPosition,
+                levelSelectionUnit.CurrentSimplifiedPosition, levelSelector.RootMapTile.m_SimplifiedMapPosition,
                 movementCostResolver);
 
             CC.InputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
@@ -103,6 +114,7 @@ namespace AWM.LevelSelection
             }, () =>
             {
                 CC.InputBlocker.ChangeBattleControlInput(false, InputBlockMode.SelectionOnly);
+                levelSelectionUnit.WorldMovementSpeed = worldMovementSpeed;
                 //TODO: display level info.
             });
         }
@@ -164,6 +176,7 @@ namespace AWM.LevelSelection
             {
                 StartCoroutine(ShowLevelSelectionRoute(routeGameObjects, levelSelector, 0.3f));
                 CC.PPS.LastUnlockedLevel = levelSelector.LevelName;
+                MoveToLevelSelector(levelSelector, true);
             }
             else
             {
@@ -187,13 +200,15 @@ namespace AWM.LevelSelection
         /// <param name="displayDelay">The delay inbetween display an object of the route.</param>
         private IEnumerator ShowLevelSelectionRoute(List<GameObject> routeGameObjects, LevelSelector targetLevelSelector, float displayDelay)
         {
+            WaitForSeconds waitForDelay = new WaitForSeconds(displayDelay);
+
             foreach (var routeGameObject in routeGameObjects)
             {
-                yield return new WaitForSeconds(displayDelay);
+                yield return waitForDelay;
                 routeGameObject.SetActive(true);
             }
         
-            yield return new WaitForSeconds(displayDelay);
+            yield return waitForDelay;
             targetLevelSelector.gameObject.SetActive(true);
         }
 
