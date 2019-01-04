@@ -12,8 +12,12 @@ namespace AWM.UI
 
         public void Show()
         {
-            animator.SetBool("Visible", true);
             Root.Instance.IsInputBlocked = true;
+
+            Root.Instance.CoroutineHelper.CallDelayed(this, 1f, () =>
+            {
+                animator.SetBool("Visible", true);
+            });
         }
 
         public void StartGame()
