@@ -123,7 +123,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level5
       m_LevelSelectionOrder: 4
-      m_CenteredCameraPosition: {x: 2.810867, y: 14.76033, z: 6.170043}
+      m_CenteredCameraPosition: {x: 2.826871, y: 11.8, z: 4.930788}
   - m_GroupPositionVector: {x: 0, y: 2}
     m_GroupPosition: {x: -15, y: 0, z: -7}
     m_MapTiles:
@@ -327,7 +327,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level8
       m_LevelSelectionOrder: 7
-      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+      m_CenteredCameraPosition: {x: 14.11035, y: 4.355266, z: 1.820129}
   - m_GroupPositionVector: {x: 0, y: 6}
     m_GroupPosition: {x: -15, y: 0, z: 9}
     m_MapTiles:
@@ -633,7 +633,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level6
       m_LevelSelectionOrder: 5
-      m_CenteredCameraPosition: {x: 7.08195, y: 5.59429, z: 2.337547}
+      m_CenteredCameraPosition: {x: 5.657986, y: 6.930182, z: 2.896031}
   - m_GroupPositionVector: {x: 1, y: 4}
     m_GroupPosition: {x: -11, y: 0, z: 1}
     m_MapTiles:
@@ -864,7 +864,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level4
       m_LevelSelectionOrder: 3
-      m_CenteredCameraPosition: {x: -4.23027, y: 13.48581, z: 5.636209}
+      m_CenteredCameraPosition: {x: -4.259862, y: 11.8, z: 4.930568}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 1
@@ -1170,7 +1170,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level9
       m_LevelSelectionOrder: 8
-      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+      m_CenteredCameraPosition: {x: 12.70007, y: -2.173245, z: -0.9078875}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 4
@@ -1500,7 +1500,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level7
       m_LevelSelectionOrder: 6
-      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+      m_CenteredCameraPosition: {x: 2.841602, y: -0.8860393, z: -0.3699501}
   - m_GroupPositionVector: {x: 3, y: 5}
     m_GroupPosition: {x: -3, y: 0, z: 5}
     m_MapTiles:
@@ -2025,7 +2025,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level10
       m_LevelSelectionOrder: 9
-      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+      m_CenteredCameraPosition: {x: 8.482832, y: -8.703473, z: -3.636722}
     - m_PositionVector: {x: 0, y: 1}
       m_LocalPositionInGroup: {x: 0, y: 0, z: 2}
       m_MapTileType: 2
@@ -2457,7 +2457,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level11
       m_LevelSelectionOrder: 10
-      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+      m_CenteredCameraPosition: {x: 4.251206, y: -11.78485, z: -4.924612}
     - m_PositionVector: {x: 1, y: 1}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 2}
       m_MapTileType: 2
@@ -2700,7 +2700,7 @@ MonoBehaviour:
       m_LevelSelectionRouteType: 2
       m_LevelNameToStart: Level12
       m_LevelSelectionOrder: 11
-      m_CenteredCameraPosition: {x: 0, y: 0, z: 0}
+      m_CenteredCameraPosition: {x: -4.233596, y: -7.400498, z: -3.0927}
     - m_PositionVector: {x: 1, y: 0}
       m_LocalPositionInGroup: {x: 2, y: 0, z: 0}
       m_MapTileType: 2
