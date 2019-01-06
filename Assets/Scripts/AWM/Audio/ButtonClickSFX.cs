@@ -9,7 +9,7 @@ namespace AWM.Audio
     {
         private void Start()
         {
-            GetComponent<Button>().onClick.AddListener(() => Root.Instance.SFXManager.PlaySFX(SoundEffect.ButtonClick));
+            GetComponent<Button>().onClick.AddListener(() => Root.Instance.AudioManager.PlaySFX(SoundEffect.ButtonClick));
         }
     }
 }

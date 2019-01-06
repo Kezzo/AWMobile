@@ -351,7 +351,7 @@ namespace AWM.BattleMechanics
         /// </summary>
         public void OnConfirmMove()
         {
-            Root.Instance.SFXManager.PlaySFX(SoundEffect.MovementClick);
+            Root.Instance.AudioManager.PlaySFX(SoundEffect.MovementClick);
             if (m_onConfirmMoveButtonPressed != null)
             {
                 m_onConfirmMoveButtonPressed();

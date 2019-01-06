@@ -609,7 +609,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -698,9 +698,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 484539774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c36abea784a5f40b69172ea87f94b632, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f488741495b94e189a447140631f2b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicAudioSource: {fileID: 484539776}
   soundEffects:
   - SoundEffect: 0
     AudioClip: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
@@ -1042,7 +1043,7 @@ MonoBehaviour:
   m_coroutineHelper: {fileID: 694809057}
   m_sceneLoadingService: {fileID: 694809058}
   m_blackScreen: {fileID: 907307938}
-  m_sfxManager: {fileID: 484539777}
+  m_audioManager: {fileID: 484539777}
   m_debugValues: {fileID: 694809060}
 --- !u!4 &694809056
 Transform:

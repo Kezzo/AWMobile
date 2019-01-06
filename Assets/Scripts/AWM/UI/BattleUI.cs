@@ -29,10 +29,14 @@ namespace AWM.UI
         [SerializeField]
         private TitleUI m_titleUi;
 
+        [SerializeField]
+        private LevelSelectionUI m_levelSelectionUi;
+
         private void Awake()
         {
             CC.MBR.Register(this);
 
+            m_levelSelectionUi.gameObject.SetActive(Root.Instance.SceneLoading.IsInLevelSelection);
             if (Root.Instance.SceneLoading.IsInLevelSelection)
             {
                 ChangeVisibilityOfBattleUI(false);

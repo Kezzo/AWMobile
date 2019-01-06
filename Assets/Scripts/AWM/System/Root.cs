@@ -25,8 +25,8 @@ namespace AWM.System
         private GameObject m_blackScreen;
 
         [SerializeField]
-        private SFXManager m_sfxManager;
-        public SFXManager SFXManager { get { return m_sfxManager; } }
+        private AudioManager m_audioManager;
+        public AudioManager AudioManager { get { return m_audioManager; } }
 
         public bool HasShownTitleUI { get; set; }
 

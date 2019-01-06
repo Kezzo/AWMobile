@@ -243,7 +243,7 @@ namespace AWM.Controls
 
                 m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);
 
-                Root.Instance.SFXManager.PlaySFX(SoundEffect.MovementClick);
+                Root.Instance.AudioManager.PlaySFX(SoundEffect.MovementClick);
             }
         }
 

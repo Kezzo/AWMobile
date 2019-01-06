@@ -95,7 +95,7 @@ namespace AWM.BattleMechanics
                 UpdateHealtBarVisuals(m_currentHealth);
             }
 
-            Root.Instance.SFXManager.PlaySFX(SoundEffect.Explosion);
+            Root.Instance.AudioManager.PlaySFX(SoundEffect.Explosion);
 
             if (m_currentHealth == 0)
             {

@@ -37,7 +37,7 @@ namespace AWM.UI
 
             Root.Instance.CoroutineHelper.CallDelayed(Root.Instance, 0.9f, () =>
             {
-                Root.Instance.SFXManager.PlaySFX(won ? SoundEffect.Win : SoundEffect.Lose);
+                Root.Instance.AudioManager.PlaySFX(won ? SoundEffect.Win : SoundEffect.Lose);
             });
         }
 

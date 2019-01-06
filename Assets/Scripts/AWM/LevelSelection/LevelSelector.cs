@@ -73,7 +73,7 @@ namespace AWM.LevelSelection
         {
             //Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
 
-            Root.Instance.SFXManager.PlaySFX(SoundEffect.ButtonClick);
+            Root.Instance.AudioManager.PlaySFX(SoundEffect.ButtonClick);
 
             if (LevelSelectionUnit.CurrentSimplifiedPosition == m_rootMapTile.m_SimplifiedMapPosition)
             {
@@ -110,12 +110,12 @@ namespace AWM.LevelSelection
 
             CC.InputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
 
-            AudioSource audioSource = Root.Instance.SFXManager.PlaySFX(levelSelectionUnit.GetSounceEffectFromUnitType());
+            AudioSource audioSource = Root.Instance.AudioManager.PlaySFX(levelSelectionUnit.GetSounceEffectFromUnitType());
 
             levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, false, movementCostResolver, tile =>
             {
                 UpdateUnitVisuals(tile.MapTileType);
-                audioSource.clip = Root.Instance.SFXManager.GetClip(levelSelectionUnit.GetSounceEffectFromUnitType());
+                audioSource.clip = Root.Instance.AudioManager.GetClip(levelSelectionUnit.GetSounceEffectFromUnitType());
                 audioSource.Play();
             }, () =>
             {

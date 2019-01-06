@@ -267,7 +267,7 @@ namespace AWM.BattleMechanics
         {
             //Debug.LogFormat("Unit: '{0}' from Team: '{1}' was selected.", UnitType, TeamColor);
 
-            Root.Instance.SFXManager.PlaySFX(SoundEffect.MovementClick);
+            Root.Instance.AudioManager.PlaySFX(SoundEffect.MovementClick);
             m_isUnitSelected = true;
             m_selectionMarker.SetActive(true);
 
@@ -739,7 +739,7 @@ namespace AWM.BattleMechanics
 
             if(playMovementSoundEffect)
             {
-                audioSource = Root.Instance.SFXManager.PlaySFX(GetSounceEffectFromUnitType());
+                audioSource = Root.Instance.AudioManager.PlaySFX(GetSounceEffectFromUnitType());
             }
 
             m_isUnitMoving = true;
