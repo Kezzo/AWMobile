@@ -16,7 +16,7 @@ MonoBehaviour:
   m_Teams:
   - m_TeamColor: 0
     m_IsPlayersTeam: 1
-  - m_TeamColor: 3
+  - m_TeamColor: 2
     m_IsPlayersTeam: 0
   m_LevelSize: {x: 16, y: 16}
   m_MapTileMargin: 2
@@ -606,7 +606,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 3
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -681,7 +681,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 1
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -951,7 +951,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 2
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -1002,7 +1002,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 1
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -1038,7 +1038,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 1
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -1116,7 +1116,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 1
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -1128,7 +1128,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 2
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -1308,7 +1308,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 3
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -1638,7 +1638,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 3
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -1983,7 +1983,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 2
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
@@ -2391,7 +2391,7 @@ MonoBehaviour:
       m_HasStreet: 0
       m_Unit:
         m_UnitType: 1
-        m_TeamColor: 3
+        m_TeamColor: 2
         m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
