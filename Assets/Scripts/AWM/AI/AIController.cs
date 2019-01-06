@@ -291,7 +291,7 @@ namespace AWM.AI
 
                 if (routeToMove != null)
                 {
-                    unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver, null, unitMovementDoneCallback);
+                    unitToProcessTurnFor.MoveAlongRoute(routeToMove, true, movementCostResolver, null, unitMovementDoneCallback);
                     return true;
                 }
             }
@@ -322,7 +322,7 @@ namespace AWM.AI
 
                     if (routeToMove.Count > 0)
                     {
-                        unitToProcessTurnFor.MoveAlongRoute(routeToMove, movementCostResolver, null,
+                        unitToProcessTurnFor.MoveAlongRoute(routeToMove, true, movementCostResolver, null,
                             unitMovementDoneCallback);
                     }
                     else

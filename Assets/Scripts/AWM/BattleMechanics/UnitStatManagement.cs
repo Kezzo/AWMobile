@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using AWM.Audio;
 using AWM.Enums;
+using AWM.System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -92,6 +94,8 @@ namespace AWM.BattleMechanics
                 m_healthBarCanvas.gameObject.SetActive(true);
                 UpdateHealtBarVisuals(m_currentHealth);
             }
+
+            Root.Instance.SFXManager.PlaySFX(SoundEffect.Explosion);
 
             if (m_currentHealth == 0)
             {

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using AWM.Audio;
 using AWM.BattleMechanics;
 using AWM.Controls;
 using AWM.EditorAndDebugOnly;
@@ -72,6 +73,8 @@ namespace AWM.LevelSelection
         {
             //Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
 
+            Root.Instance.SFXManager.PlaySFX(SoundEffect.ButtonClick);
+
             if (LevelSelectionUnit.CurrentSimplifiedPosition == m_rootMapTile.m_SimplifiedMapPosition)
             {
                 //TODO: Enter level.
@@ -107,12 +110,16 @@ namespace AWM.LevelSelection
 
             CC.InputBlocker.ChangeBattleControlInput(true, InputBlockMode.SelectionOnly);
 
-            levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, movementCostResolver, tile =>
+            AudioSource audioSource = Root.Instance.SFXManager.PlaySFX(levelSelectionUnit.GetSounceEffectFromUnitType());
+
+            levelSelectionUnit.MoveAlongRoute(routeToLevelSelector, false, movementCostResolver, tile =>
             {
                 UpdateUnitVisuals(tile.MapTileType);
-
+                audioSource.clip = Root.Instance.SFXManager.GetClip(levelSelectionUnit.GetSounceEffectFromUnitType());
+                audioSource.Play();
             }, () =>
             {
+                audioSource.Stop();
                 CC.InputBlocker.ChangeBattleControlInput(false, InputBlockMode.SelectionOnly);
                 levelSelectionUnit.WorldMovementSpeed = worldMovementSpeed;
                 //TODO: display level info.

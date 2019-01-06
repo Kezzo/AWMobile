@@ -1,4 +1,5 @@
-﻿using AWM.Enums;
+﻿using AWM.Audio;
+using AWM.Enums;
 using AWM.System;
 using TMPro;
 using UnityEngine;
@@ -26,11 +27,18 @@ namespace AWM.UI
         public void Show(TeamColor teamThatWon)
         {
             m_gameEndVisuals.SetActive(true);
-            m_battleResultText.text = CC.BSC.IsTeamWithColorPlayersTeam(teamThatWon) ?
+
+            bool won = CC.BSC.IsTeamWithColorPlayersTeam(teamThatWon);
+            m_battleResultText.text = won ?
                 "You won the match!" :
                 "The enemy team won the match!";
 
             m_animator.SetTrigger("Show");
+
+            Root.Instance.CoroutineHelper.CallDelayed(Root.Instance, 0.9f, () =>
+            {
+                Root.Instance.SFXManager.PlaySFX(won ? SoundEffect.Win : SoundEffect.Lose);
+            });
         }
 
         /// <summary>

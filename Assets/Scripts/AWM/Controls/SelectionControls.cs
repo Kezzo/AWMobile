@@ -9,6 +9,7 @@ using AWM.MapTileGeneration;
 using AWM.System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using AWM.Audio;
 
 namespace AWM.Controls
 {
@@ -241,6 +242,8 @@ namespace AWM.Controls
                     baseMapTile.m_SimplifiedMapPosition, new UnitBalancingMovementCostResolver(m_currentlySelectedUnit.GetUnitBalancing()), m_pathfindingNodeDebug);
 
                 m_currentlySelectedUnit.DisplayRouteToDestination(m_routeToDestinationField, DeselectCurrentUnit);
+
+                Root.Instance.SFXManager.PlaySFX(SoundEffect.MovementClick);
             }
         }
 

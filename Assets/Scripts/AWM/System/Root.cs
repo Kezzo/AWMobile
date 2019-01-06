@@ -1,4 +1,5 @@
 ﻿using System;
+using AWM.Audio;
 using AWM.DevHelper;
 using AWM.UI;
 using UnityEngine;
@@ -22,6 +23,10 @@ namespace AWM.System
 
         [SerializeField]
         private GameObject m_blackScreen;
+
+        [SerializeField]
+        private SFXManager m_sfxManager;
+        public SFXManager SFXManager { get { return m_sfxManager; } }
 
         public bool HasShownTitleUI { get; set; }
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AWM.Audio;
 using AWM.BattleVisuals;
 using AWM.Enums;
 using AWM.MapTileGeneration;
@@ -266,6 +267,7 @@ namespace AWM.BattleMechanics
         {
             //Debug.LogFormat("Unit: '{0}' from Team: '{1}' was selected.", UnitType, TeamColor);
 
+            Root.Instance.SFXManager.PlaySFX(SoundEffect.MovementClick);
             m_isUnitSelected = true;
             m_selectionMarker.SetActive(true);
 
@@ -525,7 +527,7 @@ namespace AWM.BattleMechanics
                 ClearAttackableUnits(m_unitsMarkedForAttack);
                 UnitHasMovedThisRound = true;
 
-                MoveAlongRoute(routeToDestination, new UnitBalancingMovementCostResolver(
+                MoveAlongRoute(routeToDestination, true, new UnitBalancingMovementCostResolver(
                     GetUnitBalancing()), null, () =>
                 {
                     if (!UnitHasMovedThisRound)
@@ -637,7 +639,7 @@ namespace AWM.BattleMechanics
         /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
         /// <param name="onMoveFinished">The on move finished.</param>
         /// <returns></returns>
-        private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, IMovementCostResolver movementCostResolver, 
+        private IEnumerator MoveAlongRouteCoroutine(List<Vector2> route, AudioSource audioSource, IMovementCostResolver movementCostResolver, 
             Action<BaseMapTile> onReachedTile, Action onMoveFinished)
         {
             // Starting with an index of 1 here, because the node at index 0 is the node the unit is standing on.
@@ -650,7 +652,17 @@ namespace AWM.BattleMechanics
 
                 if (IsBridgeOnNode(nodeToMoveTo, true, out bridgeOpeningCoroutine))
                 {
+                    if(audioSource != null)
+                    {
+                        audioSource.Stop();
+                    }
+
                     yield return bridgeOpeningCoroutine;
+
+                    if (audioSource != null)
+                    {
+                        audioSource.Play();
+                    }
                 }
 
                 yield return MoveToNeighborNode(currentNode, nodeToMoveTo, movementCostResolver,
@@ -658,7 +670,17 @@ namespace AWM.BattleMechanics
 
                 if (IsBridgeOnNode(currentNode, false, out bridgeOpeningCoroutine))
                 {
+                    if (audioSource != null)
+                    {
+                        audioSource.Stop();
+                    }
+
                     yield return bridgeOpeningCoroutine;
+
+                    if (audioSource != null)
+                    {
+                        audioSource.Play();
+                    }
                 }
 
                 if (nodeIndex == route.Count - 1)
@@ -704,7 +726,7 @@ namespace AWM.BattleMechanics
         /// <param name="movementCostResolver">The implementation that determines how a unit is affect by the terrain to change the movement speed accordingly.</param>
         /// <param name="onReachedTile">Invoked when a tile was reached while moving.</param>
         /// <param name="onMoveFinished">Invoked when the unit was successfully moved.</param>
-        public void MoveAlongRoute(List<Vector2> route, IMovementCostResolver movementCostResolver, 
+        public void MoveAlongRoute(List<Vector2> route, bool playMovementSoundEffect, IMovementCostResolver movementCostResolver, 
             Action<BaseMapTile> onReachedTile, Action onMoveFinished)
         {
             if (route == null || route.Count == 0)
@@ -713,16 +735,51 @@ namespace AWM.BattleMechanics
                 return;
             }
 
+            AudioSource audioSource = null; 
+
+            if(playMovementSoundEffect)
+            {
+                audioSource = Root.Instance.SFXManager.PlaySFX(GetSounceEffectFromUnitType());
+            }
+
             m_isUnitMoving = true;
             UpdateEnvironmentVisibility(CurrentSimplifiedPosition, false);
             m_currentSimplifiedPosition = route[route.Count - 1];
 
-            StartCoroutine(MoveAlongRouteCoroutine(route, movementCostResolver, onReachedTile, () =>
+            StartCoroutine(MoveAlongRouteCoroutine(route, audioSource, movementCostResolver, onReachedTile, () =>
             {
+                if(audioSource != null)
+                {
+                    audioSource.Stop();
+                }
+
                 m_isUnitMoving = false;
                 UpdateEnvironmentVisibility(route[route.Count - 1], true);
                 onMoveFinished();
             }));
+        }
+
+        public SoundEffect GetSounceEffectFromUnitType()
+        {
+            SoundEffect movementSoundEffect = SoundEffect.TankMovement;
+            switch (UnitType)
+            {
+                case UnitType.AntiAirTank:
+                case UnitType.BattleTank:
+                    movementSoundEffect = SoundEffect.TankMovement;
+                    break;
+
+                case UnitType.Bomber:
+                    movementSoundEffect = SoundEffect.PlaneMovement;
+                    break;
+
+                case UnitType.WarShip:
+                    movementSoundEffect = SoundEffect.ShipMovement;
+                    break;
+
+            }
+
+            return movementSoundEffect;
         }
 
         /// <summary>
