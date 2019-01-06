@@ -88,7 +88,8 @@ namespace AWM.LevelSelection
 
         public void MoveToLevelSelector(LevelSelector levelSelector, bool slowMovement)
         {
-            Debug.Log(string.Format("Moving to level selector of level: {0}", m_levelName));
+            CC.PPS.LastPlayedLevel = levelSelector.LevelName;
+            //Debug.Log(string.Format("Moving to level selector of level: {0}", levelSelector.LevelName));
 
             // There is always only one unit in the level selection.
             BaseUnit levelSelectionUnit = LevelSelectionUnit;
@@ -151,7 +152,7 @@ namespace AWM.LevelSelection
         /// </summary>
         /// <param name="levelSelector">The level selector to draw a route to.</param>
         /// <param name="isLastRoute">Determines if this drawn route is the last unlocked route leading to the newest level.</param>
-        public void DrawRouteToLevelSelector(LevelSelector levelSelector, bool isLastRoute)
+        public LevelSelector DrawRouteToLevelSelector(LevelSelector levelSelector, bool isLastRoute)
         {
             var navigationController = CC.TNC;
 
@@ -176,7 +177,7 @@ namespace AWM.LevelSelection
             {
                 StartCoroutine(ShowLevelSelectionRoute(routeGameObjects, levelSelector, 0.3f));
                 CC.PPS.LastUnlockedLevel = levelSelector.LevelName;
-                MoveToLevelSelector(levelSelector, true);
+                return levelSelector;
             }
             else
             {
@@ -189,6 +190,8 @@ namespace AWM.LevelSelection
                 {
                     levelSelector.gameObject.SetActive(true);
                 }
+
+                return null;
             }
         }
 
@@ -244,7 +247,6 @@ namespace AWM.LevelSelection
                 {
                     Root.Instance.SceneLoading.LoadToLevel(m_levelName, () =>
                     {
-                        CC.PPS.LastPlayedLevel = m_levelName;
                         CC.InputBlocker.ChangeBattleControlInput(false);
                         Root.Instance.LoadingUi.Hide();
                     });

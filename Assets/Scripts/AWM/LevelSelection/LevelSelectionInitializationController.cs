@@ -38,12 +38,15 @@ namespace AWM.LevelSelection
         public void InitializeLevelSelectionVisuals()
         {
             int levelSelectionCounter = 0;
+            LevelSelector levelSelectorToInitialize;
+            LevelSelector nextLevelSelector = null;
+
+            LevelSelector levelSelectorToMoveTo = null;
+            LevelSelector levelSelectorToMoveFrom = null;
 
             while (true)
             {
                 bool lastLevelSelectorReached = false;
-                LevelSelector levelSelectorToInitialize;
-                LevelSelector nextLevelSelector = null;
 
                 // This breaks on the last level selector, because no route has to drawn from it.
                 if (!m_registeredLevelSelectors.TryGetValue(levelSelectionCounter, out levelSelectorToInitialize) ||
@@ -77,11 +80,21 @@ namespace AWM.LevelSelection
 
                 if (CC.PPS.IsLevelCompleted(levelSelectorToInitialize.LevelName) || !Application.isPlaying)
                 {
-                    levelSelectorToInitialize.DrawRouteToLevelSelector(nextLevelSelector, 
+                    levelSelectorToMoveTo = levelSelectorToInitialize.DrawRouteToLevelSelector(nextLevelSelector, 
                         !CC.PPS.IsLevelCompleted(nextLevelSelector.LevelName));
+
+                    if(levelSelectorToMoveTo != null)
+                    {
+                        levelSelectorToMoveFrom = levelSelectorToInitialize;
+                    }
                 }
 
                 levelSelectionCounter++;
+            }
+
+            if (levelSelectorToMoveFrom != null && levelSelectorToMoveTo != null)
+            {
+                levelSelectorToMoveFrom.MoveToLevelSelector(levelSelectorToMoveTo, true);
             }
         }
     }
