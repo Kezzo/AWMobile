@@ -9,9 +9,11 @@ namespace AWM.UI
         private Animator animator;
 
         private bool loadingIntoFirstLevel = false;
+        LevelSelectionUI levelSelectionUI;
 
-        public void Show()
+        public void Show(LevelSelectionUI levelSelectionUI)
         {
+            this.levelSelectionUI = levelSelectionUI;
             Root.Instance.IsInputBlocked = true;
 
             Root.Instance.CoroutineHelper.CallDelayed(this, 1f, () =>
@@ -55,6 +57,7 @@ namespace AWM.UI
 
             Root.Instance.CoroutineHelper.CallDelayed(this, 0.2f, () =>
             {
+                levelSelectionUI.ChangeVisibilityOfHeader(true);
                 Root.Instance.IsInputBlocked = false;
             });
         }

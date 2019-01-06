@@ -2,8 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelSelectionUI : MonoBehaviour 
+public class LevelSelectionUI : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject headerBackground;
+
+    [SerializeField]
+    private GameObject headerText;
+
     [SerializeField]
     private Image musicToggleImage;
 
@@ -26,6 +32,12 @@ public class LevelSelectionUI : MonoBehaviour
     {
         musicToggleImage.sprite = Root.Instance.AudioManager.MusicIsOn ? musicOnSprite : musicOffSprite;
         sfxToggleImage.sprite = Root.Instance.AudioManager.SFXIsOn ? sfxOnSprite : sfxOffSprite;
+    }
+
+    public void ChangeVisibilityOfHeader(bool show)
+    {
+        headerBackground.SetActive(show);
+        headerText.SetActive(show);
     }
 
     public void ToggleMusic()

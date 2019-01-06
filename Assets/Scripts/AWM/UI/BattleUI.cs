@@ -37,6 +37,7 @@ namespace AWM.UI
             CC.MBR.Register(this);
 
             m_levelSelectionUi.gameObject.SetActive(Root.Instance.SceneLoading.IsInLevelSelection);
+
             if (Root.Instance.SceneLoading.IsInLevelSelection)
             {
                 ChangeVisibilityOfBattleUI(false);
@@ -70,10 +71,18 @@ namespace AWM.UI
 
         private void Start()
         {
-            if (Root.Instance.SceneLoading.IsInLevelSelection && !Root.Instance.HasShownTitleUI)
+            if (Root.Instance.SceneLoading.IsInLevelSelection)
             {
-                m_titleUi.Show();
-                Root.Instance.HasShownTitleUI = true;
+                if (!Root.Instance.HasShownTitleUI)
+                {
+                    m_titleUi.Show(m_levelSelectionUi);
+                    Root.Instance.HasShownTitleUI = true;
+                    m_levelSelectionUi.ChangeVisibilityOfHeader(false);
+                }
+                else
+                {
+                    m_levelSelectionUi.ChangeVisibilityOfHeader(true);
+                }
             }
         }
 
