@@ -1574,8 +1574,8 @@ MonoBehaviour:
       m_MapTileType: 2
       m_HasStreet: 0
       m_Unit:
-        m_UnitType: 0
-        m_TeamColor: 0
+        m_UnitType: 4
+        m_TeamColor: 3
         m_Orientation: 0
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 

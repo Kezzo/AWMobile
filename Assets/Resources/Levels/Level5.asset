@@ -605,9 +605,9 @@ MonoBehaviour:
       m_MapTileType: 2
       m_HasStreet: 0
       m_Unit:
-        m_UnitType: 0
-        m_TeamColor: 0
-        m_Orientation: 0
+        m_UnitType: 3
+        m_TeamColor: 3
+        m_Orientation: 1
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
@@ -2618,9 +2618,9 @@ MonoBehaviour:
       m_MapTileType: 1
       m_HasStreet: 0
       m_Unit:
-        m_UnitType: 0
+        m_UnitType: 1
         m_TeamColor: 0
-        m_Orientation: 0
+        m_Orientation: 3
       m_LevelSelectionRouteType: 0
       m_LevelNameToStart: 
       m_LevelSelectionOrder: 0
@@ -2645,7 +2645,7 @@ MonoBehaviour:
       m_MapTileType: 2
       m_HasStreet: 0
       m_Unit:
-        m_UnitType: 3
+        m_UnitType: 0
         m_TeamColor: 0
         m_Orientation: 3
       m_LevelSelectionRouteType: 0
