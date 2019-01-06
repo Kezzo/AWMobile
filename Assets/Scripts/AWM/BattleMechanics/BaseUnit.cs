@@ -244,7 +244,7 @@ namespace AWM.BattleMechanics
             m_meshFilter.mesh = mapTileGeneratorEditor.GetMeshOfUnitType(unitType);
             m_meshRenderer.material = mapTileGeneratorEditor.GetMaterialForTeamColor(unitType, TeamColor);
 
-            Debug.Log(string.Format("Changed unit visuals from '{0}' to '{1}'", UnitType, unitType));
+            //Debug.Log(string.Format("Changed unit visuals from '{0}' to '{1}'", UnitType, unitType));
 
             UnitType = unitType;
         }
@@ -264,7 +264,7 @@ namespace AWM.BattleMechanics
         /// </summary>
         public void OnUnitWasSelected()
         {
-            Debug.LogFormat("Unit: '{0}' from Team: '{1}' was selected.", UnitType, TeamColor);
+            //Debug.LogFormat("Unit: '{0}' from Team: '{1}' was selected.", UnitType, TeamColor);
 
             m_isUnitSelected = true;
             m_selectionMarker.SetActive(true);
@@ -546,7 +546,7 @@ namespace AWM.BattleMechanics
 
                     if (attackableUnitsInRange.Count > 0)
                     {
-                        Debug.Log("Attackable units: " + attackableUnitsInRange.Count);
+                        //Debug.Log("Attackable units: " + attackableUnitsInRange.Count);
                         if (m_isUnitSelected)
                         {
                             DisplayActionOnUnitsInRange(attackableUnitsInRange);

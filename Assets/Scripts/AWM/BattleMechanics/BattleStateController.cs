@@ -253,7 +253,7 @@ namespace AWM.BattleMechanics
         {
             Team teamToStartNext = m_teamThisBattle[m_subTurnCount];
 
-            Debug.LogFormat("Starting turn for Team: '{0}'", teamToStartNext.m_TeamColor);
+            //Debug.LogFormat("Starting turn for Team: '{0}'", teamToStartNext.m_TeamColor);
 
             foreach (var turnStartEvent in OnTurnStartListener)
             {

@@ -70,12 +70,12 @@ namespace AWM.LevelSelection
         /// </summary>
         public void OnSelected()
         {
-            Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
+            //Debug.Log(string.Format("Selected LevelSelector representing level: {0}", m_levelName));
 
             if (LevelSelectionUnit.CurrentSimplifiedPosition == m_rootMapTile.m_SimplifiedMapPosition)
             {
                 //TODO: Enter level.
-                Debug.Log(string.Format("Entering level: {0}", m_levelName));
+                //Debug.Log(string.Format("Entering level: {0}", m_levelName));
                 CC.InputBlocker.ChangeBattleControlInput(true);
 
                 SwitchToLevel();
@@ -89,7 +89,6 @@ namespace AWM.LevelSelection
         public void MoveToLevelSelector(LevelSelector levelSelector, bool slowMovement)
         {
             CC.PPS.LastPlayedLevel = levelSelector.LevelName;
-            //Debug.Log(string.Format("Moving to level selector of level: {0}", levelSelector.LevelName));
 
             // There is always only one unit in the level selection.
             BaseUnit levelSelectionUnit = LevelSelectionUnit;

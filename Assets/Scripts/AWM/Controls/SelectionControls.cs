@@ -136,14 +136,14 @@ namespace AWM.Controls
                     if (m_currentlySelectedUnit != null &&
                         TrySelection(m_battlegroundCamera, m_attackFieldLayerMask, out raycastHit))
                     {
-                        Debug.Log("Selected attack field");
+                        //Debug.Log("Selected attack field");
 
                         // Select attack field
                         StartUnitAttack(raycastHit);
                     }
                     else if (TrySelection(m_battlegroundCamera, m_unitLayerMask, out raycastHit))
                     {
-                        Debug.Log("Selected unit");
+                        //Debug.Log("Selected unit");
 
                         // Select Unit
                         SelectUnit(raycastHit);
@@ -151,7 +151,7 @@ namespace AWM.Controls
                     else if (m_currentlySelectedUnit != null &&
                              TrySelection(m_battlegroundCamera, m_movementFieldLayerMask, out raycastHit))
                     {
-                        Debug.Log("Selected movement field");
+                        //Debug.Log("Selected movement field");
 
                         // Select movement field
                         CalculateRouteToMovementField(raycastHit);
@@ -160,7 +160,7 @@ namespace AWM.Controls
                     else if (m_currentlySelectedUnit != null &&
                              TrySelection(m_battlegroundCamera, m_moveDestinationFieldLayerMask, out raycastHit))
                     {
-                        Debug.Log("Selected destination movement field");
+                        //Debug.Log("Selected destination movement field");
 
                         // confirm move
                         CC.BSC.OnConfirmMove();
@@ -169,7 +169,7 @@ namespace AWM.Controls
                     {
                         // Deselect unit
                         DeselectCurrentUnit();
-                        Debug.Log("Deselected Unit");
+                        //Debug.Log("Deselected Unit");
                     }
                 }
             }
