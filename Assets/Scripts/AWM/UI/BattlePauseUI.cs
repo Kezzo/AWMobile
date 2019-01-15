@@ -14,6 +14,8 @@ namespace AWM.UI
         private TextMeshProUGUI m_endMatchText;
 
         private Action<bool> m_onVisibilityChange;
+        private bool endMatchWasPressed = false;
+        private bool paused = false;
 
         private void Awake()
         {
@@ -49,6 +51,15 @@ namespace AWM.UI
         /// </summary>
         public void Show()
         {
+            if(paused)
+            {
+                return;
+            }
+
+            paused = true;
+
+            Root.Instance.AudioManager.ToggleSfxPause(true);
+
             CC.InputBlocker.ChangeBattleControlInput(true);
             CC.BSC.IsBattlePaused = true;
 
@@ -65,6 +76,15 @@ namespace AWM.UI
         /// </summary>
         public void Hide()
         {
+            if (!paused)
+            {
+                return;
+            }
+
+            paused = false;
+
+            Root.Instance.AudioManager.ToggleSfxPause(false);
+
             m_animator.SetBool("Visible", false);
             CC.InputBlocker.ChangeBattleControlInput(false);
             CC.BSC.IsBattlePaused = false;
@@ -80,7 +100,15 @@ namespace AWM.UI
         /// </summary>
         public void OnBackButtonPressed()
         {
+            if(endMatchWasPressed)
+            {
+                return;
+            }
+
+            endMatchWasPressed = true;
+
             Root.Instance.LoadingUi.Show();
+            Root.Instance.AudioManager.sfxIsPaused = false;
 
             Root.Instance.CoroutineHelper.CallDelayed(Root.Instance, 1.05f, () =>
             {

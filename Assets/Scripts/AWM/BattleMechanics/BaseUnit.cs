@@ -659,6 +659,11 @@ namespace AWM.BattleMechanics
 
                     yield return bridgeOpeningCoroutine;
 
+                    while (CC.BSC.IsBattlePaused)
+                    {
+                        yield return null;
+                    }
+
                     if (audioSource != null)
                     {
                         audioSource.Play();
@@ -676,6 +681,11 @@ namespace AWM.BattleMechanics
                     }
 
                     yield return bridgeOpeningCoroutine;
+
+                    while (CC.BSC.IsBattlePaused)
+                    {
+                        yield return null;
+                    }
 
                     if (audioSource != null)
                     {

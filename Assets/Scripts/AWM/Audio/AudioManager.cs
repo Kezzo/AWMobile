@@ -29,6 +29,7 @@ namespace AWM.Audio
         private PlayerPrefsStorageHelper playerPrefsHelper;
         public bool MusicIsOn { get; private set; }
         public bool SFXIsOn { get; private set; }
+        public bool sfxIsPaused = false;
 
         private void Awake()
         {
@@ -61,6 +62,11 @@ namespace AWM.Audio
             audioSourceToUse.volume = sfxReference.Volume;
             audioSourceToUse.Play();
 
+            if(sfxIsPaused)
+            {
+                audioSourceToUse.Pause();
+            }
+
             return audioSourceToUse;
         }
 
@@ -83,6 +89,22 @@ namespace AWM.Audio
             SetMusicSetting(MusicIsOn, storeToPlayerPrefs);
 
             return MusicIsOn;
+        }
+
+        public void ToggleSfxPause(bool pause)
+        {
+            sfxIsPaused = pause;
+            foreach (var sfxAudioSource in sfxAudioSourcePool)
+            {
+                if(pause)
+                {
+                    sfxAudioSource.Pause();
+                }
+                else
+                {
+                    sfxAudioSource.UnPause();
+                }
+            }
         }
 
         private void SetMusicSetting(bool isOn, bool storeToPlayerPrefs)

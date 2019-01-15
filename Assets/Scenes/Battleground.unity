@@ -1291,7 +1291,6 @@ GameObject:
   - component: {fileID: 1506953657}
   - component: {fileID: 2043089465}
   - component: {fileID: 2043089464}
-  - component: {fileID: 2043089463}
   - component: {fileID: 2043089460}
   m_Layer: 0
   m_Name: Battleground3dCamera
@@ -1507,14 +1506,6 @@ MonoBehaviour:
     type: 3}
   colorCorrectionSelectiveShader: {fileID: 4800000, guid: e515e0f94cefc4c0db54b45cba621544,
     type: 3}
---- !u!81 &2043089463
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 81234854459662942, guid: ead598963fc15d3499871565561c5537,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2043089458}
-  m_Enabled: 1
 --- !u!124 &2043089464
 Behaviour:
   m_ObjectHideFlags: 0
