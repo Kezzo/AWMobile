@@ -161,8 +161,8 @@ PlayerSettings:
     iOS: com.BraveMonkeys.CubesAndTanks
     tvOS: com.AAAGames.MobileTactics
   buildNumber:
-    iOS: 3
-  AndroidBundleVersionCode: 1
+    iOS: 4
+  AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
